@@ -542,3 +542,90 @@ function hakajobs_schema_job_posting() {
     echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
 }
 add_action('wp_head', 'hakajobs_schema_job_posting');
+
+/**
+ * Generate formatted broadcast text for WhatsApp Channel / Groups
+ *
+ * @param int $post_id
+ * @return string
+ */
+function hakajobs_get_wa_broadcast_text($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $title       = html_entity_decode(get_the_title($post_id), ENT_QUOTES, 'UTF-8');
+    $company     = get_post_meta($post_id, '_hakajobs_company_name', true);
+    if (empty($company)) {
+        $company = get_bloginfo('name');
+    }
+
+    $salary      = get_post_meta($post_id, '_hakajobs_salary', true);
+    $deadline    = get_post_meta($post_id, '_hakajobs_deadline', true);
+    $location    = get_post_meta($post_id, '_hakajobs_company_location', true);
+
+    $terms_loc   = get_the_terms($post_id, 'lokasi_lowongan');
+    if (!empty($terms_loc) && !is_wp_error($terms_loc)) {
+        $location = $terms_loc[0]->name;
+    }
+    if (empty($location)) {
+        $location = 'Indonesia';
+    }
+
+    $terms_type  = get_the_terms($post_id, 'tipe_pekerjaan');
+    $type_name   = (!empty($terms_type) && !is_wp_error($terms_type)) ? $terms_type[0]->name : '';
+
+    $terms_edu   = get_the_terms($post_id, 'pendidikan_terakhir');
+    $edu_name    = (!empty($terms_edu) && !is_wp_error($terms_edu)) ? $terms_edu[0]->name : '';
+
+    $permalink   = get_permalink($post_id);
+    $channel_url = get_theme_mod('hakajobs_wa_channel_url', '');
+    $channel_name= get_theme_mod('hakajobs_wa_channel_name', __('Saluran WhatsApp Kami', 'hakajobs'));
+    $heading     = get_theme_mod('hakajobs_wa_broadcast_heading', '📢 LOWONGAN KERJA TERBARU');
+
+    $msg = '*' . trim($heading) . "*\n";
+    $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+    $msg .= "🏢 *Perusahaan*: " . $company . "\n";
+    $msg .= "💼 *Posisi*: " . $title . "\n";
+    $msg .= "📍 *Lokasi*: " . $location . "\n";
+
+    if (!empty($type_name)) {
+        $msg .= "🕒 *Tipe*: " . $type_name . "\n";
+    }
+
+    if (!empty($edu_name)) {
+        $msg .= "🎓 *Pendidikan*: " . $edu_name . "\n";
+    }
+
+    if (!empty($salary)) {
+        $msg .= "💰 *Gaji*: " . $salary . "\n";
+    }
+
+    if (!empty($deadline)) {
+        $deadline_ts = strtotime($deadline);
+        if ($deadline_ts) {
+            $msg .= "⏳ *Batas Lamaran*: " . date_i18n('d F Y', $deadline_ts) . "\n";
+        }
+    }
+
+    $msg .= "\n🔗 *Detail Lengkap & Cara Melamar*:\n" . $permalink . "\n";
+
+    if (!empty($channel_url)) {
+        $msg .= "\n━━━━━━━━━━━━━━━━━━━━\n";
+        $msg .= "👉 *Gabung " . $channel_name . " untuk update info loker harian*:\n" . esc_url($channel_url) . "\n";
+    }
+
+    return $msg;
+}
+
+/**
+ * Generate WhatsApp Share URL with pre-filled broadcast text
+ *
+ * @param int $post_id
+ * @return string
+ */
+function hakajobs_get_wa_broadcast_url($post_id = null) {
+    $text = hakajobs_get_wa_broadcast_text($post_id);
+    return 'https://api.whatsapp.com/send?text=' . rawurlencode($text);
+}
+

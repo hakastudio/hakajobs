@@ -12,7 +12,8 @@
  *  ├─ Section 7 : Footer & Hak Cipta
  *  ├─ Section 8 : SEO & Meta Tags
  *  ├─ Section 9 : Monetisasi & Slot Banner Iklan
- *  └─ Section 10: Halaman Pasang Loker & Tarif
+ *  ├─ Section 10: Halaman Pasang Loker & Tarif
+ *  └─ Section 11: Saluran WhatsApp & Broadcast Loker
  *
  * @package Hakajobs
  */
@@ -1276,6 +1277,104 @@ function hakajobs_customize_register($wp_customize) {
         'label'       => __('🔥 Tarif Paket Urgent', 'hakajobs'),
         'description' => __('Label harga paket Urgent (Prioritas). Contoh: "Rp 75.000" atau "Rp 150.000".', 'hakajobs'),
         'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // =========================================================================
+    // SECTION 11 — SALURAN WHATSAPP & BROADCAST LOKER
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_wa_channel_section', array(
+        'title'       => __('📢 Saluran WhatsApp & Broadcast', 'hakajobs'),
+        'description' => __('Atur link Saluran WhatsApp resmi Anda untuk broadcast 1-klik loker dan banner undangan pengunjung.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 105,
+    ));
+
+    // Link Saluran WhatsApp
+    $wp_customize->add_setting('hakajobs_wa_channel_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_wa_channel_url', array(
+        'type'        => 'url',
+        'label'       => __('🔗 Tautan Saluran WhatsApp (Channel URL)', 'hakajobs'),
+        'description' => __('Contoh: https://whatsapp.com/channel/0029Va... atau link invite grup WA. Tautan ini akan otomatis disertakan pada teks broadcast dan tombol publik.', 'hakajobs'),
+        'section'     => 'hakajobs_wa_channel_section',
+    ));
+
+    // Nama Saluran WhatsApp
+    $wp_customize->add_setting('hakajobs_wa_channel_name', array(
+        'default'           => __('Saluran Resmi Info Loker', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_wa_channel_name', array(
+        'type'        => 'text',
+        'label'       => __('🏷️ Nama Saluran / Komunitas WA', 'hakajobs'),
+        'description' => __('Nama tampilan saluran yang dicantumkan pada teks broadcast.', 'hakajobs'),
+        'section'     => 'hakajobs_wa_channel_section',
+    ));
+
+    // Judul Header Broadcast
+    $wp_customize->add_setting('hakajobs_wa_broadcast_heading', array(
+        'default'           => '📢 LOWONGAN KERJA TERBARU',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_wa_broadcast_heading', array(
+        'type'        => 'text',
+        'label'       => __('📝 Header Teks Pesan Broadcast', 'hakajobs'),
+        'description' => __('Judul pesan baris pertama pada saat teks broadcast digenerate.', 'hakajobs'),
+        'section'     => 'hakajobs_wa_channel_section',
+    ));
+
+    // Tampilkan Banner Publik Gabung Saluran WA di Single Job & Footer
+    $wp_customize->add_setting('hakajobs_wa_show_public_widget', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_wa_show_public_widget', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Banner Ajakan Saluran WA ke Pengunjung', 'hakajobs'),
+        'description' => __('Membantu meningkatkan follower Saluran WhatsApp Anda secara gratis dari pengunjung setia website.', 'hakajobs'),
+        'section'     => 'hakajobs_wa_channel_section',
+    ));
+
+    // Judul Banner Publik
+    $wp_customize->add_setting('hakajobs_wa_public_cta_title', array(
+        'default'           => __('Dapatkan Info Lowongan Kerja Harian di WhatsApp Anda!', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_wa_public_cta_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Banner Publik', 'hakajobs'),
+        'section'     => 'hakajobs_wa_channel_section',
+    ));
+
+    // Deskripsi Banner Publik
+    $wp_customize->add_setting('hakajobs_wa_public_cta_desc', array(
+        'default'           => __('Ikuti Saluran WhatsApp resmi kami. Gratis, tanpa spam, dan langsung terupdate setiap hari di ponsel Anda.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_wa_public_cta_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Deskripsi Banner Publik', 'hakajobs'),
+        'section'     => 'hakajobs_wa_channel_section',
+    ));
+
+    // Teks Tombol Banner Publik
+    $wp_customize->add_setting('hakajobs_wa_public_btn_text', array(
+        'default'           => __('Gabung Saluran WhatsApp', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_wa_public_btn_text', array(
+        'type'        => 'text',
+        'label'       => __('Teks Tombol Banner Publik', 'hakajobs'),
+        'section'     => 'hakajobs_wa_channel_section',
     ));
 }
 add_action('customize_register', 'hakajobs_customize_register');

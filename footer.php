@@ -73,8 +73,11 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
                         $show_social   = get_theme_mod('hakajobs_show_footer_social', '1');
                         $social_label  = get_theme_mod('hakajobs_footer_social_label', __('Sosial Media Kami:', 'hakajobs'));
                         $social_wa     = get_theme_mod('hakajobs_footer_social_wa', '');
+                        $channel_wa    = get_theme_mod('hakajobs_wa_channel_url', '');
                         $admin_wa      = get_theme_mod('hakajobs_admin_whatsapp', '');
-                        if (empty($social_wa) && !empty($admin_wa)) {
+                        if (empty($social_wa) && !empty($channel_wa)) {
+                            $social_wa = $channel_wa;
+                        } elseif (empty($social_wa) && !empty($admin_wa)) {
                             $clean_wa  = preg_replace('/[^0-9]/', '', $admin_wa);
                             if (substr($clean_wa, 0, 1) === '0') {
                                 $clean_wa = '62' . substr($clean_wa, 1);

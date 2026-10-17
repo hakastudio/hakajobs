@@ -13,3 +13,5 @@ desktop.ini
 *.log
 scratch/
 tmp/
+*.zip
+

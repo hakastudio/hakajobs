@@ -331,6 +331,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Admin WhatsApp Broadcast Copy Button
+    var broadcastCopyBtns = document.querySelectorAll('.hk-copy-broadcast-btn');
+    broadcastCopyBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var text = btn.getAttribute('data-broadcast');
+            if (!text) return;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () {
+                    showToast('Format teks broadcast loker berhasil disalin!');
+                }).catch(function () {
+                    promptFallback(text);
+                });
+            } else {
+                promptFallback(text);
+            }
+        });
+    });
+
     function promptFallback(text) {
         window.prompt('Salin tautan ini:', text);
     }

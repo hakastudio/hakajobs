@@ -110,6 +110,14 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
      - **Slot Dalam Lowongan — Bawah Deskripsi** (In-Article Responsif)
      - **Slot Banner Bawah** (Sebelum Footer)
    - Mode Preview Iklan (Placeholder) untuk melihat tata letak kotak iklan sebelum akun AdSense aktif.
+10. **💼 Halaman Pasang Loker & Tarif:** Kustomisasi warna aksen hero, harga paket Featured, harga paket Urgent, nomor WhatsApp admin penerima pesanan iklan, dan email alternatif perusahaan.
+11. **📢 Saluran WhatsApp & Broadcast Loker (v1.0.12):**
+   - Input kustom link Saluran WhatsApp resmi (`https://whatsapp.com/channel/...` atau link grup/komunitas WA).
+   - Generator teks broadcast otomatis terstruktur (Emoji, Posisi, Perusahaan, Lokasi, Tipe, Gaji, Deadline, dan Link).
+   - Bilah alat khusus admin di halaman detail loker: tombol 1-klik kirim ke WhatsApp, tombol salin format teks ke clipboard, dan tombol buka Saluran WA.
+   - Tombol aksi cepat *"📢 Broadcast WA"* langsung pada tabel daftar lowongan kerja di dashboard admin WordPress.
+   - Banner ajakan bergabung Saluran WhatsApp untuk pengunjung umum di halaman detail loker dan integrasi tautan footer untuk memperbanyak followers secara gratis.
+
 
 ---
 

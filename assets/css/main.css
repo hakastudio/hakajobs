@@ -3145,3 +3145,336 @@ button, input, select, textarea {
         text-align: center;
     }
 }
+
+/* ==========================================================================
+   Admin WhatsApp Broadcast Tool Bar
+   ========================================================================== */
+.hk-admin-broadcast-banner {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: var(--hk-radius-lg, 12px);
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.hk-admin-broadcast-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.hk-admin-broadcast-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #1e293b;
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--hk-radius-pill, 9999px);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.hk-admin-broadcast-texts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.hk-admin-broadcast-texts strong {
+    color: #f8fafc;
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+.hk-admin-broadcast-texts span {
+    color: #94a3b8;
+    font-size: 11.5px;
+}
+
+.hk-admin-broadcast-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.hk-admin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--hk-radius-md, 8px);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.hk-admin-btn-wa {
+    background: #16a34a;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.3);
+}
+
+.hk-admin-btn-wa:hover {
+    background: #15803d;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.hk-admin-btn-copy {
+    background: #1e293b;
+    color: #cbd5e1;
+    border-color: #334155;
+}
+
+.hk-admin-btn-copy:hover {
+    background: #334155;
+    color: #ffffff;
+}
+
+.hk-admin-btn-channel {
+    background: transparent;
+    color: #38bdf8 !important;
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+.hk-admin-btn-channel:hover {
+    background: rgba(56, 189, 248, 0.1);
+    color: #7dd3fc !important;
+}
+
+.hk-admin-btn-edit {
+    background: #0f172a;
+    color: #94a3b8 !important;
+    border-color: #334155;
+}
+
+.hk-admin-btn-edit:hover {
+    background: #1e293b;
+    color: #f1f5f9 !important;
+}
+
+@media (max-width: 860px) {
+    .hk-admin-broadcast-banner {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px;
+    }
+
+    .hk-admin-broadcast-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .hk-admin-btn {
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   Public WhatsApp Channel Follower Widget
+   ========================================================================== */
+.hk-public-wa-channel-box {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border: 1px solid #a7f3d0;
+    border-radius: var(--hk-radius-lg, 12px);
+    padding: 20px 24px;
+    margin: 26px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
+}
+
+.hk-wa-channel-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #25D366;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+}
+
+.hk-wa-channel-content {
+    flex: 1;
+}
+
+.hk-wa-channel-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--hk-radius-pill, 9999px);
+    margin-bottom: 6px;
+}
+
+.hk-wa-channel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #065f46;
+    margin: 0 0 4px 0;
+}
+
+.hk-wa-channel-desc {
+    font-size: 13px;
+    color: #047857;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.hk-btn-wa-channel {
+    background: #16a34a;
+    color: #ffffff !important;
+    font-size: 13.5px;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: var(--hk-radius-md, 8px);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+    transition: all 0.15s ease;
+}
+
+.hk-btn-wa-channel:hover {
+    background: #15803d;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(22, 163, 74, 0.35);
+}
+
+@media (max-width: 680px) {
+    .hk-public-wa-channel-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 16px;
+    }
+
+    .hk-wa-channel-icon-wrap {
+        margin: 0 auto;
+    }
+
+    .hk-wa-channel-action {
+        width: 100%;
+    }
+
+    .hk-btn-wa-channel {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   Social Share Buttons Bar
+   ========================================================================== */
+.hk-job-share-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #ffffff;
+    border: 1px solid var(--hk-border, #e2e8f0);
+    border-radius: var(--hk-radius-md, 10px);
+    margin: 24px 0;
+}
+
+.hk-share-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--hk-text-muted, #64748b);
+}
+
+.hk-share-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.hk-share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--hk-radius-sm, 6px);
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.hk-share-wa {
+    background: #25D366;
+    color: #ffffff !important;
+}
+
+.hk-share-wa:hover {
+    background: #1ebe5d;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.hk-share-tg {
+    background: #229ED9;
+    color: #ffffff !important;
+}
+
+.hk-share-tg:hover {
+    background: #1b8ec5;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.hk-share-li {
+    background: #0A66C2;
+    color: #ffffff !important;
+}
+
+.hk-share-li:hover {
+    background: #085299;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.hk-share-copy {
+    background: #f1f5f9;
+    color: #334155;
+    border-color: #cbd5e1;
+}
+
+.hk-share-copy:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+

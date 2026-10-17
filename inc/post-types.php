@@ -283,3 +283,23 @@ function hakajobs_custom_lowongan_column_data($column, $post_id) {
     }
 }
 add_action('manage_lowongan_posts_custom_column', 'hakajobs_custom_lowongan_column_data', 10, 2);
+
+/**
+ * Add Quick WhatsApp Broadcast Row Action in Admin Post Table
+ */
+function hakajobs_add_lowongan_row_actions($actions, $post) {
+    if ($post->post_type === 'lowongan' && $post->post_status === 'publish') {
+        if (function_exists('hakajobs_get_wa_broadcast_url')) {
+            $wa_url = hakajobs_get_wa_broadcast_url($post->ID);
+            $actions['wa_broadcast'] = sprintf(
+                '<a href="%s" target="_blank" style="color:#15803d; font-weight:700;" title="%s">📢 %s</a>',
+                esc_url($wa_url),
+                esc_attr__('Siarkan lowongan ini ke Saluran WhatsApp atau Grup', 'hakajobs'),
+                __('Broadcast WA', 'hakajobs')
+            );
+        }
+    }
+    return $actions;
+}
+add_filter('post_row_actions', 'hakajobs_add_lowongan_row_actions', 10, 2);
+
