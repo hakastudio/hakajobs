@@ -785,79 +785,83 @@ function hakajobs_customize_register($wp_customize) {
         'section'     => 'hakajobs_footer_section',
     ));
 
-    // Bagikan Info Loker (Footer Social Share Pills)
-    $wp_customize->add_setting('hakajobs_show_footer_share', array(
+    // Media Sosial Pemilik Website di Footer
+    $wp_customize->add_setting('hakajobs_show_footer_social', array(
         'default'           => '1',
         'sanitize_callback' => 'hakajobs_sanitize_checkbox',
         'transport'         => 'refresh',
     ));
-    $wp_customize->add_control('hakajobs_show_footer_share', array(
+    $wp_customize->add_control('hakajobs_show_footer_social', array(
         'type'        => 'checkbox',
-        'label'       => __('Tampilkan Bagian "Bagikan Info Loker"', 'hakajobs'),
-        'description' => __('Tombol berbagi ke WhatsApp, Telegram, LinkedIn, dan Facebook di kolom 1 footer.', 'hakajobs'),
+        'label'       => __('Tampilkan Media Sosial Pemilik Website', 'hakajobs'),
+        'description' => __('Tampilkan deretan ikon media sosial resmi pemilik website di kolom 1 footer.', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
-    $wp_customize->add_setting('hakajobs_footer_share_label', array(
-        'default'           => __('Bagikan Info Loker:', 'hakajobs'),
+    $wp_customize->add_setting('hakajobs_footer_social_label', array(
+        'default'           => __('Sosial Media Kami:', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
-    $wp_customize->add_control('hakajobs_footer_share_label', array(
+    $wp_customize->add_control('hakajobs_footer_social_label', array(
         'type'        => 'text',
-        'label'       => __('Label Teks "Bagikan Info Loker"', 'hakajobs'),
+        'label'       => __('Label Teks Media Sosial', 'hakajobs'),
+        'description' => __('Contoh: "Sosial Media Kami:", "Ikuti Kami:", "Official Social Media:".', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
-    $wp_customize->add_setting('hakajobs_footer_share_wa', array(
-        'default'           => '1',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-    ));
-    $wp_customize->add_control('hakajobs_footer_share_wa', array(
-        'type'    => 'checkbox',
-        'label'   => __('Aktifkan Tombol WhatsApp (WA)', 'hakajobs'),
-        'section' => 'hakajobs_footer_section',
-    ));
-
-    $wp_customize->add_setting('hakajobs_footer_share_tg', array(
-        'default'           => '1',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-    ));
-    $wp_customize->add_control('hakajobs_footer_share_tg', array(
-        'type'    => 'checkbox',
-        'label'   => __('Aktifkan Tombol Telegram (TG)', 'hakajobs'),
-        'section' => 'hakajobs_footer_section',
-    ));
-
-    $wp_customize->add_setting('hakajobs_footer_share_in', array(
-        'default'           => '1',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-    ));
-    $wp_customize->add_control('hakajobs_footer_share_in', array(
-        'type'    => 'checkbox',
-        'label'   => __('Aktifkan Tombol LinkedIn (IN)', 'hakajobs'),
-        'section' => 'hakajobs_footer_section',
-    ));
-
-    $wp_customize->add_setting('hakajobs_footer_share_fb', array(
-        'default'           => '0',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-    ));
-    $wp_customize->add_control('hakajobs_footer_share_fb', array(
-        'type'    => 'checkbox',
-        'label'   => __('Aktifkan Tombol Facebook (FB)', 'hakajobs'),
-        'section' => 'hakajobs_footer_section',
-    ));
-
-    $wp_customize->add_setting('hakajobs_footer_share_text', array(
+    $wp_customize->add_setting('hakajobs_footer_social_wa', array(
         'default'           => '',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'refresh',
+        'sanitize_callback' => 'esc_url_raw',
     ));
-    $wp_customize->add_control('hakajobs_footer_share_text', array(
-        'type'        => 'text',
-        'label'       => __('Pesan Kustom Saat Dibagikan', 'hakajobs'),
-        'description' => __('Kosongkan untuk otomatis: "[Nama Situs] - Portal Info Lowongan Kerja Terupdate: [URL Situs]".', 'hakajobs'),
+    $wp_customize->add_control('hakajobs_footer_social_wa', array(
+        'type'        => 'url',
+        'label'       => __('URL WhatsApp (Admin/Official)', 'hakajobs'),
+        'description' => __('Contoh: https://wa.me/6281234567890. Jika dikosongkan, otomatis menggunakan nomor WhatsApp Admin dari Seksi 10.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_social_tg', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_footer_social_tg', array(
+        'type'        => 'url',
+        'label'       => __('URL Telegram (Channel/Group/Akun)', 'hakajobs'),
+        'description' => __('Contoh: https://t.me/infolokerlampung', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_social_in', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_footer_social_in', array(
+        'type'        => 'url',
+        'label'       => __('URL LinkedIn (Halaman/Profil)', 'hakajobs'),
+        'description' => __('Contoh: https://linkedin.com/company/infolokerlampung', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_social_fb', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_footer_social_fb', array(
+        'type'        => 'url',
+        'label'       => __('URL Facebook (Fanspage/Group/Profil)', 'hakajobs'),
+        'description' => __('Contoh: https://facebook.com/infolokerlampung', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_social_ig', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_footer_social_ig', array(
+        'type'        => 'url',
+        'label'       => __('URL Instagram (Profil Resmi)', 'hakajobs'),
+        'description' => __('Contoh: https://instagram.com/infolokerlampung', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 

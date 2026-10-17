@@ -1998,25 +1998,86 @@ button, input, select, textarea {
     margin-bottom: 16px;
 }
 
+.hk-footer-social-wrap,
 .hk-social-pills {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.hk-footer-social-label,
+.hk-social-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.hk-footer-social-icons {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
-.hk-social-label {
-    font-size: 12px;
-    color: #94a3b8;
+.hk-social-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--hk-radius-full, 9999px);
+    background: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.hk-social-icon-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+}
+
+.hk-social-icon-btn.hk-btn-wa:hover {
+    background: #25D366;
+    border-color: #25D366;
+}
+
+.hk-social-icon-btn.hk-btn-tg:hover {
+    background: #229ED9;
+    border-color: #229ED9;
+}
+
+.hk-social-icon-btn.hk-btn-in:hover {
+    background: #0A66C2;
+    border-color: #0A66C2;
+}
+
+.hk-social-icon-btn.hk-btn-fb:hover {
+    background: #1877F2;
+    border-color: #1877F2;
+}
+
+.hk-social-icon-btn.hk-btn-ig:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-color: #dc2743;
 }
 
 .hk-social-pill {
     background: #1e293b;
     color: #e2e8f0;
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: var(--hk-radius-sm);
     font-size: 11px;
     font-weight: 700;
+    transition: all 0.2s ease;
 }
+
 .hk-social-pill:hover {
     background: var(--hk-primary);
     color: #fff;
