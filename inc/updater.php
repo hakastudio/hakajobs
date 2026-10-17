@@ -38,7 +38,7 @@ function hakajobs_init_theme_updater() {
     $update_checker = PucFactory::buildUpdateChecker(
         $repo_url,
         HAKAJOBS_DIR . '/style.css',
-        'hakajobs'
+        get_template()
     );
 
     // Cabang utama (default: main)
@@ -58,10 +58,38 @@ function hakajobs_init_theme_updater() {
 add_action('after_setup_theme', 'hakajobs_init_theme_updater');
 
 /**
+ * Bersihkan direktori sementara jika ada sisa upgrade sebelumnya
+ * agar tidak terjadi error "Unable to rename the update to match the existing directory"
+ */
+add_filter('upgrader_source_selection', function ($source, $remote_source, $upgrader) {
+    global $wp_filesystem;
+    if (!$wp_filesystem || is_wp_error($source)) {
+        return $source;
+    }
+
+    $template = get_template();
+    $target   = trailingslashit($remote_source) . $template . '/';
+
+    // Jika source sudah sesuai target direktori tema, langsung kembalikan
+    if (untrailingslashit($source) === untrailingslashit($target)) {
+        return $source;
+    }
+
+    // Jika ada sisa direktori dari proses sebelumnya, bersihkan agar rename sukses
+    if (strtolower(basename($source)) === strtolower($template)) {
+        if ($wp_filesystem->exists($target)) {
+            $wp_filesystem->delete($target, true);
+        }
+    }
+
+    return $source;
+}, 5, 3);
+
+/**
  * Mengaktifkan otomatisasi background auto-update untuk tema hakajobs
  */
 add_filter('auto_update_theme', function ($update, $item) {
-    if (isset($item->theme) && $item->theme === 'hakajobs') {
+    if (isset($item->theme) && (strtolower($item->theme) === 'hakajobs')) {
         return true;
     }
     return $update;
