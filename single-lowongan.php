@@ -37,19 +37,12 @@ while (have_posts()) : the_post();
     $edu_label        = (!empty($terms_edu) && !is_wp_error($terms_edu)) ? $terms_edu[0]->name : __('Semua Jurusan', 'hakajobs');
 
     // Deadline & Expiry calculation
-    $is_expired = false;
-    $days_left  = null;
-    if (!empty($deadline)) {
-        $deadline_ts = strtotime($deadline . ' 23:59:59');
-        $now_ts      = current_time('timestamp');
-        if ($deadline_ts && $deadline_ts < $now_ts) {
-            $is_expired = true;
-        } else {
-            $diff_sec  = $deadline_ts - $now_ts;
-            $days_left = max(0, ceil($diff_sec / 86400));
-        }
-    }
-    $is_closed = ($status === 'tutup' || $is_expired);
+    $exp        = function_exists('hakajobs_get_job_expiry_data') 
+                    ? hakajobs_get_job_expiry_data($post_id) 
+                    : array('is_expired' => false, 'is_closed' => ($status === 'tutup'), 'is_urgent' => false, 'days_left' => null, 'badge_class' => 'hk-pill-open', 'badge_label' => 'Rekrutmen Aktif', 'deadline_format' => $deadline);
+    $is_expired = $exp['is_expired'];
+    $is_closed  = $exp['is_closed'];
+    $days_left  = $exp['days_left'];
 
     $apply_info = hakajobs_get_apply_info($post_id);
 ?>
@@ -120,8 +113,12 @@ while (have_posts()) : the_post();
                             <?php endif; ?>
 
                             <div class="hk-header-status-badge">
-                                <?php if ($is_closed): ?>
-                                    <span class="hk-pill hk-pill-closed"><?php _e('Lowongan Ditutup', 'hakajobs'); ?></span>
+                                <?php if ($exp['is_closed']): ?>
+                                    <span class="hk-pill hk-pill-closed"><?php _e('Pendaftaran Ditutup', 'hakajobs'); ?></span>
+                                <?php elseif ($exp['is_urgent']): ?>
+                                    <span class="hk-pill hk-pill-expiring" title="<?php esc_attr_e('Batas akhir penerimaan lamaran segera berakhir', 'hakajobs'); ?>">
+                                        ⏳ <?php echo esc_html($exp['badge_label']); ?>
+                                    </span>
                                 <?php else: ?>
                                     <span class="hk-pill hk-pill-open"><?php _e('Rekrutmen Aktif', 'hakajobs'); ?></span>
                                 <?php endif; ?>
@@ -171,6 +168,36 @@ while (have_posts()) : the_post();
 
                 <!-- Left Column: Job Description & Details -->
                 <div class="hk-single-content">
+
+                    <!-- Expired or Urgent Countdown Alert Banner -->
+                    <?php if ($exp['is_closed']): ?>
+                        <div class="hk-job-alert-closed">
+                            <div class="hk-alert-icon">🚫</div>
+                            <div class="hk-alert-text">
+                                <strong><?php _e('Pendaftaran untuk Posisi Ini Telah Resmi Ditutup', 'hakajobs'); ?></strong>
+                                <p>
+                                    <?php if (!empty($deadline)): ?>
+                                        <?php printf(__('Batas waktu penerimaan berkas telah berakhir pada %s. Rekruter tidak lagi menerima berkas lamaran baru untuk lowongan ini.', 'hakajobs'), '<strong>' . esc_html($exp['deadline_format']) . '</strong>'); ?>
+                                    <?php else: ?>
+                                        <?php _e('Proses penerimaan berkas telah ditutup oleh pihak perusahaan/rekruter.', 'hakajobs'); ?>
+                                    <?php endif; ?>
+                                </p>
+                            </div>
+                        </div>
+                    <?php elseif ($exp['is_urgent']): ?>
+                        <div class="hk-job-alert-expiring">
+                            <div class="hk-alert-icon">⏳</div>
+                            <div class="hk-alert-text">
+                                <strong><?php _e('Peringatan: Batas Waktu Lamaran Segera Berakhir!', 'hakajobs'); ?></strong>
+                                <p>
+                                    <?php 
+                                    $time_text = ($exp['days_left'] === 0) ? __('hari ini (kesempatan terakhir)', 'hakajobs') : sprintf(__('%d hari lagi', 'hakajobs'), (int)$exp['days_left']);
+                                    printf(__('Penerimaan berkas untuk posisi ini akan ditutup dalam %s (Batas: %s). Segera kirimkan lamaran Anda sebelum akses pendaftaran ditutup secara otomatis.', 'hakajobs'), '<strong>' . $time_text . '</strong>', '<strong>' . esc_html($exp['deadline_format']) . '</strong>'); 
+                                    ?>
+                                </p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Excerpt / Quick Highlights if present -->
                     <?php if (has_excerpt()): ?>
@@ -337,8 +364,12 @@ while (have_posts()) : the_post();
 
                         <?php if ($is_closed): ?>
                             <div class="hk-apply-closed-notice">
+                                <div class="hk-closed-badge-large">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                                    <span><?php _e('Pendaftaran Ditutup', 'hakajobs'); ?></span>
+                                </div>
                                 <p><?php _e('Maaf, batas waktu penerimaan lamaran untuk posisi ini telah berakhir atau telah ditutup oleh rekruter.', 'hakajobs'); ?></p>
-                                <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" class="hk-btn hk-btn-subtle hk-btn-block">
+                                <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" class="hk-btn hk-btn-primary hk-btn-block">
                                     <?php _e('Lihat Lowongan Kerja Lainnya', 'hakajobs'); ?>
                                 </a>
                             </div>
@@ -381,11 +412,16 @@ while (have_posts()) : the_post();
 
                             <div class="hk-overview-item">
                                 <span class="hk-overview-label"><?php _e('Batas Pendaftaran', 'hakajobs'); ?></span>
-                                <span class="hk-overview-value <?php echo ($days_left !== null && $days_left <= 3) ? 'hk-urgency-highlight' : ''; ?>">
+                                <span class="hk-overview-value <?php echo $exp['is_urgent'] ? 'hk-urgency-highlight' : ($exp['is_closed'] ? 'hk-deadline-closed-text' : ''); ?>">
                                     <?php if (!empty($deadline)): ?>
-                                        <?php echo esc_html(date_i18n('d F Y', strtotime($deadline))); ?>
-                                        <?php if ($days_left !== null && !$is_closed): ?>
-                                            <small>(Sisa <?php echo (int)$days_left; ?> hari)</small>
+                                        <?php if ($exp['is_closed']): ?>
+                                            <s><?php echo esc_html($exp['deadline_format']); ?></s>
+                                            <small style="color:#b91c1c; font-weight:700;">(<?php _e('Pendaftaran Ditutup', 'hakajobs'); ?>)</small>
+                                        <?php elseif ($exp['is_urgent']): ?>
+                                            ⏳ <?php echo esc_html($exp['deadline_format']); ?>
+                                            <small style="color:#c2410c; font-weight:700;">(<?php echo esc_html($exp['badge_label']); ?>)</small>
+                                        <?php else: ?>
+                                            <?php echo esc_html($exp['deadline_format']); ?>
                                         <?php endif; ?>
                                     <?php else: ?>
                                         <?php _e('Selama Dibuka', 'hakajobs'); ?>

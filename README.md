@@ -77,7 +77,15 @@ Pencari kerja dapat menyaring loker berdasarkan:
 ### 6. 1-Klik Pasang Data Demo (Sample Data Seeder)
 Tersedia menu **Lowongan Kerja > Pasang Data Demo** di dashboard WordPress. Cukup klik satu tombol, dan 6+ contoh lowongan kerja realistis di Indonesia langsung terbuat beserta kategori, kota, dan konfigurasinya.
 
-### 7. Panel Penyesuaian WordPress Lengkap (WordPress Customizer)
+### 7. Countdown & Status Kedaluwarsa Otomatis (Deadline Expired Badge) — v1.0.13
+Menjaga informasi lowongan selalu akurat dan terpercaya bagi pelamar maupun rekruter:
+- **Deteksi Otomatis:** Sistem mendeteksi tanggal batas akhir lamaran (`_hakajobs_deadline`) secara otomatis terhadap zona waktu WordPress.
+- **Badge "Segera Berakhir" (⏳ 1–3 Hari Tersisa):** Memberikan sinyal urgensi bagi pencari kerja dengan label oranye dan countdown sisa hari.
+- **Label Merah "Pendaftaran Ditutup" (🚫):** Muncul otomatis ketika batas waktu telah lewat atau saat status ditandai `tutup`.
+- **Nonaktifkan Tombol Lamar Otomatis:** Tombol kirim lamaran (WhatsApp / Email / Web Portal) otomatis dinonaktifkan sehingga pelamar tidak mengirimkan berkas ke loker yang sudah kedaluwarsa.
+- **Notifikasi Ramah:** Dilengkapi banner peringatan dan tombol pengalihan untuk mencari lowongan kerja serupa lainnya.
+
+### 8. Panel Penyesuaian WordPress Lengkap (WordPress Customizer)
 Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearance) > Sesuaikan (Customize) > 🎨 Penyesuaian Tema Hakajobs**:
 1. **🎨 Skema Warna & Branding:** Atur warna primer, hover, warna latar belakang (body bg), aksen, dan warna WhatsApp langsung dengan color picker langsung (live preview).
 2. **🧭 Header & Navigasi:**

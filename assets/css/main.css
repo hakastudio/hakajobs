@@ -866,10 +866,18 @@ button, input, select, textarea {
     color: var(--hk-wa-green-hover);
 }
 
+.hk-pill-expiring {
+    background: #ffedd5;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+}
+
 .hk-pill-closed {
     background: #fee2e2;
     color: #991b1b;
+    border: 1px solid #fecaca;
 }
+
 
 .hk-job-title {
     font-size: 16px;
@@ -3477,4 +3485,129 @@ button, input, select, textarea {
     background: #e2e8f0;
     color: #0f172a;
 }
+
+/* ==========================================================================
+   Deadline Urgency & Expired Status Styles
+   ========================================================================== */
+.hk-job-alert-closed {
+    margin-bottom: 24px;
+    background: #fef2f2;
+    border: 1.5px solid #f87171;
+    border-radius: var(--hk-radius-md, 10px);
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.08);
+}
+
+.hk-job-alert-closed .hk-alert-icon {
+    font-size: 24px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.hk-job-alert-closed strong {
+    color: #991b1b;
+    display: block;
+    font-size: 14.5px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.hk-job-alert-closed p {
+    font-size: 13px;
+    color: #b91c1c;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.hk-job-alert-expiring {
+    margin-bottom: 24px;
+    background: #fffbeb;
+    border: 1.5px solid #f59e0b;
+    border-radius: var(--hk-radius-md, 10px);
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.08);
+}
+
+.hk-job-alert-expiring .hk-alert-icon {
+    font-size: 24px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.hk-job-alert-expiring strong {
+    color: #92400e;
+    display: block;
+    font-size: 14.5px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.hk-job-alert-expiring p {
+    font-size: 13px;
+    color: #b45309;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.hk-closed-badge-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1.5px solid #fca5a5;
+    padding: 8px 16px;
+    border-radius: var(--hk-radius-pill, 9999px);
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.hk-btn-closed-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: var(--hk-radius-sm, 6px);
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    cursor: not-allowed;
+    user-select: none;
+}
+
+.hk-deadline-urgent {
+    color: #c2410c !important;
+    font-weight: 700 !important;
+    background: #ffedd5 !important;
+    border-color: #fed7aa !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.hk-deadline-closed {
+    color: #b91c1c !important;
+    font-weight: 700 !important;
+    background: #fee2e2 !important;
+    border-color: #fecaca !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.hk-deadline-closed-text {
+    color: #b91c1c !important;
+}
+
 

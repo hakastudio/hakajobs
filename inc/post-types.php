@@ -253,14 +253,16 @@ function hakajobs_custom_lowongan_column_data($column, $post_id) {
             break;
 
         case 'deadline':
-            $deadline = get_post_meta($post_id, '_hakajobs_deadline', true);
-            if (!empty($deadline)) {
-                $time = strtotime($deadline);
-                $is_expired = ($time && $time < strtotime('today'));
-                $color = $is_expired ? '#dc2626' : '#1e293b';
-                echo '<span style="color:' . esc_attr($color) . ';font-weight:600;">' . esc_html(date_i18n('d M Y', $time)) . '</span>';
-                if ($is_expired) {
-                    echo '<br><small style="color:#dc2626;font-size:10px;">(Kedaluwarsa)</small>';
+            $exp = function_exists('hakajobs_get_job_expiry_data') ? hakajobs_get_job_expiry_data($post_id) : null;
+            if ($exp && !empty($exp['deadline'])) {
+                if ($exp['is_expired']) {
+                    echo '<span style="color:#dc2626;font-weight:600;"><s>' . esc_html($exp['deadline_format']) . '</s></span>';
+                    echo '<br><span style="display:inline-block;padding:2px 6px;font-size:10px;font-weight:700;border-radius:4px;background:#fee2e2;color:#b91c1c;margin-top:2px;">KEDALUWARSA</span>';
+                } elseif ($exp['is_urgent']) {
+                    echo '<span style="color:#ea580c;font-weight:700;">' . esc_html($exp['deadline_format']) . '</span>';
+                    echo '<br><span style="display:inline-block;padding:2px 6px;font-size:10px;font-weight:700;border-radius:4px;background:#ffedd5;color:#c2410c;margin-top:2px;">⏳ ' . esc_html($exp['badge_label']) . '</span>';
+                } else {
+                    echo '<span style="color:#1e293b;font-weight:600;">' . esc_html($exp['deadline_format']) . '</span>';
                 }
             } else {
                 echo '<span style="color:#94a3b8;">Seterusnya</span>';
@@ -268,9 +270,11 @@ function hakajobs_custom_lowongan_column_data($column, $post_id) {
             break;
 
         case 'status':
-            $status = get_post_meta($post_id, '_hakajobs_status', true);
-            if ($status === 'tutup') {
-                echo '<span style="padding:3px 8px;font-size:11px;font-weight:700;border-radius:4px;background:#fee2e2;color:#b91c1c;">TUTUP</span>';
+            $exp = function_exists('hakajobs_get_job_expiry_data') ? hakajobs_get_job_expiry_data($post_id) : null;
+            if ($exp && $exp['is_closed']) {
+                echo '<span style="padding:3px 8px;font-size:11px;font-weight:700;border-radius:4px;background:#fee2e2;color:#b91c1c;">DITUTUP</span>';
+            } elseif ($exp && $exp['is_urgent']) {
+                echo '<span style="padding:3px 8px;font-size:11px;font-weight:700;border-radius:4px;background:#ffedd5;color:#c2410c;">SEGERA BERAKHIR</span>';
             } else {
                 echo '<span style="padding:3px 8px;font-size:11px;font-weight:700;border-radius:4px;background:#dcfce7;color:#15803d;">AKTIF</span>';
             }
