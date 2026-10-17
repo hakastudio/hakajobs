@@ -30,7 +30,10 @@ add_action('admin_menu', 'hakajobs_add_demo_menu');
 function hakajobs_render_demo_page() {
     if (isset($_POST['hakajobs_install_demo']) && check_admin_referer('hakajobs_demo_nonce_action', 'hakajobs_demo_nonce')) {
         $count = hakajobs_generate_sample_jobs();
-        echo '<div class="notice notice-success is-dismissible"><p><strong>Berhasil!</strong> ' . esc_html($count) . ' data lowongan kerja demo telah berhasil dibuat beserta kategori, lokasi, dan tipe pekerjaan.</p></div>';
+        if (function_exists('hakajobs_create_default_pages')) {
+            hakajobs_create_default_pages();
+        }
+        echo '<div class="notice notice-success is-dismissible"><p><strong>Berhasil!</strong> ' . esc_html($count) . ' data lowongan kerja demo telah berhasil dibuat beserta kategori, lokasi, tipe pekerjaan, dan halaman Pasang Loker.</p></div>';
     }
     ?>
     <div class="wrap" style="max-width:800px;">

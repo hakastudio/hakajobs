@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.0');
+define('HAKAJOBS_VERSION', '1.0.1');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -90,6 +90,16 @@ function hakajobs_enqueue_assets() {
         array(),
         HAKAJOBS_VERSION
     );
+
+    // Pasang Loker Stylesheet
+    if (is_page_template('page-pasang-loker.php') || is_page('pasang-loker')) {
+        wp_enqueue_style(
+            'hakajobs-pasang-loker',
+            HAKAJOBS_URI . '/assets/css/pasang-loker.css',
+            array('hakajobs-main-style'),
+            HAKAJOBS_VERSION
+        );
+    }
 
     // Main Theme JavaScript
     wp_enqueue_script(
@@ -297,3 +307,23 @@ function hakajobs_track_single_views() {
     }
 }
 add_action('wp_head', 'hakajobs_track_single_views');
+
+/**
+ * Auto-create default pages (such as Pasang Loker) on theme activation
+ */
+function hakajobs_create_default_pages() {
+    if (!get_page_by_path('pasang-loker')) {
+        $page_id = wp_insert_post(array(
+            'post_title'     => __('Pasang Lowongan Kerja', 'hakajobs'),
+            'post_name'      => 'pasang-loker',
+            'post_status'    => 'publish',
+            'post_type'      => 'page',
+            'comment_status' => 'closed',
+        ));
+        if ($page_id && !is_wp_error($page_id)) {
+            update_post_meta($page_id, '_wp_page_template', 'page-pasang-loker.php');
+        }
+    }
+}
+add_action('after_switch_theme', 'hakajobs_create_default_pages');
+

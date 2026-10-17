@@ -1,0 +1,812 @@
+/**
+ * Halaman Pasang Loker — Stylesheet
+ * @package Hakajobs
+ */
+
+/* =========================================================================
+   HERO SECTION
+   ========================================================================= */
+.hkpl-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #0c2340 50%, #0f3460 100%);
+    color: #fff;
+    padding: 72px 0 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.hkpl-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(2,132,199,0.18) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hkpl-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(2,132,199,0.18);
+    border: 1px solid rgba(2,132,199,0.35);
+    color: #7dd3fc;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    margin-bottom: 24px;
+    letter-spacing: 0.01em;
+}
+
+.hkpl-hero-title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+}
+
+.hkpl-hero-highlight {
+    background: linear-gradient(90deg, #38bdf8, #0ea5e9, #0284c7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hkpl-hero-sub {
+    font-size: 17px;
+    color: #94a3b8;
+    max-width: 580px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+}
+
+.hkpl-hero-stats {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 18px 36px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.hkpl-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 24px;
+}
+
+.hkpl-stat-num {
+    font-size: 24px;
+    font-weight: 800;
+    color: #38bdf8;
+    line-height: 1;
+}
+
+.hkpl-stat-label {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 4px;
+    white-space: nowrap;
+}
+
+.hkpl-stat-sep {
+    width: 1px;
+    height: 36px;
+    background: rgba(255,255,255,0.12);
+}
+
+.hkpl-hero-wave {
+    line-height: 0;
+    margin-top: -1px;
+}
+
+.hkpl-hero-wave svg {
+    width: 100%;
+    height: 60px;
+    display: block;
+}
+
+/* =========================================================================
+   FEATURES SECTION
+   ========================================================================= */
+.hkpl-features {
+    padding: 64px 0;
+    background: var(--hk-bg-body);
+}
+
+.hkpl-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.hkpl-feature-card {
+    background: var(--hk-bg-surface);
+    border: 1px solid var(--hk-border);
+    border-radius: var(--hk-radius-lg);
+    padding: 28px 24px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.hkpl-feature-card:hover {
+    box-shadow: var(--hk-shadow-lg);
+    transform: translateY(-3px);
+    border-color: var(--hk-border-hover);
+}
+
+.hkpl-feature-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+    line-height: 1;
+}
+
+.hkpl-feature-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--hk-text-main);
+    margin-bottom: 8px;
+}
+
+.hkpl-feature-card p {
+    font-size: 14px;
+    color: var(--hk-text-muted);
+    line-height: 1.65;
+}
+
+/* =========================================================================
+   SECTION HEADER (shared)
+   ========================================================================= */
+.hkpl-section-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.hkpl-section-badge {
+    display: inline-block;
+    background: var(--hk-primary-light);
+    color: var(--hk-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+}
+
+.hkpl-section-header h2 {
+    font-size: clamp(22px, 3.5vw, 32px);
+    font-weight: 800;
+    color: var(--hk-text-main);
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+}
+
+.hkpl-section-header p {
+    font-size: 16px;
+    color: var(--hk-text-muted);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* =========================================================================
+   PRICING SECTION
+   ========================================================================= */
+.hkpl-pricing {
+    padding: 72px 0;
+    background: linear-gradient(180deg, #f0f9ff 0%, #f8fafc 100%);
+}
+
+.hkpl-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+}
+
+.hkpl-pricing-card {
+    background: var(--hk-bg-surface);
+    border: 1.5px solid var(--hk-border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.hkpl-pricing-card:hover {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+}
+
+.hkpl-pricing-popular {
+    border-color: var(--hk-primary);
+    box-shadow: 0 8px 24px rgba(2,132,199,0.15);
+}
+
+.hkpl-popular-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+}
+
+.hkpl-pricing-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.hkpl-pricing-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.hkpl-pricing-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--hk-text-main);
+    margin-bottom: 8px;
+}
+
+.hkpl-pricing-price {
+    margin: 12px 0 8px;
+}
+
+.hkpl-price-amount {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--hk-primary);
+    letter-spacing: -0.02em;
+}
+
+.hkpl-price-period {
+    font-size: 14px;
+    color: var(--hk-text-muted);
+    margin-left: 2px;
+}
+
+.hkpl-pricing-desc {
+    font-size: 13px;
+    color: var(--hk-text-muted);
+    line-height: 1.5;
+}
+
+.hkpl-pricing-features {
+    list-style: none;
+    margin: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.hkpl-pricing-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--hk-text-main);
+    line-height: 1.45;
+}
+
+.hkpl-check {
+    color: #16a34a;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.hkpl-muted {
+    color: #cbd5e1;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.hkpl-pricing-features li:has(.hkpl-muted) {
+    color: var(--hk-text-light);
+}
+
+.hkpl-pricing-note {
+    text-align: center;
+    color: var(--hk-text-muted);
+    font-size: 14px;
+    margin-top: 28px;
+    padding: 16px 24px;
+    background: #fff;
+    border: 1px dashed var(--hk-border);
+    border-radius: var(--hk-radius-md);
+}
+
+/* =========================================================================
+   BUTTONS
+   ========================================================================= */
+.hkpl-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: var(--hk-radius-md);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.hkpl-btn-primary {
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(2,132,199,0.35);
+}
+
+.hkpl-btn-primary:hover {
+    background: linear-gradient(135deg, #0369a1, #0284c7);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(2,132,199,0.45);
+    transform: translateY(-1px);
+}
+
+.hkpl-btn-outline {
+    background: transparent;
+    color: var(--hk-primary);
+    border-color: var(--hk-primary);
+}
+
+.hkpl-btn-outline:hover {
+    background: var(--hk-primary-light);
+    color: var(--hk-primary-hover);
+}
+
+.hkpl-btn-urgent {
+    background: linear-gradient(135deg, #ea580c, #f97316);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(234,88,12,0.3);
+}
+
+.hkpl-btn-urgent:hover {
+    background: linear-gradient(135deg, #c2410c, #ea580c);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(234,88,12,0.4);
+    transform: translateY(-1px);
+}
+
+.hkpl-btn-wa {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(22,163,74,0.3);
+}
+
+.hkpl-btn-wa:hover {
+    background: linear-gradient(135deg, #15803d, #16a34a);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.hkpl-btn-outline-white {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255,255,255,0.4);
+    width: auto;
+}
+
+.hkpl-btn-outline-white:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.7);
+    color: #fff;
+}
+
+/* =========================================================================
+   HOW IT WORKS
+   ========================================================================= */
+.hkpl-how {
+    padding: 72px 0;
+    background: var(--hk-bg-surface);
+}
+
+.hkpl-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.hkpl-step {
+    background: var(--hk-bg-body);
+    border: 1.5px solid var(--hk-border);
+    border-radius: var(--hk-radius-lg);
+    padding: 28px 24px;
+    flex: 1;
+    min-width: 220px;
+    max-width: 300px;
+    text-align: center;
+}
+
+.hkpl-step-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0284c7, #0ea5e9);
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    box-shadow: 0 4px 12px rgba(2,132,199,0.3);
+}
+
+.hkpl-step-body h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--hk-text-main);
+    margin-bottom: 8px;
+}
+
+.hkpl-step-body p {
+    font-size: 14px;
+    color: var(--hk-text-muted);
+    line-height: 1.6;
+}
+
+.hkpl-step-arrow {
+    font-size: 24px;
+    color: var(--hk-border-hover);
+    align-self: center;
+    flex-shrink: 0;
+    padding: 0 4px;
+    margin-top: -20px;
+}
+
+/* =========================================================================
+   FORM SECTION
+   ========================================================================= */
+.hkpl-form-section {
+    padding: 72px 0;
+    background: var(--hk-bg-body);
+}
+
+.hkpl-form-wrap {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 48px;
+    align-items: start;
+    background: var(--hk-bg-surface);
+    border: 1px solid var(--hk-border);
+    border-radius: 20px;
+    padding: 48px;
+    box-shadow: var(--hk-shadow-lg);
+}
+
+.hkpl-form-info h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--hk-text-main);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+}
+
+.hkpl-form-info > p {
+    font-size: 14px;
+    color: var(--hk-text-muted);
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.hkpl-contact-wa,
+.hkpl-contact-email {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: var(--hk-radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+}
+
+.hkpl-contact-wa {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+}
+
+.hkpl-contact-wa:hover {
+    background: #bbf7d0;
+    color: #166534;
+}
+
+.hkpl-contact-email {
+    background: var(--hk-primary-light);
+    color: var(--hk-primary);
+    border: 1px solid #bae6fd;
+    word-break: break-all;
+}
+
+.hkpl-contact-email:hover {
+    background: #bae6fd;
+    color: var(--hk-primary-hover);
+}
+
+/* Form Fields */
+.hkpl-form-row {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.hkpl-form-row-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.hkpl-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.hkpl-form-group:not(:last-child):not(.hkpl-form-row *) {
+    margin-bottom: 16px;
+}
+
+.hkpl-form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--hk-text-main);
+}
+
+.hkpl-required {
+    color: #ef4444;
+}
+
+.hkpl-form-group input,
+.hkpl-form-group select,
+.hkpl-form-group textarea {
+    padding: 10px 14px;
+    border: 1.5px solid var(--hk-border);
+    border-radius: var(--hk-radius-md);
+    font-size: 14px;
+    color: var(--hk-text-main);
+    background: var(--hk-bg-body);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    width: 100%;
+}
+
+.hkpl-form-group input:focus,
+.hkpl-form-group select:focus,
+.hkpl-form-group textarea:focus {
+    border-color: var(--hk-primary);
+    box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
+    background: #fff;
+}
+
+.hkpl-form-group textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.hkpl-btn-submit {
+    width: 100%;
+    margin-top: 8px;
+    font-size: 16px;
+    padding: 15px 24px;
+}
+
+.hkpl-form-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--hk-text-light);
+    margin-top: 10px;
+}
+
+/* =========================================================================
+   FAQ SECTION
+   ========================================================================= */
+.hkpl-faq {
+    padding: 72px 0;
+    background: var(--hk-bg-surface);
+}
+
+.hkpl-faq-list {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hkpl-faq-item {
+    border: 1.5px solid var(--hk-border);
+    border-radius: var(--hk-radius-md);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+}
+
+.hkpl-faq-item.hkpl-faq-open {
+    border-color: var(--hk-primary);
+}
+
+.hkpl-faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--hk-text-main);
+    text-align: left;
+    transition: background 0.15s ease;
+}
+
+.hkpl-faq-q:hover {
+    background: var(--hk-bg-body);
+}
+
+.hkpl-faq-open .hkpl-faq-q {
+    color: var(--hk-primary);
+}
+
+.hkpl-faq-icon {
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+    color: var(--hk-text-muted);
+}
+
+.hkpl-faq-open .hkpl-faq-icon {
+    transform: rotate(180deg);
+    color: var(--hk-primary);
+}
+
+.hkpl-faq-a {
+    padding: 0 20px 18px;
+    animation: hkplFadeIn 0.2s ease;
+}
+
+.hkpl-faq-a p {
+    font-size: 14px;
+    color: var(--hk-text-muted);
+    line-height: 1.7;
+    border-top: 1px solid var(--hk-border);
+    padding-top: 14px;
+}
+
+@keyframes hkplFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================================
+   CTA BOTTOM
+   ========================================================================= */
+.hkpl-cta-bottom {
+    background: linear-gradient(135deg, #0f172a 0%, #0c2340 60%, #0f3460 100%);
+    padding: 72px 0;
+    text-align: center;
+    color: #fff;
+}
+
+.hkpl-cta-bottom h2 {
+    font-size: clamp(22px, 3.5vw, 34px);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+
+.hkpl-cta-bottom p {
+    font-size: 16px;
+    color: #94a3b8;
+    margin-bottom: 32px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hkpl-cta-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hkpl-cta-actions .hkpl-btn {
+    width: auto;
+    padding: 14px 28px;
+    font-size: 15px;
+}
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 900px) {
+    .hkpl-features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .hkpl-pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 460px;
+        margin: 0 auto;
+    }
+    .hkpl-form-wrap {
+        grid-template-columns: 1fr;
+        padding: 32px 24px;
+        gap: 28px;
+    }
+    .hkpl-steps {
+        flex-direction: column;
+        align-items: center;
+    }
+    .hkpl-step-arrow {
+        transform: rotate(90deg);
+        margin: -8px 0;
+    }
+    .hkpl-step {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .hkpl-features-grid {
+        grid-template-columns: 1fr;
+    }
+    .hkpl-form-row-2 {
+        grid-template-columns: 1fr;
+    }
+    .hkpl-hero {
+        padding: 48px 0 0;
+    }
+    .hkpl-hero-stats {
+        padding: 16px 20px;
+    }
+    .hkpl-stat {
+        padding: 0 14px;
+    }
+    .hkpl-stat-sep {
+        display: none;
+    }
+    .hkpl-cta-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    .hkpl-cta-actions .hkpl-btn {
+        width: 100%;
+    }
+}

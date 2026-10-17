@@ -9,7 +9,10 @@
  *  ├─ Section 4 : Tombol Kembali ke Atas
  *  ├─ Section 5 : Halaman Beranda (Hero)
  *  ├─ Section 6 : Peringatan Anti Penipuan
- *  └─ Section 7 : Footer & Hak Cipta
+ *  ├─ Section 7 : Footer & Hak Cipta
+ *  ├─ Section 8 : SEO & Meta Tags
+ *  ├─ Section 9 : Monetisasi & Slot Banner Iklan
+ *  └─ Section 10: Halaman Pasang Loker & Tarif
  *
  * @package Hakajobs
  */
@@ -822,6 +825,68 @@ function hakajobs_customize_register($wp_customize) {
         'label'       => __('Slot Iklan Sebelum Footer (Banner Lebar)', 'hakajobs'),
         'description' => __('Tampil di atas banner anti penipuan pada seluruh halaman website.', 'hakajobs'),
         'section'     => 'hakajobs_ads_section',
+    ));
+
+    // =========================================================================
+    // SECTION 10 — HALAMAN PASANG LOKER & TARIF
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_postjob_section', array(
+        'title'       => __('💼 Halaman Pasang Loker & Tarif', 'hakajobs'),
+        'description' => __('Atur nomor WhatsApp admin, email, dan tarif paket di halaman /pasang-loker/.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 95,
+    ));
+
+    // Nomor WhatsApp Admin
+    $wp_customize->add_setting('hakajobs_contact_wa', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_contact_wa', array(
+        'type'        => 'text',
+        'label'       => __('📱 Nomor WhatsApp Admin', 'hakajobs'),
+        'description' => __('Menerima pesan otomatis pendaftaran lowongan dari form pasang loker. Format: 08123456789 atau 628123456789.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // Email Kontak Admin
+    $wp_customize->add_setting('hakajobs_contact_email', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_email',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_contact_email', array(
+        'type'        => 'email',
+        'label'       => __('✉️ Email Admin / Perusahaan', 'hakajobs'),
+        'description' => __('Email alternatif penerima data lowongan (jika kosong, menggunakan email admin WordPress).', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // Tarif Paket Featured
+    $wp_customize->add_setting('hakajobs_price_featured', array(
+        'default'           => 'Rp 50.000',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_price_featured', array(
+        'type'        => 'text',
+        'label'       => __('⭐ Tarif Paket Featured', 'hakajobs'),
+        'description' => __('Label harga paket Featured (Populer). Contoh: "Rp 50.000" atau "Rp 99.000".', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // Tarif Paket Urgent
+    $wp_customize->add_setting('hakajobs_price_urgent', array(
+        'default'           => 'Rp 75.000',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_price_urgent', array(
+        'type'        => 'text',
+        'label'       => __('🔥 Tarif Paket Urgent', 'hakajobs'),
+        'description' => __('Label harga paket Urgent (Prioritas). Contoh: "Rp 75.000" atau "Rp 150.000".', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
     ));
 }
 add_action('customize_register', 'hakajobs_customize_register');
