@@ -680,6 +680,30 @@ function hakajobs_customize_register($wp_customize) {
     )));
 
     // --- Sub-bagian: Lowongan Sorotan & Dibutuhkan Segera (Spotlight) ---
+    $wp_customize->add_setting('hakajobs_show_featured_section', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_show_featured_section', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bagian Lowongan Prioritas (Spotlight)', 'hakajobs'),
+        'description' => __('Centang untuk mengaktifkan blok kartu lowongan prioritas / sorotan di beranda.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_featured_badge', array(
+        'default'           => __('🔥 Lowongan Prioritas', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_featured_badge', array(
+        'type'        => 'text',
+        'label'       => __('Teks Badge / Label Bagian', 'hakajobs'),
+        'description' => __('Contoh: 🔥 Lowongan Prioritas, ⭐ Lowongan Pilihan, dsb.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
     $wp_customize->add_setting('hakajobs_featured_section_title', array(
         'default'           => __('🔥 Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
@@ -712,6 +736,41 @@ function hakajobs_customize_register($wp_customize) {
         'type'        => 'text',
         'label'       => __('Teks Tautan "Lihat Semua"', 'hakajobs'),
         'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_featured_count', array(
+        'default'           => 6,
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_featured_count', array(
+        'type'        => 'number',
+        'label'       => __('Jumlah Lowongan Prioritas Ditampilkan', 'hakajobs'),
+        'description' => __('Atur berapa banyak kartu lowongan yang ditampilkan. Default: 6 lowongan.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+        'input_attrs' => array(
+            'min'  => 1,
+            'max'  => 24,
+            'step' => 1,
+        ),
+    ));
+
+    $wp_customize->add_setting('hakajobs_featured_columns', array(
+        'default'           => '3',
+        'sanitize_callback' => 'hakajobs_sanitize_select',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_featured_columns', array(
+        'type'        => 'select',
+        'label'       => __('Jumlah Kolom Grid Desktop', 'hakajobs'),
+        'description' => __('Pilih tata letak kolom kartu pada desktop. Pilihan 3 kolom sangat presisi dan rapi untuk 6 lowongan (2 baris × 3 kolom).', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+        'choices'     => array(
+            '3'    => __('3 Kolom (Rekomendasi untuk 6 kartu: 2 baris × 3 kolom)', 'hakajobs'),
+            '2'    => __('2 Kolom (Kartu lebih lebar & lega)', 'hakajobs'),
+            '4'    => __('4 Kolom (Tampilan lebih rapat)', 'hakajobs'),
+            'auto' => __('Otomatis Fleksibel (Auto-fit)', 'hakajobs'),
+        ),
     ));
 
     // --- Sub-bagian: Panduan Cara Melamar Kerja ---

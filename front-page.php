@@ -166,57 +166,76 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
 
     <!-- Urgently Needed / Featured Jobs Section -->
     <?php
-    $featured_query = new WP_Query(array(
-        'post_type'      => 'lowongan',
-        'posts_per_page' => 4,
-        'meta_query'     => array(
-            'relation' => 'OR',
-            array(
-                'key'     => '_hakajobs_is_urgent',
-                'value'   => '1',
-                'compare' => '=',
-            ),
-            array(
-                'key'     => '_hakajobs_is_featured',
-                'value'   => '1',
-                'compare' => '=',
-            ),
-        ),
-    ));
+    $show_featured  = get_theme_mod('hakajobs_show_featured_section', '1');
+    $featured_count = absint(get_theme_mod('hakajobs_featured_count', 6));
+    if ($featured_count <= 0) {
+        $featured_count = 6;
+    }
+    $featured_cols = get_theme_mod('hakajobs_featured_columns', '3');
 
-    if ($featured_query->have_posts()):
-    ?>
-    <section class="hk-spotlight-section">
-        <div class="hk-container">
-            <?php
+    if ($show_featured) :
+        $featured_query = new WP_Query(array(
+            'post_type'      => 'lowongan',
+            'posts_per_page' => $featured_count,
+            'meta_query'     => array(
+                'relation' => 'OR',
+                array(
+                    'key'     => '_hakajobs_is_urgent',
+                    'value'   => '1',
+                    'compare' => '=',
+                ),
+                array(
+                    'key'     => '_hakajobs_is_featured',
+                    'value'   => '1',
+                    'compare' => '=',
+                ),
+            ),
+        ));
+
+        if ($featured_query->have_posts()):
+            $featured_badge = get_theme_mod('hakajobs_featured_badge', __('🔥 Lowongan Prioritas', 'hakajobs'));
             $featured_title = get_theme_mod('hakajobs_featured_section_title', __('🔥 Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera', 'hakajobs'));
             $featured_sub   = get_theme_mod('hakajobs_featured_section_subtitle', __('Peluang karir terbaik dengan respon rekrutmen tercepat. Kirim lamaranmu sebelum kuota penuh!', 'hakajobs'));
             $featured_link  = get_theme_mod('hakajobs_featured_section_link_text', __('Lihat Semua', 'hakajobs'));
-            ?>
-            <div class="hk-section-header">
-                <div>
-                    <span class="hk-section-badge"><?php _e('🔥 Lowongan Prioritas', 'hakajobs'); ?></span>
-                    <h2 class="hk-section-title"><?php echo esc_html($featured_title); ?></h2>
-                    <?php if (!empty($featured_sub)): ?>
-                        <p class="hk-section-subtitle"><?php echo esc_html($featured_sub); ?></p>
-                    <?php endif; ?>
-                </div>
-                <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" class="hk-link-arrow">
-                    <?php echo esc_html($featured_link); ?> &rarr;
-                </a>
-            </div>
 
-            <div class="hk-jobs-grid">
-                <?php
-                while ($featured_query->have_posts()) {
-                    $featured_query->the_post();
-                    hakajobs_render_job_card(get_the_ID());
-                }
-                wp_reset_postdata();
-                ?>
+            $grid_class = 'hk-jobs-grid';
+            if ($featured_cols === '2') {
+                $grid_class .= ' hk-grid-cols-2';
+            } elseif ($featured_cols === '3') {
+                $grid_class .= ' hk-grid-cols-3';
+            } elseif ($featured_cols === '4') {
+                $grid_class .= ' hk-grid-cols-4';
+            }
+        ?>
+        <section class="hk-spotlight-section">
+            <div class="hk-container">
+                <div class="hk-section-header">
+                    <div>
+                        <?php if (!empty($featured_badge)): ?>
+                            <span class="hk-section-badge"><?php echo esc_html($featured_badge); ?></span>
+                        <?php endif; ?>
+                        <h2 class="hk-section-title"><?php echo esc_html($featured_title); ?></h2>
+                        <?php if (!empty($featured_sub)): ?>
+                            <p class="hk-section-subtitle"><?php echo esc_html($featured_sub); ?></p>
+                        <?php endif; ?>
+                    </div>
+                    <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" class="hk-link-arrow">
+                        <?php echo esc_html($featured_link); ?> &rarr;
+                    </a>
+                </div>
+
+                <div class="<?php echo esc_attr($grid_class); ?>">
+                    <?php
+                    while ($featured_query->have_posts()) {
+                        $featured_query->the_post();
+                        hakajobs_render_job_card(get_the_ID());
+                    }
+                    wp_reset_postdata();
+                    ?>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <?php endif; ?>
     <?php endif; ?>
 
     <!-- Header Ad Slot -->

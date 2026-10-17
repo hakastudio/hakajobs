@@ -756,6 +756,25 @@ button, input, select, textarea {
     gap: 20px;
 }
 
+.hk-jobs-grid.hk-grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.hk-jobs-grid.hk-grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.hk-jobs-grid.hk-grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 991px) {
+    .hk-jobs-grid.hk-grid-cols-3,
+    .hk-jobs-grid.hk-grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 /* ==========================================================================
    Job Cards (Reusable)
    ========================================================================== */
@@ -2911,7 +2930,10 @@ button, input, select, textarea {
     }
 
     /* Job Cards & Grid on Mobile */
-    .hk-jobs-grid {
+    .hk-jobs-grid,
+    .hk-jobs-grid.hk-grid-cols-2,
+    .hk-jobs-grid.hk-grid-cols-3,
+    .hk-jobs-grid.hk-grid-cols-4 {
         grid-template-columns: 1fr;
         gap: 14px;
     }
