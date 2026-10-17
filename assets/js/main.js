@@ -408,6 +408,64 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Smart Anti Copy-Paste & Source Link Attribution
+    document.addEventListener('copy', function (e) {
+        var selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+
+        var selectedText = selection.toString();
+        if (!selectedText || !selectedText.trim()) return;
+
+        // Skip if user is copying from form inputs/textareas
+        var activeEl = document.activeElement;
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
+            return;
+        }
+
+        // Target article pages or content areas
+        var isSinglePage = document.querySelector('.hk-single-job-page, .hk-single-standard-page, .hk-job-description-box, .hk-article-content, .hk-page-content');
+        if (!isSinglePage) return;
+
+        // Get site name and current URL
+        var siteName = (window.HakajobsData && HakajobsData.siteName) ? HakajobsData.siteName : (document.title ? document.title.split(' - ')[0].split(' | ')[0] : 'Website');
+        var pageUrl = window.location.href.split('#')[0];
+
+        // Determine if it is a job posting or general article
+        var isJob = document.querySelector('.hk-single-job-page, .hk-job-description-box') !== null;
+        var label = isJob ? 'Lowongan ini telah tayang di ' : 'Artikel ini telah tayang di ';
+
+        var attribution = '\n\n' + label + siteName + ':\n' + pageUrl;
+        var fullText = selectedText + attribution;
+
+        if (e.clipboardData) {
+            e.clipboardData.setData('text/plain', fullText);
+
+            try {
+                var htmlContainer = document.createElement('div');
+                for (var i = 0; i < selection.rangeCount; ++i) {
+                    htmlContainer.appendChild(selection.getRangeAt(i).cloneContents());
+                }
+                var htmlAttribution = '<br><br><p>' + label + '<strong>' + siteName + '</strong>:<br><a href="' + pageUrl + '">' + pageUrl + '</a></p>';
+                e.clipboardData.setData('text/html', htmlContainer.innerHTML + htmlAttribution);
+            } catch (err) {
+                // Ignore fallback to plain text
+            }
+
+            e.preventDefault();
+        } else if (window.clipboardData) {
+            window.clipboardData.setData('Text', fullText);
+            e.preventDefault();
+        }
+
+        // Show toast notification
+        if (typeof showToast === 'function') {
+            var copiedMsg = (window.HakajobsData && HakajobsData.strings && HakajobsData.strings.copiedSource)
+                ? HakajobsData.strings.copiedSource
+                : 'Teks disalin beserta link sumber!';
+            showToast(copiedMsg);
+        }
+    });
+
     // Initial UI Sync
     updateSavedUI();
 });

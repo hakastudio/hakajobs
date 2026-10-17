@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.14');
+define('HAKAJOBS_VERSION', '1.0.15');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -112,6 +112,7 @@ function hakajobs_enqueue_assets() {
 
     // Localize Script for LocalStorage and AJAX info
     wp_localize_script('hakajobs-main-script', 'HakajobsData', array(
+        'siteName'    => get_bloginfo('name'),
         'ajaxUrl'     => admin_url('admin-ajax.php'),
         'homeUrl'     => home_url('/'),
         'archiveUrl'  => get_post_type_archive_link('lowongan'),
@@ -122,6 +123,7 @@ function hakajobs_enqueue_assets() {
             'removed'       => __('Dihapus dari simpanan', 'hakajobs'),
             'linkCopied'    => __('Tautan berhasil disalin!', 'hakajobs'),
             'noSavedJobs'   => __('Belum ada lowongan yang disimpan.', 'hakajobs'),
+            'copiedSource'  => __('Teks disalin beserta sumber artikel!', 'hakajobs'),
         ),
     ));
 }
