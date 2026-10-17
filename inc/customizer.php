@@ -483,8 +483,38 @@ function hakajobs_customize_register($wp_customize) {
         'priority'    => 35,
     ));
 
+    // Pilihan Gaya Hero (Pasang Loker vs Light)
+    $wp_customize->add_setting('hakajobs_hero_style', array(
+        'default'           => 'pasang-loker',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_hero_style', array(
+        'type'        => 'select',
+        'label'       => __('🎨 Gaya Desain Hero Beranda', 'hakajobs'),
+        'description' => __('Pilih gaya visual hero beranda. Gaya Pasang Loker menggunakan latar dark navy modern dengan aksen cyan glow.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+        'choices'     => array(
+            'pasang-loker' => __('Gaya Pasang Loker (Dark Navy & Aksen Cyan - Rekomendasi)', 'hakajobs'),
+            'light'        => __('Gaya Terang Minimalis (Clean Light)', 'hakajobs'),
+        ),
+    ));
+
+    // Badge Teks Hero
+    $wp_customize->add_setting('hakajobs_hero_badge', array(
+        'default'           => __('💼 Portal Loker Terpercaya & Lamar Langsung', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_hero_badge', array(
+        'type'        => 'text',
+        'label'       => __('Teks Badge / Label Kecil Hero', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    // Judul Utama Hero (H1)
     $wp_customize->add_setting('hakajobs_hero_title', array(
-        'default'           => __('Temukan Pekerjaan Impianmu Hari Ini', 'hakajobs'),
+        'default'           => __('Temukan Lowongan Kerja Impian & Lamar Langsung ke Rekruter', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
@@ -492,6 +522,19 @@ function hakajobs_customize_register($wp_customize) {
         'type'    => 'text',
         'label'   => __('Judul Utama Hero (H1)', 'hakajobs'),
         'section' => 'hakajobs_hero_section',
+    ));
+
+    // Teks Sorotan Bergradien (Highlight Text)
+    $wp_customize->add_setting('hakajobs_hero_highlight', array(
+        'default'           => __('Lamar Langsung ke Rekruter', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_hero_highlight', array(
+        'type'        => 'text',
+        'label'       => __('Teks Sorotan Gradien (Highlight)', 'hakajobs'),
+        'description' => __('Ketikkan potongan kalimat dalam Judul Utama di atas yang ingin diberi efek gradien warna seperti di halaman pasang loker.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
     ));
 
     $wp_customize->add_setting('hakajobs_hero_subtitle', array(
@@ -524,6 +567,116 @@ function hakajobs_customize_register($wp_customize) {
         'label'   => __('Teks Tombol Cari', 'hakajobs'),
         'section' => 'hakajobs_hero_section',
     ));
+
+    // --- Sub-bagian: Statistik Hero (Stats Bar) ---
+    $wp_customize->add_setting('hakajobs_hero_show_stats', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_hero_show_stats', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bilah Statistik Hero (Stats Bar)', 'hakajobs'),
+        'description' => __('Menampilkan 3 kotak statistik di bawah kolom pencarian seperti pada halaman pasang loker.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_stat1_num', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_hero_stat1_num', array(
+        'type'        => 'text',
+        'label'       => __('Stat 1: Angka (Kosong = Otomatis)', 'hakajobs'),
+        'description' => __('Kosongkan jika ingin otomatis menghitung total lowongan aktif yang tayang.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_stat1_label', array(
+        'default'           => __('Lowongan Aktif', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_hero_stat1_label', array(
+        'type'    => 'text',
+        'label'   => __('Stat 1: Label', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_stat2_num', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_hero_stat2_num', array(
+        'type'        => 'text',
+        'label'       => __('Stat 2: Angka (Kosong = Otomatis)', 'hakajobs'),
+        'description' => __('Kosongkan jika ingin otomatis menghitung total kategori bidang kerja.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_stat2_label', array(
+        'default'           => __('Kategori Bidang', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_hero_stat2_label', array(
+        'type'    => 'text',
+        'label'   => __('Stat 2: Label', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_stat3_num', array(
+        'default'           => '1×24 Jam',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_hero_stat3_num', array(
+        'type'    => 'text',
+        'label'   => __('Stat 3: Angka / Nilai', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_stat3_label', array(
+        'default'           => __('Respon Rekruter', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_hero_stat3_label', array(
+        'type'    => 'text',
+        'label'   => __('Stat 3: Label', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    // Lengkungan Gelombang Wave
+    $wp_customize->add_setting('hakajobs_hero_show_wave', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_hero_show_wave', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Lengkungan Gelombang (Wave) di Bawah Hero', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    // Warna Kustom Gradien Hero
+    $wp_customize->add_setting('hakajobs_hero_bg_start', array(
+        'default'           => '#0f172a',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_hero_bg_start', array(
+        'label'       => __('Warna Awal Gradien Hero (Kiri Atas)', 'hakajobs'),
+        'description' => __('Default: #0f172a (Dark Slate Navy khas Pasang Loker)', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    )));
+
+    $wp_customize->add_setting('hakajobs_hero_bg_end', array(
+        'default'           => '#0f3460',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_hero_bg_end', array(
+        'label'       => __('Warna Akhir Gradien Hero (Kanan Bawah)', 'hakajobs'),
+        'description' => __('Default: #0f3460 (Deep Navy khas Pasang Loker)', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    )));
 
     // --- Sub-bagian: Lowongan Sorotan & Dibutuhkan Segera (Spotlight) ---
     $wp_customize->add_setting('hakajobs_featured_section_title', array(
@@ -1142,6 +1295,8 @@ function hakajobs_customizer_css() {
     $logo_height    = get_theme_mod('hakajobs_logo_max_height', 42);
     $logo_text_size = get_theme_mod('hakajobs_logo_text_size', 20);
     $logo_icon_size = get_theme_mod('hakajobs_logo_icon_size', 26);
+    $hero_bg_start  = get_theme_mod('hakajobs_hero_bg_start', '#0f172a');
+    $hero_bg_end    = get_theme_mod('hakajobs_hero_bg_end', '#0f3460');
     ?>
     <style id="hakajobs-customizer-inline-css">
         :root {
@@ -1154,9 +1309,11 @@ function hakajobs_customizer_css() {
             --hk-btt-color: <?php echo esc_attr($btt_color); ?>;
         }
         .hk-topbar,
-        .hk-site-footer,
-        .hk-card-post-job {
+        .hk-site-footer {
             background-color: var(--hk-dark) !important;
+        }
+        .hk-hero-pasangloker-theme {
+            background: linear-gradient(135deg, <?php echo esc_attr($hero_bg_start); ?> 0%, #0c2340 50%, <?php echo esc_attr($hero_bg_end); ?> 100%) !important;
         }
         .hk-back-to-top {
             background-color: var(--hk-btt-color) !important;

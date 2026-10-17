@@ -9,22 +9,63 @@ get_header();
 ?>
 
 <?php
+$hero_style        = get_theme_mod('hakajobs_hero_style', 'pasang-loker');
+$hero_badge        = get_theme_mod('hakajobs_hero_badge', __('💼 Portal Loker Terpercaya & Lamar Langsung', 'hakajobs'));
 $hero_title        = get_theme_mod('hakajobs_hero_title', __('Temukan Lowongan Kerja Impian & Lamar Langsung ke Rekruter', 'hakajobs'));
+$hero_highlight    = get_theme_mod('hakajobs_hero_highlight', __('Lamar Langsung ke Rekruter', 'hakajobs'));
 $hero_subtitle     = get_theme_mod('hakajobs_hero_subtitle', __('Ribuan info loker terkurasi setiap hari. Terhubung langsung melalui WhatsApp HRD, Email, dan Karir Resmi tanpa proses pembuatan akun yang berbelit.', 'hakajobs'));
 $hero_placeholder  = get_theme_mod('hakajobs_hero_search_placeholder', __('Posisi, keahlian, atau perusahaan...', 'hakajobs'));
-$hero_search_btn   = get_theme_mod('hakajobs_hero_search_btn', __('Cari Lowongan', 'hakajobs'));
+$hero_search_btn   = get_theme_mod('hakajobs_hero_search_btn', __('Cari Loker', 'hakajobs'));
+
+$show_stats        = get_theme_mod('hakajobs_hero_show_stats', '1');
+$stat1_num         = get_theme_mod('hakajobs_hero_stat1_num', '');
+$stat1_label       = get_theme_mod('hakajobs_hero_stat1_label', __('Lowongan Aktif', 'hakajobs'));
+$stat2_num         = get_theme_mod('hakajobs_hero_stat2_num', '');
+$stat2_label       = get_theme_mod('hakajobs_hero_stat2_label', __('Kategori Bidang', 'hakajobs'));
+$stat3_num         = get_theme_mod('hakajobs_hero_stat3_num', __('1×24 Jam', 'hakajobs'));
+$stat3_label       = get_theme_mod('hakajobs_hero_stat3_label', __('Respon Rekruter', 'hakajobs'));
+$show_wave         = get_theme_mod('hakajobs_hero_show_wave', '1');
+
+// Hitung statistik otomatis jika kosong
+if (empty($stat1_num)) {
+    $counts    = wp_count_posts('lowongan');
+    $stat1_num = (isset($counts->publish) && $counts->publish > 0) ? number_format_i18n($counts->publish) . '+' : '100+';
+}
+if (empty($stat2_num)) {
+    $total_cats = wp_count_terms(array('taxonomy' => 'kategori_lowongan', 'hide_empty' => false));
+    $stat2_num  = (!is_wp_error($total_cats) && $total_cats > 0) ? $total_cats . '+' : '20+';
+}
+
+// Render judul dengan efek gradien highlight
+if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
+    $escaped_title = esc_html($hero_title);
+    $escaped_high  = esc_html($hero_highlight);
+    $display_title = str_replace(
+        $escaped_high,
+        '<span class="hk-hero-highlight">' . $escaped_high . '</span>',
+        $escaped_title
+    );
+} else {
+    $display_title = esc_html($hero_title);
+}
 ?>
 
 <main id="hk-main" class="hk-site-main">
 
-    <!-- Hero Search Section -->
-    <section class="hk-hero-section">
+    <!-- Hero Search Section (Aksen Pasang Loker / Terang) -->
+    <section class="hk-hero-section <?php echo ($hero_style === 'pasang-loker') ? 'hk-hero-pasangloker-theme' : 'hk-hero-light-theme'; ?>">
         <div class="hk-container">
             <div class="hk-hero-content">
-                <span class="hk-hero-pill"><?php _e('🎯 Portal Loker Tanpa Ribet Registrasi', 'hakajobs'); ?></span>
+                <?php if (!empty($hero_badge)): ?>
+                    <div class="hk-hero-badge">
+                        <?php echo esc_html($hero_badge); ?>
+                    </div>
+                <?php endif; ?>
+
                 <h1 class="hk-hero-title">
-                    <?php echo esc_html($hero_title); ?>
+                    <?php echo $display_title; ?>
                 </h1>
+
                 <p class="hk-hero-desc">
                     <?php echo nl2br(esc_html($hero_subtitle)); ?>
                 </p>
@@ -90,8 +131,37 @@ $hero_search_btn   = get_theme_mod('hakajobs_hero_search_btn', __('Cari Lowongan
                     <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=penuh-waktu" class="hk-chip">⏰ Penuh Waktu</a>
                 </div>
 
+                <?php if ($show_stats === '1'): ?>
+                <!-- Hero Live Stats Strip (Aksen Pasang Loker) -->
+                <div class="hk-hero-stats">
+                    <div class="hk-stat-item">
+                        <span class="hk-stat-num"><?php echo esc_html($stat1_num); ?></span>
+                        <span class="hk-stat-label"><?php echo esc_html($stat1_label); ?></span>
+                    </div>
+                    <div class="hk-stat-sep"></div>
+                    <div class="hk-stat-item">
+                        <span class="hk-stat-num"><?php echo esc_html($stat2_num); ?></span>
+                        <span class="hk-stat-label"><?php echo esc_html($stat2_label); ?></span>
+                    </div>
+                    <div class="hk-stat-sep"></div>
+                    <div class="hk-stat-item">
+                        <span class="hk-stat-num"><?php echo esc_html($stat3_num); ?></span>
+                        <span class="hk-stat-label"><?php echo esc_html($stat3_label); ?></span>
+                    </div>
+                </div>
+                <?php endif; ?>
+
             </div>
         </div>
+
+        <?php if ($show_wave === '1' && $hero_style === 'pasang-loker'): ?>
+        <!-- Hero Wave Bottom Transition (Identik Pasang Loker) -->
+        <div class="hk-hero-wave" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path d="M0 60L60 50C120 40 240 20 360 16.7C480 13.3 600 26.7 720 33.3C840 40 960 40 1080 33.3C1200 26.7 1320 13.3 1380 6.7L1440 0V60H1380C1320 60 1200 60 1080 60C960 60 840 60 720 60C600 60 480 60 360 60C240 60 120 60 60 60H0Z" fill="var(--hk-bg-body, #f8fafc)" />
+            </svg>
+        </div>
+        <?php endif; ?>
     </section>
 
     <!-- Urgently Needed / Featured Jobs Section -->
@@ -125,6 +195,7 @@ $hero_search_btn   = get_theme_mod('hakajobs_hero_search_btn', __('Cari Lowongan
             ?>
             <div class="hk-section-header">
                 <div>
+                    <span class="hk-section-badge"><?php _e('🔥 Lowongan Prioritas', 'hakajobs'); ?></span>
                     <h2 class="hk-section-title"><?php echo esc_html($featured_title); ?></h2>
                     <?php if (!empty($featured_sub)): ?>
                         <p class="hk-section-subtitle"><?php echo esc_html($featured_sub); ?></p>
@@ -308,6 +379,7 @@ $hero_search_btn   = get_theme_mod('hakajobs_hero_search_btn', __('Cari Lowongan
     <section class="hk-how-section">
         <div class="hk-container">
             <div class="hk-section-center-head">
+                <span class="hk-section-badge"><?php _e('Panduan Loker', 'hakajobs'); ?></span>
                 <h2 class="hk-section-title"><?php echo esc_html($how_title); ?></h2>
                 <?php if (!empty($how_subtitle)): ?>
                     <p class="hk-section-subtitle"><?php echo esc_html($how_subtitle); ?></p>
