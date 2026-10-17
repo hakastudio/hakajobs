@@ -9,8 +9,10 @@ $show_fraud   = get_theme_mod('hakajobs_show_fraud_alert', '1');
 $fraud_title  = get_theme_mod('hakajobs_fraud_title', __('Peringatan Anti Penipuan Rekrutmen', 'hakajobs'));
 $fraud_text   = get_theme_mod('hakajobs_fraud_text', __('Seluruh proses seleksi dan lamaran kerja di situs ini adalah 100% GRATIS. Jangan pernah mentransfer uang dengan alasan apapun (biaya administrasi, seragam, tiket travel, atau akomodasi hotel). Jika menemukan indikasi mencurigakan, segera laporkan ke pihak berwajib.', 'hakajobs'));
 $footer_about = get_theme_mod('hakajobs_footer_about', __('Platform kurasi info lowongan kerja terpercaya, menghubungkan pencari kerja langsung dengan HRD via WhatsApp, Email, & Web resmi tanpa perlu registrasi akun.', 'hakajobs'));
-$custom_copy  = get_theme_mod('hakajobs_copyright_text', '');
-$enable_btt   = get_theme_mod('hakajobs_enable_back_to_top', '1');
+$custom_copy    = get_theme_mod('hakajobs_copyright_text', '');
+$show_tagline   = get_theme_mod('hakajobs_show_footer_tagline', '0');
+$footer_tagline = get_theme_mod('hakajobs_footer_tagline', __('Portal Info Lowongan Kerja Tanpa Login', 'hakajobs'));
+$enable_btt     = get_theme_mod('hakajobs_enable_back_to_top', '1');
 $logo_icon    = get_theme_mod('hakajobs_logo_icon', '💼');
 $col2_title   = get_theme_mod('hakajobs_footer_col2_title', __('Kategori Pekerjaan', 'hakajobs'));
 $col3_title   = get_theme_mod('hakajobs_footer_col3_title', __('Kota & Wilayah', 'hakajobs'));
@@ -248,9 +250,11 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
                         &copy; <?php echo date('Y'); ?> <strong><?php bloginfo('name'); ?></strong>. <?php _e('Hak Cipta Dilindungi.', 'hakajobs'); ?>
                     <?php endif; ?>
                 </div>
+                <?php if ($show_tagline === '1' && !empty($footer_tagline)): ?>
                 <div class="hk-footer-notes">
-                    <span><?php _e('Portal Info Lowongan Kerja Tanpa Login', 'hakajobs'); ?></span>
+                    <span><?php echo esc_html($footer_tagline); ?></span>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </footer>

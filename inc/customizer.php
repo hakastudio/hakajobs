@@ -938,6 +938,31 @@ function hakajobs_customize_register($wp_customize) {
         'section'     => 'hakajobs_footer_section',
     ));
 
+    // Catatan / Slogan Footer Bawah (Portal Info Lowongan Kerja Tanpa Login)
+    $wp_customize->add_setting('hakajobs_show_footer_tagline', array(
+        'default'           => '0',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_show_footer_tagline', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Catatan / Slogan Footer Bawah', 'hakajobs'),
+        'description' => __('Default tidak aktif (tersembunyi). Centang jika ingin memunculkan teks catatan di samping copyright footer.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_tagline', array(
+        'default'           => __('Portal Info Lowongan Kerja Tanpa Login', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_footer_tagline', array(
+        'type'        => 'text',
+        'label'       => __('Teks Catatan / Slogan Footer', 'hakajobs'),
+        'description' => __('Contoh: Portal Info Lowongan Kerja Tanpa Login. Hanya tampil jika opsi centang di atas diaktifkan.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
     // Media Sosial Pemilik Website di Footer
     $wp_customize->add_setting('hakajobs_show_footer_social', array(
         'default'           => '1',
