@@ -12,6 +12,11 @@ $footer_about = get_theme_mod('hakajobs_footer_about', __('Platform kurasi info 
 $custom_copy  = get_theme_mod('hakajobs_copyright_text', '');
 $enable_btt   = get_theme_mod('hakajobs_enable_back_to_top', '1');
 $logo_icon    = get_theme_mod('hakajobs_logo_icon', '💼');
+$col2_title   = get_theme_mod('hakajobs_footer_col2_title', __('Kategori Pekerjaan', 'hakajobs'));
+$col3_title   = get_theme_mod('hakajobs_footer_col3_title', __('Kota & Wilayah', 'hakajobs'));
+$col4_title   = get_theme_mod('hakajobs_footer_col4_title', __('Navigasi & Info', 'hakajobs'));
+$col2_count   = (int) get_theme_mod('hakajobs_footer_col2_count', 6);
+$col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
 ?>
 
     <!-- Footer Ad Slot -->
@@ -41,84 +46,134 @@ $logo_icon    = get_theme_mod('hakajobs_logo_icon', '💼');
         <div class="hk-container hk-footer-container">
             <div class="hk-footer-grid">
 
-                <!-- Column 1: Brand & About -->
+                <!-- Column 1: Brand & About / Widget -->
                 <div class="hk-footer-col">
-                    <div class="hk-footer-brand">
-                        <?php if (has_custom_logo()): ?>
-                            <div class="hk-custom-logo hk-footer-custom-logo"><?php the_custom_logo(); ?></div>
+                    <?php if (is_active_sidebar('footer-1')): ?>
+                        <?php dynamic_sidebar('footer-1'); ?>
+                    <?php else: ?>
+                        <div class="hk-footer-brand">
+                            <?php if (has_custom_logo()): ?>
+                                <div class="hk-custom-logo hk-footer-custom-logo"><?php the_custom_logo(); ?></div>
+                            <?php else: ?>
+                                <a href="<?php echo esc_url(home_url('/')); ?>" class="hk-footer-logo-link" rel="home">
+                                    <span class="hk-logo-icon"><?php echo esc_html($logo_icon); ?></span>
+                                    <span class="hk-footer-brand-title"><?php bloginfo('name'); ?></span>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                        <p class="hk-footer-about">
+                            <?php bloginfo('description'); ?>
+                        </p>
+                        <p class="hk-footer-subtext">
+                            <?php echo esc_html($footer_about); ?>
+                        </p>
+                        <div class="hk-social-pills">
+                            <span class="hk-social-label"><?php _e('Bagikan Info Loker:', 'hakajobs'); ?></span>
+                            <a href="https://api.whatsapp.com/send?text=<?php echo rawurlencode(get_bloginfo('name') . ' - Portal Info Lowongan Kerja Terupdate: ' . home_url()); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="WhatsApp">WA</a>
+                            <a href="https://t.me/share/url?url=<?php echo rawurlencode(home_url()); ?>&text=<?php echo rawurlencode(get_bloginfo('name') . ' Info Loker'); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="Telegram">TG</a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo rawurlencode(home_url()); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="LinkedIn">IN</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Column 2: Kategori Pekerjaan (Widget / Menu / Auto) -->
+                <div class="hk-footer-col">
+                    <?php if (is_active_sidebar('footer-2')): ?>
+                        <?php dynamic_sidebar('footer-2'); ?>
+                    <?php else: ?>
+                        <h4 class="hk-footer-heading"><?php echo esc_html($col2_title); ?></h4>
+                        <?php if (has_nav_menu('footer-col2-menu')): ?>
+                            <?php
+                            wp_nav_menu(array(
+                                'theme_location' => 'footer-col2-menu',
+                                'container'      => false,
+                                'menu_class'     => 'hk-footer-links',
+                                'depth'          => 1,
+                            ));
+                            ?>
                         <?php else: ?>
-                            <a href="<?php echo esc_url(home_url('/')); ?>" class="hk-footer-logo-link" rel="home">
-                                <span class="hk-logo-icon"><?php echo esc_html($logo_icon); ?></span>
-                                <span class="hk-footer-brand-title"><?php bloginfo('name'); ?></span>
-                            </a>
+                            <ul class="hk-footer-links">
+                                <?php
+                                $categories = get_terms(array(
+                                    'taxonomy'   => 'kategori_lowongan',
+                                    'number'     => $col2_count > 0 ? $col2_count : 6,
+                                    'hide_empty' => false,
+                                ));
+                                if (!empty($categories) && !is_wp_error($categories)) {
+                                    foreach ($categories as $cat) {
+                                        echo '<li><a href="' . esc_url(get_term_link($cat)) . '">' . esc_html($cat->name) . ' <span class="hk-footer-count">(' . $cat->count . ')</span></a></li>';
+                                    }
+                                } else {
+                                    echo '<li><a href="' . esc_url(get_post_type_archive_link('lowongan')) . '">' . __('Semua Kategori', 'hakajobs') . '</a></li>';
+                                }
+                                ?>
+                            </ul>
                         <?php endif; ?>
-                    </div>
-                    <p class="hk-footer-about">
-                        <?php bloginfo('description'); ?>
-                    </p>
-                    <p class="hk-footer-subtext">
-                        <?php echo esc_html($footer_about); ?>
-                    </p>
-                    <div class="hk-social-pills">
-                        <span class="hk-social-label"><?php _e('Bagikan Info Loker:', 'hakajobs'); ?></span>
-                        <a href="https://api.whatsapp.com/send?text=<?php echo rawurlencode(get_bloginfo('name') . ' - Portal Info Lowongan Kerja Terupdate: ' . home_url()); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="WhatsApp">WA</a>
-                        <a href="https://t.me/share/url?url=<?php echo rawurlencode(home_url()); ?>&text=<?php echo rawurlencode(get_bloginfo('name') . ' Info Loker'); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="Telegram">TG</a>
-                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo rawurlencode(home_url()); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="LinkedIn">IN</a>
-                    </div>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Column 2: Kategori Populer -->
+                <!-- Column 3: Kota & Wilayah (Widget / Menu / Auto) -->
                 <div class="hk-footer-col">
-                    <h4 class="hk-footer-heading"><?php _e('Kategori Pekerjaan', 'hakajobs'); ?></h4>
-                    <ul class="hk-footer-links">
-                        <?php
-                        $categories = get_terms(array(
-                            'taxonomy'   => 'kategori_lowongan',
-                            'number'     => 6,
-                            'hide_empty' => false,
-                        ));
-                        if (!empty($categories) && !is_wp_error($categories)) {
-                            foreach ($categories as $cat) {
-                                echo '<li><a href="' . esc_url(get_term_link($cat)) . '">' . esc_html($cat->name) . ' <span class="hk-footer-count">(' . $cat->count . ')</span></a></li>';
-                            }
-                        } else {
-                            echo '<li><a href="' . esc_url(get_post_type_archive_link('lowongan')) . '">' . __('Semua Kategori', 'hakajobs') . '</a></li>';
-                        }
-                        ?>
-                    </ul>
+                    <?php if (is_active_sidebar('footer-3')): ?>
+                        <?php dynamic_sidebar('footer-3'); ?>
+                    <?php else: ?>
+                        <h4 class="hk-footer-heading"><?php echo esc_html($col3_title); ?></h4>
+                        <?php if (has_nav_menu('footer-col3-menu')): ?>
+                            <?php
+                            wp_nav_menu(array(
+                                'theme_location' => 'footer-col3-menu',
+                                'container'      => false,
+                                'menu_class'     => 'hk-footer-links',
+                                'depth'          => 1,
+                            ));
+                            ?>
+                        <?php else: ?>
+                            <ul class="hk-footer-links">
+                                <?php
+                                $locations = get_terms(array(
+                                    'taxonomy'   => 'lokasi_lowongan',
+                                    'number'     => $col3_count > 0 ? $col3_count : 6,
+                                    'hide_empty' => false,
+                                ));
+                                if (!empty($locations) && !is_wp_error($locations)) {
+                                    foreach ($locations as $loc) {
+                                        echo '<li><a href="' . esc_url(get_term_link($loc)) . '">' . esc_html($loc->name) . ' <span class="hk-footer-count">(' . $loc->count . ')</span></a></li>';
+                                    }
+                                } else {
+                                    echo '<li><a href="' . esc_url(get_post_type_archive_link('lowongan')) . '">' . __('Semua Lokasi', 'hakajobs') . '</a></li>';
+                                }
+                                ?>
+                            </ul>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Column 3: Lokasi Populer -->
+                <!-- Column 4: Navigasi & Info (Widget / Menu / Default) -->
                 <div class="hk-footer-col">
-                    <h4 class="hk-footer-heading"><?php _e('Kota & Wilayah', 'hakajobs'); ?></h4>
-                    <ul class="hk-footer-links">
-                        <?php
-                        $locations = get_terms(array(
-                            'taxonomy'   => 'lokasi_lowongan',
-                            'number'     => 6,
-                            'hide_empty' => false,
-                        ));
-                        if (!empty($locations) && !is_wp_error($locations)) {
-                            foreach ($locations as $loc) {
-                                echo '<li><a href="' . esc_url(get_term_link($loc)) . '">' . esc_html($loc->name) . ' <span class="hk-footer-count">(' . $loc->count . ')</span></a></li>';
-                            }
-                        } else {
-                            echo '<li><a href="' . esc_url(get_post_type_archive_link('lowongan')) . '">' . __('Semua Lokasi', 'hakajobs') . '</a></li>';
-                        }
-                        ?>
-                    </ul>
-                </div>
-
-                <!-- Column 4: Tautan & Bantuan -->
-                <div class="hk-footer-col">
-                    <h4 class="hk-footer-heading"><?php _e('Navigasi & Info', 'hakajobs'); ?></h4>
-                    <ul class="hk-footer-links">
-                        <li><a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>"><?php _e('Cari Lowongan Kerja', 'hakajobs'); ?></a></li>
-                        <li><a href="<?php echo esc_url(get_theme_mod('hakajobs_post_job_url', home_url('/pasang-loker/'))); ?>"><?php _e('Pasang Info Lowongan (Admin)', 'hakajobs'); ?></a></li>
-                        <li><a href="<?php echo esc_url(home_url('/tentang-kami/')); ?>"><?php _e('Tentang Kami', 'hakajobs'); ?></a></li>
-                        <li><a href="<?php echo esc_url(home_url('/kontak/')); ?>"><?php _e('Hubungi Pengelola', 'hakajobs'); ?></a></li>
-                        <li><a href="<?php echo esc_url(home_url('/kebijakan-privasi/')); ?>"><?php _e('Kebijakan Privasi', 'hakajobs'); ?></a></li>
-                    </ul>
+                    <?php if (is_active_sidebar('footer-4')): ?>
+                        <?php dynamic_sidebar('footer-4'); ?>
+                    <?php else: ?>
+                        <h4 class="hk-footer-heading"><?php echo esc_html($col4_title); ?></h4>
+                        <?php if (has_nav_menu('footer-col4-menu') || has_nav_menu('footer-menu')): ?>
+                            <?php
+                            $menu_location = has_nav_menu('footer-col4-menu') ? 'footer-col4-menu' : 'footer-menu';
+                            wp_nav_menu(array(
+                                'theme_location' => $menu_location,
+                                'container'      => false,
+                                'menu_class'     => 'hk-footer-links',
+                                'depth'          => 1,
+                            ));
+                            ?>
+                        <?php else: ?>
+                            <ul class="hk-footer-links">
+                                <li><a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>"><?php _e('Cari Lowongan Kerja', 'hakajobs'); ?></a></li>
+                                <li><a href="<?php echo esc_url(get_theme_mod('hakajobs_post_job_url', home_url('/pasang-loker/'))); ?>"><?php _e('Pasang Info Lowongan (Admin)', 'hakajobs'); ?></a></li>
+                                <li><a href="<?php echo esc_url(home_url('/tentang-kami/')); ?>"><?php _e('Tentang Kami', 'hakajobs'); ?></a></li>
+                                <li><a href="<?php echo esc_url(home_url('/kontak/')); ?>"><?php _e('Hubungi Pengelola', 'hakajobs'); ?></a></li>
+                                <li><a href="<?php echo esc_url(home_url('/kebijakan-privasi/')); ?>"><?php _e('Kebijakan Privasi', 'hakajobs'); ?></a></li>
+                            </ul>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
 
             </div>

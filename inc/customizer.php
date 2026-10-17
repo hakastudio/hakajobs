@@ -483,6 +483,66 @@ function hakajobs_customize_register($wp_customize) {
         'section' => 'hakajobs_footer_section',
     ));
 
+    // Footer Column 2 (Kategori)
+    $wp_customize->add_setting('hakajobs_footer_col2_title', array(
+        'default'           => __('Kategori Pekerjaan', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_footer_col2_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Kolom 2 (Kategori)', 'hakajobs'),
+        'description' => __('Default: Kategori Pekerjaan. Bisa diisi custom menu via Tampilan > Menu (Footer Kolom 2) atau Tampilan > Widget.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_col2_count', array(
+        'default'           => 6,
+        'sanitize_callback' => 'absint',
+    ));
+    $wp_customize->add_control('hakajobs_footer_col2_count', array(
+        'type'        => 'number',
+        'label'       => __('Jumlah Kategori Populer (Otomatis)', 'hakajobs'),
+        'description' => __('Jumlah kategori yang tampil jika belum memilih menu manual di Tampilan > Menu.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+        'input_attrs' => array('min' => 1, 'max' => 20, 'step' => 1),
+    ));
+
+    // Footer Column 3 (Kota & Wilayah)
+    $wp_customize->add_setting('hakajobs_footer_col3_title', array(
+        'default'           => __('Kota & Wilayah', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_footer_col3_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Kolom 3 (Kota & Wilayah)', 'hakajobs'),
+        'description' => __('Default: Kota & Wilayah. Bisa diisi custom menu via Tampilan > Menu (Footer Kolom 3) atau Tampilan > Widget.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_col3_count', array(
+        'default'           => 6,
+        'sanitize_callback' => 'absint',
+    ));
+    $wp_customize->add_control('hakajobs_footer_col3_count', array(
+        'type'        => 'number',
+        'label'       => __('Jumlah Lokasi Populer (Otomatis)', 'hakajobs'),
+        'description' => __('Jumlah kota yang tampil jika belum memilih menu manual di Tampilan > Menu.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+        'input_attrs' => array('min' => 1, 'max' => 20, 'step' => 1),
+    ));
+
+    // Footer Column 4 (Navigasi & Info)
+    $wp_customize->add_setting('hakajobs_footer_col4_title', array(
+        'default'           => __('Navigasi & Info', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_footer_col4_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Kolom 4 (Navigasi & Info)', 'hakajobs'),
+        'description' => __('Default: Navigasi & Info. Isi tautan dapat disetel manual via Tampilan > Menu (Footer Kolom 4) atau Tampilan > Widget.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
     $wp_customize->add_setting('hakajobs_copyright_text', array(
         'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',

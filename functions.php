@@ -62,8 +62,11 @@ function hakajobs_setup() {
 
     // Register Navigation Menus
     register_nav_menus(array(
-        'primary-menu' => __('Menu Utama (Header)', 'hakajobs'),
-        'footer-menu'  => __('Menu Footer', 'hakajobs'),
+        'primary-menu'     => __('Menu Utama (Header)', 'hakajobs'),
+        'footer-col2-menu' => __('Footer Kolom 2 (Kategori Pekerjaan)', 'hakajobs'),
+        'footer-col3-menu' => __('Footer Kolom 3 (Kota & Wilayah)', 'hakajobs'),
+        'footer-col4-menu' => __('Footer Kolom 4 (Navigasi & Info)', 'hakajobs'),
+        'footer-menu'      => __('Menu Footer Cadangan', 'hakajobs'),
     ));
 }
 add_action('after_setup_theme', 'hakajobs_setup');
@@ -129,32 +132,42 @@ function hakajobs_widgets_init() {
     ));
 
     register_sidebar(array(
-        'name'          => __('Footer Kolom 1 (Tentang)', 'hakajobs'),
+        'name'          => __('Footer Kolom 1 (Tentang & Brand)', 'hakajobs'),
         'id'            => 'footer-1',
-        'description'   => __('Kolom kiri bawah pada footer.', 'hakajobs'),
+        'description'   => __('Widget kolom 1 footer (opsional, menggantikan info brand bawaan jika diisi).', 'hakajobs'),
         'before_widget' => '<div id="%1$s" class="hk-footer-widget %2$s">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="hk-footer-title">',
+        'before_title'  => '<h4 class="hk-footer-heading">',
         'after_title'   => '</h4>',
     ));
 
     register_sidebar(array(
         'name'          => __('Footer Kolom 2 (Kategori)', 'hakajobs'),
         'id'            => 'footer-2',
-        'description'   => __('Kolom tengah footer untuk kategori.', 'hakajobs'),
+        'description'   => __('Widget kolom 2 footer (opsional, menggantikan daftar kategori bawaan jika diisi).', 'hakajobs'),
         'before_widget' => '<div id="%1$s" class="hk-footer-widget %2$s">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="hk-footer-title">',
+        'before_title'  => '<h4 class="hk-footer-heading">',
         'after_title'   => '</h4>',
     ));
 
     register_sidebar(array(
-        'name'          => __('Footer Kolom 3 (Bantuan & Info)', 'hakajobs'),
+        'name'          => __('Footer Kolom 3 (Kota & Wilayah)', 'hakajobs'),
         'id'            => 'footer-3',
-        'description'   => __('Kolom kanan footer.', 'hakajobs'),
+        'description'   => __('Widget kolom 3 footer (opsional, menggantikan daftar kota bawaan jika diisi).', 'hakajobs'),
         'before_widget' => '<div id="%1$s" class="hk-footer-widget %2$s">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="hk-footer-title">',
+        'before_title'  => '<h4 class="hk-footer-heading">',
+        'after_title'   => '</h4>',
+    ));
+
+    register_sidebar(array(
+        'name'          => __('Footer Kolom 4 (Navigasi & Info)', 'hakajobs'),
+        'id'            => 'footer-4',
+        'description'   => __('Widget kolom 4 footer (opsional, menggantikan daftar tautan bawaan jika diisi).', 'hakajobs'),
+        'before_widget' => '<div id="%1$s" class="hk-footer-widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="hk-footer-heading">',
         'after_title'   => '</h4>',
     ));
 }
