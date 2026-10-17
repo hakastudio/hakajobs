@@ -92,6 +92,48 @@
                 white-space: nowrap;
             }
         }
+        body.is-screenshot .preview-bar {
+            display: none !important;
+        }
+        body.is-screenshot .hk-hero-section {
+            padding: 30px 0 20px !important;
+        }
+        body.is-screenshot .hk-hero-badge {
+            margin-bottom: 8px !important;
+            padding: 4px 12px !important;
+            font-size: 11px !important;
+        }
+        body.is-screenshot .hk-hero-title {
+            font-size: 30px !important;
+            margin-bottom: 8px !important;
+        }
+        body.is-screenshot .hk-hero-subtitle {
+            font-size: 13.5px !important;
+            margin-bottom: 16px !important;
+        }
+        body.is-screenshot .hk-search-box-card {
+            margin-bottom: 12px !important;
+        }
+        body.is-screenshot .hk-hero-stats,
+        body.is-screenshot .hk-ad-slot-header {
+            display: none !important;
+        }
+        body.is-screenshot .hk-spotlight-section {
+            padding: 16px 0 20px !important;
+            border-bottom: none !important;
+        }
+        body.is-screenshot .hk-section-header {
+            margin-bottom: 14px !important;
+        }
+        body.is-screenshot .hk-section-title {
+            font-size: 18px !important;
+        }
+        body.is-screenshot .hk-section-subtitle {
+            font-size: 12px !important;
+        }
+        body.is-screenshot .hk-job-card {
+            padding: 16px !important;
+        }
     </style>
 </head>
 <body class="hk-preview-body">
@@ -337,6 +379,7 @@
                                 <div class="hk-job-card-header">
                                     <span class="hk-card-company">Studio Cipta Global</span>
                                     <div class="hk-card-status-badges">
+                                        <span class="hk-pill hk-pill-expiring">⏳ Sisa 2 Hari</span>
                                         <span class="hk-pill hk-pill-urgent">🔥 Urgent</span>
                                     </div>
                                 </div>
@@ -363,7 +406,7 @@
                         <div class="hk-job-card-footer">
                             <div class="hk-card-footer-info">
                                 <span class="hk-post-time">5 jam lalu</span>
-                                <span class="hk-deadline-tag">Batas: 10 Nov 2026</span>
+                                <span class="hk-deadline-tag hk-deadline-urgent">⏳ Batas: 10 Nov (Sisa 2 hr)</span>
                             </div>
                             <div class="hk-card-actions">
                                 <button type="button" class="hk-btn-bookmark" data-job-id="102" title="Simpan Lowongan">
@@ -432,16 +475,16 @@
                                 </div>
                             </article>
 
-                            <!-- Job Card 4 -->
-                            <article class="hk-job-card" data-id="104" data-title="Staff Administrasi & Keuangan Junior" data-company="CV Sinar Jaya Abadi" data-url="#single">
+                            <!-- Job Card 4 (Contoh Status Kedaluwarsa / Ditutup) -->
+                            <article class="hk-job-card hk-job-closed" data-id="104" data-title="Staff Administrasi & Keuangan Junior" data-company="CV Sinar Jaya Abadi" data-url="#single">
                                 <div class="hk-job-card-top">
                                     <div class="hk-company-logo-wrap">
-                                        <div class="hk-company-initials" style="background:#fff7ed; color:#c2410c; width:52px; height:52px; font-size:18px;">SJ</div>
+                                        <div class="hk-company-initials" style="background:#f1f5f9; color:#64748b; width:52px; height:52px; font-size:18px;">SJ</div>
                                     </div>
                                     <div class="hk-job-card-main">
                                         <div class="hk-job-card-header">
                                             <span class="hk-card-company">CV Sinar Jaya Abadi</span>
-                                            <span class="hk-pill hk-pill-open">Rekrutmen Aktif</span>
+                                            <span class="hk-pill hk-pill-closed">Pendaftaran Ditutup</span>
                                         </div>
                                         <h3 class="hk-job-title">
                                             <a href="javascript:void(0)" onclick="switchView('single')">Staff Administrasi & Keuangan Junior (Fresh Graduate Welcome)</a>
@@ -459,14 +502,15 @@
                                 </div>
                                 <div class="hk-job-card-footer">
                                     <div class="hk-card-footer-info">
-                                        <span class="hk-post-time">2 hari lalu</span>
+                                        <span class="hk-post-time">5 hari lalu</span>
+                                        <span class="hk-deadline-tag hk-deadline-closed">🚫 Pendaftaran Ditutup</span>
                                     </div>
                                     <div class="hk-card-actions">
                                         <button type="button" class="hk-btn-bookmark" data-job-id="104" title="Simpan">
                                             <svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
                                         </button>
                                         <a href="javascript:void(0)" onclick="switchView('single')" class="hk-btn hk-btn-detail">Lihat Detail</a>
-                                        <a href="https://api.whatsapp.com/send?phone=6285712348899" target="_blank" class="hk-btn hk-btn-quick-apply hk-btn-wa">Lamar via WA</a>
+                                        <span class="hk-btn-closed-pill" title="Pendaftaran untuk lowongan ini telah ditutup">Ditutup</span>
                                     </div>
                                 </div>
                             </article>
@@ -1104,6 +1148,10 @@
             document.querySelectorAll('.hk-logo-icon').forEach(function(el){ el.style.fontSize = iconSize + 'px'; });
             document.querySelectorAll('.hk-site-title').forEach(function(el){ el.style.fontSize = titleSize + 'px'; });
             document.querySelectorAll('.hk-custom-logo img, .custom-logo').forEach(function(el){ el.style.maxHeight = val + 'px'; });
+        }
+
+        if (window.location.search.indexOf('screenshot') !== -1) {
+            document.body.classList.add('is-screenshot');
         }
     </script>
 </body>
