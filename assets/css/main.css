@@ -1152,6 +1152,18 @@ button, input, select, textarea {
     flex-shrink: 0;
 }
 
+.hk-single-company-logo .hk-company-logo-img {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--hk-radius-md);
+    object-fit: cover;
+    border: 1px solid var(--hk-border);
+}
+
+.hk-single-company-logo .hk-company-initials {
+    border-radius: var(--hk-radius-md);
+}
+
 .hk-single-header-details {
     flex: 1;
 }
