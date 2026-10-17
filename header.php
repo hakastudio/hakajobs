@@ -98,7 +98,7 @@
                         'depth'          => 2,
                     ));
                 } else {
-                    hakajobs_fallback_menu();
+                    hakajobs_fallback_menu(false);
                 }
                 ?>
             </nav>
@@ -114,10 +114,15 @@
                 <?php endif; ?>
 
                 <!-- Post Job CTA for Employers -->
+                <?php 
+                $show_cta = get_theme_mod('hakajobs_show_cta_btn', '1');
+                if ($show_cta === '1' && !empty($post_job_label)): 
+                ?>
                 <a href="<?php echo esc_url($post_job_url); ?>" class="hk-btn hk-btn-header-cta">
                     <svg class="hk-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     <span><?php echo esc_html($post_job_label); ?></span>
                 </a>
+                <?php endif; ?>
 
                 <!-- Mobile Hamburger Button -->
                 <button type="button" class="hk-mobile-menu-toggle" id="hk-mobile-toggle" aria-label="<?php esc_attr_e('Buka Menu', 'hakajobs'); ?>" aria-expanded="false" aria-controls="hk-mobile-drawer">
@@ -146,14 +151,19 @@
                     'depth'          => 2,
                 ));
             } else {
-                hakajobs_fallback_menu();
+                hakajobs_fallback_menu(true);
             }
+            ?>
+            <?php 
+            $show_cta = get_theme_mod('hakajobs_show_cta_btn', '1');
+            if ($show_cta === '1' && !empty($post_job_label)): 
             ?>
             <div class="hk-mobile-drawer-cta">
                 <a href="<?php echo esc_url($post_job_url); ?>" class="hk-btn hk-btn-primary hk-btn-block">
-                    + <?php _e('Pasang Info Lowongan Kerja', 'hakajobs'); ?>
+                    + <?php echo esc_html($post_job_label); ?>
                 </a>
             </div>
+            <?php endif; ?>
         </div>
     </div>
     <div class="hk-drawer-backdrop" id="hk-drawer-backdrop"></div>

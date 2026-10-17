@@ -221,6 +221,103 @@ function hakajobs_customize_register($wp_customize) {
         ),
     ));
 
+    // =========================================================================
+    // PENGATURAN MENU UTAMA BAWAAN (DEFAULT NAV MENU)
+    // =========================================================================
+    // Label Beranda
+    $wp_customize->add_setting('hakajobs_nav_home_label', array(
+        'default'           => __('Beranda', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_nav_home_label', array(
+        'type'        => 'text',
+        'label'       => __('Menu: Label [Beranda]', 'hakajobs'),
+        'description' => __('Label menu beranda bawaan. Kosongkan jika ingin disembunyikan.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Label Semua Lowongan
+    $wp_customize->add_setting('hakajobs_nav_all_label', array(
+        'default'           => __('Semua', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_nav_all_label', array(
+        'type'        => 'text',
+        'label'       => __('Menu: Label [Semua]', 'hakajobs'),
+        'description' => __('Label menu arsip lowongan. Contoh: "Semua", "Semua Lowongan", atau kosongkan.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Label Menu 3 (Magang)
+    $wp_customize->add_setting('hakajobs_nav_custom1_label', array(
+        'default'           => __('Magang (Internship)', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_nav_custom1_label', array(
+        'type'        => 'text',
+        'label'       => __('Menu: Label [Magang]', 'hakajobs'),
+        'description' => __('Label menu ketiga bawaan. Contoh: Magang (Internship).', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // URL Menu 3 (Magang)
+    $wp_customize->add_setting('hakajobs_nav_custom1_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_nav_custom1_url', array(
+        'type'        => 'url',
+        'label'       => __('Menu: URL [Magang]', 'hakajobs'),
+        'description' => __('Kosongkan untuk otomatis ke filter tipe Magang.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Label Menu 4 (Paruh Waktu)
+    $wp_customize->add_setting('hakajobs_nav_custom2_label', array(
+        'default'           => __('Paruh Waktu', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_nav_custom2_label', array(
+        'type'        => 'text',
+        'label'       => __('Menu: Label [Paruh Waktu]', 'hakajobs'),
+        'description' => __('Label menu keempat bawaan. Contoh: Paruh Waktu.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // URL Menu 4 (Paruh Waktu)
+    $wp_customize->add_setting('hakajobs_nav_custom2_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_nav_custom2_url', array(
+        'type'        => 'url',
+        'label'       => __('Menu: URL [Paruh Waktu]', 'hakajobs'),
+        'description' => __('Kosongkan untuk otomatis ke filter tipe Paruh Waktu.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Tampilkan Tombol Pasang Loker di Dalam Menu Navigasi
+    $wp_customize->add_setting('hakajobs_nav_show_post_job', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_nav_show_post_job', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Link [Pasang Loker] di Deretan Menu', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Tampilkan Tombol CTA di Kanan Header
+    $wp_customize->add_setting('hakajobs_show_cta_btn', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_show_cta_btn', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Tombol CTA [Pasang Loker] di Pojok Kanan Header', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
     // Teks Tombol CTA Header
     $wp_customize->add_setting('hakajobs_post_job_label', array(
         'default'           => __('Pasang Loker', 'hakajobs'),
@@ -229,7 +326,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_post_job_label', array(
         'type'        => 'text',
-        'label'       => __('Teks Tombol CTA Header', 'hakajobs'),
+        'label'       => __('Teks Tombol CTA Header [Pasang Loker]', 'hakajobs'),
         'description' => __('Label tombol di pojok kanan header. Contoh: "Pasang Loker", "Hubungi Admin".', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));

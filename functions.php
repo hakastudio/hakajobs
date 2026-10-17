@@ -253,21 +253,38 @@ function hakajobs_filter_job_query($query) {
 add_action('pre_get_posts', 'hakajobs_filter_job_query');
 
 /**
- * Fallback Menu
+ * Fallback Menu (dapat diatur via Customizer jika belum menggunakan Tampilan > Menu)
+ *
+ * @param bool $is_mobile
  */
-function hakajobs_fallback_menu() {
-    echo '<ul class="hk-nav-list">';
-    echo '<li><a href="' . esc_url(home_url('/')) . '">' . __('Beranda', 'hakajobs') . '</a></li>';
-    echo '<li><a href="' . esc_url(get_post_type_archive_link('lowongan')) . '">' . __('Semua Lowongan', 'hakajobs') . '</a></li>';
-    
-    // Quick terms
-    $terms = get_terms(array('taxonomy' => 'tipe_pekerjaan', 'number' => 2, 'hide_empty' => false));
-    if (!empty($terms) && !is_wp_error($terms)) {
-        foreach ($terms as $t) {
-            echo '<li><a href="' . esc_url(get_term_link($t)) . '">' . esc_html($t->name) . '</a></li>';
-        }
+function hakajobs_fallback_menu($is_mobile = false) {
+    $class      = $is_mobile ? 'hk-mobile-nav-list' : 'hk-nav-list';
+    $home_label = get_theme_mod('hakajobs_nav_home_label', __('Beranda', 'hakajobs'));
+    $all_label  = get_theme_mod('hakajobs_nav_all_label', __('Semua', 'hakajobs'));
+    $c1_label   = get_theme_mod('hakajobs_nav_custom1_label', __('Magang (Internship)', 'hakajobs'));
+    $c1_url     = get_theme_mod('hakajobs_nav_custom1_url', get_post_type_archive_link('lowongan') . '?tipe=magang');
+    $c2_label   = get_theme_mod('hakajobs_nav_custom2_label', __('Paruh Waktu', 'hakajobs'));
+    $c2_url     = get_theme_mod('hakajobs_nav_custom2_url', get_post_type_archive_link('lowongan') . '?tipe=paruh-waktu');
+    $post_label = get_theme_mod('hakajobs_post_job_label', __('Pasang Loker', 'hakajobs'));
+    $post_url   = get_theme_mod('hakajobs_post_job_url', home_url('/pasang-loker/'));
+    $show_post  = get_theme_mod('hakajobs_nav_show_post_job', '1');
+
+    echo '<ul class="' . esc_attr($class) . '">';
+    if (!empty($home_label)) {
+        echo '<li><a href="' . esc_url(home_url('/')) . '">' . esc_html($home_label) . '</a></li>';
     }
-    echo '<li><a href="' . esc_url(home_url('/pasang-loker/')) . '" class="hk-menu-highlight">' . __('Pasang Loker', 'hakajobs') . '</a></li>';
+    if (!empty($all_label)) {
+        echo '<li><a href="' . esc_url(get_post_type_archive_link('lowongan')) . '">' . esc_html($all_label) . '</a></li>';
+    }
+    if (!empty($c1_label) && !empty($c1_url)) {
+        echo '<li><a href="' . esc_url($c1_url) . '">' . esc_html($c1_label) . '</a></li>';
+    }
+    if (!empty($c2_label) && !empty($c2_url)) {
+        echo '<li><a href="' . esc_url($c2_url) . '">' . esc_html($c2_label) . '</a></li>';
+    }
+    if ($show_post === '1' && !empty($post_label) && !empty($post_url)) {
+        echo '<li><a href="' . esc_url($post_url) . '" class="hk-menu-highlight">' . esc_html($post_label) . '</a></li>';
+    }
     echo '</ul>';
 }
 
