@@ -67,12 +67,36 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
                         <p class="hk-footer-subtext">
                             <?php echo esc_html($footer_about); ?>
                         </p>
-                        <div class="hk-social-pills">
-                            <span class="hk-social-label"><?php _e('Bagikan Info Loker:', 'hakajobs'); ?></span>
-                            <a href="https://api.whatsapp.com/send?text=<?php echo rawurlencode(get_bloginfo('name') . ' - Portal Info Lowongan Kerja Terupdate: ' . home_url()); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="WhatsApp">WA</a>
-                            <a href="https://t.me/share/url?url=<?php echo rawurlencode(home_url()); ?>&text=<?php echo rawurlencode(get_bloginfo('name') . ' Info Loker'); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="Telegram">TG</a>
-                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo rawurlencode(home_url()); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="LinkedIn">IN</a>
-                        </div>
+                        <?php
+                        $show_share        = get_theme_mod('hakajobs_show_footer_share', '1');
+                        $share_label       = get_theme_mod('hakajobs_footer_share_label', __('Bagikan Info Loker:', 'hakajobs'));
+                        $share_wa          = get_theme_mod('hakajobs_footer_share_wa', '1');
+                        $share_tg          = get_theme_mod('hakajobs_footer_share_tg', '1');
+                        $share_in          = get_theme_mod('hakajobs_footer_share_in', '1');
+                        $share_fb          = get_theme_mod('hakajobs_footer_share_fb', '0');
+                        $share_text_custom = get_theme_mod('hakajobs_footer_share_text', '');
+                        $site_url          = home_url('/');
+                        $share_text        = !empty($share_text_custom) ? $share_text_custom : (get_bloginfo('name') . ' - Portal Info Lowongan Kerja Terupdate: ' . $site_url);
+                        ?>
+                        <?php if ($show_share === '1'): ?>
+                            <div class="hk-social-pills">
+                                <?php if (!empty($share_label)): ?>
+                                    <span class="hk-social-label"><?php echo esc_html($share_label); ?></span>
+                                <?php endif; ?>
+                                <?php if ($share_wa === '1'): ?>
+                                    <a href="https://api.whatsapp.com/send?text=<?php echo rawurlencode($share_text); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="WhatsApp">WA</a>
+                                <?php endif; ?>
+                                <?php if ($share_tg === '1'): ?>
+                                    <a href="https://t.me/share/url?url=<?php echo rawurlencode($site_url); ?>&text=<?php echo rawurlencode(!empty($share_text_custom) ? $share_text_custom : (get_bloginfo('name') . ' Info Loker')); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="Telegram">TG</a>
+                                <?php endif; ?>
+                                <?php if ($share_in === '1'): ?>
+                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo rawurlencode($site_url); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="LinkedIn">IN</a>
+                                <?php endif; ?>
+                                <?php if ($share_fb === '1'): ?>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo rawurlencode($site_url); ?>" target="_blank" rel="noopener noreferrer" class="hk-social-pill" title="Facebook">FB</a>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
 

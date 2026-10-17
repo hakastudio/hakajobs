@@ -92,9 +92,9 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
    - Atur label & URL dua tautan cepat di bilah pengumuman atas.
 3. **📢 Bilah Pengumuman (Topbar):** Tampilkan/sembunyikan topbar, ganti teks badge (contoh: *Terverifikasi*), dan ganti pesan pengumuman utama.
 4. **⬆️ Tombol Kembali ke Atas (Back to Top):** Tombol melayang di pojok kanan bawah yang muncul otomatis saat scroll, lengkap dengan kontrol warna tombol.
-5. **🏠 Halaman Beranda & Cara Melamar:** Atur judul H1 hero, subjudul, placeholder pencarian, tombol cari, serta kustomisasi lengkap judul/subjudul blok "Cara Melamar Kerja" (otomatis mengikuti nama situs Anda atau kustom) dan detail 3 langkah melamar.
+5. **🏠 Halaman Beranda & Cara Melamar:** Atur judul H1 hero, subjudul, placeholder pencarian, tombol cari, judul & subjudul Lowongan Sorotan/Spotlight berorientasi CTA (contoh: *🔥 Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera*), serta kustomisasi lengkap blok "Cara Melamar Kerja" (otomatis mengikuti nama situs Anda atau kustom) dan detail 3 langkah melamar.
 6. **🛡️ Peringatan Anti Penipuan:** Tampilkan/sembunyikan banner anti-penipuan di atas footer, ubah judul & isi peringatan rekrutmen.
-7. **📋 Footer & Hak Cipta:** Ubah paragraf "Tentang Kami" footer dan teks hak cipta/copyright kustom.
+7. **📋 Footer & Hak Cipta:** Ubah paragraf "Tentang Kami" footer, teks hak cipta/copyright kustom, serta pengaturan lengkap tombol **"Bagikan Info Loker"** (aktifkan/nonaktifkan tombol WhatsApp, Telegram, LinkedIn, Facebook, ubah label teks, dan kustomisasi format pesan share).
 8. **🔍 SEO & Verifikasi Mesin Pencari:**
    - Aktifkan mesin SEO otomatis (Meta Description dinamis, Canonical URL, Open Graph untuk WhatsApp/Facebook, Twitter Cards, robots indexing tag).
    - Kolom verifikasi resmi Google Search Console dan Bing Webmaster Tools.

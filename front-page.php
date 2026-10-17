@@ -118,13 +118,20 @@ $hero_search_btn   = get_theme_mod('hakajobs_hero_search_btn', __('Cari Lowongan
     ?>
     <section class="hk-spotlight-section">
         <div class="hk-container">
+            <?php
+            $featured_title = get_theme_mod('hakajobs_featured_section_title', __('🔥 Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera', 'hakajobs'));
+            $featured_sub   = get_theme_mod('hakajobs_featured_section_subtitle', __('Peluang karir terbaik dengan respon rekrutmen tercepat. Kirim lamaranmu sebelum kuota penuh!', 'hakajobs'));
+            $featured_link  = get_theme_mod('hakajobs_featured_section_link_text', __('Lihat Semua', 'hakajobs'));
+            ?>
             <div class="hk-section-header">
                 <div>
-                    <h2 class="hk-section-title">🔥 <?php _e('Lowongan Sorotan & Dibutuhkan Segera', 'hakajobs'); ?></h2>
-                    <p class="hk-section-subtitle"><?php _e('Peluang kerja prioritas dengan proses rekrutmen aktif minggu ini.', 'hakajobs'); ?></p>
+                    <h2 class="hk-section-title"><?php echo esc_html($featured_title); ?></h2>
+                    <?php if (!empty($featured_sub)): ?>
+                        <p class="hk-section-subtitle"><?php echo esc_html($featured_sub); ?></p>
+                    <?php endif; ?>
                 </div>
                 <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" class="hk-link-arrow">
-                    <?php _e('Lihat Semua', 'hakajobs'); ?> &rarr;
+                    <?php echo esc_html($featured_link); ?> &rarr;
                 </a>
             </div>
 

@@ -525,6 +525,41 @@ function hakajobs_customize_register($wp_customize) {
         'section' => 'hakajobs_hero_section',
     ));
 
+    // --- Sub-bagian: Lowongan Sorotan & Dibutuhkan Segera (Spotlight) ---
+    $wp_customize->add_setting('hakajobs_featured_section_title', array(
+        'default'           => __('🔥 Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_featured_section_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Bagian Lowongan Sorotan (CTA)', 'hakajobs'),
+        'description' => __('Gunakan kata-kata aksi/CTA yang memikat pelamar untuk segera melamar lowongan prioritas.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_featured_section_subtitle', array(
+        'default'           => __('Peluang karir terbaik dengan respon rekrutmen tercepat. Kirim lamaranmu sebelum kuota penuh!', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_featured_section_subtitle', array(
+        'type'        => 'textarea',
+        'label'       => __('Subjudul Bagian Lowongan Sorotan', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_featured_section_link_text', array(
+        'default'           => __('Lihat Semua', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_featured_section_link_text', array(
+        'type'        => 'text',
+        'label'       => __('Teks Tautan "Lihat Semua"', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
     // --- Sub-bagian: Panduan Cara Melamar Kerja ---
     $wp_customize->add_setting('hakajobs_show_how_it_works', array(
         'default'           => '1',
@@ -747,6 +782,82 @@ function hakajobs_customize_register($wp_customize) {
         'type'        => 'text',
         'label'       => __('Teks Hak Cipta Custom', 'hakajobs'),
         'description' => __('Kosongkan untuk default: © [Tahun] [Nama Situs]. Hak Cipta Dilindungi.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    // Bagikan Info Loker (Footer Social Share Pills)
+    $wp_customize->add_setting('hakajobs_show_footer_share', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_show_footer_share', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bagian "Bagikan Info Loker"', 'hakajobs'),
+        'description' => __('Tombol berbagi ke WhatsApp, Telegram, LinkedIn, dan Facebook di kolom 1 footer.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_share_label', array(
+        'default'           => __('Bagikan Info Loker:', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_footer_share_label', array(
+        'type'        => 'text',
+        'label'       => __('Label Teks "Bagikan Info Loker"', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_share_wa', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_footer_share_wa', array(
+        'type'    => 'checkbox',
+        'label'   => __('Aktifkan Tombol WhatsApp (WA)', 'hakajobs'),
+        'section' => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_share_tg', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_footer_share_tg', array(
+        'type'    => 'checkbox',
+        'label'   => __('Aktifkan Tombol Telegram (TG)', 'hakajobs'),
+        'section' => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_share_in', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_footer_share_in', array(
+        'type'    => 'checkbox',
+        'label'   => __('Aktifkan Tombol LinkedIn (IN)', 'hakajobs'),
+        'section' => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_share_fb', array(
+        'default'           => '0',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_footer_share_fb', array(
+        'type'    => 'checkbox',
+        'label'   => __('Aktifkan Tombol Facebook (FB)', 'hakajobs'),
+        'section' => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_share_text', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_footer_share_text', array(
+        'type'        => 'text',
+        'label'       => __('Pesan Kustom Saat Dibagikan', 'hakajobs'),
+        'description' => __('Kosongkan untuk otomatis: "[Nama Situs] - Portal Info Lowongan Kerja Terupdate: [URL Situs]".', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
