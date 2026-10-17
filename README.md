@@ -197,6 +197,120 @@ Karena tema ini dirancang **tanpa sistem login/registrasi pengguna luar**, tombo
 
 ---
 
+## 🖼️ Panduan Ukuran & Format Logo Lowongan
+
+Untuk memastikan tampilan kartu lowongan terlihat proporsional dan memenuhi standar Google Rich Results:
+
+| Parameter | Rekomendasi | Keterangan |
+| :--- | :--- | :--- |
+| **Rasio Gambar** | **1:1 (Persegi / Square)** | Wajib rasio 1:1 agar logo tidak terdistorsi atau terpotong saat dipotong membulat |
+| **Dimensi Ideal** | **`512 x 512 px`** | Resolusi paling tajam di layar Retina / smartphone modern |
+| **Dimensi Minimal** | **`256 x 256 px`** | Batas minimal yang dianjurkan (Google Jobs mewajibkan min. `112 x 112 px`) |
+| **Format File** | **PNG Transparan** atau **WebP / JPG** | PNG dengan background transparan atau putih bersih sangat disarankan |
+| **Ukuran Berkas** | **< 150 KB** | Kompres gambar agar loading halaman tetap super cepat |
+
+### Di mana Logo Perusahaan Ditampilkan?
+1. **Daftar Lowongan (Job Card / Halaman Depan / Arsip):** Ditampilkan otomatis pada dimensi **`52 x 52 px`**.
+2. **Detail Lowongan (Single Job Header):** Ditampilkan otomatis pada dimensi **`80 x 80 px`**.
+3. **Google Schema `JobPosting`:** Diinput otomatis ke atribut `hiringOrganization.logo` untuk memunculkan logo perusahaan di cuplikan pencarian Google for Jobs.
+4. **Fallback Otomatis (Tanpa Upload):** Jika gambar logo tidak diunggah, Hakajobs secara otomatis membuatkan avatar inisial nama perusahaan berbasis teks dengan palet warna pastel yang menarik.
+
+---
+
+## ✍️ Standar Penulisan Artikel Lowongan Kerja (SEO & Google Jobs Friendly)
+
+Agar lowongan kerja cepat diindeks Google, lolos kurasi Google Jobs, dan nyaman dibaca pelamar melalui ponsel:
+
+### 1. Format Judul Tulisan (Title)
+Gunakan format yang jelas, padat, dan mencantumkan posisi kerja utama:
+* **Pola:** `[Nama Posisi Pekerjaan] – [Nama Perusahaan] – [Kota/Lokasi]`
+* **Contoh:**
+  - `Customer Service WhatsApp – PT Sinar Abadi – Surabaya`
+  - `Admin Gudang & Logistik – CV Maju Jaya – Jakarta Barat`
+  - `Content Creator TikTok – Remote Indonesia`
+* *Tips:* Hindari kata clickbait berlebihan (seperti *"HOT LOKER CEPAT LAMAR"*) karena bot Google for Jobs membaca judul murni sebagai nama jabatan resmi (`title`).
+
+### 2. Pengisian Kolom Meta Box Lowongan (Wajib Diisi)
+* **Nama Perusahaan:** Masukkan nama resmi PT/CV/Brand.
+* **Website Perusahaan:** (Opsional) URL situs resmi perusahaan.
+* **Lokasi & Alamat:** Tulis alamat lengkap kantor/penempatan.
+* **Rentang Gaji:** Contoh: `Rp 4.500.000 - Rp 6.000.000` atau `Kompetitif`. *(Lowongan dengan nominal gaji mendapat klik hingga 2x lebih tinggi di Google Jobs)*.
+* **Batas Waktu Lamaran (Deadline):** Pilih tanggal berakhirnya lowongan agar badge hitung mundur aktif dan parameter `validThrough` otomatis tersinkronisasi ke Schema Google.
+* **Metode Lamaran:**
+  - WhatsApp HRD (format `628xxxxxxxxxx` langsung tanpa spasi/simbol)
+  - Email Lamaran (contoh: `karir@perusahaan.com`)
+  - Link Eksternal (Google Form / Portal Karir Resmi)
+
+### 3. Struktur Template Isi Konten (Content Body)
+Gunakan heading H2/H3 dan bullet list (`ul` / `li`) seperti pola berikut:
+
+```markdown
+## Tentang Perusahaan
+[1-2 paragraf singkat profil perusahaan, bidang usaha, dan budaya kerja]
+
+## Deskripsi Pekerjaan (Job Description)
+- Mengelola pesanan pelanggan yang masuk melalui WhatsApp dan marketplace.
+- Melakukan follow-up pembayaran dan menjawab pertanyaan seputar produk secara ramah.
+- Berkoordinasi dengan tim operasional dan logistik untuk kelancaran pengiriman barang.
+
+## Kualifikasi & Persyaratan (Requirements)
+- Pria / Wanita, usia maksimal 28 tahun.
+- Pendidikan minimal SMA / SMK / D3 / S1 semua jurusan.
+- Pengalaman minimal 1 tahun di posisi Customer Service (fresh graduate dipersilakan melamar).
+- Memiliki kemampuan komunikasi yang baik dan mampu mengetik dengan cepat.
+- Bersedia bekerja dalam sistem shifting di kantor Surabaya.
+
+## Benefit & Fasilitas
+- Gaji Pokok + Tunjangan Makan & Transport.
+- Bonus performa bulanan & reward tahunan.
+- BPJS Ketenagakerjaan & Kesehatan.
+
+## Cara Melamar
+Kirimkan berkas lamaran berupa Surat Lamaran, CV terbaru, dan Portofolio ke kontak HRD yang tertera pada tombol di bawah sebelum tanggal batas waktu berakhir.
+```
+
+---
+
+## ⚙️ Panduan Pengaturan Rank Math SEO untuk Hakajobs
+
+Tema Hakajobs sudah dilengkapi dengan **Fast-Indexing Engine** dan **Schema `JobPosting` JSON-LD** bawaan. Tema mendeteksi plugin Rank Math secara otomatis agar tidak terjadi konflik duplikasi meta tag.
+
+Berikut langkah konfigurasi Rank Math yang direkomendasikan:
+
+### 1. Pengaturan Judul & Meta (`Rank Math` > `Titles & Meta` > `Lowongan`)
+* **Single Lowongan Title:**
+  ```text
+  %title% %sep% %sitename%
+  ```
+* **Single Lowongan Description:**
+  ```text
+  Info lowongan kerja %title% terbaru. Cek persyaratan, rentang gaji, lokasi kerja, dan kirim lamaran langsung ke HRD via WhatsApp/Email.
+  ```
+* **Schema Type (Tipe Schema):**
+  - **Rekomendasi:** Pilih **None (Nonaktifkan Schema di Rank Math khusus post type Lowongan)**.
+  - *Alasan:* Hakajobs sudah menyematkan script Schema JSON-LD `JobPosting` bawaan yang sudah terhubung langsung ke meta box (tipe pekerjaan `FULL_TIME`/`PART_TIME`/`INTERN`, nominal gaji, deadline `validThrough`, logo perusahaan, dan alamat lokasi penempatan).
+
+### 2. Pengaturan Peta Situs (`Rank Math` > `Sitemap Settings`)
+* **Post Types:**
+  - `Lowongan`: Pastikan **Include in Sitemap = ON**.
+* **Taxonomies:**
+  - `Kategori Loker` (`kategori_lowongan`): **Include in Sitemap = ON**
+  - `Lokasi Loker` (`lokasi_lowongan`): **Include in Sitemap = ON**
+  - `Tipe Pekerjaan` (`tipe_pekerjaan`): **Include in Sitemap = ON**
+  *(Membuat Google mengindeks ribuan halaman kategori profesi dan arsip kota secara menyeluruh)*.
+
+### 3. Aktifkan Fitur IndexNow (Instant Indexing)
+* Masuk ke **Rank Math Dashboard** > aktifkan modul **Instant Indexing**.
+* Setiap kali admin mempublikasikan lowongan baru atau memperbarui info loker, Rank Math akan langsung mengirimkan sinyal ping API ke mesin pencari (Bing, Yandex, IndexNow) agar langsung di-crawl dalam hitungan menit tanpa menunggu antrean rutin.
+
+### 4. Menentukan Focus Keyword pada Loker
+Saat menyunting artikel lowongan kerja, masukkan kata kunci yang spesifik dengan intensi pencarian kerja lokal, misalnya:
+- `Lowongan Admin Jakarta`
+- `Loker CS WhatsApp Surabaya`
+- `Lowongan Kerja Barista Bandung`
+
+---
+
 ## 🔄 Pembaruan Tema Otomatis (GitHub Releases)
 
 Tema **Hakajobs** sudah dilengkapi dengan engine pembaruan otomatis bawaan menggunakan library **Plugin Update Checker (PUC)** yang terhubung langsung ke GitHub Releases.
