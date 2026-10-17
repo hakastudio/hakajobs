@@ -172,8 +172,29 @@ button, input, select, textarea {
     border-bottom: 1px solid var(--hk-border);
     position: sticky;
     top: 0;
-    z-index: 50;
-    box-shadow: var(--hk-shadow-sm);
+    z-index: 500;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.hk-site-header.is-scrolled {
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.10);
+    border-bottom-color: rgba(226, 232, 240, 0.85);
+}
+
+/* WP Admin Bar Compatibility for Sticky Header */
+.admin-bar .hk-site-header {
+    top: 32px;
+}
+@media (max-width: 782px) {
+    .admin-bar .hk-site-header {
+        top: 46px;
+    }
+}
+@media (max-width: 600px) {
+    .admin-bar .hk-site-header {
+        top: 0;
+    }
 }
 
 .hk-header-inner {
@@ -2657,47 +2678,243 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
+    /* Header & Navigation on Mobile */
+    .hk-header-inner {
+        height: 60px;
+        gap: 10px;
+    }
+    .hk-site-branding {
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+    }
+    .hk-site-logo-link {
+        gap: 8px;
+        min-width: 0;
+    }
+    .hk-logo-icon {
+        font-size: 22px;
+        flex-shrink: 0;
+    }
+    .hk-site-title {
+        font-size: 17px;
+        font-weight: 800;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .hk-site-tagline {
+        display: none !important;
+    }
     .hk-main-navigation,
     .hk-btn-header-cta {
         display: none;
     }
+    .hk-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+    .hk-btn-saved-trigger {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        min-height: 42px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #ffffff;
+        border: 1px solid var(--hk-border);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        position: relative;
+    }
     .hk-mobile-menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        min-height: 42px;
+        padding: 0;
+        border-radius: 10px;
+        border: 1px solid var(--hk-border);
+        background: #ffffff;
+        cursor: pointer;
+        gap: 4.5px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    .hk-mobile-menu-toggle:active {
+        background-color: #f1f5f9;
+        transform: scale(0.96);
+    }
+    .hk-hamburger-line {
         display: block;
+        width: 20px;
+        height: 2.5px;
+        background-color: #0f172a !important;
+        margin: 0 !important;
+        border-radius: 3px;
+        transition: all 0.2s ease;
+    }
+
+    /* Topbar on Mobile */
+    .hk-topbar {
+        padding: 6px 0;
+        font-size: 11px;
+    }
+    .hk-topbar-inner {
+        justify-content: center;
+        text-align: center;
+    }
+    .hk-topbar-left {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
     }
     .hk-topbar-right {
         display: none;
     }
-    .hk-hero-title {
-        font-size: 26px;
-    }
+
+    /* Hero Section on Mobile */
     .hk-hero-section.hk-hero-pasangloker-theme {
-        padding: 48px 0 0;
+        padding: 36px 0 0;
     }
-    .hk-hero-stats {
-        padding: 12px 14px;
-        gap: 4px;
-        margin-top: 24px;
-        margin-bottom: 16px;
-        border-radius: 12px;
-    }
-    .hk-stat-item {
-        padding: 0 10px;
-    }
-    .hk-stat-num {
-        font-size: 20px;
-    }
-    .hk-stat-label {
+    .hk-hero-badge {
         font-size: 11px;
+        padding: 3px 10px;
+        margin-bottom: 12px;
     }
-    .hk-hero-wave svg {
-        height: 32px;
+    .hk-hero-title {
+        font-size: 24px;
+        line-height: 1.25;
+        margin-bottom: 10px;
+    }
+    .hk-hero-subtitle {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 18px;
+        padding: 0 4px;
+    }
+    .hk-hero-search-box {
+        padding: 8px;
+        border-radius: 14px;
+        margin-bottom: 16px;
     }
     .hk-search-field-group {
         grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .hk-search-field {
+        height: 46px;
+        border-radius: 10px;
+    }
+    /* Prevent iOS auto-zoom on mobile inputs */
+    .hk-search-field input,
+    .hk-search-field select,
+    .hk-filter-select,
+    .hk-form-control,
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    select {
+        font-size: 16px !important;
     }
     .hk-search-submit-btn {
         grid-column: span 1;
+        height: 46px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 700;
     }
+    .hk-quick-filters {
+        gap: 6px;
+    }
+    .hk-chip {
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+    .hk-hero-stats {
+        padding: 10px 12px;
+        gap: 4px;
+        margin-top: 20px;
+        margin-bottom: 14px;
+        border-radius: 12px;
+    }
+    .hk-stat-item {
+        padding: 0 8px;
+    }
+    .hk-stat-num {
+        font-size: 18px;
+    }
+    .hk-stat-label {
+        font-size: 10px;
+    }
+    .hk-hero-wave svg {
+        height: 28px;
+    }
+
+    /* Section Headers */
+    .hk-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .hk-section-title {
+        font-size: 20px;
+    }
+
+    /* Job Cards & Grid on Mobile */
+    .hk-jobs-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .hk-job-card {
+        padding: 16px 14px;
+        border-radius: 12px;
+    }
+    .hk-job-card-top {
+        gap: 12px;
+    }
+    .hk-company-logo-img,
+    .hk-company-initials {
+        width: 44px;
+        height: 44px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+    .hk-job-title {
+        font-size: 15px;
+        margin-bottom: 6px;
+    }
+    .hk-job-meta-row {
+        gap: 6px 10px;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+    .hk-badges-group {
+        gap: 5px;
+    }
+    .hk-badge {
+        font-size: 10px;
+        padding: 2px 7px;
+    }
+    .hk-job-card-footer {
+        padding-top: 10px;
+        margin-top: 10px;
+        gap: 8px;
+    }
+    .hk-card-footer-info {
+        font-size: 11px;
+    }
+
+    /* Footer on Mobile */
     .hk-footer-grid {
         grid-template-columns: 1fr;
         gap: 24px;
@@ -2707,6 +2924,8 @@ button, input, select, textarea {
         gap: 8px;
         text-align: center;
     }
+
+    /* Single Job Page on Mobile */
     .hk-single-header-top {
         flex-direction: column;
         align-items: center;
@@ -2723,19 +2942,63 @@ button, input, select, textarea {
     }
     .hk-mobile-sticky-bar {
         display: flex;
+        z-index: 400;
+        padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
     }
     .hk-single-job-page {
-        padding-bottom: 90px;
+        padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
     }
     .hk-back-to-top {
-        bottom: 24px;
-        right: 18px;
+        bottom: 20px;
+        right: 16px;
         width: 42px;
         height: 42px;
+        z-index: 300;
     }
     .hk-single-job-page ~ .hk-back-to-top,
-    .hk-site-wrapper:has(#hk-mobile-sticky-bar) .hk-back-to-top {
-        bottom: 80px;
+    .hk-site-wrapper:has(#hk-mobile-sticky-bar) .hk-back-to-top,
+    body.single-lowongan .hk-back-to-top {
+        bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    }
+
+    /* Mobile Drawer */
+    .hk-mobile-drawer {
+        width: min(320px, 86vw);
+        z-index: 1200;
+    }
+    .hk-drawer-backdrop {
+        z-index: 1150;
+    }
+}
+
+@media (max-width: 480px) {
+    .hk-container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+    .hk-hero-title {
+        font-size: 21px;
+    }
+    .hk-stat-item {
+        padding: 0 4px;
+    }
+    .hk-stat-num {
+        font-size: 16px;
+    }
+    .hk-stat-label {
+        font-size: 9.5px;
+    }
+    .hk-stat-sep {
+        height: 24px;
+    }
+    .hk-hero-search-box {
+        padding: 6px;
+    }
+    .hk-job-card {
+        padding: 14px 12px;
+    }
+    .hk-card-company {
+        max-width: 140px;
     }
 }
 

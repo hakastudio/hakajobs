@@ -346,24 +346,41 @@ document.addEventListener('DOMContentLoaded', function () {
             .replace(/'/g, '&#039;');
     }
 
-    // Back to Top Button Logic
+    // Sticky Header & Back to Top Scroll Logic
+    var siteHeader = document.getElementById('hk-masthead') || document.querySelector('.hk-site-header');
     var backToTopBtn = document.getElementById('hk-back-to-top');
-    if (backToTopBtn) {
-        var isScrolling = false;
-        window.addEventListener('scroll', function () {
-            if (!isScrolling) {
-                window.requestAnimationFrame(function () {
-                    if (window.scrollY > 300) {
+    var isScrolling = false;
+
+    window.addEventListener('scroll', function () {
+        if (!isScrolling) {
+            window.requestAnimationFrame(function () {
+                var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+                // Header scrolled class
+                if (siteHeader) {
+                    if (scrollY > 15) {
+                        siteHeader.classList.add('is-scrolled');
+                    } else {
+                        siteHeader.classList.remove('is-scrolled');
+                    }
+                }
+
+                // Back to Top visibility
+                if (backToTopBtn) {
+                    if (scrollY > 280) {
                         backToTopBtn.classList.add('is-visible');
                     } else {
                         backToTopBtn.classList.remove('is-visible');
                     }
-                    isScrolling = false;
-                });
-                isScrolling = true;
-            }
-        }, { passive: true });
+                }
 
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    }, { passive: true });
+
+    if (backToTopBtn) {
         backToTopBtn.addEventListener('click', function (e) {
             e.preventDefault();
             window.scrollTo({

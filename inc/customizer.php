@@ -1366,6 +1366,19 @@ function hakajobs_customizer_css() {
             top: 0;
             z-index: 500;
         }
+        .admin-bar .hk-site-header {
+            top: 32px;
+        }
+        @media (max-width: 782px) {
+            .admin-bar .hk-site-header {
+                top: 46px;
+            }
+        }
+        @media (max-width: 600px) {
+            .admin-bar .hk-site-header {
+                top: 0;
+            }
+        }
         <?php else: ?>
         .hk-site-header {
             position: relative;
