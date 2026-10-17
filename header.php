@@ -26,12 +26,13 @@
     $logo_icon        = get_theme_mod('hakajobs_logo_icon', '💼');
     $show_tagline     = get_theme_mod('hakajobs_show_tagline', '1');
     $show_bookmark    = get_theme_mod('hakajobs_show_bookmark_btn', '1');
-    $link1_label      = get_theme_mod('hakajobs_menu_link1_label', __('Loker Remote / WFH', 'hakajobs'));
-    $link1_url        = get_theme_mod('hakajobs_menu_link1_url', get_post_type_archive_link('lowongan') . '?tipe=remote');
-    $link2_label      = get_theme_mod('hakajobs_menu_link2_label', __('Fresh Graduate', 'hakajobs'));
-    $link2_url        = get_theme_mod('hakajobs_menu_link2_url', get_post_type_archive_link('lowongan') . '?pengalaman=fresh-graduate');
+    $link1_label      = get_theme_mod('hakajobs_menu_link1_label', '');
+    $link1_url        = get_theme_mod('hakajobs_menu_link1_url', '');
+    $link2_label      = get_theme_mod('hakajobs_menu_link2_label', '');
+    $link2_url        = get_theme_mod('hakajobs_menu_link2_url', '');
+    $has_topbar_content = (!empty($topbar_badge) || !empty($topbar_text) || !empty($link1_url) || !empty($link2_url));
     ?>
-    <?php if ($show_topbar === '1'): ?>
+    <?php if ($show_topbar === '1' && $has_topbar_content): ?>
     <div class="hk-topbar">
         <div class="hk-container hk-topbar-inner">
             <?php if (!empty($topbar_badge) || !empty($topbar_text)): ?>
@@ -44,6 +45,7 @@
                 <?php endif; ?>
             </div>
             <?php endif; ?>
+            <?php if (!empty($link1_url) || !empty($link2_url)): ?>
             <div class="hk-topbar-right">
                 <?php if (!empty($link1_url)): ?>
                 <a href="<?php echo esc_url($link1_url); ?>" class="hk-topbar-link">
@@ -59,6 +61,7 @@
                 </a>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
         </div>
     </div>
     <?php endif; ?>

@@ -261,13 +261,13 @@ function hakajobs_customize_register($wp_customize) {
 
     // Topbar Quick Link 1
     $wp_customize->add_setting('hakajobs_menu_link1_label', array(
-        'default'           => __('Loker Remote / WFH', 'hakajobs'),
+        'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('hakajobs_menu_link1_label', array(
         'type'        => 'text',
         'label'       => __('Topbar — Teks Link Cepat 1', 'hakajobs'),
-        'description' => __('Tautan cepat pertama di bilah pengumuman (topbar).', 'hakajobs'),
+        'description' => __('Tautan cepat pertama di bilah pengumuman (opsional).', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
     $wp_customize->add_setting('hakajobs_menu_link1_url', array(
@@ -282,7 +282,7 @@ function hakajobs_customize_register($wp_customize) {
 
     // Topbar Quick Link 2
     $wp_customize->add_setting('hakajobs_menu_link2_label', array(
-        'default'           => __('Fresh Graduate', 'hakajobs'),
+        'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('hakajobs_menu_link2_label', array(
