@@ -1,0 +1,762 @@
+<?php
+/**
+ * Theme Customizer Settings for Hakajobs
+ *
+ * Panel: 🎨 Penyesuaian Tema Hakajobs
+ *  ├─ Section 1 : Skema Warna & Branding
+ *  ├─ Section 2 : Header & Navigasi Menu
+ *  ├─ Section 3 : Bilah Pengumuman (Topbar)
+ *  ├─ Section 4 : Tombol Kembali ke Atas
+ *  ├─ Section 5 : Halaman Beranda (Hero)
+ *  ├─ Section 6 : Peringatan Anti Penipuan
+ *  └─ Section 7 : Footer & Hak Cipta
+ *
+ * @package Hakajobs
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Register Customizer Settings and Controls
+ */
+function hakajobs_customize_register($wp_customize) {
+
+    // =========================================================================
+    // PANEL UTAMA
+    // =========================================================================
+    $wp_customize->add_panel('hakajobs_theme_options', array(
+        'title'       => __('🎨 Penyesuaian Tema Hakajobs', 'hakajobs'),
+        'description' => __('Atur warna, header, navigasi, hero, dan semua teks tema dari sini.', 'hakajobs'),
+        'priority'    => 20,
+    ));
+
+    // =========================================================================
+    // SECTION 1 — WARNA & BRANDING
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_color_section', array(
+        'title'    => __('🎨 Skema Warna & Branding', 'hakajobs'),
+        'panel'    => 'hakajobs_theme_options',
+        'priority' => 10,
+    ));
+
+    $wp_customize->add_setting('hakajobs_primary_color', array(
+        'default'           => '#0284c7',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_primary_color', array(
+        'label'       => __('Warna Utama (Tombol, Link Aktif)', 'hakajobs'),
+        'description' => __('Warna dominan tema — tombol, link, dan elemen sorotan.', 'hakajobs'),
+        'section'     => 'hakajobs_color_section',
+    )));
+
+    $wp_customize->add_setting('hakajobs_primary_hover_color', array(
+        'default'           => '#0369a1',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_primary_hover_color', array(
+        'label'   => __('Warna Hover Tombol Utama', 'hakajobs'),
+        'section' => 'hakajobs_color_section',
+    )));
+
+    $wp_customize->add_setting('hakajobs_dark_color', array(
+        'default'           => '#0f172a',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_dark_color', array(
+        'label'       => __('Warna Gelap (Topbar & Footer)', 'hakajobs'),
+        'description' => __('Latar bilah atas, footer, dan kartu gelap.', 'hakajobs'),
+        'section'     => 'hakajobs_color_section',
+    )));
+
+    $wp_customize->add_setting('hakajobs_accent_color', array(
+        'default'           => '#0f766e',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_accent_color', array(
+        'label'       => __('Warna Aksen (Label Gaji & Sorotan)', 'hakajobs'),
+        'section'     => 'hakajobs_color_section',
+    )));
+
+    $wp_customize->add_setting('hakajobs_wa_color', array(
+        'default'           => '#16a34a',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_wa_color', array(
+        'label'   => __('Warna Tombol Lamar via WhatsApp', 'hakajobs'),
+        'section' => 'hakajobs_color_section',
+    )));
+
+    $wp_customize->add_setting('hakajobs_body_bg', array(
+        'default'           => '#f8fafc',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_body_bg', array(
+        'label'   => __('Warna Latar Belakang Halaman', 'hakajobs'),
+        'section' => 'hakajobs_color_section',
+    )));
+
+    // =========================================================================
+    // SECTION 2 — HEADER & NAVIGASI MENU
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_header_section', array(
+        'title'       => __('🧭 Header & Navigasi Menu', 'hakajobs'),
+        'description' => __('Atur logo, sticky header, tombol CTA, dan tautan cepat di bilah atas. Untuk mengedit item menu, buka: Tampilan → Menu.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 20,
+    ));
+
+    // Sticky Header
+    $wp_customize->add_setting('hakajobs_sticky_header', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sticky_header', array(
+        'type'        => 'checkbox',
+        'label'       => __('Header Melekat (Sticky Header)', 'hakajobs'),
+        'description' => __('Header tetap terlihat di paling atas saat halaman di-scroll.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Tampilkan Tagline
+    $wp_customize->add_setting('hakajobs_show_tagline', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_show_tagline', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Tagline di Bawah Nama Situs', 'hakajobs'),
+        'description' => __('Menampilkan deskripsi singkat situs di bawah nama logo teks.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Ikon Logo (Emoji)
+    $wp_customize->add_setting('hakajobs_logo_icon', array(
+        'default'           => '💼',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_logo_icon', array(
+        'type'        => 'text',
+        'label'       => __('Ikon Logo (Emoji)', 'hakajobs'),
+        'description' => __('Emoji sebelum nama situs (jika tidak pakai logo gambar). Contoh: 💼 🏢 🌟 🚀', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Tinggi Maksimal Logo Gambar (px) — Pengaturan Besar Kecil Logo
+    $wp_customize->add_setting('hakajobs_logo_max_height', array(
+        'default'           => 42,
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_logo_max_height', array(
+        'type'        => 'range',
+        'label'       => __('📏 Ukuran Tinggi Logo Gambar (px)', 'hakajobs'),
+        'description' => __('Atur besar / kecil ukuran tinggi logo gambar agar pas dan tidak kebesaran di header. Rekomendasi: 32px - 52px (Default: 42px).', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+        'input_attrs' => array(
+            'min'  => 20,
+            'max'  => 70,
+            'step' => 1,
+        ),
+    ));
+
+    // Kontrol Logo di Menu Bawaan Identitas Situs (Site Identity)
+    $wp_customize->add_control('hakajobs_logo_max_height_site_identity', array(
+        'settings'    => 'hakajobs_logo_max_height',
+        'type'        => 'range',
+        'label'       => __('📏 Tinggi Maksimal Logo Gambar (px)', 'hakajobs'),
+        'description' => __('Atur besar / kecil ukuran logo agar tidak kebesaran di header.', 'hakajobs'),
+        'section'     => 'title_tagline',
+        'priority'    => 9,
+        'input_attrs' => array(
+            'min'  => 20,
+            'max'  => 70,
+            'step' => 1,
+        ),
+    ));
+
+    // Ukuran Font Teks Nama Situs (px)
+    $wp_customize->add_setting('hakajobs_logo_text_size', array(
+        'default'           => 20,
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_logo_text_size', array(
+        'type'        => 'range',
+        'label'       => __('🔤 Ukuran Font Nama Situs (px)', 'hakajobs'),
+        'description' => __('Besar / kecil font nama website jika tidak memakai logo gambar (14px - 32px). Default: 20px.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+        'input_attrs' => array(
+            'min'  => 14,
+            'max'  => 32,
+            'step' => 1,
+        ),
+    ));
+
+    // Ukuran Ikon Logo Emoji (px)
+    $wp_customize->add_setting('hakajobs_logo_icon_size', array(
+        'default'           => 26,
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_logo_icon_size', array(
+        'type'        => 'range',
+        'label'       => __('✨ Ukuran Ikon Logo Emoji (px)', 'hakajobs'),
+        'description' => __('Besar / kecil emoji ikon sebelum nama website (16px - 44px). Default: 26px.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+        'input_attrs' => array(
+            'min'  => 16,
+            'max'  => 44,
+            'step' => 2,
+        ),
+    ));
+
+    // Teks Tombol CTA Header
+    $wp_customize->add_setting('hakajobs_post_job_label', array(
+        'default'           => __('Pasang Loker', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_post_job_label', array(
+        'type'        => 'text',
+        'label'       => __('Teks Tombol CTA Header', 'hakajobs'),
+        'description' => __('Label tombol di pojok kanan header. Contoh: "Pasang Loker", "Hubungi Admin".', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // URL Tombol CTA Header
+    $wp_customize->add_setting('hakajobs_post_job_url', array(
+        'default'           => home_url('/pasang-loker/'),
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_post_job_url', array(
+        'type'        => 'url',
+        'label'       => __('URL Tombol CTA Header', 'hakajobs'),
+        'description' => __('Link tujuan tombol CTA. Bisa berupa halaman kontak atau WhatsApp: https://wa.me/628xxx', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Tampilkan Tombol Bookmark
+    $wp_customize->add_setting('hakajobs_show_bookmark_btn', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_show_bookmark_btn', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Tombol Lowongan Tersimpan di Header', 'hakajobs'),
+        'description' => __('Ikon bookmark dengan penghitung loker yang disimpan pengunjung.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    // Topbar Quick Link 1
+    $wp_customize->add_setting('hakajobs_menu_link1_label', array(
+        'default'           => __('Loker Remote / WFH', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_menu_link1_label', array(
+        'type'        => 'text',
+        'label'       => __('Topbar — Teks Link Cepat 1', 'hakajobs'),
+        'description' => __('Tautan cepat pertama di bilah pengumuman (topbar).', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+    $wp_customize->add_setting('hakajobs_menu_link1_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_menu_link1_url', array(
+        'type'    => 'url',
+        'label'   => __('Topbar — URL Link Cepat 1', 'hakajobs'),
+        'section' => 'hakajobs_header_section',
+    ));
+
+    // Topbar Quick Link 2
+    $wp_customize->add_setting('hakajobs_menu_link2_label', array(
+        'default'           => __('Fresh Graduate', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_menu_link2_label', array(
+        'type'    => 'text',
+        'label'   => __('Topbar — Teks Link Cepat 2', 'hakajobs'),
+        'section' => 'hakajobs_header_section',
+    ));
+    $wp_customize->add_setting('hakajobs_menu_link2_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_menu_link2_url', array(
+        'type'    => 'url',
+        'label'   => __('Topbar — URL Link Cepat 2', 'hakajobs'),
+        'section' => 'hakajobs_header_section',
+    ));
+
+    // =========================================================================
+    // SECTION 3 — BILAH PENGUMUMAN (TOPBAR)
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_topbar_section', array(
+        'title'    => __('📢 Bilah Pengumuman (Topbar)', 'hakajobs'),
+        'panel'    => 'hakajobs_theme_options',
+        'priority' => 25,
+    ));
+
+    $wp_customize->add_setting('hakajobs_show_topbar', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_show_topbar', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bilah Pengumuman', 'hakajobs'),
+        'description' => __('Bilah tipis di paling atas halaman untuk pengumuman singkat.', 'hakajobs'),
+        'section'     => 'hakajobs_topbar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_topbar_badge', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_topbar_badge', array(
+        'type'        => 'text',
+        'label'       => __('Teks Badge / Label Kecil', 'hakajobs'),
+        'description' => __('Badge di kiri topbar (opsional). Contoh: "Terverifikasi", "Resmi", "#1 di Indonesia".', 'hakajobs'),
+        'section'     => 'hakajobs_topbar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_topbar_text', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_topbar_text', array(
+        'type'        => 'text',
+        'label'       => __('Teks Pengumuman Utama', 'hakajobs'),
+        'description' => __('Pesan pengumuman di samping badge (opsional).', 'hakajobs'),
+        'section'     => 'hakajobs_topbar_section',
+    ));
+
+    // =========================================================================
+    // SECTION 4 — TOMBOL KEMBALI KE ATAS
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_backtotop_section', array(
+        'title'    => __('⬆️ Tombol Kembali ke Atas', 'hakajobs'),
+        'panel'    => 'hakajobs_theme_options',
+        'priority' => 30,
+    ));
+
+    $wp_customize->add_setting('hakajobs_enable_back_to_top', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_enable_back_to_top', array(
+        'type'        => 'checkbox',
+        'label'       => __('Aktifkan Tombol "Kembali ke Atas"', 'hakajobs'),
+        'description' => __('Tombol melayang di pojok kanan bawah saat pengguna menggulir ke bawah.', 'hakajobs'),
+        'section'     => 'hakajobs_backtotop_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_backtotop_color', array(
+        'default'           => '#0284c7',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_backtotop_color', array(
+        'label'   => __('Warna Tombol Kembali ke Atas', 'hakajobs'),
+        'section' => 'hakajobs_backtotop_section',
+    )));
+
+    // =========================================================================
+    // SECTION 5 — HALAMAN BERANDA (HERO)
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_hero_section', array(
+        'title'       => __('🏠 Halaman Beranda — Hero', 'hakajobs'),
+        'description' => __('Kustomisasi teks judul, subjudul, dan kolom pencarian di hero utama.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 35,
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_title', array(
+        'default'           => __('Temukan Pekerjaan Impianmu Hari Ini', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_hero_title', array(
+        'type'    => 'text',
+        'label'   => __('Judul Utama Hero (H1)', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_subtitle', array(
+        'default'           => __('Ribuan info lowongan kerja dari perusahaan terpercaya. Lamar langsung tanpa daftar akun — gratis selamanya.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_hero_subtitle', array(
+        'type'    => 'textarea',
+        'label'   => __('Subjudul / Deskripsi Hero', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_search_placeholder', array(
+        'default'           => __('Cari jabatan, skill, atau perusahaan...', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_hero_search_placeholder', array(
+        'type'    => 'text',
+        'label'   => __('Placeholder Kotak Pencarian', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_hero_search_btn', array(
+        'default'           => __('Cari Loker', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_hero_search_btn', array(
+        'type'    => 'text',
+        'label'   => __('Teks Tombol Cari', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    // =========================================================================
+    // SECTION 6 — PERINGATAN ANTI PENIPUAN
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_fraud_section', array(
+        'title'    => __('🛡️ Peringatan Anti Penipuan', 'hakajobs'),
+        'panel'    => 'hakajobs_theme_options',
+        'priority' => 40,
+    ));
+
+    $wp_customize->add_setting('hakajobs_show_fraud_alert', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_show_fraud_alert', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Banner Anti Penipuan di Atas Footer', 'hakajobs'),
+        'section'     => 'hakajobs_fraud_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_fraud_title', array(
+        'default'           => __('Peringatan Anti Penipuan Rekrutmen', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_fraud_title', array(
+        'type'    => 'text',
+        'label'   => __('Judul Peringatan', 'hakajobs'),
+        'section' => 'hakajobs_fraud_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_fraud_text', array(
+        'default'           => __('Seluruh proses seleksi dan lamaran kerja di situs ini adalah 100% GRATIS. Jangan pernah mentransfer uang dengan alasan apapun (biaya administrasi, tiket travel, seragam, atau akomodasi hotel).', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    $wp_customize->add_control('hakajobs_fraud_text', array(
+        'type'    => 'textarea',
+        'label'   => __('Teks Isi Peringatan', 'hakajobs'),
+        'section' => 'hakajobs_fraud_section',
+    ));
+
+    // =========================================================================
+    // SECTION 7 — FOOTER & HAK CIPTA
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_footer_section', array(
+        'title'    => __('📋 Footer & Hak Cipta', 'hakajobs'),
+        'panel'    => 'hakajobs_theme_options',
+        'priority' => 50,
+    ));
+
+    $wp_customize->add_setting('hakajobs_footer_about', array(
+        'default'           => __('Platform kurasi info lowongan kerja terpercaya, menghubungkan pencari kerja langsung dengan HRD via WhatsApp, Email, & Web resmi tanpa perlu registrasi akun.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    $wp_customize->add_control('hakajobs_footer_about', array(
+        'type'    => 'textarea',
+        'label'   => __('Deskripsi Singkat di Footer', 'hakajobs'),
+        'section' => 'hakajobs_footer_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_copyright_text', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_copyright_text', array(
+        'type'        => 'text',
+        'label'       => __('Teks Hak Cipta Custom', 'hakajobs'),
+        'description' => __('Kosongkan untuk default: © [Tahun] [Nama Situs]. Hak Cipta Dilindungi.', 'hakajobs'),
+        'section'     => 'hakajobs_footer_section',
+    ));
+
+    // =========================================================================
+    // SECTION 8 — 🔍 SEO & VERIFIKASI MESIN PENCARI
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_seo_section', array(
+        'title'       => __('🔍 SEO & Verifikasi Mesin Pencari', 'hakajobs'),
+        'description' => __('Optimalisasi agar situs mudah diindeks Google, Bing, serta preview menarik di WhatsApp & Medsos.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 55,
+    ));
+
+    $wp_customize->add_setting('hakajobs_seo_enable', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_seo_enable', array(
+        'type'        => 'checkbox',
+        'label'       => __('Aktifkan Mesin SEO Otomatis', 'hakajobs'),
+        'description' => __('Otomatis menyisipkan Meta Description, Canonical URL, Open Graph, Twitter Card, dan Robots.', 'hakajobs'),
+        'section'     => 'hakajobs_seo_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_google_verification', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_google_verification', array(
+        'type'        => 'text',
+        'label'       => __('Kode Verifikasi Google Search Console', 'hakajobs'),
+        'description' => __('Masukkan nilai content meta tag Google Anda. Contoh: abc123def456...', 'hakajobs'),
+        'section'     => 'hakajobs_seo_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_bing_verification', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_bing_verification', array(
+        'type'        => 'text',
+        'label'       => __('Kode Verifikasi Bing Webmaster Tools', 'hakajobs'),
+        'description' => __('Nilai kode msvalidate.01 dari Bing.', 'hakajobs'),
+        'section'     => 'hakajobs_seo_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_default_meta_desc', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    $wp_customize->add_control('hakajobs_default_meta_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Meta Description Beranda', 'hakajobs'),
+        'description' => __('Ringkasan deskripsi website yang tampil di hasil pencarian Google (Rekomendasi: 140 - 160 karakter).', 'hakajobs'),
+        'section'     => 'hakajobs_seo_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_default_share_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'hakajobs_default_share_image', array(
+        'label'       => __('Gambar Preview Medsos / WhatsApp (Default)', 'hakajobs'),
+        'description' => __('Gambar banner saat link website dibagikan ke WhatsApp/Facebook jika postingan tidak ada foto.', 'hakajobs'),
+        'section'     => 'hakajobs_seo_section',
+    )));
+
+    // =========================================================================
+    // SECTION 9 — 💰 GOOGLE ADSENSE & PENEMPATAN IKLAN
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_ads_section', array(
+        'title'       => __('💰 Google AdSense & Penempatan Iklan', 'hakajobs'),
+        'description' => __('Monetisasi website Anda dengan Google AdSense atau banner sponsor kustom di berbagai posisi strategis.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 60,
+    ));
+
+    $wp_customize->add_setting('hakajobs_ads_enable', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_ads_enable', array(
+        'type'        => 'checkbox',
+        'label'       => __('Aktifkan Penayangan Iklan', 'hakajobs'),
+        'description' => __('Nyalakan atau matikan seluruh slot iklan di website dengan satu klik.', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_ads_demo_mode', array(
+        'default'           => '0',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_ads_demo_mode', array(
+        'type'        => 'checkbox',
+        'label'       => __('Mode Preview Kotak Iklan (Placeholder)', 'hakajobs'),
+        'description' => __('Centang ini untuk menampilkan kotak abu-abu di semua posisi iklan agar Anda bisa melihat tata letaknya sebelum akun AdSense disetujui.', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_adsense_client', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_adsense_client', array(
+        'type'        => 'text',
+        'label'       => __('ID Klien Google AdSense (Auto Ads)', 'hakajobs'),
+        'description' => __('Contoh: ca-pub-1234567890123456. Ini otomatis memuat skrip resmi AdSense di seluruh halaman.', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_ad_head_code', array(
+        'default'           => '',
+        'sanitize_callback' => 'hakajobs_sanitize_ad_code',
+    ));
+    $wp_customize->add_control('hakajobs_ad_head_code', array(
+        'type'        => 'textarea',
+        'label'       => __('Kode Kustom <head> Iklan / Verifikasi AdSense', 'hakajobs'),
+        'description' => __('Skrip tambahan dari Google AdSense untuk peninjauan situs (Site Review).', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_ad_slot_header', array(
+        'default'           => '',
+        'sanitize_callback' => 'hakajobs_sanitize_ad_code',
+    ));
+    $wp_customize->add_control('hakajobs_ad_slot_header', array(
+        'type'        => 'textarea',
+        'label'       => __('Slot Iklan Atas Konten (Banner 728x90 / Responsif)', 'hakajobs'),
+        'description' => __('Tampil di antara hero dan konten utama pada beranda & arsip.', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_ad_slot_sidebar', array(
+        'default'           => '',
+        'sanitize_callback' => 'hakajobs_sanitize_ad_code',
+    ));
+    $wp_customize->add_control('hakajobs_ad_slot_sidebar', array(
+        'type'        => 'textarea',
+        'label'       => __('Slot Iklan Sidebar (Kotak 300x250 / 300x600)', 'hakajobs'),
+        'description' => __('Tampil di sidebar beranda, arsip loker, dan detail lowongan kerja.', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_ad_slot_single_top', array(
+        'default'           => '',
+        'sanitize_callback' => 'hakajobs_sanitize_ad_code',
+    ));
+    $wp_customize->add_control('hakajobs_ad_slot_single_top', array(
+        'type'        => 'textarea',
+        'label'       => __('Slot Iklan Dalam Lowongan (Atas Deskripsi)', 'hakajobs'),
+        'description' => __('Tampil di halaman detail lowongan sebelum teks deskripsi pekerjaan (CTR Tinggi).', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_ad_slot_single_bottom', array(
+        'default'           => '',
+        'sanitize_callback' => 'hakajobs_sanitize_ad_code',
+    ));
+    $wp_customize->add_control('hakajobs_ad_slot_single_bottom', array(
+        'type'        => 'textarea',
+        'label'       => __('Slot Iklan Dalam Lowongan (Bawah Deskripsi)', 'hakajobs'),
+        'description' => __('Tampil setelah kualifikasi dan benefit sebelum bagian peringatan keamanan.', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_ad_slot_footer', array(
+        'default'           => '',
+        'sanitize_callback' => 'hakajobs_sanitize_ad_code',
+    ));
+    $wp_customize->add_control('hakajobs_ad_slot_footer', array(
+        'type'        => 'textarea',
+        'label'       => __('Slot Iklan Sebelum Footer (Banner Lebar)', 'hakajobs'),
+        'description' => __('Tampil di atas banner anti penipuan pada seluruh halaman website.', 'hakajobs'),
+        'section'     => 'hakajobs_ads_section',
+    ));
+}
+add_action('customize_register', 'hakajobs_customize_register');
+
+/**
+ * Sanitize Raw Ad Code Callback (allows script, ins, style, iframe)
+ */
+function hakajobs_sanitize_ad_code($input) {
+    if (current_user_can('unfiltered_html')) {
+        return $input;
+    }
+    return wp_kses_post($input);
+}
+
+/**
+ * Sanitize Checkbox Callback
+ */
+function hakajobs_sanitize_checkbox($checked) {
+    return ((isset($checked) && true == $checked) ? '1' : '0');
+}
+
+/**
+ * Sanitize Select Callback
+ */
+function hakajobs_sanitize_select($input, $setting) {
+    $choices = $setting->manager->get_control($setting->id)->choices;
+    return (array_key_exists($input, $choices) ? $input : $setting->default);
+}
+
+/**
+ * Output Dynamic CSS from Customizer values
+ */
+function hakajobs_customizer_css() {
+    $primary        = get_theme_mod('hakajobs_primary_color', '#0284c7');
+    $primary_hover  = get_theme_mod('hakajobs_primary_hover_color', '#0369a1');
+    $dark           = get_theme_mod('hakajobs_dark_color', '#0f172a');
+    $accent         = get_theme_mod('hakajobs_accent_color', '#0f766e');
+    $wa_color       = get_theme_mod('hakajobs_wa_color', '#16a34a');
+    $body_bg        = get_theme_mod('hakajobs_body_bg', '#f8fafc');
+    $btt_color      = get_theme_mod('hakajobs_backtotop_color', '#0284c7');
+    $sticky         = get_theme_mod('hakajobs_sticky_header', '1');
+    $logo_height    = get_theme_mod('hakajobs_logo_max_height', 42);
+    $logo_text_size = get_theme_mod('hakajobs_logo_text_size', 20);
+    $logo_icon_size = get_theme_mod('hakajobs_logo_icon_size', 26);
+    ?>
+    <style id="hakajobs-customizer-inline-css">
+        :root {
+            --hk-primary: <?php echo esc_attr($primary); ?>;
+            --hk-primary-hover: <?php echo esc_attr($primary_hover); ?>;
+            --hk-dark: <?php echo esc_attr($dark); ?>;
+            --hk-accent: <?php echo esc_attr($accent); ?>;
+            --hk-wa-green: <?php echo esc_attr($wa_color); ?>;
+            --hk-bg-body: <?php echo esc_attr($body_bg); ?>;
+            --hk-btt-color: <?php echo esc_attr($btt_color); ?>;
+        }
+        .hk-topbar,
+        .hk-site-footer,
+        .hk-card-post-job {
+            background-color: var(--hk-dark) !important;
+        }
+        .hk-back-to-top {
+            background-color: var(--hk-btt-color) !important;
+        }
+        .hk-btn-wa {
+            background-color: var(--hk-wa-green) !important;
+        }
+        /* Pengaturan Besar Kecil Logo Header */
+        .hk-custom-logo img,
+        .custom-logo {
+            max-height: <?php echo intval($logo_height); ?>px !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
+        }
+        .hk-site-title {
+            font-size: <?php echo intval($logo_text_size); ?>px !important;
+        }
+        .hk-logo-icon {
+            font-size: <?php echo intval($logo_icon_size); ?>px !important;
+        }
+        <?php if ($sticky === '1'): ?>
+        .hk-site-header {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+        }
+        <?php else: ?>
+        .hk-site-header {
+            position: relative;
+        }
+        <?php endif; ?>
+    </style>
+    <?php
+}
+add_action('wp_head', 'hakajobs_customizer_css', 100);

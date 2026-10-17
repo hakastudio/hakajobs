@@ -1,0 +1,17 @@
+/*
+Theme Name: Hakajobs
+Theme URI: https://github.com/hakastudio/hakajobs
+Author: Hakajobs Studio
+Author URI: https://hakajobs.id
+Description: Tema WordPress modern untuk portal lowongan kerja tanpa sistem login pengguna. Didesain khusus untuk job board lokal, kurasi karir harian, dan info loker dengan fitur lamaran langsung via WhatsApp, Email, atau Website Perusahaan. Dilengkapi filter pencarian canggih, bookmark lowongan berbasis browser, dan Schema JobPosting SEO Google.
+Version: 1.0.0
+Requires at least: 5.8
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: hakajobs
+Tags: job-board, two-columns, custom-menu, featured-images, theme-options, translation-ready
+*/
+
+/* Core styles are located in assets/css/main.css */

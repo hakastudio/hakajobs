@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakajobs — Preview Interaktif Tema WordPress Lowongan Kerja</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Interactive Preview Switcher Bar */
+        .preview-bar {
+            background: #0f172a;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+            font-family: var(--hk-font-sans);
+            font-size: 13px;
+        }
+        .preview-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .preview-badge {
+            background: #0284c7;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }
+        .preview-title {
+            font-weight: 700;
+            color: #f8fafc;
+        }
+        .preview-tabs {
+            display: flex;
+            gap: 6px;
+            background: #1e293b;
+            padding: 4px;
+            border-radius: 8px;
+        }
+        .preview-tab-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .preview-tab-btn:hover {
+            color: #fff;
+        }
+        .preview-tab-btn.active {
+            background: #0284c7;
+            color: #fff;
+        }
+        .preview-view {
+            display: none;
+        }
+        .preview-view.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="hk-preview-body">
+
+    <!-- Top Preview Switcher Controls -->
+    <div class="preview-bar">
+        <div class="preview-bar-left">
+            <span class="preview-badge">LIVE DEMO</span>
+            <span class="preview-title">Tema WordPress Hakajobs (Tanpa Login)</span>
+        </div>
+        <div class="preview-tabs">
+            <button class="preview-tab-btn active" onclick="switchView('front')">🏠 Beranda (Front Page)</button>
+            <button class="preview-tab-btn" onclick="switchView('single')">📄 Detail Lowongan (Single Job)</button>
+            <button class="preview-tab-btn" onclick="switchView('archive')">📂 Arsip & Filter (Directory)</button>
+        </div>
+        <div style="display:flex; align-items:center; gap:16px;">
+            <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:11px; color:#cbd5e1; font-weight:600;">📏 Ukuran Logo:</span>
+                <input type="range" id="logoSizeSlider" min="24" max="64" value="42" step="2" oninput="changeLogoSize(this.value)" style="width:75px; cursor:pointer;" title="Geser untuk mengatur tinggi logo">
+                <span id="logoSizeVal" style="font-size:11px; color:#38bdf8; font-weight:700; min-width:28px;">42px</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:11px; color:#cbd5e1; font-weight:600;">🎨 Warna:</span>
+                <button type="button" onclick="setThemeColor('#0284c7', '#0369a1')" title="Biru Samudra (Default)" style="width:18px;height:18px;border-radius:50%;background:#0284c7;border:2px solid #fff;cursor:pointer;"></button>
+                <button type="button" onclick="setThemeColor('#059669', '#047857')" title="Hijau Emerald" style="width:18px;height:18px;border-radius:50%;background:#059669;border:2px solid #fff;cursor:pointer;"></button>
+                <button type="button" onclick="setThemeColor('#4f46e5', '#4338ca')" title="Ungu Indigo" style="width:18px;height:18px;border-radius:50%;background:#4f46e5;border:2px solid #fff;cursor:pointer;"></button>
+                <button type="button" onclick="setThemeColor('#ea580c', '#c2410c')" title="Oranye Amber" style="width:18px;height:18px;border-radius:50%;background:#ea580c;border:2px solid #fff;cursor:pointer;"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="hk-topbar">
+        <div class="hk-container hk-topbar-inner">
+            <div class="hk-topbar-right">
+                <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-topbar-link">🌐 Loker Remote / WFH</a>
+                <span class="hk-topbar-sep">•</span>
+                <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-topbar-link">🎓 Fresh Graduate</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="hk-site-header">
+        <div class="hk-container hk-header-inner">
+            <div class="hk-site-branding">
+                <a href="javascript:void(0)" onclick="switchView('front')" class="hk-site-logo-link">
+                    <span class="hk-logo-icon">💼</span>
+                    <div class="hk-logo-text-wrap">
+                        <span class="hk-site-title">Hakajobs</span>
+                        <span class="hk-site-tagline">Portal Lowongan Kerja Terpercaya</span>
+                    </div>
+                </a>
+            </div>
+
+            <nav class="hk-main-navigation">
+                <ul class="hk-nav-list">
+                    <li><a href="javascript:void(0)" onclick="switchView('front')">Beranda</a></li>
+                    <li><a href="javascript:void(0)" onclick="switchView('archive')">Semua Lowongan</a></li>
+                    <li><a href="javascript:void(0)" onclick="switchView('archive')">Remote / WFH</a></li>
+                    <li><a href="javascript:void(0)" onclick="switchView('archive')">Magang</a></li>
+                    <li><a href="javascript:void(0)" class="hk-menu-highlight">Pasang Loker</a></li>
+                </ul>
+            </nav>
+
+            <div class="hk-header-actions">
+                <button type="button" class="hk-btn-saved-trigger" id="hk-saved-jobs-toggle" aria-label="Buka Lowongan Tersimpan" title="Lowongan Tersimpan">
+                    <svg class="hk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                    <span class="hk-saved-count-badge" id="hk-saved-badge">0</span>
+                </button>
+
+                <a href="javascript:void(0)" class="hk-btn hk-btn-header-cta">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Pasang Loker</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ====================================================================
+         VIEW 1: FRONT PAGE
+         ==================================================================== -->
+    <div id="view-front" class="preview-view active">
+        <!-- Hero Search Section -->
+        <section class="hk-hero-section">
+            <div class="hk-container">
+                <div class="hk-hero-content">
+                    <span class="hk-hero-pill">🎯 Portal Loker Tanpa Ribet Registrasi</span>
+                    <h1 class="hk-hero-title">Temukan Lowongan Kerja Impian & Lamar Langsung ke Rekruter</h1>
+                    <p class="hk-hero-desc">Ribuan info loker terkurasi setiap hari. Terhubung langsung melalui WhatsApp HRD, Email, dan Karir Resmi tanpa proses pembuatan akun yang berbelit.</p>
+
+                    <div class="hk-hero-search-box">
+                        <form onsubmit="event.preventDefault(); switchView('archive');" class="hk-search-form">
+                            <div class="hk-search-field-group">
+                                <div class="hk-search-field hk-field-keyword">
+                                    <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    <input type="text" placeholder="Posisi, keahlian, atau perusahaan..." value="Frontend Developer">
+                                </div>
+                                <div class="hk-search-field hk-field-category">
+                                    <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                    <select>
+                                        <option>IT & Rekayasa Software</option>
+                                        <option>Pemasaran Digital</option>
+                                        <option>Desain Grafis</option>
+                                        <option>Akuntansi & Keuangan</option>
+                                    </select>
+                                </div>
+                                <div class="hk-search-field hk-field-location">
+                                    <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <select>
+                                        <option>Jakarta Pusat</option>
+                                        <option>Bandung</option>
+                                        <option>Surabaya</option>
+                                        <option>Remote / WFH</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="hk-search-submit-btn">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    <span>Cari Lowongan</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="hk-quick-filters">
+                        <span class="hk-quick-label">Pencarian Populer:</span>
+                        <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-chip">🌐 Remote / WFH</a>
+                        <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-chip">🎓 Fresh Graduate</a>
+                        <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-chip">💼 Magang (Intern)</a>
+                        <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-chip">⏰ Penuh Waktu</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Google AdSense Header Banner Slot -->
+        <div class="hk-container">
+            <div class="hk-ad-slot hk-ad-slot-header">
+                <div class="hk-ad-header-label">
+                    <span class="hk-ad-badge">IKLAN • GOOGLE ADSENSE</span>
+                </div>
+                <div class="hk-ad-inner">
+                    <div class="hk-ad-placeholder" style="background:#f8fafc; border:1px solid #e2e8f0; width:100%; border-radius:10px;">
+                        <div class="hk-ad-ph-icon">📢</div>
+                        <div class="hk-ad-ph-info">
+                            <strong>Slot Iklan Header (Banner Responsif / Leaderboard 728x90)</strong>
+                            <span>Dukungan Google AdSense terverifikasi & siap menayangkan iklan otomatis maupun unit manual.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spotlight Urgently Needed Section -->
+        <section class="hk-spotlight-section">
+            <div class="hk-container">
+                <div class="hk-section-header">
+                    <div>
+                        <h2 class="hk-section-title">🔥 Lowongan Sorotan & Dibutuhkan Segera</h2>
+                        <p class="hk-section-subtitle">Peluang kerja prioritas dengan proses rekrutmen aktif minggu ini.</p>
+                    </div>
+                    <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-link-arrow">Lihat Semua &rarr;</a>
+                </div>
+
+                <div class="hk-jobs-grid">
+                    <!-- Job Card 1 -->
+                    <article class="hk-job-card hk-job-featured" data-id="101" data-title="Senior Frontend Developer (React / Next.js)" data-company="PT Digital Kreasi Nusantara" data-url="#single">
+                        <div class="hk-job-card-top">
+                            <div class="hk-company-logo-wrap">
+                                <div class="hk-company-initials" style="background:#eff6ff; color:#1d4ed8; width:52px; height:52px; font-size:18px;">DK</div>
+                            </div>
+                            <div class="hk-job-card-main">
+                                <div class="hk-job-card-header">
+                                    <span class="hk-card-company">PT Digital Kreasi Nusantara</span>
+                                    <div class="hk-card-status-badges">
+                                        <span class="hk-pill hk-pill-urgent">🔥 Urgent</span>
+                                        <span class="hk-pill hk-pill-featured">⭐ Sorotan</span>
+                                    </div>
+                                </div>
+                                <h3 class="hk-job-title">
+                                    <a href="javascript:void(0)" onclick="switchView('single')">Senior Frontend Developer (React / Next.js)</a>
+                                </h3>
+                                <div class="hk-job-meta-row">
+                                    <span class="hk-meta-item">
+                                        <svg class="hk-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        Jakarta Pusat
+                                    </span>
+                                    <span class="hk-meta-item hk-salary-highlight">
+                                        Rp 14.000.000 - Rp 20.000.000
+                                    </span>
+                                </div>
+                                <div class="hk-job-tags-row">
+                                    <div class="hk-badges-group">
+                                        <span class="hk-badge hk-badge-fulltime">Penuh Waktu</span>
+                                        <span class="hk-badge hk-badge-remote">Bisa Remote</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hk-job-card-footer">
+                            <div class="hk-card-footer-info">
+                                <span class="hk-post-time">2 jam lalu</span>
+                                <span class="hk-deadline-tag">Batas: 15 Nov 2026</span>
+                            </div>
+                            <div class="hk-card-actions">
+                                <button type="button" class="hk-btn-bookmark" data-job-id="101" title="Simpan Lowongan">
+                                    <svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                </button>
+                                <a href="javascript:void(0)" onclick="switchView('single')" class="hk-btn hk-btn-detail">Lihat Detail</a>
+                                <a href="https://api.whatsapp.com/send?phone=6281234567890&text=Halo%20HRD%20PT%20Digital%20Kreasi%2C%20saya%20tertarik%20melamar%20posisi%20Frontend%20Developer" target="_blank" class="hk-btn hk-btn-quick-apply hk-btn-wa">Lamar via WA</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Job Card 2 -->
+                    <article class="hk-job-card hk-job-featured" data-id="102" data-title="UI/UX Product Designer (Remote)" data-company="Studio Cipta Global" data-url="#single">
+                        <div class="hk-job-card-top">
+                            <div class="hk-company-logo-wrap">
+                                <div class="hk-company-initials" style="background:#faf5ff; color:#7e22ce; width:52px; height:52px; font-size:18px;">SC</div>
+                            </div>
+                            <div class="hk-job-card-main">
+                                <div class="hk-job-card-header">
+                                    <span class="hk-card-company">Studio Cipta Global</span>
+                                    <div class="hk-card-status-badges">
+                                        <span class="hk-pill hk-pill-urgent">🔥 Urgent</span>
+                                    </div>
+                                </div>
+                                <h3 class="hk-job-title">
+                                    <a href="javascript:void(0)" onclick="switchView('single')">UI/UX Product Designer (100% WFH)</a>
+                                </h3>
+                                <div class="hk-job-meta-row">
+                                    <span class="hk-meta-item">
+                                        <svg class="hk-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        Remote / Dari Rumah
+                                    </span>
+                                    <span class="hk-meta-item hk-salary-highlight">
+                                        Rp 9.000.000 - Rp 13.000.000
+                                    </span>
+                                </div>
+                                <div class="hk-job-tags-row">
+                                    <div class="hk-badges-group">
+                                        <span class="hk-badge hk-badge-remote">100% Remote</span>
+                                        <span class="hk-badge hk-badge-contract">Kontrak</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hk-job-card-footer">
+                            <div class="hk-card-footer-info">
+                                <span class="hk-post-time">5 jam lalu</span>
+                                <span class="hk-deadline-tag">Batas: 10 Nov 2026</span>
+                            </div>
+                            <div class="hk-card-actions">
+                                <button type="button" class="hk-btn-bookmark" data-job-id="102" title="Simpan Lowongan">
+                                    <svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                </button>
+                                <a href="javascript:void(0)" onclick="switchView('single')" class="hk-btn hk-btn-detail">Lihat Detail</a>
+                                <a href="mailto:career@studiocipta.com?subject=Lamaran%20UI%2FUX" class="hk-btn hk-btn-quick-apply">Kirim Email</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Feed & Sidebar Section -->
+        <section class="hk-content-section">
+            <div class="hk-container">
+                <div class="hk-layout-with-sidebar">
+                    <!-- Left Column: Jobs List -->
+                    <div class="hk-main-feed">
+                        <div class="hk-section-header">
+                            <div>
+                                <h2 class="hk-section-title">Lowongan Kerja Terbaru</h2>
+                                <p class="hk-section-subtitle">Diperbarui secara berkala setiap hari tanpa perlu login.</p>
+                            </div>
+                            <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-btn hk-btn-subtle">Buka Direktori Lengkap &rarr;</a>
+                        </div>
+
+                        <div class="hk-jobs-list">
+                            <!-- Job Card 3 -->
+                            <article class="hk-job-card" data-id="103" data-title="Digital Marketing & Social Media Specialist" data-company="PT Ruang Media Kreatif" data-url="#single">
+                                <div class="hk-job-card-top">
+                                    <div class="hk-company-logo-wrap">
+                                        <div class="hk-company-initials" style="background:#ecfdf5; color:#047857; width:52px; height:52px; font-size:18px;">RM</div>
+                                    </div>
+                                    <div class="hk-job-card-main">
+                                        <div class="hk-job-card-header">
+                                            <span class="hk-card-company">PT Ruang Media Kreatif</span>
+                                            <span class="hk-pill hk-pill-open">Rekrutmen Aktif</span>
+                                        </div>
+                                        <h3 class="hk-job-title">
+                                            <a href="javascript:void(0)" onclick="switchView('single')">Digital Marketing & Social Media Specialist</a>
+                                        </h3>
+                                        <div class="hk-job-meta-row">
+                                            <span class="hk-meta-item">📍 Bandung</span>
+                                            <span class="hk-meta-item hk-salary-highlight">Rp 6.500.000 - Rp 9.000.000</span>
+                                            <span class="hk-meta-item hk-category-tag">Pemasaran Digital</span>
+                                        </div>
+                                        <div class="hk-job-tags-row">
+                                            <span class="hk-badge hk-badge-fulltime">Penuh Waktu</span>
+                                            <span class="hk-badge">1-3 Tahun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hk-job-card-footer">
+                                    <div class="hk-card-footer-info">
+                                        <span class="hk-post-time">1 hari lalu</span>
+                                    </div>
+                                    <div class="hk-card-actions">
+                                        <button type="button" class="hk-btn-bookmark" data-job-id="103" title="Simpan">
+                                            <svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                        </button>
+                                        <a href="javascript:void(0)" onclick="switchView('single')" class="hk-btn hk-btn-detail">Lihat Detail</a>
+                                        <a href="https://api.whatsapp.com/send?phone=6282198765432" target="_blank" class="hk-btn hk-btn-quick-apply hk-btn-wa">Lamar via WA</a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Job Card 4 -->
+                            <article class="hk-job-card" data-id="104" data-title="Staff Administrasi & Keuangan Junior" data-company="CV Sinar Jaya Abadi" data-url="#single">
+                                <div class="hk-job-card-top">
+                                    <div class="hk-company-logo-wrap">
+                                        <div class="hk-company-initials" style="background:#fff7ed; color:#c2410c; width:52px; height:52px; font-size:18px;">SJ</div>
+                                    </div>
+                                    <div class="hk-job-card-main">
+                                        <div class="hk-job-card-header">
+                                            <span class="hk-card-company">CV Sinar Jaya Abadi</span>
+                                            <span class="hk-pill hk-pill-open">Rekrutmen Aktif</span>
+                                        </div>
+                                        <h3 class="hk-job-title">
+                                            <a href="javascript:void(0)" onclick="switchView('single')">Staff Administrasi & Keuangan Junior (Fresh Graduate Welcome)</a>
+                                        </h3>
+                                        <div class="hk-job-meta-row">
+                                            <span class="hk-meta-item">📍 Surabaya</span>
+                                            <span class="hk-meta-item hk-salary-highlight">Rp 5.200.000 - Rp 6.500.000</span>
+                                            <span class="hk-meta-item hk-category-tag">Keuangan</span>
+                                        </div>
+                                        <div class="hk-job-tags-row">
+                                            <span class="hk-badge hk-badge-fulltime">Penuh Waktu</span>
+                                            <span class="hk-badge">Fresh Graduate</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hk-job-card-footer">
+                                    <div class="hk-card-footer-info">
+                                        <span class="hk-post-time">2 hari lalu</span>
+                                    </div>
+                                    <div class="hk-card-actions">
+                                        <button type="button" class="hk-btn-bookmark" data-job-id="104" title="Simpan">
+                                            <svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                        </button>
+                                        <a href="javascript:void(0)" onclick="switchView('single')" class="hk-btn hk-btn-detail">Lihat Detail</a>
+                                        <a href="https://api.whatsapp.com/send?phone=6285712348899" target="_blank" class="hk-btn hk-btn-quick-apply hk-btn-wa">Lamar via WA</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="hk-load-more-wrap">
+                            <button onclick="switchView('archive')" class="hk-btn hk-btn-primary hk-btn-large">
+                                Jelajahi Semua Lowongan Lainnya &rarr;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Sidebar -->
+                    <aside class="hk-sidebar">
+                        <div class="hk-widget-card hk-card-post-job">
+                            <div class="hk-post-job-badge">Untuk Rekruter</div>
+                            <h3 class="hk-widget-title">Punya Lowongan Kerja?</h3>
+                            <p class="hk-widget-text">Pasang info lowongan kerja Anda di Hakajobs dan dapatkan pelamar berkualitas langsung ke WhatsApp atau Email perusahaan Anda.</p>
+                            <a href="javascript:void(0)" class="hk-btn hk-btn-accent hk-btn-block">Pasang Iklan Loker &rarr;</a>
+                        </div>
+
+                        <div class="hk-widget-card">
+                            <h3 class="hk-widget-title">Kategori Populer</h3>
+                            <ul class="hk-widget-list">
+                                <li><a href="javascript:void(0)" onclick="switchView('archive')" class="hk-widget-link"><span>IT & Software</span><span class="hk-badge-count">24</span></a></li>
+                                <li><a href="javascript:void(0)" onclick="switchView('archive')" class="hk-widget-link"><span>Pemasaran Digital</span><span class="hk-badge-count">18</span></a></li>
+                                <li><a href="javascript:void(0)" onclick="switchView('archive')" class="hk-widget-link"><span>Desain Grafis</span><span class="hk-badge-count">12</span></a></li>
+                                <li><a href="javascript:void(0)" onclick="switchView('archive')" class="hk-widget-link"><span>Akuntansi & Keuangan</span><span class="hk-badge-count">9</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="hk-widget-card hk-tips-card">
+                            <h3 class="hk-widget-title">💡 Tips Melamar Cepat</h3>
+                            <ul class="hk-tips-list">
+                                <li>Simpan CV dalam format PDF rapi.</li>
+                                <li>Gunakan bahasa santun saat mengirim pesan WhatsApp ke HRD.</li>
+                                <li>Jangan pernah membayar biaya administrasi apapun.</li>
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="hk-how-section">
+            <div class="hk-container">
+                <div class="hk-section-center-head">
+                    <h2 class="hk-section-title">Cara Melamar Kerja di Hakajobs</h2>
+                    <p class="hk-section-subtitle">Tanpa perlu daftar akun, verifikasi email yang panjang, atau mengingat password.</p>
+                </div>
+
+                <div class="hk-steps-grid">
+                    <div class="hk-step-card">
+                        <div class="hk-step-number">1</div>
+                        <h3 class="hk-step-title">Cari & Pilih Lowongan</h3>
+                        <p class="hk-step-desc">Gunakan filter lokasi, tipe kerja, atau bidang industri untuk menemukan posisi yang sesuai kualifikasi Anda.</p>
+                    </div>
+                    <div class="hk-step-card">
+                        <div class="hk-step-number">2</div>
+                        <h3 class="hk-step-title">Siapkan Berkas CV</h3>
+                        <p class="hk-step-desc">Pastikan resume/CV dan tautan portofolio terbaru Anda sudah siap dikirimkan kepada tim rekruter.</p>
+                    </div>
+                    <div class="hk-step-card">
+                        <div class="hk-step-number">3</div>
+                        <h3 class="hk-step-title">Lamar Seketika</h3>
+                        <p class="hk-step-desc">Klik tombol Lamar untuk terhubung langsung ke WhatsApp HRD atau kirim email resmi tanpa login.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 2: SINGLE JOB PAGE (DETAIL LOWONGAN)
+         ==================================================================== -->
+    <div id="view-single" class="preview-view">
+        <nav class="hk-breadcrumbs">
+            <div class="hk-container">
+                <ol class="hk-breadcrumbs-list">
+                    <li><a href="javascript:void(0)" onclick="switchView('front')">Beranda</a></li>
+                    <li class="hk-breadcrumbs-sep">/</li>
+                    <li><a href="javascript:void(0)" onclick="switchView('archive')">Lowongan Kerja</a></li>
+                    <li class="hk-breadcrumbs-sep">/</li>
+                    <li>IT & Rekayasa Software</li>
+                    <li class="hk-breadcrumbs-sep">/</li>
+                    <li class="hk-current">Senior Frontend Developer (React / Next.js)</li>
+                </ol>
+            </div>
+        </nav>
+
+        <section class="hk-single-header-section">
+            <div class="hk-container">
+                <div class="hk-single-header-card">
+                    <div class="hk-single-header-top">
+                        <div class="hk-single-company-logo">
+                            <div class="hk-company-initials" style="background:#eff6ff; color:#1d4ed8; width:80px; height:80px; font-size:28px;">DK</div>
+                        </div>
+                        <div class="hk-single-header-details">
+                            <div class="hk-single-company-line">
+                                <span class="hk-company-name">PT Digital Kreasi Nusantara</span>
+                                <a href="https://example.com" target="_blank" class="hk-company-web-link">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                    Website Perusahaan
+                                </a>
+                                <span class="hk-pill hk-pill-open">Rekrutmen Aktif</span>
+                            </div>
+
+                            <h1 class="hk-single-job-title">Senior Frontend Developer (React / Next.js)</h1>
+
+                            <div class="hk-single-meta-strip">
+                                <span class="hk-meta-pill">📍 Jakarta Pusat / Remote</span>
+                                <span class="hk-meta-pill hk-pill-salary">💰 Rp 14.000.000 - Rp 20.000.000 / Bulan</span>
+                                <span class="hk-meta-pill">🕒 Diterbitkan 2 jam lalu</span>
+                                <span class="hk-meta-pill">👁️ 342 kali dilihat</span>
+                            </div>
+
+                            <div class="hk-single-type-badges">
+                                <span class="hk-badge hk-badge-fulltime">Penuh Waktu</span>
+                                <span class="hk-badge hk-badge-remote">Bisa WFH / Remote</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="hk-single-body-section">
+            <div class="hk-container">
+                <div class="hk-single-layout">
+                    <!-- Left: Description -->
+                    <div class="hk-single-content">
+                        <div class="hk-single-excerpt">
+                            <strong>Ringkasan:</strong> Posisi Senior Frontend Developer ini bertanggung jawab mengembangkan antarmuka aplikasi web berskala enterprise menggunakan React, Next.js, dan TypeScript. Bekerja fleksibel dengan opsi Hybrid atau Full Remote.
+                        </div>
+
+                        <!-- In-Article AdSense Unit Preview -->
+                        <div class="hk-ad-slot hk-ad-slot-single_top">
+                            <div class="hk-ad-header-label">
+                                <span class="hk-ad-badge">IKLAN • GOOGLE ADSENSE</span>
+                            </div>
+                            <div class="hk-ad-inner">
+                                <div class="hk-ad-placeholder" style="background:#f8fafc; border:1px solid #e2e8f0; width:100%; border-radius:10px;">
+                                    <div class="hk-ad-ph-icon">📈</div>
+                                    <div class="hk-ad-ph-info">
+                                        <strong>Slot Iklan Dalam Artikel Lowongan (In-Article Responsive)</strong>
+                                        <span>Posisi optimal di atas uraian kualifikasi pekerjaan dengan rasio klik (CTR) tinggi.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hk-job-description-box hk-typography">
+                            <h2 class="hk-box-heading">Deskripsi & Tanggung Jawab</h2>
+                            <p>PT Digital Kreasi Nusantara adalah perusahaan rintisan teknologi yang bergerak di bidang solusi fintech dan e-commerce. Kami mengundang talenta berbakat untuk berkolaborasi dalam mengembangkan aplikasi web berkinerja tinggi.</p>
+                            
+                            <h3>Tanggung Jawab Utama:</h3>
+                            <ul>
+                                <li>Membangun arsitektur komponen frontend yang bersih, modular, dan teruji dengan Next.js App Router.</li>
+                                <li>Melakukan integrasi API GraphQL dan RESTful secara aman dan efisien.</li>
+                                <li>Mengoptimalkan Core Web Vitals, SEO teknis, dan responsive UX pada semua perangkat.</li>
+                                <li>Melakukan code review berkala dan memberikan bimbingan teknis kepada junior engineer.</li>
+                            </ul>
+
+                            <h3>Kualifikasi Pelamar:</h3>
+                            <ul>
+                                <li>Pengalaman kerja minimal 3 tahun dalam frontend development dengan ekosistem React/TypeScript.</li>
+                                <li>Memahami Tailwind CSS, CSS Modules, dan State Management modern (Zustand/Redux Toolkit).</li>
+                                <li>Terbiasa dengan Git, Docker, serta testing automated (Jest/Playwright).</li>
+                                <li>Komunikasi baik dan terbiasa bekerja secara mandiri maupun kolaboratif dalam tim.</li>
+                            </ul>
+                        </div>
+
+                        <div class="hk-job-benefits-box">
+                            <h3 class="hk-box-heading">✨ Benefit & Fasilitas yang Diberikan</h3>
+                            <ul class="hk-benefits-grid">
+                                <li class="hk-benefit-item"><span class="hk-benefit-icon">✓</span> BPJS Ketenagakerjaan & Kesehatan</li>
+                                <li class="hk-benefit-item"><span class="hk-benefit-icon">✓</span> Asuransi Rawat Inap Swasta</li>
+                                <li class="hk-benefit-item"><span class="hk-benefit-icon">✓</span> Laptop MacBook Pro M3 Disediakan</li>
+                                <li class="hk-benefit-item"><span class="hk-benefit-icon">✓</span> Jatah Cuti 15 Hari per Tahun</li>
+                                <li class="hk-benefit-item"><span class="hk-benefit-icon">✓</span> Budget Sertifikasi & Belajar</li>
+                                <li class="hk-benefit-item"><span class="hk-benefit-icon">✓</span> Jam Kerja Fleksibel</li>
+                            </ul>
+                        </div>
+
+                        <div class="hk-job-notes-box">
+                            <h4 class="hk-notes-heading">📌 Petunjuk Khusus Pelamar</h4>
+                            <p class="hk-notes-text">Silakan lampirkan CV terbaru dan link profil GitHub atau portofolio website Anda saat mengirimkan pesan lamaran ke tim HRD.</p>
+                        </div>
+
+                        <div class="hk-job-alert-warning">
+                            <div class="hk-alert-icon">⚠️</div>
+                            <div class="hk-alert-text">
+                                <strong>Peringatan Keamanan Rekrutmen:</strong>
+                                <p>Proses lamaran kerja ini GRATIS. Jangan pernah mentransfer biaya apapun seperti akomodasi tiket pesawat atau seragam. PT Digital Kreasi Nusantara tidak pernah memungut biaya apapun dari pelamar.</p>
+                            </div>
+                        </div>
+
+                        <div class="hk-job-share-bar">
+                            <span class="hk-share-label">Bagikan info ini:</span>
+                            <div class="hk-share-buttons">
+                                <a href="https://api.whatsapp.com/send?text=Lowongan%20Frontend%20Developer%20di%20Hakajobs" target="_blank" class="hk-share-btn hk-share-wa">WhatsApp</a>
+                                <a href="https://t.me/share/url?url=https://hakajobs.id" target="_blank" class="hk-share-btn hk-share-tg">Telegram</a>
+                                <a href="https://linkedin.com" target="_blank" class="hk-share-btn hk-share-li">LinkedIn</a>
+                                <button type="button" class="hk-share-btn hk-share-copy" id="hk-copy-link-btn" data-url="https://hakajobs.id/lowongan/senior-frontend-developer/">Salin Tautan</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Sticky Sidebar -->
+                    <aside class="hk-single-sidebar">
+                        <div class="hk-sticky-apply-card">
+                            <div class="hk-apply-card-top">
+                                <span class="hk-apply-subtext">Lamar Cepat Tanpa Akun</span>
+                                <h3 class="hk-apply-title">Kirim Lamaran Sekarang</h3>
+                            </div>
+
+                            <div class="hk-apply-actions">
+                                <a href="https://api.whatsapp.com/send?phone=6281234567890&text=Halo%20Tim%20HRD%20PT%20Digital%20Kreasi%2C%20saya%20ingin%20melamar%20posisi%20Senior%20Frontend%20Developer%20dari%20Hakajobs." target="_blank" class="hk-btn hk-btn-primary hk-btn-block hk-btn-apply-main hk-btn-wa">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                    <span>Lamar via WhatsApp HRD</span>
+                                </a>
+
+                                <button type="button" class="hk-btn hk-btn-subtle hk-btn-block hk-btn-single-bookmark" data-job-id="101" data-title="Senior Frontend Developer" data-company="PT Digital Kreasi Nusantara" data-url="#single">
+                                    <svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                    <span class="hk-bookmark-text">Simpan Lowongan</span>
+                                </button>
+                            </div>
+
+                            <p class="hk-apply-channel-note">📱 Tombol di atas akan membuka WhatsApp langsung ke nomor HRD perusahaan.</p>
+
+                            <div class="hk-overview-list">
+                                <h4 class="hk-overview-heading">Ringkasan Lowongan</h4>
+                                <div class="hk-overview-item">
+                                    <span class="hk-overview-label">Batas Pendaftaran</span>
+                                    <span class="hk-overview-value hk-urgency-highlight">15 November 2026 <small>(Sisa 30 hari)</small></span>
+                                </div>
+                                <div class="hk-overview-item">
+                                    <span class="hk-overview-label">Tipe Pekerjaan</span>
+                                    <span class="hk-overview-value">Penuh Waktu</span>
+                                </div>
+                                <div class="hk-overview-item">
+                                    <span class="hk-overview-label">Gaji Ditawarkan</span>
+                                    <span class="hk-overview-value hk-salary-text">Rp 14Jt - 20Jt</span>
+                                </div>
+                                <div class="hk-overview-item">
+                                    <span class="hk-overview-label">Pengalaman</span>
+                                    <span class="hk-overview-value">3-5 Tahun</span>
+                                </div>
+                                <div class="hk-overview-item">
+                                    <span class="hk-overview-label">Lokasi Kantor</span>
+                                    <span class="hk-overview-value">Jakarta Pusat</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </aside>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 3: DIRECTORY / ARCHIVE FILTER
+         ==================================================================== -->
+    <div id="view-archive" class="preview-view">
+        <nav class="hk-breadcrumbs">
+            <div class="hk-container">
+                <ol class="hk-breadcrumbs-list">
+                    <li><a href="javascript:void(0)" onclick="switchView('front')">Beranda</a></li>
+                    <li class="hk-breadcrumbs-sep">/</li>
+                    <li class="hk-current">Semua Lowongan Kerja</li>
+                </ol>
+            </div>
+        </nav>
+
+        <main class="hk-archive-page">
+            <div class="hk-container">
+                <div class="hk-archive-header">
+                    <h1 class="hk-archive-title">Direktori Lowongan Kerja</h1>
+                    <p class="hk-archive-subtitle">Temukan posisi yang sesuai dengan keahlian Anda dari berbagai industri dan kota terpercaya.</p>
+                </div>
+
+                <div class="hk-directory-layout">
+                    <!-- Filter Sidebar -->
+                    <aside class="hk-filter-sidebar">
+                        <div class="hk-filter-card">
+                            <div class="hk-filter-card-header">
+                                <div class="hk-filter-header-title">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                                    <span>Filter Pencarian</span>
+                                </div>
+                                <a href="javascript:void(0)" class="hk-filter-reset-link">Reset</a>
+                            </div>
+
+                            <form onsubmit="event.preventDefault();" class="hk-filter-form">
+                                <div class="hk-filter-group">
+                                    <label class="hk-filter-label">Kata Kunci</label>
+                                    <input type="text" placeholder="Posisi atau skill..." value="Developer" class="hk-filter-input">
+                                </div>
+
+                                <div class="hk-filter-group">
+                                    <label class="hk-filter-label">Kategori</label>
+                                    <select class="hk-filter-select">
+                                        <option>Semua Kategori</option>
+                                        <option selected>IT & Rekayasa Software (24)</option>
+                                        <option>Pemasaran Digital (18)</option>
+                                        <option>Desain Grafis (12)</option>
+                                        <option>Akuntansi & Keuangan (9)</option>
+                                    </select>
+                                </div>
+
+                                <div class="hk-filter-group">
+                                    <label class="hk-filter-label">Kota / Lokasi</label>
+                                    <select class="hk-filter-select">
+                                        <option>Semua Lokasi</option>
+                                        <option selected>Jakarta Pusat</option>
+                                        <option>Bandung</option>
+                                        <option>Surabaya</option>
+                                        <option>Remote / WFH</option>
+                                    </select>
+                                </div>
+
+                                <div class="hk-filter-group">
+                                    <label class="hk-filter-label">Tipe Pekerjaan</label>
+                                    <div class="hk-filter-radios">
+                                        <label class="hk-radio-item"><input type="radio" name="preview_type" checked><span>Semua Tipe</span></label>
+                                        <label class="hk-radio-item"><input type="radio" name="preview_type"><span>Penuh Waktu</span></label>
+                                        <label class="hk-radio-item"><input type="radio" name="preview_type"><span>Remote / WFH</span></label>
+                                        <label class="hk-radio-item"><input type="radio" name="preview_type"><span>Magang (Intern)</span></label>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="hk-btn hk-btn-primary hk-btn-block">Terapkan Filter</button>
+                            </form>
+                        </div>
+                    </aside>
+
+                    <!-- Results Column -->
+                    <div class="hk-directory-content">
+                        <div class="hk-results-toolbar">
+                            <div class="hk-results-count">
+                                Menampilkan <strong>4</strong> lowongan kerja aktif
+                            </div>
+                            <div class="hk-results-sorting">
+                                <label>Urutkan:</label>
+                                <select>
+                                    <option>Terbaru Dipublikasikan</option>
+                                    <option>Paling Banyak Dilihat</option>
+                                    <option>Batas Lamaran Terdekat</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="hk-active-chips-bar">
+                            <span class="hk-chips-label">Filter aktif:</span>
+                            <span class="hk-active-chip">"Developer"</span>
+                            <span class="hk-active-chip">Kategori: IT & Software</span>
+                            <a href="javascript:void(0)" class="hk-clear-all-chips">Hapus Semua &times;</a>
+                        </div>
+
+                        <div class="hk-jobs-list">
+                            <!-- Card 1 -->
+                            <article class="hk-job-card hk-job-featured" data-id="101" data-title="Senior Frontend Developer" data-company="PT Digital Kreasi Nusantara" data-url="#single">
+                                <div class="hk-job-card-top">
+                                    <div class="hk-company-logo-wrap">
+                                        <div class="hk-company-initials" style="background:#eff6ff; color:#1d4ed8; width:52px; height:52px; font-size:18px;">DK</div>
+                                    </div>
+                                    <div class="hk-job-card-main">
+                                        <div class="hk-job-card-header">
+                                            <span class="hk-card-company">PT Digital Kreasi Nusantara</span>
+                                            <span class="hk-pill hk-pill-urgent">🔥 Urgent</span>
+                                        </div>
+                                        <h3 class="hk-job-title"><a href="javascript:void(0)" onclick="switchView('single')">Senior Frontend Developer (React / Next.js)</a></h3>
+                                        <div class="hk-job-meta-row">
+                                            <span class="hk-meta-item">📍 Jakarta Pusat</span>
+                                            <span class="hk-meta-item hk-salary-highlight">Rp 14Jt - 20Jt</span>
+                                        </div>
+                                        <div class="hk-job-tags-row">
+                                            <span class="hk-badge hk-badge-fulltime">Penuh Waktu</span>
+                                            <span class="hk-badge hk-badge-remote">Remote</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hk-job-card-footer">
+                                    <span class="hk-post-time">2 jam lalu</span>
+                                    <div class="hk-card-actions">
+                                        <button type="button" class="hk-btn-bookmark" data-job-id="101"><svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+                                        <a href="javascript:void(0)" onclick="switchView('single')" class="hk-btn hk-btn-detail">Lihat Detail</a>
+                                        <a href="https://api.whatsapp.com/send?phone=6281234567890" target="_blank" class="hk-btn hk-btn-quick-apply hk-btn-wa">Lamar WA</a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Card 2 -->
+                            <article class="hk-job-card" data-id="105" data-title="Backend Engineer (Node.js / Golang)" data-company="PT Inovasi Sistem Cerdas" data-url="#single">
+                                <div class="hk-job-card-top">
+                                    <div class="hk-company-logo-wrap">
+                                        <div class="hk-company-initials" style="background:#f0fdf4; color:#15803d; width:52px; height:52px; font-size:18px;">IS</div>
+                                    </div>
+                                    <div class="hk-job-card-main">
+                                        <div class="hk-job-card-header">
+                                            <span class="hk-card-company">PT Inovasi Sistem Cerdas</span>
+                                            <span class="hk-pill hk-pill-open">Aktif</span>
+                                        </div>
+                                        <h3 class="hk-job-title"><a href="javascript:void(0)" onclick="switchView('single')">Backend Engineer (Node.js / Golang)</a></h3>
+                                        <div class="hk-job-meta-row">
+                                            <span class="hk-meta-item">📍 Jakarta Selatan</span>
+                                            <span class="hk-meta-item hk-salary-highlight">Rp 12Jt - 17Jt</span>
+                                        </div>
+                                        <div class="hk-job-tags-row">
+                                            <span class="hk-badge hk-badge-fulltime">Penuh Waktu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hk-job-card-footer">
+                                    <span class="hk-post-time">1 hari lalu</span>
+                                    <div class="hk-card-actions">
+                                        <button type="button" class="hk-btn-bookmark" data-job-id="105"><svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></button>
+                                        <a href="javascript:void(0)" onclick="switchView('single')" class="hk-btn hk-btn-detail">Lihat Detail</a>
+                                        <a href="https://api.whatsapp.com/send?phone=6281234567890" target="_blank" class="hk-btn hk-btn-quick-apply hk-btn-wa">Lamar WA</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Fraud Alert Banner -->
+    <section class="hk-fraud-alert-section">
+        <div class="hk-container">
+            <div class="hk-fraud-alert-card">
+                <div class="hk-fraud-alert-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div class="hk-fraud-alert-content">
+                    <h4 class="hk-fraud-alert-title">Peringatan Anti Penipuan Rekrutmen</h4>
+                    <p class="hk-fraud-alert-desc">Seluruh proses seleksi dan lamaran kerja di situs ini adalah 100% GRATIS. Jangan pernah mentransfer uang dengan alasan apapun (biaya administrasi, tiket travel, atau akomodasi hotel).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Site Footer -->
+    <footer class="hk-site-footer">
+        <div class="hk-container hk-footer-container">
+            <div class="hk-footer-grid">
+                <div class="hk-footer-col">
+                    <div class="hk-footer-brand">
+                        <a href="javascript:void(0)" onclick="switchView('front')" class="hk-footer-logo-link">
+                            <span class="hk-logo-icon">💼</span>
+                            <span class="hk-footer-brand-title">Hakajobs</span>
+                        </a>
+                    </div>
+                    <p class="hk-footer-about">Portal info lowongan kerja terpercaya tanpa login pelamar.</p>
+                </div>
+                <div class="hk-footer-col">
+                    <h4 class="hk-footer-heading">Kategori</h4>
+                    <ul class="hk-footer-links">
+                        <li><a href="javascript:void(0)" onclick="switchView('archive')">IT & Software (24)</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchView('archive')">Pemasaran Digital (18)</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchView('archive')">Desain Grafis (12)</a></li>
+                    </ul>
+                </div>
+                <div class="hk-footer-col">
+                    <h4 class="hk-footer-heading">Lokasi Kota</h4>
+                    <ul class="hk-footer-links">
+                        <li><a href="javascript:void(0)" onclick="switchView('archive')">Jakarta Pusat</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchView('archive')">Bandung</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchView('archive')">Surabaya</a></li>
+                    </ul>
+                </div>
+                <div class="hk-footer-col">
+                    <h4 class="hk-footer-heading">Navigasi</h4>
+                    <ul class="hk-footer-links">
+                        <li><a href="javascript:void(0)" onclick="switchView('archive')">Cari Lowongan</a></li>
+                        <li><a href="javascript:void(0)">Pasang Loker</a></li>
+                        <li><a href="javascript:void(0)">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="hk-footer-bottom">
+                <div class="hk-copyright">&copy; 2026 <strong>Hakajobs</strong>. Hak Cipta Dilindungi.</div>
+                <div class="hk-footer-notes">Portal Info Lowongan Kerja Tanpa Login</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Saved Jobs Drawer Modal -->
+    <div class="hk-saved-modal" id="hk-saved-modal" aria-hidden="true" role="dialog">
+        <div class="hk-saved-modal-backdrop" id="hk-saved-modal-backdrop"></div>
+        <div class="hk-saved-modal-content">
+            <div class="hk-saved-modal-header">
+                <div>
+                    <h3 class="hk-saved-modal-title">Lowongan Tersimpan</h3>
+                    <p class="hk-saved-modal-subtitle">Disimpan di browser Anda tanpa perlu mendaftar akun.</p>
+                </div>
+                <button type="button" class="hk-saved-modal-close" id="hk-saved-modal-close">&times;</button>
+            </div>
+            <div class="hk-saved-modal-body" id="hk-saved-list-container"></div>
+            <div class="hk-saved-modal-footer">
+                <button type="button" class="hk-btn hk-btn-subtle" id="hk-clear-saved-btn">Hapus Semua</button>
+                <button type="button" class="hk-btn hk-btn-primary" onclick="switchView('archive'); document.getElementById('hk-saved-modal-close').click();">Jelajahi Lowongan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="hk-toast" id="hk-toast"></div>
+
+    <!-- Floating Back to Top Button -->
+    <button type="button" class="hk-back-to-top" id="hk-back-to-top" aria-label="Kembali ke Atas" title="Kembali ke Atas">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+
+    <!-- Theme JS -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        function switchView(viewName) {
+            document.querySelectorAll('.preview-view').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.preview-tab-btn').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            var targetView = document.getElementById('view-' + viewName);
+            if (targetView) {
+                targetView.classList.add('active');
+            }
+
+            var activeBtn = Array.from(document.querySelectorAll('.preview-tab-btn')).find(function(btn) {
+                return btn.getAttribute('onclick') && btn.getAttribute('onclick').indexOf(viewName) !== -1;
+            });
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setThemeColor(primary, hover) {
+            document.documentElement.style.setProperty('--hk-primary', primary);
+            document.documentElement.style.setProperty('--hk-primary-hover', hover);
+            document.documentElement.style.setProperty('--hk-btt-color', primary);
+            var toast = document.getElementById('hk-toast');
+            if (toast) {
+                toast.textContent = 'Warna tema diubah ke: ' + primary;
+                toast.classList.add('hk-toast-show');
+                setTimeout(function(){ toast.classList.remove('hk-toast-show'); }, 2000);
+            }
+        }
+
+        function changeLogoSize(val) {
+            var valEl = document.getElementById('logoSizeVal');
+            if (valEl) valEl.textContent = val + 'px';
+            var scale = val / 42;
+            var iconSize = Math.round(26 * scale);
+            var titleSize = Math.round(20 * scale);
+            document.querySelectorAll('.hk-logo-icon').forEach(function(el){ el.style.fontSize = iconSize + 'px'; });
+            document.querySelectorAll('.hk-site-title').forEach(function(el){ el.style.fontSize = titleSize + 'px'; });
+            document.querySelectorAll('.hk-custom-logo img, .custom-logo').forEach(function(el){ el.style.maxHeight = val + 'px'; });
+        }
+    </script>
+</body>
+</html>

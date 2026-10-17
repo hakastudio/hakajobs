@@ -1,0 +1,269 @@
+<?php
+/**
+ * Hakajobs Theme Functions and Definitions
+ *
+ * @package Hakajobs
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+define('HAKAJOBS_VERSION', '1.0.0');
+define('HAKAJOBS_DIR', get_template_directory());
+define('HAKAJOBS_URI', get_template_directory_uri());
+
+/**
+ * Include Required Modules
+ */
+require_once HAKAJOBS_DIR . '/inc/post-types.php';
+require_once HAKAJOBS_DIR . '/inc/meta-boxes.php';
+require_once HAKAJOBS_DIR . '/inc/template-tags.php';
+require_once HAKAJOBS_DIR . '/inc/sample-data.php';
+require_once HAKAJOBS_DIR . '/inc/seo.php';
+require_once HAKAJOBS_DIR . '/inc/ads.php';
+require_once HAKAJOBS_DIR . '/inc/customizer.php';
+require_once HAKAJOBS_DIR . '/inc/updater.php';
+
+/**
+ * Theme Setup
+ */
+function hakajobs_setup() {
+    // Translation support
+    load_theme_textdomain('hakajobs', HAKAJOBS_DIR . '/languages');
+
+    // Title tag
+    add_theme_support('title-tag');
+
+    // Featured images
+    add_theme_support('post-thumbnails');
+    set_post_thumbnail_size(120, 120, true);
+    add_image_size('hakajobs-company-logo', 96, 96, true);
+    add_image_size('hakajobs-card-thumb', 360, 200, true);
+
+    // Custom Logo
+    add_theme_support('custom-logo', array(
+        'height'      => 60,
+        'width'       => 220,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ));
+
+    // HTML5 markup
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+        'style',
+        'script',
+    ));
+
+    // Register Navigation Menus
+    register_nav_menus(array(
+        'primary-menu' => __('Menu Utama (Header)', 'hakajobs'),
+        'footer-menu'  => __('Menu Footer', 'hakajobs'),
+    ));
+}
+add_action('after_setup_theme', 'hakajobs_setup');
+
+/**
+ * Enqueue Scripts and Styles
+ */
+function hakajobs_enqueue_assets() {
+    // Google Fonts (Plus Jakarta Sans)
+    wp_enqueue_style(
+        'hakajobs-fonts',
+        'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+        array(),
+        null
+    );
+
+    // Main Theme Stylesheet
+    wp_enqueue_style(
+        'hakajobs-main-style',
+        HAKAJOBS_URI . '/assets/css/main.css',
+        array(),
+        HAKAJOBS_VERSION
+    );
+
+    // Main Theme JavaScript
+    wp_enqueue_script(
+        'hakajobs-main-script',
+        HAKAJOBS_URI . '/assets/js/main.js',
+        array(),
+        HAKAJOBS_VERSION,
+        true
+    );
+
+    // Localize Script for LocalStorage and AJAX info
+    wp_localize_script('hakajobs-main-script', 'HakajobsData', array(
+        'ajaxUrl'     => admin_url('admin-ajax.php'),
+        'homeUrl'     => home_url('/'),
+        'archiveUrl'  => get_post_type_archive_link('lowongan'),
+        'savedJobsUrl'=> home_url('/tersimpan/'),
+        'strings'     => array(
+            'saved'         => __('Tersimpan', 'hakajobs'),
+            'save'          => __('Simpan Lowongan', 'hakajobs'),
+            'removed'       => __('Dihapus dari simpanan', 'hakajobs'),
+            'linkCopied'    => __('Tautan berhasil disalin!', 'hakajobs'),
+            'noSavedJobs'   => __('Belum ada lowongan yang disimpan.', 'hakajobs'),
+        ),
+    ));
+}
+add_action('wp_enqueue_scripts', 'hakajobs_enqueue_assets');
+
+/**
+ * Register Sidebars / Widget Areas
+ */
+function hakajobs_widgets_init() {
+    register_sidebar(array(
+        'name'          => __('Sidebar Lowongan', 'hakajobs'),
+        'id'            => 'sidebar-job',
+        'description'   => __('Widget yang tampil di sidebar halaman arsip/pencarian lowongan.', 'hakajobs'),
+        'before_widget' => '<div id="%1$s" class="hk-widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="hk-widget-title">',
+        'after_title'   => '</h4>',
+    ));
+
+    register_sidebar(array(
+        'name'          => __('Footer Kolom 1 (Tentang)', 'hakajobs'),
+        'id'            => 'footer-1',
+        'description'   => __('Kolom kiri bawah pada footer.', 'hakajobs'),
+        'before_widget' => '<div id="%1$s" class="hk-footer-widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="hk-footer-title">',
+        'after_title'   => '</h4>',
+    ));
+
+    register_sidebar(array(
+        'name'          => __('Footer Kolom 2 (Kategori)', 'hakajobs'),
+        'id'            => 'footer-2',
+        'description'   => __('Kolom tengah footer untuk kategori.', 'hakajobs'),
+        'before_widget' => '<div id="%1$s" class="hk-footer-widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="hk-footer-title">',
+        'after_title'   => '</h4>',
+    ));
+
+    register_sidebar(array(
+        'name'          => __('Footer Kolom 3 (Bantuan & Info)', 'hakajobs'),
+        'id'            => 'footer-3',
+        'description'   => __('Kolom kanan footer.', 'hakajobs'),
+        'before_widget' => '<div id="%1$s" class="hk-footer-widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="hk-footer-title">',
+        'after_title'   => '</h4>',
+    ));
+}
+add_action('widgets_init', 'hakajobs_widgets_init');
+
+/**
+ * Custom Search & Filter Query Modifier for Lowongan
+ */
+function hakajobs_filter_job_query($query) {
+    if (is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    // Apply to lowongan archive, search, or taxonomy
+    if ($query->is_post_type_archive('lowongan') || $query->is_tax(array('kategori_lowongan', 'lokasi_lowongan', 'tipe_pekerjaan', 'pengalaman_kerja')) || (is_search() && isset($_GET['post_type']) && $_GET['post_type'] === 'lowongan')) {
+        
+        $query->set('post_type', 'lowongan');
+        $query->set('posts_per_page', 12);
+
+        $tax_query = array('relation' => 'AND');
+
+        // Filter: Kategori
+        if (!empty($_GET['kategori'])) {
+            $tax_query[] = array(
+                'taxonomy' => 'kategori_lowongan',
+                'field'    => 'slug',
+                'terms'    => sanitize_text_field($_GET['kategori']),
+            );
+        }
+
+        // Filter: Lokasi
+        if (!empty($_GET['lokasi'])) {
+            $tax_query[] = array(
+                'taxonomy' => 'lokasi_lowongan',
+                'field'    => 'slug',
+                'terms'    => sanitize_text_field($_GET['lokasi']),
+            );
+        }
+
+        // Filter: Tipe Pekerjaan
+        if (!empty($_GET['tipe'])) {
+            $tax_query[] = array(
+                'taxonomy' => 'tipe_pekerjaan',
+                'field'    => 'slug',
+                'terms'    => sanitize_text_field($_GET['tipe']),
+            );
+        }
+
+        // Filter: Tingkat Pengalaman
+        if (!empty($_GET['pengalaman'])) {
+            $tax_query[] = array(
+                'taxonomy' => 'pengalaman_kerja',
+                'field'    => 'slug',
+                'terms'    => sanitize_text_field($_GET['pengalaman']),
+            );
+        }
+
+        if (count($tax_query) > 1) {
+            $query->set('tax_query', $tax_query);
+        }
+
+        // Keyword Search (by title or company name)
+        if (!empty($_GET['s_keyword'])) {
+            $query->set('s', sanitize_text_field($_GET['s_keyword']));
+        }
+
+        // Sorting
+        $sort = !empty($_GET['sort']) ? sanitize_text_field($_GET['sort']) : 'terbaru';
+        if ($sort === 'populer') {
+            $query->set('meta_key', '_hakajobs_views_count');
+            $query->set('orderby', 'meta_value_num');
+            $query->set('order', 'DESC');
+        } elseif ($sort === 'deadline') {
+            $query->set('meta_key', '_hakajobs_deadline');
+            $query->set('orderby', 'meta_value');
+            $query->set('order', 'ASC');
+        } else {
+            $query->set('orderby', 'date');
+            $query->set('order', 'DESC');
+        }
+    }
+}
+add_action('pre_get_posts', 'hakajobs_filter_job_query');
+
+/**
+ * Fallback Menu
+ */
+function hakajobs_fallback_menu() {
+    echo '<ul class="hk-nav-list">';
+    echo '<li><a href="' . esc_url(home_url('/')) . '">' . __('Beranda', 'hakajobs') . '</a></li>';
+    echo '<li><a href="' . esc_url(get_post_type_archive_link('lowongan')) . '">' . __('Semua Lowongan', 'hakajobs') . '</a></li>';
+    
+    // Quick terms
+    $terms = get_terms(array('taxonomy' => 'tipe_pekerjaan', 'number' => 2, 'hide_empty' => false));
+    if (!empty($terms) && !is_wp_error($terms)) {
+        foreach ($terms as $t) {
+            echo '<li><a href="' . esc_url(get_term_link($t)) . '">' . esc_html($t->name) . '</a></li>';
+        }
+    }
+    echo '<li><a href="' . esc_url(home_url('/pasang-loker/')) . '" class="hk-menu-highlight">' . __('Pasang Loker', 'hakajobs') . '</a></li>';
+    echo '</ul>';
+}
+
+/**
+ * Increment view count on single lowongan
+ */
+function hakajobs_track_single_views() {
+    if (is_singular('lowongan')) {
+        hakajobs_set_views(get_the_ID());
+    }
+}
+add_action('wp_head', 'hakajobs_track_single_views');
