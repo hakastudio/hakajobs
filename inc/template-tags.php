@@ -204,12 +204,40 @@ function hakajobs_get_apply_info($post_id = null) {
 
     if ($apply_type === 'whatsapp' && !empty($apply_wa)) {
         $formatted_phone = hakajobs_format_whatsapp_number($apply_wa);
-        $default_msg = !empty($apply_wa_message) ? $apply_wa_message : sprintf(
-            'Halo HRD %s, saya ingin melamar posisi %s yang diiklankan di Hakajobs (%s). Berikut data diri saya...',
-            $company_name,
-            $post_title,
-            $permalink
-        );
+        $site_name       = get_bloginfo('name');
+
+        if (empty($apply_wa_message)) {
+            $default_msg = sprintf(
+                'Halo Tim HRD, saya melihat lowongan pekerjaan di website "%s" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.',
+                $site_name
+            );
+        } else {
+            $default_msg = str_ireplace(
+                array(
+                    'website Hakajobs',
+                    'website "Hakajobs"',
+                    'website HakaJob',
+                    'website "HakaJob"',
+                    'di Hakajobs',
+                    'di HakaJob',
+                    '{site_name}',
+                    '{nama_website}',
+                    '{website}',
+                ),
+                array(
+                    'website "' . $site_name . '"',
+                    'website "' . $site_name . '"',
+                    'website "' . $site_name . '"',
+                    'website "' . $site_name . '"',
+                    'di website "' . $site_name . '"',
+                    'di website "' . $site_name . '"',
+                    $site_name,
+                    $site_name,
+                    $site_name,
+                ),
+                $apply_wa_message
+            );
+        }
         $encoded_msg = rawurlencode($default_msg);
         $info['link'] = 'https://api.whatsapp.com/send?phone=' . esc_attr($formatted_phone) . '&text=' . $encoded_msg;
         $info['target'] = '_blank';
@@ -217,8 +245,9 @@ function hakajobs_get_apply_info($post_id = null) {
         $info['icon'] = 'whatsapp';
         $info['channel'] = 'WhatsApp';
     } elseif ($apply_type === 'email' && !empty($apply_email)) {
+        $site_name = get_bloginfo('name');
         $subject = !empty($apply_email_sub) ? $apply_email_sub : sprintf('Lamaran Pekerjaan: %s - [Nama Anda]', $post_title);
-        $body = sprintf("Halo Tim Rekrutmen %s,\n\nSaya tertarik untuk melamar posisi %s yang saya temukan di situs Hakajobs (%s).\n\nTerlampir CV dan portofolio saya untuk bahan pertimbangan.\n\nTerima kasih.", $company_name, $post_title, $permalink);
+        $body = sprintf("Halo Tim Rekrutmen %s,\n\nSaya tertarik untuk melamar posisi %s yang saya temukan di situs %s (%s).\n\nTerlampir CV dan portofolio saya untuk bahan pertimbangan.\n\nTerima kasih.", $company_name, $post_title, $site_name, $permalink);
         $info['link'] = 'mailto:' . esc_attr($apply_email) . '?subject=' . rawurlencode($subject) . '&body=' . rawurlencode($body);
         $info['label'] = __('Kirim Email Lamaran', 'hakajobs');
         $info['icon'] = 'mail';

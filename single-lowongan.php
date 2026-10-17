@@ -221,7 +221,7 @@ while (have_posts()) : the_post();
                         if (!empty($benefit_lines)):
                     ?>
                         <div class="hk-job-benefits-box">
-                            <h3 class="hk-box-heading">✨ <?php _e('Benefit & Fasilitas yang Diberikan', 'hakajobs'); ?></h3>
+                            <h2 class="hk-box-heading">✨ <?php _e('Benefit & Fasilitas yang Diberikan', 'hakajobs'); ?></h2>
                             <ul class="hk-benefits-grid">
                                 <?php foreach ($benefit_lines as $b): ?>
                                     <li class="hk-benefit-item">
@@ -236,7 +236,7 @@ while (have_posts()) : the_post();
                     <!-- Special Application Notes -->
                     <?php if (!empty($apply_notes)): ?>
                         <div class="hk-job-notes-box">
-                            <h4 class="hk-notes-heading">📌 <?php _e('Petunjuk Khusus Pelamar', 'hakajobs'); ?></h4>
+                            <h2 class="hk-notes-heading">📌 <?php _e('Petunjuk Khusus Pelamar', 'hakajobs'); ?></h2>
                             <p class="hk-notes-text"><?php echo nl2br(esc_html($apply_notes)); ?></p>
                         </div>
                     <?php endif; ?>

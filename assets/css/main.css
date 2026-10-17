@@ -1477,23 +1477,53 @@ button, input, select, textarea {
 }
 
 .hk-box-heading {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 18px !important;
+    font-weight: 700 !important;
     color: var(--hk-dark);
     margin-bottom: 16px;
+    line-height: 1.45;
 }
 
 /* Typography styles for content */
 .hk-typography {
-    line-height: 1.7;
+    line-height: 1.75;
     color: #334155;
     font-size: 15px;
 }
 
-.hk-typography h2, .hk-typography h3, .hk-typography h4 {
+/* Headings in Job Article (H1, H2, H3, H4, H5, H6) - Uniform Size */
+.hk-box-heading,
+.hk-typography h1,
+.hk-typography h2,
+.hk-typography h3,
+.hk-typography h4,
+.hk-typography h5,
+.hk-typography h6,
+.hk-typography .wp-block-heading,
+.hk-single-content .hk-typography h1,
+.hk-single-content .hk-typography h2,
+.hk-single-content .hk-typography h3,
+.hk-single-content .hk-typography h4,
+.hk-single-content .hk-typography h5,
+.hk-single-content .hk-typography h6 {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.45;
     color: var(--hk-dark);
     margin: 24px 0 12px;
-    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.hk-box-heading:first-child,
+.hk-typography > *:first-child,
+.hk-typography > h1:first-child,
+.hk-typography > h2:first-child,
+.hk-typography > h3:first-child,
+.hk-typography > h4:first-child,
+.hk-typography > h5:first-child,
+.hk-typography > h6:first-child,
+.hk-typography > .wp-block-heading:first-child {
+    margin-top: 0;
 }
 
 .hk-typography p {
@@ -1552,8 +1582,10 @@ button, input, select, textarea {
 }
 .hk-notes-heading {
     color: #166534;
-    font-size: 15px;
-    margin-bottom: 6px;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.45;
+    margin-bottom: 8px;
 }
 .hk-notes-text {
     font-size: 13px;
@@ -2947,6 +2979,18 @@ button, input, select, textarea {
     }
     .hk-single-type-badges {
         justify-content: center;
+    }
+    .hk-box-heading,
+    .hk-notes-heading,
+    .hk-typography h1,
+    .hk-typography h2,
+    .hk-typography h3,
+    .hk-typography h4,
+    .hk-typography h5,
+    .hk-typography h6,
+    .hk-typography .wp-block-heading {
+        font-size: 16px !important;
+        margin: 20px 0 10px;
     }
     .hk-mobile-sticky-bar {
         display: flex;

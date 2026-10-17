@@ -162,8 +162,15 @@ function hakajobs_render_job_apply_box($post) {
     if (empty($apply_type)) {
         $apply_type = 'whatsapp';
     }
+    $site_name = get_bloginfo('name');
     if (empty($apply_wa_message)) {
-        $apply_wa_message = 'Halo Tim HRD, saya melihat lowongan pekerjaan di website Hakajobs dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.';
+        $apply_wa_message = sprintf(__('Halo Tim HRD, saya melihat lowongan pekerjaan di website "%s" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.', 'hakajobs'), $site_name);
+    } else {
+        $apply_wa_message = str_ireplace(
+            array('website Hakajobs', 'website "Hakajobs"', 'website HakaJob', 'website "HakaJob"', 'di Hakajobs', 'di HakaJob'),
+            array('website "' . $site_name . '"', 'website "' . $site_name . '"', 'website "' . $site_name . '"', 'website "' . $site_name . '"', 'di website "' . $site_name . '"', 'di website "' . $site_name . '"'),
+            $apply_wa_message
+        );
     }
     ?>
     <p style="margin-top:0; color:#475569; font-size:13px;">
@@ -190,8 +197,8 @@ function hakajobs_render_job_apply_box($post) {
             </div>
             <div class="hk-field">
                 <label for="hakajobs_apply_wa_message"><?php _e('Template Teks Pesan WhatsApp', 'hakajobs'); ?></label>
-                <textarea id="hakajobs_apply_wa_message" name="hakajobs_apply_wa_message" rows="3" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:13px;"><?php echo esc_textarea($apply_wa_message); ?></textarea>
-                <small><?php _e('Teks pembuka yang langsung muncul di aplikasi WhatsApp pelamar.', 'hakajobs'); ?></small>
+                <textarea id="hakajobs_apply_wa_message" name="hakajobs_apply_wa_message" rows="3" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:13px;" placeholder="<?php echo esc_attr(sprintf(__('Halo Tim HRD, saya melihat lowongan pekerjaan di website "%s" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.', 'hakajobs'), $site_name)); ?>"><?php echo esc_textarea($apply_wa_message); ?></textarea>
+                <small><?php _e('Teks pembuka yang langsung muncul di aplikasi WhatsApp pelamar. Nama website otomatis terisi.', 'hakajobs'); ?></small>
             </div>
         </div>
     </div>
