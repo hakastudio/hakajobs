@@ -477,8 +477,8 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 5 — HALAMAN BERANDA (HERO)
     // =========================================================================
     $wp_customize->add_section('hakajobs_hero_section', array(
-        'title'       => __('🏠 Halaman Beranda — Hero', 'hakajobs'),
-        'description' => __('Kustomisasi teks judul, subjudul, dan kolom pencarian di hero utama.', 'hakajobs'),
+        'title'       => __('🏠 Halaman Beranda & Cara Melamar', 'hakajobs'),
+        'description' => __('Kustomisasi teks hero pencarian dan panduan 3 langkah cara melamar kerja di halaman beranda.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 35,
     ));
@@ -522,6 +522,102 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_hero_search_btn', array(
         'type'    => 'text',
         'label'   => __('Teks Tombol Cari', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    // --- Sub-bagian: Panduan Cara Melamar Kerja ---
+    $wp_customize->add_setting('hakajobs_show_how_it_works', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_show_how_it_works', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bagian "Cara Melamar"', 'hakajobs'),
+        'description' => __('Tampilkan blok panduan 3 langkah melamar kerja di halaman beranda.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_how_it_works_title', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_how_it_works_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Bagian "Cara Melamar"', 'hakajobs'),
+        'description' => __('Kosongkan untuk otomatis mengikuti nama website: "Cara Melamar Kerja di [Nama Situs]". Anda juga bisa mengetikkan judul kustom di sini.', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_how_it_works_subtitle', array(
+        'default'           => __('Tanpa perlu daftar akun, verifikasi email yang panjang, atau mengingat password.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_how_it_works_subtitle', array(
+        'type'        => 'textarea',
+        'label'       => __('Subjudul Bagian "Cara Melamar"', 'hakajobs'),
+        'section'     => 'hakajobs_hero_section',
+    ));
+
+    // Langkah 1
+    $wp_customize->add_setting('hakajobs_step1_title', array(
+        'default'           => __('Cari & Pilih Lowongan', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_step1_title', array(
+        'type'    => 'text',
+        'label'   => __('Langkah 1 — Judul', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+    $wp_customize->add_setting('hakajobs_step1_desc', array(
+        'default'           => __('Gunakan filter lokasi, tipe kerja, atau bidang industri untuk menemukan posisi yang sesuai dengan keahlian Anda.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    $wp_customize->add_control('hakajobs_step1_desc', array(
+        'type'    => 'textarea',
+        'label'   => __('Langkah 1 — Deskripsi', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    // Langkah 2
+    $wp_customize->add_setting('hakajobs_step2_title', array(
+        'default'           => __('Siapkan Dokumen', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_step2_title', array(
+        'type'    => 'text',
+        'label'   => __('Langkah 2 — Judul', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+    $wp_customize->add_setting('hakajobs_step2_desc', array(
+        'default'           => __('Pastikan berkas resume/CV dan tautan portofolio terbaru Anda sudah siap dikirimkan kepada tim rekruter.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    $wp_customize->add_control('hakajobs_step2_desc', array(
+        'type'    => 'textarea',
+        'label'   => __('Langkah 2 — Deskripsi', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+
+    // Langkah 3
+    $wp_customize->add_setting('hakajobs_step3_title', array(
+        'default'           => __('Kirim Lamaran Langsung', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('hakajobs_step3_title', array(
+        'type'    => 'text',
+        'label'   => __('Langkah 3 — Judul', 'hakajobs'),
+        'section' => 'hakajobs_hero_section',
+    ));
+    $wp_customize->add_setting('hakajobs_step3_desc', array(
+        'default'           => __('Klik tombol Lamar untuk terhubung langsung ke WhatsApp HRD, kirim email, atau isi formulir karir resmi perusahaan.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ));
+    $wp_customize->add_control('hakajobs_step3_desc', array(
+        'type'    => 'textarea',
+        'label'   => __('Langkah 3 — Deskripsi', 'hakajobs'),
         'section' => 'hakajobs_hero_section',
     ));
 

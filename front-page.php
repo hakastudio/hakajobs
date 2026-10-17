@@ -283,35 +283,52 @@ $hero_search_btn   = get_theme_mod('hakajobs_hero_search_btn', __('Cari Lowongan
         </div>
     </section>
 
+    <?php
+    $show_how = get_theme_mod('hakajobs_show_how_it_works', '1');
+    if ($show_how === '1'):
+        $site_name    = get_bloginfo('name');
+        $custom_title = get_theme_mod('hakajobs_how_it_works_title', '');
+        $how_title    = !empty($custom_title) ? $custom_title : sprintf(__('Cara Melamar Kerja di %s', 'hakajobs'), $site_name);
+        $how_subtitle = get_theme_mod('hakajobs_how_it_works_subtitle', __('Tanpa perlu daftar akun, verifikasi email yang panjang, atau mengingat password.', 'hakajobs'));
+        $step1_title  = get_theme_mod('hakajobs_step1_title', __('Cari & Pilih Lowongan', 'hakajobs'));
+        $step1_desc   = get_theme_mod('hakajobs_step1_desc', __('Gunakan filter lokasi, tipe kerja, atau bidang industri untuk menemukan posisi yang sesuai dengan keahlian Anda.', 'hakajobs'));
+        $step2_title  = get_theme_mod('hakajobs_step2_title', __('Siapkan Dokumen', 'hakajobs'));
+        $step2_desc   = get_theme_mod('hakajobs_step2_desc', __('Pastikan berkas resume/CV dan tautan portofolio terbaru Anda sudah siap dikirimkan kepada tim rekruter.', 'hakajobs'));
+        $step3_title  = get_theme_mod('hakajobs_step3_title', __('Kirim Lamaran Langsung', 'hakajobs'));
+        $step3_desc   = get_theme_mod('hakajobs_step3_desc', __('Klik tombol Lamar untuk terhubung langsung ke WhatsApp HRD, kirim email, atau isi formulir karir resmi perusahaan.', 'hakajobs'));
+    ?>
     <!-- How It Works (Tanpa Login) -->
     <section class="hk-how-section">
         <div class="hk-container">
             <div class="hk-section-center-head">
-                <h2 class="hk-section-title"><?php _e('Cara Melamar Kerja di Hakajobs', 'hakajobs'); ?></h2>
-                <p class="hk-section-subtitle"><?php _e('Tanpa perlu daftar akun, verifikasi email yang panjang, atau mengingat password.', 'hakajobs'); ?></p>
+                <h2 class="hk-section-title"><?php echo esc_html($how_title); ?></h2>
+                <?php if (!empty($how_subtitle)): ?>
+                    <p class="hk-section-subtitle"><?php echo esc_html($how_subtitle); ?></p>
+                <?php endif; ?>
             </div>
 
             <div class="hk-steps-grid">
                 <div class="hk-step-card">
                     <div class="hk-step-number">1</div>
-                    <h3 class="hk-step-title"><?php _e('Cari & Pilih Lowongan', 'hakajobs'); ?></h3>
-                    <p class="hk-step-desc"><?php _e('Gunakan filter lokasi, tipe kerja, atau bidang industri untuk menemukan posisi yang sesuai dengan keahlian Anda.', 'hakajobs'); ?></p>
+                    <h3 class="hk-step-title"><?php echo esc_html($step1_title); ?></h3>
+                    <p class="hk-step-desc"><?php echo esc_html($step1_desc); ?></p>
                 </div>
 
                 <div class="hk-step-card">
                     <div class="hk-step-number">2</div>
-                    <h3 class="hk-step-title"><?php _e('Siapkan Dokumen', 'hakajobs'); ?></h3>
-                    <p class="hk-step-desc"><?php _e('Pastikan berkas resume/CV dan tautan portofolio terbaru Anda sudah siap dikirimkan kepada tim rekruter.', 'hakajobs'); ?></p>
+                    <h3 class="hk-step-title"><?php echo esc_html($step2_title); ?></h3>
+                    <p class="hk-step-desc"><?php echo esc_html($step2_desc); ?></p>
                 </div>
 
                 <div class="hk-step-card">
                     <div class="hk-step-number">3</div>
-                    <h3 class="hk-step-title"><?php _e('Kirim Lamaran Langsung', 'hakajobs'); ?></h3>
-                    <p class="hk-step-desc"><?php _e('Klik tombol Lamar untuk terhubung langsung ke WhatsApp HRD, kirim email, atau isi formulir karir resmi perusahaan.', 'hakajobs'); ?></p>
+                    <h3 class="hk-step-title"><?php echo esc_html($step3_title); ?></h3>
+                    <p class="hk-step-desc"><?php echo esc_html($step3_desc); ?></p>
                 </div>
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
 </main>
 
