@@ -13,7 +13,8 @@
  *  ├─ Section 8 : SEO & Meta Tags
  *  ├─ Section 9 : Monetisasi & Slot Banner Iklan
  *  ├─ Section 10: Halaman Pasang Loker & Tarif
- *  └─ Section 11: Saluran WhatsApp & Broadcast Loker
+ *  ├─ Section 11: Saluran WhatsApp & Broadcast Loker
+ *  └─ Section 12: Sidebar Kanan (Beranda & Halaman Statis)
  *
  * @package Hakajobs
  */
@@ -1434,6 +1435,282 @@ function hakajobs_customize_register($wp_customize) {
         'type'        => 'text',
         'label'       => __('Teks Tombol Banner Publik', 'hakajobs'),
         'section'     => 'hakajobs_wa_channel_section',
+    ));
+
+    // =========================================================================
+    // SECTION 12 — SIDEBAR KANAN (BERANDA & HALAMAN STATIS)
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_sidebar_section', array(
+        'title'       => __('Sidebar Kanan (Beranda & Halaman)', 'hakajobs'),
+        'description' => __('Atur tampilan dan isi widget sidebar kanan: Pasang Loker, Kategori Populer, Lokasi Kerja Teratas, dan Tips Melamar Efektif.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 36,
+    ));
+
+    // --- Pengaturan Tampilan Halaman Statis ---
+    $wp_customize->add_setting('hakajobs_sidebar_show_on_pages', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_show_on_pages', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Sidebar di Halaman Statis Standar (page.php)', 'hakajobs'),
+        'description' => __('Jika diaktifkan, halaman statis seperti Tentang Kami atau Kontak akan menggunakan tata letak dua kolom dengan sidebar kanan.', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    // --- WIDGET 1: PASANG LOKER (UNTUK PERUSAHAAN / REKRUTER) ---
+    $wp_customize->add_setting('hakajobs_sidebar_show_post_job', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_show_post_job', array(
+        'type'        => 'checkbox',
+        'label'       => __('1. Tampilkan Widget "Pasang Loker"', 'hakajobs'),
+        'description' => __('Kartu ajakan pasang lowongan kerja untuk perusahaan/rekruter dengan gaya dark navy.', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_post_job_badge', array(
+        'default'           => 'UNTUK PERUSAHAAN / REKRUTER',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_post_job_badge', array(
+        'type'        => 'text',
+        'label'       => __('Label Badge Rekruter', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_post_job_title', array(
+        'default'           => __('Punya Lowongan Kerja?', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_post_job_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Pasang Loker', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_post_job_desc', array(
+        'default'           => __('Pasang info lowongan kerja Anda di Hakajobs dan dapatkan pelamar berkualitas langsung ke WhatsApp atau Email perusahaan Anda.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_post_job_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Deskripsi Pasang Loker', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_post_job_btn_text', array(
+        'default'           => 'Pasang Iklan Loker →',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_post_job_btn_text', array(
+        'type'        => 'text',
+        'label'       => __('Teks Tombol Pasang Loker', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_post_job_btn_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_post_job_btn_url', array(
+        'type'        => 'url',
+        'label'       => __('Tautan Tombol Pasang Loker (URL)', 'hakajobs'),
+        'description' => __('Kosongkan untuk otomatis mengarah ke halaman /pasang-loker/ bawaan tema.', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    // --- WIDGET 2: KATEGORI POPULER ---
+    $wp_customize->add_setting('hakajobs_sidebar_show_cats', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_show_cats', array(
+        'type'        => 'checkbox',
+        'label'       => __('2. Tampilkan Widget "Kategori Populer"', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_cats_title', array(
+        'default'           => __('Kategori Populer', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_cats_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Widget Kategori', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_cats_count', array(
+        'default'           => 6,
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_cats_count', array(
+        'type'        => 'number',
+        'label'       => __('Jumlah Kategori Ditampilkan', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+        'input_attrs' => array(
+            'min'  => 1,
+            'max'  => 30,
+            'step' => 1,
+        ),
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_cats_hide_empty', array(
+        'default'           => '0',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_cats_hide_empty', array(
+        'type'        => 'checkbox',
+        'label'       => __('Sembunyikan Kategori yang Tidak Memiliki Lowongan (0 loker)', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_cats_orderby', array(
+        'default'           => 'count',
+        'sanitize_callback' => 'hakajobs_sanitize_select',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_cats_orderby', array(
+        'type'        => 'select',
+        'label'       => __('Urutan Kategori', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+        'choices'     => array(
+            'count' => __('Jumlah Lowongan Terbanyak (Populer)', 'hakajobs'),
+            'name'  => __('Sesuai Abjad Nama (A-Z)', 'hakajobs'),
+        ),
+    ));
+
+    // --- WIDGET 3: LOKASI KERJA TERATAS ---
+    $wp_customize->add_setting('hakajobs_sidebar_show_locs', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_show_locs', array(
+        'type'        => 'checkbox',
+        'label'       => __('3. Tampilkan Widget "Lokasi Kerja Teratas"', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_locs_title', array(
+        'default'           => __('Lokasi Kerja Teratas', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_locs_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Widget Lokasi', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_locs_count', array(
+        'default'           => 8,
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_locs_count', array(
+        'type'        => 'number',
+        'label'       => __('Jumlah Lokasi Ditampilkan', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+        'input_attrs' => array(
+            'min'  => 1,
+            'max'  => 40,
+            'step' => 1,
+        ),
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_locs_hide_empty', array(
+        'default'           => '0',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_locs_hide_empty', array(
+        'type'        => 'checkbox',
+        'label'       => __('Sembunyikan Lokasi yang Tidak Memiliki Lowongan (0 loker)', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_locs_orderby', array(
+        'default'           => 'count',
+        'sanitize_callback' => 'hakajobs_sanitize_select',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_locs_orderby', array(
+        'type'        => 'select',
+        'label'       => __('Urutan Lokasi', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+        'choices'     => array(
+            'count' => __('Jumlah Lowongan Terbanyak (Teratas)', 'hakajobs'),
+            'name'  => __('Sesuai Abjad Nama Kota/Provinsi (A-Z)', 'hakajobs'),
+        ),
+    ));
+
+    // --- WIDGET 4: TIPS MELAMAR EFEKTIF ---
+    $wp_customize->add_setting('hakajobs_sidebar_show_tips', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_show_tips', array(
+        'type'        => 'checkbox',
+        'label'       => __('4. Tampilkan Widget "💡 Tips Melamar Efektif"', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_tips_title', array(
+        'default'           => __('💡 Tips Melamar Efektif', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_tips_title', array(
+        'type'        => 'text',
+        'label'       => __('Judul Widget Tips', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $default_tips_text = "Sesuaikan CV Anda dengan kata kunci yang diminta pada kualifikasi lowongan.\nGunakan format PDF dengan nama file yang jelas (contoh: CV_NamaLengkap_Posisi.pdf).\nSaat melamar via WhatsApp, gunakan bahasa yang santun dan perkenalkan diri secara ringkas.";
+    $wp_customize->add_setting('hakajobs_sidebar_tips_content', array(
+        'default'           => $default_tips_text,
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_tips_content', array(
+        'type'        => 'textarea',
+        'label'       => __('Daftar Butir Poin Tips', 'hakajobs'),
+        'description' => __('Ketik satu butir tips per baris (tekan Enter untuk poin baru). Setiap baris akan otomatis ditampilkan sebagai butir daftar berpeluru.', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    // --- INTEGRASI WIDGET WORDPRESS ---
+    $wp_customize->add_setting('hakajobs_sidebar_wp_widgets_pos', array(
+        'default'           => 'after',
+        'sanitize_callback' => 'hakajobs_sanitize_select',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_wp_widgets_pos', array(
+        'type'        => 'select',
+        'label'       => __('Posisi Widget WordPress Kustom (Tampilan > Widget)', 'hakajobs'),
+        'description' => __('Tentukan di mana widget kustom dari area "Sidebar Kanan (Beranda & Halaman Statis)" akan diletakkan.', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+        'choices'     => array(
+            'after'   => __('Tampilkan Setelah Widget Bawaan Tema (Bawah)', 'hakajobs'),
+            'before'  => __('Tampilkan Sebelum Widget Bawaan Tema (Atas)', 'hakajobs'),
+            'replace' => __('Gantikan Semua Widget Bawaan (Hanya Widget WP)', 'hakajobs'),
+        ),
     ));
 }
 add_action('customize_register', 'hakajobs_customize_register');

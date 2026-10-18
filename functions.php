@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.17');
+define('HAKAJOBS_VERSION', '1.0.18');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -133,6 +133,16 @@ add_action('wp_enqueue_scripts', 'hakajobs_enqueue_assets');
  * Register Sidebars / Widget Areas
  */
 function hakajobs_widgets_init() {
+    register_sidebar(array(
+        'name'          => __('Sidebar Kanan (Beranda & Halaman Statis)', 'hakajobs'),
+        'id'            => 'sidebar-right',
+        'description'   => __('Widget yang tampil di bilah kanan beranda dan halaman statis. Anda dapat menambahkan widget WordPress kustom di sini.', 'hakajobs'),
+        'before_widget' => '<div id="%1$s" class="hk-widget-card %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="hk-widget-title">',
+        'after_title'   => '</h3>',
+    ));
+
     register_sidebar(array(
         'name'          => __('Sidebar Lowongan', 'hakajobs'),
         'id'            => 'sidebar-job',

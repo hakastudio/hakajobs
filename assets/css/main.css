@@ -1270,6 +1270,59 @@ button, input, select, textarea {
     margin-bottom: 8px;
 }
 
+/* WordPress Dynamic Widgets Styling in Sidebar */
+.hk-sidebar .hk-widget-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hk-sidebar .hk-widget-card ul li {
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+.hk-sidebar .hk-widget-card ul li a {
+    color: var(--hk-text-main);
+    transition: color 0.2s ease;
+}
+
+.hk-sidebar .hk-widget-card ul li a:hover {
+    color: var(--hk-primary);
+}
+
+.hk-sidebar .hk-widget-card input[type="text"],
+.hk-sidebar .hk-widget-card input[type="search"] {
+    width: 100%;
+    padding: 9px 13px;
+    border: 1px solid var(--hk-border);
+    border-radius: var(--hk-radius-sm);
+    font-size: 13.5px;
+    outline: none;
+    margin-bottom: 8px;
+    background: var(--hk-bg-surface);
+    color: var(--hk-text-main);
+}
+
+.hk-sidebar .hk-widget-card input[type="submit"],
+.hk-sidebar .hk-widget-card button[type="submit"] {
+    padding: 8px 16px;
+    background: var(--hk-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--hk-radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.hk-sidebar .hk-widget-card input[type="submit"]:hover,
+.hk-sidebar .hk-widget-card button[type="submit"]:hover {
+    background: var(--hk-primary-hover);
+}
+
 /* ==========================================================================
    How It Works Section
    ========================================================================== */
@@ -2083,6 +2136,14 @@ button, input, select, textarea {
 /* ==========================================================================
    Pages & Articles
    ========================================================================== */
+.hk-page-standard {
+    padding: 36px 0 60px;
+}
+
+.hk-page-main-col {
+    min-width: 0;
+}
+
 .hk-page-card, .hk-article-card {
     background: var(--hk-bg-surface);
     border: 1px solid var(--hk-border);
@@ -2091,6 +2152,17 @@ button, input, select, textarea {
     margin: 36px auto 60px;
     max-width: 860px;
     box-shadow: var(--hk-shadow-sm);
+}
+
+.hk-layout-with-sidebar .hk-page-card,
+.hk-page-main-col .hk-page-card {
+    margin: 0 0 32px;
+    max-width: 100%;
+}
+
+.hk-page-card-full {
+    max-width: 100%;
+    margin: 0 auto 60px;
 }
 
 .hk-page-header, .hk-article-header {

@@ -27,7 +27,10 @@ Hakajobs/
 ├── taxonomy.php               # Template arsip kategori & kota
 ├── search.php                 # Halaman hasil pencarian
 ├── single.php                 # Template artikel blog standar
-├── page.php                   # Template halaman statis (Tentang, Kontak, Pasang Loker)
+├── page.php                   # Template halaman statis (Tentang, Kontak, dll.)
+├── sidebar.php                # Bilah sisi kanan (Pasang Loker, Kategori, Lokasi, Tips & Widget WP)
+├── template-with-sidebar.php  # Template halaman statis dengan sidebar kanan
+├── template-full-width.php   # Template halaman statis lebar penuh tanpa sidebar
 ├── page-saved.php             # Template khusus "Lowongan Tersimpan"
 ├── 404.php                    # Halaman 404 ramah pengguna
 ├── screenshot.png             # Gambar pratinjau tema di dashboard WordPress
