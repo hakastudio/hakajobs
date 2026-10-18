@@ -72,40 +72,24 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
                         <?php
                         $show_social   = get_theme_mod('hakajobs_show_footer_social', '1');
                         $social_label  = get_theme_mod('hakajobs_footer_social_label', __('Sosial Media Kami:', 'hakajobs'));
-                        $social_wa     = get_theme_mod('hakajobs_footer_social_wa', '');
-                        $channel_wa    = get_theme_mod('hakajobs_wa_channel_url', '');
-                        $admin_wa      = get_theme_mod('hakajobs_admin_whatsapp', '');
-                        if (empty($social_wa) && !empty($channel_wa)) {
-                            $social_wa = $channel_wa;
-                        } elseif (empty($social_wa) && !empty($admin_wa)) {
-                            $clean_wa  = preg_replace('/[^0-9]/', '', $admin_wa);
+                        $social_wa     = trim(get_theme_mod('hakajobs_footer_social_wa', ''));
+                        if (!empty($social_wa) && !preg_match('#^https?://#i', $social_wa)) {
+                            $clean_wa  = preg_replace('/[^0-9]/', '', $social_wa);
                             if (substr($clean_wa, 0, 1) === '0') {
                                 $clean_wa = '62' . substr($clean_wa, 1);
                             }
                             $social_wa = 'https://wa.me/' . $clean_wa;
                         }
-                        if (empty($social_wa)) {
-                            $social_wa = 'https://api.whatsapp.com/send?text=' . rawurlencode(get_bloginfo('name') . ' - Portal Info Lowongan Kerja Terupdate: ' . home_url('/'));
-                        }
 
-                        $social_tg     = get_theme_mod('hakajobs_footer_social_tg', '');
-                        if (empty($social_tg)) {
-                            $social_tg = 'https://t.me/share/url?url=' . rawurlencode(home_url('/')) . '&text=' . rawurlencode(get_bloginfo('name') . ' Info Loker');
-                        }
+                        $social_tg     = trim(get_theme_mod('hakajobs_footer_social_tg', ''));
+                        $social_in     = trim(get_theme_mod('hakajobs_footer_social_in', ''));
+                        $social_fb     = trim(get_theme_mod('hakajobs_footer_social_fb', ''));
+                        $social_ig     = trim(get_theme_mod('hakajobs_footer_social_ig', ''));
 
-                        $social_in     = get_theme_mod('hakajobs_footer_social_in', '');
-                        if (empty($social_in)) {
-                            $social_in = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode(home_url('/'));
-                        }
-
-                        $social_fb     = get_theme_mod('hakajobs_footer_social_fb', '');
-                        if (empty($social_fb)) {
-                            $social_fb = 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode(home_url('/'));
-                        }
-
-                        $social_ig     = get_theme_mod('hakajobs_footer_social_ig', '');
+                        $is_social_on     = ($show_social === '1' || $show_social === 1 || $show_social === true);
+                        $has_social_links = (!empty($social_wa) || !empty($social_tg) || !empty($social_in) || !empty($social_fb) || !empty($social_ig));
                         ?>
-                        <?php if ($show_social === '1'): ?>
+                        <?php if ($is_social_on && $has_social_links): ?>
                             <div class="hk-footer-social-wrap">
                                 <?php if (!empty($social_label)): ?>
                                     <span class="hk-footer-social-label"><?php echo esc_html($social_label); ?></span>

@@ -31,7 +31,7 @@ function hakajobs_customize_register($wp_customize) {
     // PANEL UTAMA
     // =========================================================================
     $wp_customize->add_panel('hakajobs_theme_options', array(
-        'title'       => __('🎨 Penyesuaian Tema Hakajobs', 'hakajobs'),
+        'title'       => __('Penyesuaian Tema Hakajobs', 'hakajobs'),
         'description' => __('Atur warna, header, navigasi, hero, dan semua teks tema dari sini.', 'hakajobs'),
         'priority'    => 20,
     ));
@@ -40,7 +40,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 1 — WARNA & BRANDING
     // =========================================================================
     $wp_customize->add_section('hakajobs_color_section', array(
-        'title'    => __('🎨 Skema Warna & Branding', 'hakajobs'),
+        'title'    => __('Skema Warna & Branding', 'hakajobs'),
         'panel'    => 'hakajobs_theme_options',
         'priority' => 10,
     ));
@@ -111,7 +111,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 2 — HEADER & NAVIGASI MENU
     // =========================================================================
     $wp_customize->add_section('hakajobs_header_section', array(
-        'title'       => __('🧭 Header & Navigasi Menu', 'hakajobs'),
+        'title'       => __('Header & Navigasi Menu', 'hakajobs'),
         'description' => __('Atur logo, sticky header, tombol CTA, dan tautan cepat di bilah atas. Untuk mengedit item menu, buka: Tampilan → Menu.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 20,
@@ -405,7 +405,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 3 — BILAH PENGUMUMAN (TOPBAR)
     // =========================================================================
     $wp_customize->add_section('hakajobs_topbar_section', array(
-        'title'    => __('📢 Bilah Pengumuman (Topbar)', 'hakajobs'),
+        'title'    => __('Bilah Pengumuman (Topbar)', 'hakajobs'),
         'panel'    => 'hakajobs_theme_options',
         'priority' => 25,
     ));
@@ -447,7 +447,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 4 — TOMBOL KEMBALI KE ATAS
     // =========================================================================
     $wp_customize->add_section('hakajobs_backtotop_section', array(
-        'title'    => __('⬆️ Tombol Kembali ke Atas', 'hakajobs'),
+        'title'    => __('Tombol Kembali ke Atas', 'hakajobs'),
         'panel'    => 'hakajobs_theme_options',
         'priority' => 30,
     ));
@@ -478,7 +478,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 5 — HALAMAN BERANDA (HERO)
     // =========================================================================
     $wp_customize->add_section('hakajobs_hero_section', array(
-        'title'       => __('🏠 Halaman Beranda & Cara Melamar', 'hakajobs'),
+        'title'       => __('Halaman Beranda & Cara Melamar', 'hakajobs'),
         'description' => __('Kustomisasi teks hero pencarian dan panduan 3 langkah cara melamar kerja di halaman beranda.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 35,
@@ -492,7 +492,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_hero_style', array(
         'type'        => 'select',
-        'label'       => __('🎨 Gaya Desain Hero Beranda', 'hakajobs'),
+        'label'       => __('Gaya Desain Hero Beranda', 'hakajobs'),
         'description' => __('Pilih gaya visual hero beranda. Gaya Pasang Loker menggunakan latar dark navy modern dengan aksen cyan glow.', 'hakajobs'),
         'section'     => 'hakajobs_hero_section',
         'choices'     => array(
@@ -503,7 +503,7 @@ function hakajobs_customize_register($wp_customize) {
 
     // Badge Teks Hero
     $wp_customize->add_setting('hakajobs_hero_badge', array(
-        'default'           => __('💼 Portal Loker Terpercaya & Lamar Langsung', 'hakajobs'),
+        'default'           => __('Portal Loker Terpercaya & Lamar Langsung', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
@@ -693,7 +693,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_setting('hakajobs_featured_badge', array(
-        'default'           => __('🔥 Lowongan Prioritas', 'hakajobs'),
+        'default'           => __('Lowongan Prioritas', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
@@ -705,7 +705,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_setting('hakajobs_featured_section_title', array(
-        'default'           => __('🔥 Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera', 'hakajobs'),
+        'default'           => __('Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
@@ -873,7 +873,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 6 — PERINGATAN ANTI PENIPUAN
     // =========================================================================
     $wp_customize->add_section('hakajobs_fraud_section', array(
-        'title'    => __('🛡️ Peringatan Anti Penipuan', 'hakajobs'),
+        'title'    => __('Peringatan Anti Penipuan', 'hakajobs'),
         'panel'    => 'hakajobs_theme_options',
         'priority' => 40,
     ));
@@ -912,7 +912,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 7 — FOOTER & HAK CIPTA
     // =========================================================================
     $wp_customize->add_section('hakajobs_footer_section', array(
-        'title'    => __('📋 Footer & Hak Cipta', 'hakajobs'),
+        'title'    => __('Footer & Hak Cipta', 'hakajobs'),
         'panel'    => 'hakajobs_theme_options',
         'priority' => 50,
     ));
@@ -1032,7 +1032,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_show_footer_social', array(
         'type'        => 'checkbox',
         'label'       => __('Tampilkan Media Sosial Pemilik Website', 'hakajobs'),
-        'description' => __('Tampilkan deretan ikon media sosial resmi pemilik website di kolom 1 footer.', 'hakajobs'),
+        'description' => __('Aktifkan (ON) atau nonaktifkan (OFF) deretan ikon media sosial di footer. Ikon hanya akan tampil jika tautan (link) diisi di bawah ini.', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
@@ -1055,7 +1055,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_footer_social_wa', array(
         'type'        => 'url',
         'label'       => __('URL WhatsApp (Admin/Official)', 'hakajobs'),
-        'description' => __('Contoh: https://wa.me/6281234567890. Jika dikosongkan, otomatis menggunakan nomor WhatsApp Admin dari Seksi 10.', 'hakajobs'),
+        'description' => __('Contoh: https://wa.me/6281234567890. Kosongkan jika tidak ingin menampilkan.', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
@@ -1066,7 +1066,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_footer_social_tg', array(
         'type'        => 'url',
         'label'       => __('URL Telegram (Channel/Group/Akun)', 'hakajobs'),
-        'description' => __('Contoh: https://t.me/infolokerlampung', 'hakajobs'),
+        'description' => __('Contoh: https://t.me/sosialmedia. Kosongkan jika tidak ingin menampilkan.', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
@@ -1077,7 +1077,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_footer_social_in', array(
         'type'        => 'url',
         'label'       => __('URL LinkedIn (Halaman/Profil)', 'hakajobs'),
-        'description' => __('Contoh: https://linkedin.com/company/infolokerlampung', 'hakajobs'),
+        'description' => __('Contoh: https://linkedin.com/company/sosialmedia. Kosongkan jika tidak ingin menampilkan.', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
@@ -1088,7 +1088,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_footer_social_fb', array(
         'type'        => 'url',
         'label'       => __('URL Facebook (Fanspage/Group/Profil)', 'hakajobs'),
-        'description' => __('Contoh: https://facebook.com/infolokerlampung', 'hakajobs'),
+        'description' => __('Contoh: https://facebook.com/sosialmedia. Kosongkan jika tidak ingin menampilkan.', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
@@ -1099,7 +1099,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_footer_social_ig', array(
         'type'        => 'url',
         'label'       => __('URL Instagram (Profil Resmi)', 'hakajobs'),
-        'description' => __('Contoh: https://instagram.com/infolokerlampung', 'hakajobs'),
+        'description' => __('Contoh: https://instagram.com/sosialmedia. Kosongkan jika tidak ingin menampilkan.', 'hakajobs'),
         'section'     => 'hakajobs_footer_section',
     ));
 
@@ -1107,7 +1107,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 8 — 🔍 SEO & VERIFIKASI MESIN PENCARI
     // =========================================================================
     $wp_customize->add_section('hakajobs_seo_section', array(
-        'title'       => __('🔍 SEO & Verifikasi Mesin Pencari', 'hakajobs'),
+        'title'       => __('SEO & Verifikasi Mesin Pencari', 'hakajobs'),
         'description' => __('Optimalisasi agar situs mudah diindeks Google, Bing, serta preview menarik di WhatsApp & Medsos.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 55,
@@ -1171,7 +1171,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 9 — 💰 GOOGLE ADSENSE & PENEMPATAN IKLAN
     // =========================================================================
     $wp_customize->add_section('hakajobs_ads_section', array(
-        'title'       => __('💰 Google AdSense & Penempatan Iklan', 'hakajobs'),
+        'title'       => __('Google AdSense & Penempatan Iklan', 'hakajobs'),
         'description' => __('Monetisasi website Anda dengan Google AdSense atau banner sponsor kustom di berbagai posisi strategis.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 60,
@@ -1280,7 +1280,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 10 — HALAMAN PASANG LOKER & TARIF
     // =========================================================================
     $wp_customize->add_section('hakajobs_postjob_section', array(
-        'title'       => __('💼 Halaman Pasang Loker & Tarif', 'hakajobs'),
+        'title'       => __('Halaman Pasang Loker & Tarif', 'hakajobs'),
         'description' => __('Atur nomor WhatsApp admin, email, dan tarif paket di halaman /pasang-loker/.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 95,
@@ -1294,7 +1294,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_contact_wa', array(
         'type'        => 'text',
-        'label'       => __('📱 Nomor WhatsApp Admin', 'hakajobs'),
+        'label'       => __('Nomor WhatsApp Admin', 'hakajobs'),
         'description' => __('Menerima pesan otomatis pendaftaran lowongan dari form pasang loker. Format: 08123456789 atau 628123456789.', 'hakajobs'),
         'section'     => 'hakajobs_postjob_section',
     ));
@@ -1307,7 +1307,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_contact_email', array(
         'type'        => 'email',
-        'label'       => __('✉️ Email Admin / Perusahaan', 'hakajobs'),
+        'label'       => __('Email Admin / Perusahaan', 'hakajobs'),
         'description' => __('Email alternatif penerima data lowongan (jika kosong, menggunakan email admin WordPress).', 'hakajobs'),
         'section'     => 'hakajobs_postjob_section',
     ));
@@ -1320,7 +1320,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_price_featured', array(
         'type'        => 'text',
-        'label'       => __('⭐ Tarif Paket Featured', 'hakajobs'),
+        'label'       => __('Tarif Paket Featured', 'hakajobs'),
         'description' => __('Label harga paket Featured (Populer). Contoh: "Rp 50.000" atau "Rp 99.000".', 'hakajobs'),
         'section'     => 'hakajobs_postjob_section',
     ));
@@ -1333,7 +1333,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_price_urgent', array(
         'type'        => 'text',
-        'label'       => __('🔥 Tarif Paket Urgent', 'hakajobs'),
+        'label'       => __('Tarif Paket Urgent', 'hakajobs'),
         'description' => __('Label harga paket Urgent (Prioritas). Contoh: "Rp 75.000" atau "Rp 150.000".', 'hakajobs'),
         'section'     => 'hakajobs_postjob_section',
     ));
@@ -1342,7 +1342,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 11 — SALURAN WHATSAPP & BROADCAST LOKER
     // =========================================================================
     $wp_customize->add_section('hakajobs_wa_channel_section', array(
-        'title'       => __('📢 Saluran WhatsApp & Broadcast', 'hakajobs'),
+        'title'       => __('Saluran WhatsApp & Broadcast', 'hakajobs'),
         'description' => __('Atur link Saluran WhatsApp resmi Anda untuk broadcast 1-klik loker dan banner undangan pengunjung.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 105,
@@ -1356,7 +1356,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_wa_channel_url', array(
         'type'        => 'url',
-        'label'       => __('🔗 Tautan Saluran WhatsApp (Channel URL)', 'hakajobs'),
+        'label'       => __('Tautan Saluran WhatsApp (Channel URL)', 'hakajobs'),
         'description' => __('Contoh: https://whatsapp.com/channel/0029Va... atau link invite grup WA. Tautan ini akan otomatis disertakan pada teks broadcast dan tombol publik.', 'hakajobs'),
         'section'     => 'hakajobs_wa_channel_section',
     ));
