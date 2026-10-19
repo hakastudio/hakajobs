@@ -156,6 +156,145 @@ function hakajobs_format_whatsapp_number($phone) {
 }
 
 /**
+ * Helper to replace dynamic placeholders in job application templates
+ * Supported tags: {posisi}, {job_title}, {title}, {perusahaan}, {company}, {company_name}, {website}, {site_name}, {nama_website}, {link}, {url}, {permalink}
+ *
+ * @param string $text
+ * @param int $post_id
+ * @return string
+ */
+function hakajobs_replace_template_tags($text, $post_id) {
+    if (empty($text)) {
+        return '';
+    }
+    $post_title   = html_entity_decode(get_the_title($post_id), ENT_QUOTES, 'UTF-8');
+    $company_name = get_post_meta($post_id, '_hakajobs_company_name', true);
+    if (empty($company_name)) {
+        $company_name = __('Perusahaan', 'hakajobs');
+    }
+    $site_name = get_bloginfo('name');
+    $permalink = get_permalink($post_id);
+
+    $tags = array(
+        '{posisi}'        => $post_title,
+        '{job_title}'     => $post_title,
+        '{title}'         => $post_title,
+        '{perusahaan}'    => $company_name,
+        '{company}'       => $company_name,
+        '{company_name}'  => $company_name,
+        '{website}'       => $site_name,
+        '{site_name}'     => $site_name,
+        '{nama_website}'  => $site_name,
+        '{link}'          => $permalink,
+        '{url}'           => $permalink,
+        '{permalink}'     => $permalink,
+    );
+
+    // Legacy hardcoded strings replacement
+    $legacy_search = array(
+        'website Hakajobs',
+        'website "Hakajobs"',
+        'website HakaJob',
+        'website "HakaJob"',
+        'di Hakajobs',
+        'di HakaJob',
+    );
+    $legacy_replace = array(
+        'website "' . $site_name . '"',
+        'website "' . $site_name . '"',
+        'website "' . $site_name . '"',
+        'website "' . $site_name . '"',
+        'di website "' . $site_name . '"',
+        'di website "' . $site_name . '"',
+    );
+
+    $text = str_ireplace($legacy_search, $legacy_replace, $text);
+    return str_replace(array_keys($tags), array_values($tags), $text);
+}
+
+/**
+ * Professional default WhatsApp application message
+ *
+ * @param int $post_id
+ * @return string
+ */
+function hakajobs_get_default_apply_wa_message($post_id) {
+    $post_title   = html_entity_decode(get_the_title($post_id), ENT_QUOTES, 'UTF-8');
+    $company_name = get_post_meta($post_id, '_hakajobs_company_name', true);
+    if (empty($company_name)) {
+        $company_name = __('Perusahaan', 'hakajobs');
+    }
+    $site_name = get_bloginfo('name');
+    $permalink = get_permalink($post_id);
+
+    $msg  = sprintf("Halo Tim Rekrutmen %s,\n\n", $company_name);
+    $msg .= sprintf("Saya membaca informasi lowongan pekerjaan di website %s dan bermaksud untuk melamar posisi berikut:\n\n", $site_name);
+    $msg .= "📋 *Detail Lamaran:*\n";
+    $msg .= sprintf("• Posisi: *%s*\n", $post_title);
+    $msg .= sprintf("• Perusahaan: %s\n", $company_name);
+    $msg .= sprintf("• Referensi Info Loker: %s\n\n", $permalink);
+    $msg .= "👤 *Ringkasan Data Singkat:*\n";
+    $msg .= "• Nama Lengkap: [Nama Anda]\n";
+    $msg .= "• Domisili: [Kota/Daerah Domisili]\n";
+    $msg .= "• Pendidikan / Pengalaman Terakhir: [Pendidikan / Pengalaman Terakhir]\n\n";
+    $msg .= "Saya telah menyiapkan berkas lamaran (CV dan dokumen pendukung). Apakah berkas dapat saya kirimkan melalui chat WhatsApp ini atau via email resmi rekrutmen?\n\n";
+    $msg .= "Terima kasih atas waktu dan kesempatan yang diberikan.";
+
+    return $msg;
+}
+
+/**
+ * Professional default application email subject
+ *
+ * @param int $post_id
+ * @return string
+ */
+function hakajobs_get_default_apply_email_subject($post_id) {
+    $post_title = html_entity_decode(get_the_title($post_id), ENT_QUOTES, 'UTF-8');
+    return sprintf('Lamaran Pekerjaan: %s - [Nama Lengkap Anda]', $post_title);
+}
+
+/**
+ * Professional default application email body
+ *
+ * @param int $post_id
+ * @return string
+ */
+function hakajobs_get_default_apply_email_body($post_id) {
+    $post_title   = html_entity_decode(get_the_title($post_id), ENT_QUOTES, 'UTF-8');
+    $company_name = get_post_meta($post_id, '_hakajobs_company_name', true);
+    if (empty($company_name)) {
+        $company_name = __('Perusahaan', 'hakajobs');
+    }
+    $site_name = get_bloginfo('name');
+    $permalink = get_permalink($post_id);
+
+    $body  = "Kepada Yth.\n";
+    $body .= sprintf("Tim Rekrutmen / HRD %s\n", $company_name);
+    $body .= "di Tempat\n\n";
+    $body .= "Dengan hormat,\n\n";
+    $body .= sprintf("Sehubungan dengan informasi lowongan pekerjaan untuk posisi %s yang saya temukan melalui situs %s (%s), bersama email ini saya bermaksud untuk mengajukan diri guna mengisi posisi tersebut.\n\n", $post_title, $site_name, $permalink);
+    $body .= "Berikut adalah ringkasan singkat profil saya:\n";
+    $body .= "• Nama Lengkap: [Nama Lengkap Anda]\n";
+    $body .= "• Nomor WhatsApp / HP: [Nomor HP/WA Aktif]\n";
+    $body .= "• Kota Domisili: [Kota Domisili]\n";
+    $body .= "• Pendidikan Terakhir: [Pendidikan Terakhir / Jurusan]\n";
+    $body .= "• Keahlian / Pengalaman Relevan: [Sebutkan 1-2 keahlian utama atau pengalaman kerja relevan]\n\n";
+    $body .= "Sebagai bahan pertimbangan Bapak/Ibu, bersama surat lamaran ini turut saya lampirkan berkas kelengkapan:\n";
+    $body .= "1. Curriculum Vitae (CV) Terbaru\n";
+    $body .= "2. Portofolio Pekerjaan\n";
+    $body .= "3. Dokumen Pendukung Lainnya\n\n";
+    $body .= "Besar harapan saya untuk memperoleh kesempatan wawancara agar dapat menjelaskan kualifikasi, pengalaman kerja, dan motivasi saya secara lebih terperinci.\n\n";
+    $body .= "Demikian surat permohonan ini saya sampaikan. Atas perhatian dan kesempatan yang diberikan oleh Bapak/Ibu, saya ucapkan terima kasih.\n\n\n";
+    $body .= "Hormat saya,\n\n";
+    $body .= "[Nama Lengkap Anda]\n";
+    $body .= "[Nomor WhatsApp / HP Aktif]\n";
+    $body .= "[Tautan Profil LinkedIn / Portofolio]";
+
+    return $body;
+}
+
+/**
  * Build Direct Apply Link (WhatsApp, Email, or Web URL)
  */
 function hakajobs_get_apply_info($post_id = null) {
@@ -201,43 +340,20 @@ function hakajobs_get_apply_info($post_id = null) {
     $post_title = get_the_title($post_id);
     $company_name = get_post_meta($post_id, '_hakajobs_company_name', true);
     $permalink = get_permalink($post_id);
+    $site_name = get_bloginfo('name');
 
     if ($apply_type === 'whatsapp' && !empty($apply_wa)) {
         $formatted_phone = hakajobs_format_whatsapp_number($apply_wa);
-        $site_name       = get_bloginfo('name');
 
-        if (empty($apply_wa_message)) {
-            $default_msg = sprintf(
-                'Halo Tim HRD, saya melihat lowongan pekerjaan di website "%s" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.',
-                $site_name
-            );
+        $legacy_old_default = sprintf('Halo Tim HRD, saya melihat lowongan pekerjaan di website "%s" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.', $site_name);
+        $is_legacy = (trim($apply_wa_message) === trim($legacy_old_default) || trim($apply_wa_message) === 'Halo Tim HRD, saya melihat lowongan pekerjaan di website "Hakajobs" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.');
+
+        if (empty($apply_wa_message) || $is_legacy) {
+            $default_msg = hakajobs_get_default_apply_wa_message($post_id);
         } else {
-            $default_msg = str_ireplace(
-                array(
-                    'website Hakajobs',
-                    'website "Hakajobs"',
-                    'website HakaJob',
-                    'website "HakaJob"',
-                    'di Hakajobs',
-                    'di HakaJob',
-                    '{site_name}',
-                    '{nama_website}',
-                    '{website}',
-                ),
-                array(
-                    'website "' . $site_name . '"',
-                    'website "' . $site_name . '"',
-                    'website "' . $site_name . '"',
-                    'website "' . $site_name . '"',
-                    'di website "' . $site_name . '"',
-                    'di website "' . $site_name . '"',
-                    $site_name,
-                    $site_name,
-                    $site_name,
-                ),
-                $apply_wa_message
-            );
+            $default_msg = hakajobs_replace_template_tags($apply_wa_message, $post_id);
         }
+
         $encoded_msg = rawurlencode($default_msg);
         $info['link'] = 'https://api.whatsapp.com/send?phone=' . esc_attr($formatted_phone) . '&text=' . $encoded_msg;
         $info['target'] = '_blank';
@@ -245,9 +361,20 @@ function hakajobs_get_apply_info($post_id = null) {
         $info['icon'] = 'whatsapp';
         $info['channel'] = 'WhatsApp';
     } elseif ($apply_type === 'email' && !empty($apply_email)) {
-        $site_name = get_bloginfo('name');
-        $subject = !empty($apply_email_sub) ? $apply_email_sub : sprintf('Lamaran Pekerjaan: %s - [Nama Anda]', $post_title);
-        $body = sprintf("Halo Tim Rekrutmen %s,\n\nSaya tertarik untuk melamar posisi %s yang saya temukan di situs %s (%s).\n\nTerlampir CV dan portofolio saya untuk bahan pertimbangan.\n\nTerima kasih.", $company_name, $post_title, $site_name, $permalink);
+        $apply_email_body = get_post_meta($post_id, '_hakajobs_apply_email_body', true);
+
+        if (empty($apply_email_sub)) {
+            $subject = hakajobs_get_default_apply_email_subject($post_id);
+        } else {
+            $subject = hakajobs_replace_template_tags($apply_email_sub, $post_id);
+        }
+
+        if (empty($apply_email_body)) {
+            $body = hakajobs_get_default_apply_email_body($post_id);
+        } else {
+            $body = hakajobs_replace_template_tags($apply_email_body, $post_id);
+        }
+
         $info['link'] = 'mailto:' . esc_attr($apply_email) . '?subject=' . rawurlencode($subject) . '&body=' . rawurlencode($body);
         $info['label'] = __('Kirim Email Lamaran', 'hakajobs');
         $info['icon'] = 'mail';
@@ -700,34 +827,37 @@ function hakajobs_get_wa_broadcast_text($post_id = null) {
 
     $msg = '*' . trim($heading) . "*\n";
     $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
-    $msg .= "🏢 *Perusahaan*: " . $company . "\n";
-    $msg .= "💼 *Posisi*: " . $title . "\n";
-    $msg .= "📍 *Lokasi*: " . $location . "\n";
+    $msg .= "🏢 *Perusahaan* : " . $company . "\n";
+    $msg .= "💼 *Posisi*     : " . $title . "\n";
+    $msg .= "📍 *Lokasi*     : " . $location . "\n";
 
     if (!empty($type_name)) {
-        $msg .= "🕒 *Tipe*: " . $type_name . "\n";
+        $msg .= "🕒 *Tipe Kerja* : " . $type_name . "\n";
     }
 
     if (!empty($edu_name)) {
-        $msg .= "🎓 *Pendidikan*: " . $edu_name . "\n";
+        $msg .= "🎓 *Pendidikan* : " . $edu_name . "\n";
     }
 
     if (!empty($salary)) {
-        $msg .= "💰 *Gaji*: " . $salary . "\n";
+        $msg .= "💰 *Kisaran Gaji*: " . $salary . "\n";
     }
 
     if (!empty($deadline)) {
         $deadline_ts = strtotime($deadline);
         if ($deadline_ts) {
-            $msg .= "⏳ *Batas Lamaran*: " . date_i18n('d F Y', $deadline_ts) . "\n";
+            $msg .= "⏳ *Batas Akhir*: " . date_i18n('d F Y', $deadline_ts) . "\n";
         }
     }
 
-    $msg .= "\n🔗 *Detail Lengkap & Cara Melamar*:\n" . $permalink . "\n";
+    $msg .= "\n📝 *Detail Lengkap & Cara Melamar:*\n";
+    $msg .= "👉 " . $permalink . "\n\n";
+    $msg .= "⚠️ *Catatan:* Proses rekrutmen ini TIDAK dipungut biaya apapun (GRATIS). Waspada terhadap segala bentuk penipuan.\n";
 
     if (!empty($channel_url)) {
-        $msg .= "\n━━━━━━━━━━━━━━━━━━━━\n";
-        $msg .= "👉 *Gabung " . $channel_name . " untuk update info loker harian*:\n" . esc_url($channel_url) . "\n";
+        $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+        $msg .= "📲 *Gabung " . $channel_name . " untuk update loker harian:*\n";
+        $msg .= "👉 " . esc_url($channel_url) . "\n";
     }
 
     return $msg;

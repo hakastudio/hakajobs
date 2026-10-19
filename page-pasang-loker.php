@@ -20,10 +20,60 @@ if (str_starts_with($wa_clean, '0')) {
 $contact_email = get_theme_mod('hakajobs_contact_email', get_bloginfo('admin_email'));
 $site_name     = get_bloginfo('name');
 
-// Pesan template WhatsApp
-$wa_msg_basic    = rawurlencode("Halo Admin {$site_name}, saya ingin memasang lowongan kerja paket BASIC (Gratis). Berikut detail lowongan:\n\n- Nama Perusahaan:\n- Posisi:\n- Lokasi:\n- Tipe Pekerjaan:\n- Gaji:\n- Deadline:\n- Deskripsi singkat:\n- Kontak HRD (WA/Email):");
-$wa_msg_featured = rawurlencode("Halo Admin {$site_name}, saya ingin memasang lowongan kerja paket FEATURED (Berbayar). Berikut detail lowongan:\n\n- Nama Perusahaan:\n- Posisi:\n- Lokasi:\n- Tipe Pekerjaan:\n- Gaji:\n- Deadline:\n- Deskripsi singkat:\n- Kontak HRD (WA/Email):\n\nMohon informasi metode pembayaran.");
-$wa_msg_urgent   = rawurlencode("Halo Admin {$site_name}, saya ingin memasang lowongan kerja paket URGENT (Berbayar). Berikut detail lowongan:\n\n- Nama Perusahaan:\n- Posisi:\n- Lokasi:\n- Tipe Pekerjaan:\n- Gaji:\n- Deadline:\n- Deskripsi singkat:\n- Kontak HRD (WA/Email):\n\nMohon informasi metode pembayaran.");
+// Pesan template WhatsApp untuk paket
+$wa_msg_basic = rawurlencode(
+    "Halo Tim Admin {$site_name},\n\n" .
+    "Saya ingin mengajukan pemasangan lowongan kerja untuk *Paket BASIC (Gratis)*. Berikut rincian informasinya:\n\n" .
+    "📋 *DATA LOWONGAN KERJA:*\n" .
+    "━━━━━━━━━━━━━━━━━━━━\n" .
+    "• Nama Perusahaan : \n" .
+    "• Posisi Lowongan : \n" .
+    "• Lokasi Kerja    : \n" .
+    "• Tipe Pekerjaan  : (Penuh Waktu / Paruh Waktu / Freelance / Magang)\n" .
+    "• Kisaran Gaji    : \n" .
+    "• Batas Lamaran   : \n" .
+    "• Kontak HRD      : (No. WhatsApp / Email Lamaran)\n\n" .
+    "📝 *Deskripsi Singkat & Kualifikasi:*\n" .
+    "(Tuliskan kualifikasi singkat dan persyaratan)\n\n" .
+    "━━━━━━━━━━━━━━━━━━━━\n" .
+    "Mohon bantuan untuk verifikasi dan proses penayangannya. Terima kasih!"
+);
+
+$wa_msg_featured = rawurlencode(
+    "Halo Tim Admin {$site_name},\n\n" .
+    "Saya ingin mengajukan pemasangan lowongan kerja untuk *Paket FEATURED (Sorotan Berbayar)*. Berikut rincian informasinya:\n\n" .
+    "📋 *DATA LOWONGAN KERJA:*\n" .
+    "━━━━━━━━━━━━━━━━━━━━\n" .
+    "• Nama Perusahaan : \n" .
+    "• Posisi Lowongan : \n" .
+    "• Lokasi Kerja    : \n" .
+    "• Tipe Pekerjaan  : \n" .
+    "• Kisaran Gaji    : \n" .
+    "• Batas Lamaran   : \n" .
+    "• Kontak HRD      : (No. WhatsApp / Email Lamaran)\n\n" .
+    "📝 *Deskripsi Singkat & Kualifikasi:*\n" .
+    "(Tuliskan kualifikasi singkat dan persyaratan)\n\n" .
+    "━━━━━━━━━━━━━━━━━━━━\n" .
+    "Mohon informasi rekening pembayaran dan konfirmasi penayangannya. Terima kasih!"
+);
+
+$wa_msg_urgent = rawurlencode(
+    "Halo Tim Admin {$site_name},\n\n" .
+    "Saya ingin mengajukan pemasangan lowongan kerja untuk *Paket URGENT (Prioritas Utama)*. Berikut rincian informasinya:\n\n" .
+    "📋 *DATA LOWONGAN KERJA:*\n" .
+    "━━━━━━━━━━━━━━━━━━━━\n" .
+    "• Nama Perusahaan : \n" .
+    "• Posisi Lowongan : \n" .
+    "• Lokasi Kerja    : \n" .
+    "• Tipe Pekerjaan  : \n" .
+    "• Kisaran Gaji    : \n" .
+    "• Batas Lamaran   : \n" .
+    "• Kontak HRD      : (No. WhatsApp / Email Lamaran)\n\n" .
+    "📝 *Deskripsi Singkat & Kualifikasi:*\n" .
+    "(Tuliskan kualifikasi singkat dan persyaratan)\n\n" .
+    "━━━━━━━━━━━━━━━━━━━━\n" .
+    "Mohon informasi rekening pembayaran dan konfirmasi penayangan prioritas 1x24 jam. Terima kasih!"
+);
 
 $wa_url_basic    = !empty($wa_clean) ? "https://wa.me/{$wa_clean}?text={$wa_msg_basic}" : "mailto:{$contact_email}";
 $wa_url_featured = !empty($wa_clean) ? "https://wa.me/{$wa_clean}?text={$wa_msg_featured}" : "mailto:{$contact_email}";
@@ -440,17 +490,23 @@ if (!wp_style_is('hakajobs-pasang-loker', 'enqueued')) {
                 return;
             }
 
-            var msg = "Halo Admin, saya ingin memasang lowongan kerja paket " + pkg + ".\n\n"
-                + "📋 *Detail Lowongan:*\n"
-                + "• Nama Perusahaan: " + company + "\n"
-                + "• Posisi: " + position + "\n"
-                + "• Lokasi: " + (location || '-') + "\n"
-                + "• Tipe Pekerjaan: " + (jobtype || '-') + "\n"
-                + "• Kisaran Gaji: " + (salary || '-') + "\n"
-                + "• Deadline Lamaran: " + (deadline || '-') + "\n"
-                + "• Kontak HRD: " + contact + "\n\n"
-                + "📝 *Deskripsi:*\n" + desc + "\n\n"
-                + "Mohon konfirmasi admin. Terima kasih!";
+            var siteName = '<?php echo esc_js($site_name); ?>';
+            var msg = "Halo Tim Admin " + siteName + ",\n\n"
+                + "Saya ingin mengajukan pemasangan lowongan kerja melalui form website. Berikut rincian informasinya:\n\n"
+                + "📋 *DATA PENGAJUAN LOKER:*\n"
+                + "━━━━━━━━━━━━━━━━━━━━\n"
+                + "• Pilihan Paket : " + pkg + "\n"
+                + "• Perusahaan    : " + company + "\n"
+                + "• Posisi / Role : " + position + "\n"
+                + "• Lokasi Kerja  : " + (location || '-') + "\n"
+                + "• Tipe Kerja    : " + (jobtype || '-') + "\n"
+                + "• Kisaran Gaji  : " + (salary || '-') + "\n"
+                + "• Batas Lamaran : " + (deadline || '-') + "\n"
+                + "• Kontak HRD    : " + contact + "\n\n"
+                + "📝 *Deskripsi & Kualifikasi:*\n"
+                + desc + "\n\n"
+                + "━━━━━━━━━━━━━━━━━━━━\n"
+                + "Mohon konfirmasi verifikasi data dan penayangan lowongan ini. Terima kasih!";
 
             var waNumber = '<?php echo esc_js($wa_clean); ?>';
             var adminEmail = '<?php echo esc_js($contact_email); ?>';
@@ -458,7 +514,8 @@ if (!wp_style_is('hakajobs-pasang-loker', 'enqueued')) {
             if (waNumber) {
                 window.open('https://wa.me/' + waNumber + '?text=' + encodeURIComponent(msg), '_blank');
             } else {
-                window.location.href = 'mailto:' + adminEmail + '?subject=Pasang Loker - ' + encodeURIComponent(company) + '&body=' + encodeURIComponent(msg);
+                var emailSubject = 'Pengajuan Pasang Loker [' + pkg + '] - ' + company + ' (' + position + ')';
+                window.location.href = 'mailto:' + adminEmail + '?subject=' + encodeURIComponent(emailSubject) + '&body=' + encodeURIComponent(msg);
             }
         });
     }

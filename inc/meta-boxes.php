@@ -156,6 +156,7 @@ function hakajobs_render_job_apply_box($post) {
     $apply_wa_message  = get_post_meta($post->ID, '_hakajobs_apply_wa_message', true);
     $apply_email       = get_post_meta($post->ID, '_hakajobs_apply_email', true);
     $apply_email_sub   = get_post_meta($post->ID, '_hakajobs_apply_email_sub', true);
+    $apply_email_body  = get_post_meta($post->ID, '_hakajobs_apply_email_body', true);
     $apply_url         = get_post_meta($post->ID, '_hakajobs_apply_url', true);
     $apply_notes       = get_post_meta($post->ID, '_hakajobs_apply_notes', true);
 
@@ -163,15 +164,15 @@ function hakajobs_render_job_apply_box($post) {
         $apply_type = 'whatsapp';
     }
     $site_name = get_bloginfo('name');
-    if (empty($apply_wa_message)) {
-        $apply_wa_message = sprintf(__('Halo Tim HRD, saya melihat lowongan pekerjaan di website "%s" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.', 'hakajobs'), $site_name);
-    } else {
-        $apply_wa_message = str_ireplace(
-            array('website Hakajobs', 'website "Hakajobs"', 'website HakaJob', 'website "HakaJob"', 'di Hakajobs', 'di HakaJob'),
-            array('website "' . $site_name . '"', 'website "' . $site_name . '"', 'website "' . $site_name . '"', 'website "' . $site_name . '"', 'di website "' . $site_name . '"', 'di website "' . $site_name . '"'),
-            $apply_wa_message
-        );
+    
+    // Check if using old generic placeholder
+    $legacy_old_default = sprintf('Halo Tim HRD, saya melihat lowongan pekerjaan di website "%s" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.', $site_name);
+    if (trim($apply_wa_message) === trim($legacy_old_default) || trim($apply_wa_message) === 'Halo Tim HRD, saya melihat lowongan pekerjaan di website "Hakajobs" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.') {
+        $apply_wa_message = '';
     }
+
+    $wa_placeholder = "Halo Tim Rekrutmen {company},\n\nSaya melihat informasi lowongan pekerjaan di website {website} dan bermaksud untuk melamar posisi berikut:\n\n📋 *Detail Lamaran:*\n• Posisi: *{posisi}*\n• Perusahaan: {company}\n• Referensi Info Loker: {link}\n\n👤 *Ringkasan Data Singkat:*\n• Nama Lengkap: [Nama Anda]\n• Domisili: [Kota/Daerah Domisili]\n• Pendidikan / Pengalaman Terakhir: [Pendidikan / Pengalaman Singkat]\n\nSaya telah menyiapkan berkas lamaran (CV dan dokumen pendukung). Apakah berkas dapat saya kirimkan melalui chat WhatsApp ini atau via email resmi rekrutmen?\n\nTerima kasih atas waktu dan kesempatan yang diberikan.";
+    $email_body_placeholder = "Kepada Yth.\nTim Rekrutmen / HRD {company}\ndi Tempat\n\nDengan hormat,\n\nSehubungan dengan informasi lowongan pekerjaan untuk posisi {posisi} yang saya peroleh melalui situs {website} ({link}), bersama email ini saya bermaksud untuk mengajukan diri guna mengisi posisi tersebut.\n\nBerikut adalah ringkasan singkat profil saya:\n• Nama Lengkap: [Nama Lengkap Anda]\n• Nomor WhatsApp / HP: [Nomor HP/WA Aktif]\n• Kota Domisili: [Kota Domisili]\n• Pendidikan Terakhir: [Pendidikan Terakhir / Jurusan]\n• Keahlian / Pengalaman Relevan: [Sebutkan 1-2 keahlian utama]\n\nSebagai bahan pertimbangan Bapak/Ibu, bersama email ini turut saya lampirkan berkas kelengkapan:\n1. Curriculum Vitae (CV) Terbaru\n2. Portofolio Pekerjaan\n3. Dokumen Pendukung Lainnya\n\nBesar harapan saya untuk memperoleh kesempatan wawancara...\n\n(Biarkan kosong untuk menggunakan template surat lamaran profesional otomatis lengkap)";
     ?>
     <p style="margin-top:0; color:#475569; font-size:13px;">
         <?php _e('Pilih cara bagaimana pelamar mengirim lamaran kepada perusahaan/rekruter. Pelamar TIDAK PERLU login untuk mengirim lamaran!', 'hakajobs'); ?>
@@ -196,9 +197,11 @@ function hakajobs_render_job_apply_box($post) {
                 <small><?php _e('Akan otomatis diformat ke format internasional WhatsApp (628...).', 'hakajobs'); ?></small>
             </div>
             <div class="hk-field">
-                <label for="hakajobs_apply_wa_message"><?php _e('Template Teks Pesan WhatsApp', 'hakajobs'); ?></label>
-                <textarea id="hakajobs_apply_wa_message" name="hakajobs_apply_wa_message" rows="3" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:13px;" placeholder="<?php echo esc_attr(sprintf(__('Halo Tim HRD, saya melihat lowongan pekerjaan di website "%s" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.', 'hakajobs'), $site_name)); ?>"><?php echo esc_textarea($apply_wa_message); ?></textarea>
-                <small><?php _e('Teks pembuka yang langsung muncul di aplikasi WhatsApp pelamar. Nama website otomatis terisi.', 'hakajobs'); ?></small>
+                <label for="hakajobs_apply_wa_message"><?php _e('Template Teks Pesan WhatsApp (Opsional)', 'hakajobs'); ?></label>
+                <textarea id="hakajobs_apply_wa_message" name="hakajobs_apply_wa_message" rows="5" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:12px; font-family:monospace;" placeholder="<?php echo esc_attr($wa_placeholder); ?>"><?php echo esc_textarea($apply_wa_message); ?></textarea>
+                <small style="display:block; margin-top:4px; color:#475569;">
+                    <?php _e('Tersedia tag dinamis: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>, <code>{link}</code>.<br><strong>Biarkan kosong</strong> untuk menggunakan template pesan HRD profesional otomatis.', 'hakajobs'); ?>
+                </small>
             </div>
         </div>
     </div>
@@ -214,8 +217,15 @@ function hakajobs_render_job_apply_box($post) {
             </div>
             <div class="hk-field">
                 <label for="hakajobs_apply_email_sub"><?php _e('Subjek Default Email', 'hakajobs'); ?></label>
-                <input type="text" id="hakajobs_apply_email_sub" name="hakajobs_apply_email_sub" value="<?php echo esc_attr($apply_email_sub); ?>" placeholder="Lamaran Pekerjaan - [Nama Posisi] - [Nama Pelamar]" />
-                <small><?php _e('Format subjek email yang akan otomatis terisi saat pelamar klik tombol lamar.', 'hakajobs'); ?></small>
+                <input type="text" id="hakajobs_apply_email_sub" name="hakajobs_apply_email_sub" value="<?php echo esc_attr($apply_email_sub); ?>" placeholder="Lamaran Pekerjaan: {posisi} - [Nama Lengkap Anda]" />
+                <small><?php _e('Tersedia tag: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>. Biarkan kosong untuk subjek profesional otomatis.', 'hakajobs'); ?></small>
+            </div>
+            <div class="hk-field" style="margin-top:10px;">
+                <label for="hakajobs_apply_email_body"><?php _e('Template Isi Surat Lamaran Email (Opsional)', 'hakajobs'); ?></label>
+                <textarea id="hakajobs_apply_email_body" name="hakajobs_apply_email_body" rows="6" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:12px; font-family:monospace;" placeholder="<?php echo esc_attr($email_body_placeholder); ?>"><?php echo esc_textarea($apply_email_body); ?></textarea>
+                <small style="display:block; margin-top:4px; color:#475569;">
+                    <?php _e('Tersedia tag: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>, <code>{link}</code>.<br><strong>Biarkan kosong</strong> untuk format surat lamaran kerja resmi standar HRD secara otomatis.', 'hakajobs'); ?>
+                </small>
             </div>
         </div>
     </div>
@@ -288,6 +298,7 @@ function hakajobs_save_job_meta($post_id) {
         '_hakajobs_apply_wa_message' => isset($_POST['hakajobs_apply_wa_message']) ? sanitize_textarea_field($_POST['hakajobs_apply_wa_message']) : '',
         '_hakajobs_apply_email'      => isset($_POST['hakajobs_apply_email']) ? sanitize_email($_POST['hakajobs_apply_email']) : '',
         '_hakajobs_apply_email_sub'  => isset($_POST['hakajobs_apply_email_sub']) ? sanitize_text_field($_POST['hakajobs_apply_email_sub']) : '',
+        '_hakajobs_apply_email_body' => isset($_POST['hakajobs_apply_email_body']) ? sanitize_textarea_field($_POST['hakajobs_apply_email_body']) : '',
         '_hakajobs_apply_url'        => isset($_POST['hakajobs_apply_url']) ? esc_url_raw($_POST['hakajobs_apply_url']) : '',
         '_hakajobs_apply_notes'      => isset($_POST['hakajobs_apply_notes']) ? sanitize_textarea_field($_POST['hakajobs_apply_notes']) : '',
         '_hakajobs_benefits'         => isset($_POST['hakajobs_benefits']) ? sanitize_textarea_field($_POST['hakajobs_benefits']) : '',

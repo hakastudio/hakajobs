@@ -52,9 +52,18 @@ Hakajobs/
 
 ### 1. Metode Lamaran Fleksibel (WhatsApp / Email / Web)
 Pada setiap lowongan, admin dapat memilih metode pengiriman berkas:
-- **WhatsApp Langsung:** Tombol hijau WhatsApp yang otomatis membuka chat dengan nomor HRD serta pesan pembuka yang sudah disiapkan (pre-filled text).
-- **Email Lamaran:** Membuka aplikasi email pelamar dengan alamat email HRD dan subjek yang sudah otomatis terisi.
+- **WhatsApp Langsung ke HRD (Format Profesional Otomatis):** Tombol WhatsApp yang otomatis membuka chat dengan nomor HRD disertai draf pesan terstruktur standar rekrutmen: salam pembuka formal, posisi yang dilamar, tautan lowongan sebagai referensi, ringkasan profil pelamar (Nama, Domisili, Pendidikan/Pengalaman), kesiapan berkas CV/portofolio, dan salam penutup.
+- **Kirim Email Lamaran (Mailto Surat Resmi):** Membuka aplikasi email dengan subjek standar HR (`Lamaran Pekerjaan: [Posisi] - [Nama Lengkap Pelamar]`) serta format surat lamaran resmi (cover letter) lengkap dengan detail posisi, sumber informasi situs, profil ringkas, lampiran berkas (CV & Portofolio), dan tanda tangan kontak pelamar.
 - **Tautan Eksternal:** Menghubungkan langsung ke Google Form pendaftaran atau portal karir resmi perusahaan.
+
+#### 🏷️ Tag Dinamis Template Lamaran:
+Admin dapat mengkustomisasi template pesan WhatsApp maupun Email di Meta Box setiap lowongan menggunakan tag berikut:
+- `{posisi}` / `{job_title}` : Judul posisi lowongan kerja otomatis.
+- `{perusahaan}` / `{company}` : Nama perusahaan pemasang loker.
+- `{website}` / `{site_name}` : Nama situs portal lowongan kerja Anda.
+- `{link}` / `{url}` / `{permalink}` : Tautan lengkap ke halaman detail lowongan.
+
+*(Jika kolom template dikosongkan, sistem otomatis menerapkan template standar HRD profesional secara default).*
 
 ### 2. Fitur "Simpan Lowongan" (LocalStorage Bookmark)
 Pelamar dapat menandai lowongan favorit mereka. Data disimpan langsung di peramban (browser) pengguna:
@@ -129,8 +138,13 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
    - Tombol aksi cepat *"📢 Broadcast WA"* langsung pada tabel daftar lowongan kerja di dashboard admin WordPress.
    - Banner ajakan bergabung Saluran WhatsApp untuk pengunjung umum di halaman detail loker dan integrasi tautan footer untuk memperbanyak followers secara gratis.
 
-
----
+12. **✉️ Standar Format Lamaran Profesional & Template WhatsApp/Email (v1.0.19):**
+   - Format pesan WhatsApp lamaran kerja terstruktur dan santun standar rekrutmen: posisi, referensi URL loker, profil singkat, dan konfirmasi pengiriman dokumen.
+   - Format surat lamaran email resmi (cover letter) lengkap dengan subjek standar HR, salam pembuka formal, ringkasan kualifikasi, checklist berkas lampiran (CV & Portofolio), dan penutup.
+   - Kolom kustomisasi baru pada Meta Box WordPress: opsi menyunting template isi pesan email lamaran per-lowongan atau menggunakan template default otomatis.
+   - Penyempurnaan format siaran / broadcast loker WhatsApp dengan penambahan catatan resmi anti-penipuan (*Proses rekrutmen GRATIS*).
+   - Pembaruan template WhatsApp pengajuan pasang lowongan dari perusahaan (Paket Basic, Featured, Urgent) dan formulir interaktif di halaman Pasang Loker.
+   - Pembaruan tombol notifikasi dashboard WordPress: *"🔄 Cek Pembaruan Thema Sekarang"*.
 
 ## 🔍 Panduan Optimasi SEO & Indeks Cepat Google
 
