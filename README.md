@@ -146,6 +146,11 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
    - Pembaruan template WhatsApp pengajuan pasang lowongan dari perusahaan (Paket Basic, Featured, Urgent) dan formulir interaktif di halaman Pasang Loker.
    - Pembaruan tombol notifikasi dashboard WordPress: *"🔄 Cek Pembaruan Thema Sekarang"*.
 
+13. **🔄 Fix Pembaruan Tema Otomatis via GitHub Releases (v1.0.20):**
+   - Fix critical: folder hasil ekstrak ZIP GitHub Releases otomatis di-rename dari `hakajobs-1.0.x/` → `hakajobs/` sehingga proses **Update Now** dari dashboard WordPress tidak lagi error *"Tema ini tidak memiliki style.css stylesheet"*.
+   - Validasi rename dengan pesan error informatif jika direktori `wp-content/themes/` tidak dapat ditulisi.
+
+
 ## 🔍 Panduan Optimasi SEO & Indeks Cepat Google
 
 1. **Google Search Console:**

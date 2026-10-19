@@ -131,8 +131,9 @@ add_action('admin_notices', function () {
 });
 
 /**
- * Bersihkan direktori sementara jika ada sisa upgrade sebelumnya
- * agar tidak terjadi error "Unable to rename the update to match the existing directory"
+ * Rename folder hasil ekstrak ZIP GitHub agar sesuai slug tema.
+ * GitHub auto-zip menghasilkan folder seperti "hakajobs-1.0.20/" atau "hakajobs-main/",
+ * sedangkan WordPress membutuhkan folder bernama persis "hakajobs/" agar style.css terbaca.
  */
 add_filter('upgrader_source_selection', function ($source, $remote_source, $upgrader) {
     global $wp_filesystem;
@@ -143,19 +144,35 @@ add_filter('upgrader_source_selection', function ($source, $remote_source, $upgr
     $template = get_template();
     $target   = trailingslashit($remote_source) . $template . '/';
 
-    // Jika source sudah sesuai target direktori tema, langsung kembalikan
+    // Jika source sudah bernama persis sesuai slug tema, tidak perlu apa-apa
     if (untrailingslashit($source) === untrailingslashit($target)) {
         return $source;
     }
 
-    // Jika ada sisa direktori dari proses sebelumnya, bersihkan agar rename sukses
-    if (strtolower(basename($source)) === strtolower($template)) {
-        if ($wp_filesystem->exists($target)) {
-            $wp_filesystem->delete($target, true);
-        }
+    // Cek apakah ini adalah update untuk tema Hakajobs
+    $source_base = strtolower(basename(untrailingslashit($source)));
+    if (strpos($source_base, strtolower($template)) === false) {
+        return $source;
     }
 
-    return $source;
+    // Hapus target lama jika masih ada sisa dari proses sebelumnya
+    if ($wp_filesystem->exists($target)) {
+        $wp_filesystem->delete($target, true);
+    }
+
+    // Rename folder "hakajobs-1.0.x" atau "hakajobs-main" → "hakajobs"
+    if (!$wp_filesystem->move($source, $target, true)) {
+        return new WP_Error(
+            'hakajobs_rename_failed',
+            sprintf(
+                __('Gagal rename folder tema dari "%s" ke "%s". Pastikan direktori wp-content/themes dapat ditulisi.', 'hakajobs'),
+                basename(untrailingslashit($source)),
+                $template
+            )
+        );
+    }
+
+    return $target;
 }, 5, 3);
 
 /**
