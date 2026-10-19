@@ -51,6 +51,7 @@ function hakajobs_render_job_details_box($post) {
     $company_name     = get_post_meta($post->ID, '_hakajobs_company_name', true);
     $company_website  = get_post_meta($post->ID, '_hakajobs_company_website', true);
     $company_location = get_post_meta($post->ID, '_hakajobs_company_location', true);
+    $postal_code      = get_post_meta($post->ID, '_hakajobs_postal_code', true);
     $salary           = get_post_meta($post->ID, '_hakajobs_salary', true);
     $salary_period    = get_post_meta($post->ID, '_hakajobs_salary_period', true);
     $deadline         = get_post_meta($post->ID, '_hakajobs_deadline', true);
@@ -93,23 +94,23 @@ function hakajobs_render_job_details_box($post) {
 
     <div class="hk-meta-grid">
         <div class="hk-field">
-            <label for="hakajobs_company_location"><?php _e('Alamat / Wilayah Kantor', 'hakajobs'); ?></label>
-            <input type="text" id="hakajobs_company_location" name="hakajobs_company_location" value="<?php echo esc_attr($company_location); ?>" placeholder="Contoh: Jakarta Selatan / Menara Sudirman Lt. 12" />
-            <small><?php _e('Wilayah spesifik kantor tempat bekerja.', 'hakajobs'); ?></small>
+            <label for="hakajobs_company_location"><?php _e('Alamat Lengkap Kantor / Jalan (streetAddress)', 'hakajobs'); ?></label>
+            <input type="text" id="hakajobs_company_location" name="hakajobs_company_location" value="<?php echo esc_attr($company_location); ?>" placeholder="Contoh: Menara Sudirman Lt. 12, Jl. Jend. Sudirman" />
+            <small><?php _e('Alamat spesifik kantor tempat bekerja (jalan, gedung, lantai). Terhubung ke streetAddress Google Jobs.', 'hakajobs'); ?></small>
         </div>
 
         <div class="hk-field">
-            <label for="hakajobs_deadline"><?php _e('Batas Akhir Pendaftaran (Deadline)', 'hakajobs'); ?></label>
-            <input type="date" id="hakajobs_deadline" name="hakajobs_deadline" value="<?php echo esc_attr($deadline); ?>" />
-            <small><?php _e('Biarkan kosong jika tidak ada batas waktu tertentu.', 'hakajobs'); ?></small>
+            <label for="hakajobs_postal_code"><?php _e('Kode Pos Kantor (postalCode)', 'hakajobs'); ?></label>
+            <input type="text" id="hakajobs_postal_code" name="hakajobs_postal_code" value="<?php echo esc_attr($postal_code); ?>" placeholder="Contoh: 12190" maxlength="10" />
+            <small><?php _e('Kode pos 5 digit kantor. Jika kosong, sistem otomatis mengisinya berdasarkan kota.', 'hakajobs'); ?></small>
         </div>
     </div>
 
     <div class="hk-meta-grid">
         <div class="hk-field">
             <label for="hakajobs_salary"><?php _e('Kisaran Gaji / Penghasilan', 'hakajobs'); ?></label>
-            <input type="text" id="hakajobs_salary" name="hakajobs_salary" value="<?php echo esc_attr($salary); ?>" placeholder="Contoh: Rp 6.000.000 - Rp 9.000.000 atau Kompetitif" />
-            <small><?php _e('Tuliskan nominal atau rentang gaji (atau "Kompetitif / UMR").', 'hakajobs'); ?></small>
+            <input type="text" id="hakajobs_salary" name="hakajobs_salary" value="<?php echo esc_attr($salary); ?>" placeholder="Contoh: Rp 6.000.000 - Rp 9.000.000" />
+            <small><?php _e('Format angka (misal Rp 6.000.000 - Rp 9.000.000) otomatis terbaca oleh Google baseSalary.', 'hakajobs'); ?></small>
         </div>
 
         <div class="hk-field">
@@ -122,6 +123,14 @@ function hakajobs_render_job_details_box($post) {
                 <option value="proyek" <?php selected($salary_period, 'proyek'); ?>><?php _e('Per Proyek / Freelance', 'hakajobs'); ?></option>
             </select>
             <small><?php _e('Frekuensi pembayaran upah.', 'hakajobs'); ?></small>
+        </div>
+    </div>
+
+    <div class="hk-meta-grid">
+        <div class="hk-field">
+            <label for="hakajobs_deadline"><?php _e('Batas Akhir Pendaftaran (Deadline)', 'hakajobs'); ?></label>
+            <input type="date" id="hakajobs_deadline" name="hakajobs_deadline" value="<?php echo esc_attr($deadline); ?>" />
+            <small><?php _e('Biarkan kosong jika tidak ada batas waktu tertentu.', 'hakajobs'); ?></small>
         </div>
     </div>
 
@@ -287,6 +296,7 @@ function hakajobs_save_job_meta($post_id) {
         '_hakajobs_company_name'     => isset($_POST['hakajobs_company_name']) ? sanitize_text_field($_POST['hakajobs_company_name']) : '',
         '_hakajobs_company_website'  => isset($_POST['hakajobs_company_website']) ? esc_url_raw($_POST['hakajobs_company_website']) : '',
         '_hakajobs_company_location' => isset($_POST['hakajobs_company_location']) ? sanitize_text_field($_POST['hakajobs_company_location']) : '',
+        '_hakajobs_postal_code'      => isset($_POST['hakajobs_postal_code']) ? sanitize_text_field($_POST['hakajobs_postal_code']) : '',
         '_hakajobs_salary'           => isset($_POST['hakajobs_salary']) ? sanitize_text_field($_POST['hakajobs_salary']) : '',
         '_hakajobs_salary_period'    => isset($_POST['hakajobs_salary_period']) ? sanitize_text_field($_POST['hakajobs_salary_period']) : 'bulan',
         '_hakajobs_deadline'         => isset($_POST['hakajobs_deadline']) ? sanitize_text_field($_POST['hakajobs_deadline']) : '',

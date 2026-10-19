@@ -150,6 +150,12 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
    - Fix critical: folder hasil ekstrak ZIP GitHub Releases otomatis di-rename dari `hakajobs-1.0.x/` → `hakajobs/` sehingga proses **Update Now** dari dashboard WordPress tidak lagi error *"Tema ini tidak memiliki style.css stylesheet"*.
    - Validasi rename dengan pesan error informatif jika direktori `wp-content/themes/` tidak dapat ditulisi.
 
+14. **🚀 Optimasi Lengkap Google JobPosting Schema & Rich Snippets (v1.0.21):**
+   - **`baseSalary` Terstruktur:** Parser otomatis yang mengonversi input nominal gaji (contoh: `Rp 6.000.000 - Rp 9.000.000`) menjadi format resmi Google `MonetaryAmount` (`IDR`), `QuantitativeValue` (`minValue`/`maxValue`), dan satuan waktu (`MONTH`/`YEAR`).
+   - **`streetAddress` Pemetaan:** Mengaitkan alamat fisik kantor (`_hakajobs_company_location`) langsung ke atribut `jobLocation.address.streetAddress`.
+   - **Input & Fallback Cerdas `postalCode`:** Field baru Kode Pos di metabox, auto-ekstraksi 5 digit dari alamat kantor, dan fallback otomatis berdasarkan nama kota di Indonesia.
+   - **Dukungan Pekerjaan Remote / WFH:** Otomatis menambahkan `"jobLocationType": "TELECOMMUTE"` ke schema Google jika lowongan bertipe Remote / WFH.
+
 
 ## 🔍 Panduan Optimasi SEO & Indeks Cepat Google
 

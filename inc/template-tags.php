@@ -357,7 +357,7 @@ function hakajobs_get_apply_info($post_id = null) {
         $encoded_msg = rawurlencode($default_msg);
         $info['link'] = 'https://api.whatsapp.com/send?phone=' . esc_attr($formatted_phone) . '&text=' . $encoded_msg;
         $info['target'] = '_blank';
-        $info['label'] = __('Lamar via WhatsApp HRD', 'hakajobs');
+        $info['label'] = __('Lamar via WhatsApp', 'hakajobs');
         $info['icon'] = 'whatsapp';
         $info['channel'] = 'WhatsApp';
     } elseif ($apply_type === 'email' && !empty($apply_email)) {
@@ -711,6 +711,93 @@ function hakajobs_breadcrumbs() {
 }
 
 /**
+ * Helper to parse salary string into structured Schema.org MonetaryAmount array
+ *
+ * @param string $salary_str
+ * @param string $salary_period
+ * @return array|null
+ */
+function hakajobs_parse_salary_for_schema($salary_str, $salary_period = 'bulan') {
+    if (empty($salary_str)) {
+        return null;
+    }
+
+    $period_map = array(
+        'bulan'  => 'MONTH',
+        'tahun'  => 'YEAR',
+        'hari'   => 'DAY',
+        'jam'    => 'HOUR',
+        'proyek' => 'MONTH',
+    );
+    $unit_text = isset($period_map[$salary_period]) ? $period_map[$salary_period] : 'MONTH';
+
+    $clean = strtolower(trim($salary_str));
+    $has_juta = (strpos($clean, 'juta') !== false || strpos($clean, 'jt') !== false);
+
+    $parts = preg_split('/(\s*-\s*|\s+sampai\s+|\s+s\/d\s+|\s+to\s+)/i', $clean);
+    $numbers = array();
+
+    foreach ($parts as $part) {
+        $part_clean = str_replace(',', '.', $part);
+        if ($has_juta || strpos($part_clean, 'jt') !== false || strpos($part_clean, 'juta') !== false) {
+            if (preg_match('/([0-9]+(?:\.[0-9]+)?)/', $part_clean, $m)) {
+                $val = floatval($m[1]);
+                if ($val < 1000) {
+                    $numbers[] = (int) round($val * 1000000);
+                    continue;
+                }
+            }
+        }
+
+        $digits_only = preg_replace('/[^0-9]/', '', $part);
+        if (!empty($digits_only)) {
+            $val = (int) $digits_only;
+            if ($val > 0) {
+                if ($val < 1000 && $has_juta) {
+                    $val = $val * 1000000;
+                }
+                $numbers[] = $val;
+            }
+        }
+    }
+
+    if (empty($numbers)) {
+        return null;
+    }
+
+    if (count($numbers) >= 2) {
+        $min = min($numbers[0], $numbers[1]);
+        $max = max($numbers[0], $numbers[1]);
+        if ($min === $max) {
+            $value_data = array(
+                '@type'    => 'QuantitativeValue',
+                'value'    => $min,
+                'unitText' => $unit_text,
+            );
+        } else {
+            $value_data = array(
+                '@type'    => 'QuantitativeValue',
+                'minValue' => $min,
+                'maxValue' => $max,
+                'unitText' => $unit_text,
+            );
+        }
+    } else {
+        $value_data = array(
+            '@type'    => 'QuantitativeValue',
+            'value'    => $numbers[0],
+            'unitText' => $unit_text,
+        );
+    }
+
+    return array(
+        '@type'    => 'MonetaryAmount',
+        'currency' => 'IDR',
+        'value'    => $value_data,
+    );
+}
+
+/**
  * Output Google JobPosting JSON-LD Schema for SEO
  */
 function hakajobs_schema_job_posting() {
@@ -722,7 +809,9 @@ function hakajobs_schema_job_posting() {
     $company_name     = get_post_meta($post_id, '_hakajobs_company_name', true);
     $company_website  = get_post_meta($post_id, '_hakajobs_company_website', true);
     $company_location = get_post_meta($post_id, '_hakajobs_company_location', true);
+    $postal_code      = get_post_meta($post_id, '_hakajobs_postal_code', true);
     $salary           = get_post_meta($post_id, '_hakajobs_salary', true);
+    $salary_period    = get_post_meta($post_id, '_hakajobs_salary_period', true);
     $deadline         = get_post_meta($post_id, '_hakajobs_deadline', true);
     $status           = get_post_meta($post_id, '_hakajobs_status', true);
 
@@ -731,6 +820,8 @@ function hakajobs_schema_job_posting() {
 
     $terms_type       = get_the_terms($post_id, 'tipe_pekerjaan');
     $employment_type  = 'FULL_TIME';
+    $is_remote        = false;
+
     if (!empty($terms_type) && !is_wp_error($terms_type)) {
         $slug = $terms_type[0]->slug;
         if (strpos($slug, 'part') !== false || strpos($slug, 'paruh') !== false) {
@@ -741,6 +832,72 @@ function hakajobs_schema_job_posting() {
             $employment_type = 'INTERN';
         } elseif (strpos($slug, 'free') !== false) {
             $employment_type = 'FREELANCE';
+        }
+
+        foreach ($terms_type as $t) {
+            if (strpos($t->slug, 'remote') !== false || strpos($t->slug, 'wfh') !== false) {
+                $is_remote = true;
+                break;
+            }
+        }
+    }
+
+    if (!$is_remote && !empty($terms_location) && !is_wp_error($terms_location)) {
+        foreach ($terms_location as $l) {
+            if (strpos($l->slug, 'remote') !== false || strpos($l->slug, 'wfh') !== false) {
+                $is_remote = true;
+                break;
+            }
+        }
+    }
+
+    // 1. Resolve streetAddress
+    $street_address = !empty($company_location) ? $company_location : $city;
+
+    // 2. Resolve postalCode
+    if (empty($postal_code) && !empty($company_location)) {
+        if (preg_match('/\b(1[0-9]{4}|2[0-9]{4}|3[0-9]{4}|4[0-9]{4}|5[0-9]{4}|6[0-9]{4}|7[0-9]{4}|8[0-9]{4}|9[0-9]{4})\b/', $company_location, $m)) {
+            $postal_code = $m[1];
+        }
+    }
+    if (empty($postal_code)) {
+        $city_lower = strtolower($city);
+        $city_postal_defaults = array(
+            'jakarta'     => '10110',
+            'bandung'     => '40111',
+            'surabaya'    => '60111',
+            'medan'       => '20111',
+            'semarang'    => '50111',
+            'yogyakarta'  => '55111',
+            'jogja'       => '55111',
+            'makassar'    => '90111',
+            'palembang'   => '30111',
+            'tangerang'   => '15111',
+            'bekasi'      => '17111',
+            'depok'       => '16411',
+            'bogor'       => '16111',
+            'malang'      => '65111',
+            'denpasar'    => '80111',
+            'bali'        => '80111',
+            'batam'       => '29411',
+            'solo'        => '57111',
+            'surakarta'   => '57111',
+            'pekanbaru'   => '28111',
+            'lampung'     => '35111',
+            'padang'      => '25111',
+            'pontianak'   => '78111',
+            'banjarmasin' => '70111',
+            'samarinda'   => '75111',
+            'balikpapan'  => '76111',
+        );
+        foreach ($city_postal_defaults as $key => $code) {
+            if (strpos($city_lower, $key) !== false) {
+                $postal_code = $code;
+                break;
+            }
+        }
+        if (empty($postal_code)) {
+            $postal_code = '10110';
         }
     }
 
@@ -757,20 +914,32 @@ function hakajobs_schema_job_posting() {
         'datePosted'      => get_the_date('c', $post_id),
         'employmentType'  => $employment_type,
         'hiringOrganization' => array(
-            '@type' => 'Organization',
-            'name'  => $company_name ? $company_name : get_bloginfo('name'),
+            '@type'  => 'Organization',
+            'name'   => $company_name ? $company_name : get_bloginfo('name'),
             'sameAs' => $company_website ? esc_url($company_website) : home_url(),
         ),
         'jobLocation'     => array(
             '@type'   => 'Place',
             'address' => array(
                 '@type'           => 'PostalAddress',
-                'addressLocality' => $city,
-                'addressRegion'   => $city,
+                'streetAddress'   => esc_html($street_address),
+                'addressLocality' => esc_html($city),
+                'addressRegion'   => esc_html($city),
+                'postalCode'      => esc_html($postal_code),
                 'addressCountry'  => 'ID',
             ),
         ),
     );
+
+    if ($is_remote) {
+        $schema['jobLocationType'] = 'TELECOMMUTE';
+    }
+
+    // Attach baseSalary structured data if numeric amount is available
+    $base_salary = hakajobs_parse_salary_for_schema($salary, $salary_period);
+    if (!empty($base_salary)) {
+        $schema['baseSalary'] = $base_salary;
+    }
 
     if (has_post_thumbnail($post_id)) {
         $schema['hiringOrganization']['logo'] = get_the_post_thumbnail_url($post_id, 'full');
