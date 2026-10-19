@@ -128,7 +128,7 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
                     <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=remote" class="hk-chip">🌐 Remote / WFH</a>
                     <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?pengalaman=fresh-graduate" class="hk-chip">🎓 Fresh Graduate</a>
                     <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=magang" class="hk-chip">💼 Magang (Intern)</a>
-                    <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=penuh-waktu" class="hk-chip">⏰ Penuh Waktu</a>
+                    <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=full-time" class="hk-chip">⏰ Full-Time</a>
                 </div>
 
                 <?php if ($show_stats === '1'): ?>

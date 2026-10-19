@@ -45,7 +45,7 @@ function hakajobs_render_demo_page() {
             <ul style="list-style:disc; margin-left:20px; line-height:1.8;">
                 <li><strong>Kategori:</strong> IT & Rekayasa Software, Pemasaran Digital & Media Sosial, Desain Grafis & Kreatif, Akuntansi & Keuangan, Layanan Pelanggan & Administrasi.</li>
                 <li><strong>Lokasi:</strong> Jakarta Pusat, Bandung, Surabaya, Yogyakarta, dan Remote / WFH (Bisa dari Rumah).</li>
-                <li><strong>Tipe Kerja:</strong> Penuh Waktu (Full-time), Remote / WFH, Paruh Waktu, Magang (Internship), Kontrak.</li>
+                <li><strong>Tipe Kerja:</strong> Full-Time, Remote / WFH, Part-Time, Magang (Internship), Kontrak.</li>
                 <li><strong>Contoh Loker:</strong> 6+ posisi lowongan kerja realistis lengkap dengan gaji, persyaratan, tanggung jawab, dan link lamaran cepat via WhatsApp / Email.</li>
             </ul>
 
@@ -70,7 +70,7 @@ function hakajobs_generate_sample_jobs() {
             'company'          => 'PT Digital Kreasi Nusantara',
             'location'         => 'Jakarta Pusat',
             'category'         => 'IT & Rekayasa Software',
-            'type'             => 'Penuh Waktu',
+            'type'             => 'Full-Time',
             'experience'       => '3-5 Tahun',
             'salary'           => 'Rp 14.000.000 - Rp 20.000.000',
             'apply_type'       => 'whatsapp',
@@ -104,7 +104,7 @@ function hakajobs_generate_sample_jobs() {
             'company'          => 'PT Ruang Media Kreatif',
             'location'         => 'Bandung',
             'category'         => 'Pemasaran Digital & Media Sosial',
-            'type'             => 'Penuh Waktu',
+            'type'             => 'Full-Time',
             'experience'       => '1-3 Tahun',
             'salary'           => 'Rp 6.500.000 - Rp 9.000.000',
             'apply_type'       => 'whatsapp',
@@ -172,7 +172,7 @@ function hakajobs_generate_sample_jobs() {
             'company'          => 'CV Sinar Jaya Abadi',
             'location'         => 'Surabaya',
             'category'         => 'Akuntansi & Keuangan',
-            'type'             => 'Penuh Waktu',
+            'type'             => 'Full-Time',
             'experience'       => 'Fresh Graduate',
             'salary'           => 'Rp 5.200.000 - Rp 6.500.000',
             'apply_type'       => 'whatsapp',
@@ -206,7 +206,7 @@ function hakajobs_generate_sample_jobs() {
             'company'          => 'PT Solusi Layanan Hebat',
             'location'         => 'Yogyakarta',
             'category'         => 'Layanan Pelanggan & Administrasi',
-            'type'             => 'Paruh Waktu',
+            'type'             => 'Part-Time',
             'experience'       => 'Fresh Graduate',
             'salary'           => 'Rp 3.500.000 - Rp 4.500.000',
             'apply_type'       => 'whatsapp',

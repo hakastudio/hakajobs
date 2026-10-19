@@ -277,27 +277,27 @@ function hakajobs_customize_register($wp_customize) {
         'section'     => 'hakajobs_header_section',
     ));
 
-    // Label Menu 4 (Paruh Waktu)
+    // Label Menu 4 (Part-Time)
     $wp_customize->add_setting('hakajobs_nav_custom2_label', array(
-        'default'           => __('Paruh Waktu', 'hakajobs'),
+        'default'           => __('Part-Time', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('hakajobs_nav_custom2_label', array(
         'type'        => 'text',
-        'label'       => __('Menu: Label [Paruh Waktu]', 'hakajobs'),
-        'description' => __('Label menu keempat bawaan. Contoh: Paruh Waktu.', 'hakajobs'),
+        'label'       => __('Menu: Label [Part-Time]', 'hakajobs'),
+        'description' => __('Label menu keempat bawaan. Contoh: Part-Time.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
-    // URL Menu 4 (Paruh Waktu)
+    // URL Menu 4 (Part-Time)
     $wp_customize->add_setting('hakajobs_nav_custom2_url', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
     ));
     $wp_customize->add_control('hakajobs_nav_custom2_url', array(
         'type'        => 'url',
-        'label'       => __('Menu: URL [Paruh Waktu]', 'hakajobs'),
-        'description' => __('Kosongkan untuk otomatis ke filter tipe Paruh Waktu.', 'hakajobs'),
+        'label'       => __('Menu: URL [Part-Time]', 'hakajobs'),
+        'description' => __('Kosongkan untuk otomatis ke filter tipe Part-Time.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 

@@ -29,7 +29,7 @@ $wa_msg_basic = rawurlencode(
     "• Nama Perusahaan : \n" .
     "• Posisi Lowongan : \n" .
     "• Lokasi Kerja    : \n" .
-    "• Tipe Pekerjaan  : (Penuh Waktu / Paruh Waktu / Freelance / Magang)\n" .
+    "• Tipe Pekerjaan  : (Full-Time / Part-Time / Freelance / Magang)\n" .
     "• Kisaran Gaji    : \n" .
     "• Batas Lamaran   : \n" .
     "• Kontak HRD      : (No. WhatsApp / Email Lamaran)\n\n" .
@@ -335,8 +335,8 @@ if (!wp_style_is('hakajobs-pasang-loker', 'enqueued')) {
                             <label for="hkpl-jobtype">Tipe Pekerjaan</label>
                             <select id="hkpl-jobtype" name="jobtype">
                                 <option value="">-- Pilih Tipe --</option>
-                                <option>Full Time</option>
-                                <option>Part Time</option>
+                                <option>Full-Time</option>
+                                <option>Part-Time</option>
                                 <option>Magang (Internship)</option>
                                 <option>Freelance / Kontrak</option>
                                 <option>Remote / WFH</option>

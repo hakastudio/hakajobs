@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 /**
  * Company Logo or Generated Initials Avatar
  */
-function hakajobs_get_company_logo($post_id = null, $size = 54) {
+function hakajobs_get_company_logo($post_id = null, $size = 54, $is_hero = false) {
     if (!$post_id) {
         $post_id = get_the_ID();
     }
@@ -23,11 +23,22 @@ function hakajobs_get_company_logo($post_id = null, $size = 54) {
     }
 
     if (has_post_thumbnail($post_id)) {
-        return get_the_post_thumbnail($post_id, array($size, $size), array(
-            'class' => 'hk-company-logo-img',
-            'alt'   => esc_attr($company_name),
-            'loading' => 'lazy',
-        ));
+        $attrs = array(
+            'class'    => 'hk-company-logo-img',
+            'alt'      => esc_attr($company_name),
+            'width'    => (int)$size,
+            'height'   => (int)$size,
+            'decoding' => 'async',
+        );
+
+        if ($is_hero) {
+            $attrs['loading']       = 'eager';
+            $attrs['fetchpriority'] = 'high';
+        } else {
+            $attrs['loading']       = 'lazy';
+        }
+
+        return get_the_post_thumbnail($post_id, array($size, $size), $attrs);
     }
 
     // Generate initials avatar
@@ -66,7 +77,7 @@ function hakajobs_get_company_logo($post_id = null, $size = 54) {
 }
 
 /**
- * Job Type Badges (Penuh Waktu, Magang, Remote, dll.)
+ * Job Type Badges (Full-Time, Part-Time, Magang, Remote, dll.)
  */
 function hakajobs_get_job_type_badges($post_id = null) {
     if (!$post_id) {

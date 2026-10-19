@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.21');
+define('HAKAJOBS_VERSION', '1.0.22');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -24,6 +24,7 @@ require_once HAKAJOBS_DIR . '/inc/seo.php';
 require_once HAKAJOBS_DIR . '/inc/ads.php';
 require_once HAKAJOBS_DIR . '/inc/customizer.php';
 require_once HAKAJOBS_DIR . '/inc/updater.php';
+require_once HAKAJOBS_DIR . '/inc/performance.php';
 
 /**
  * Theme Setup
@@ -83,28 +84,34 @@ function hakajobs_enqueue_assets() {
         null
     );
 
+    // Suffix for minified assets in production
+    $min = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
+
     // Main Theme Stylesheet
+    $css_file = file_exists(HAKAJOBS_DIR . '/assets/css/main' . $min . '.css') ? '/assets/css/main' . $min . '.css' : '/assets/css/main.css';
     wp_enqueue_style(
         'hakajobs-main-style',
-        HAKAJOBS_URI . '/assets/css/main.css',
+        HAKAJOBS_URI . $css_file,
         array(),
         HAKAJOBS_VERSION
     );
 
     // Pasang Loker Stylesheet
     if (is_page_template('page-pasang-loker.php') || is_page('pasang-loker')) {
+        $pl_css = file_exists(HAKAJOBS_DIR . '/assets/css/pasang-loker' . $min . '.css') ? '/assets/css/pasang-loker' . $min . '.css' : '/assets/css/pasang-loker.css';
         wp_enqueue_style(
             'hakajobs-pasang-loker',
-            HAKAJOBS_URI . '/assets/css/pasang-loker.css',
+            HAKAJOBS_URI . $pl_css,
             array('hakajobs-main-style'),
             HAKAJOBS_VERSION
         );
     }
 
-    // Main Theme JavaScript
+    // Main Theme JavaScript (Deferred via inc/performance.php)
+    $js_file = file_exists(HAKAJOBS_DIR . '/assets/js/main' . $min . '.js') ? '/assets/js/main' . $min . '.js' : '/assets/js/main.js';
     wp_enqueue_script(
         'hakajobs-main-script',
-        HAKAJOBS_URI . '/assets/js/main.js',
+        HAKAJOBS_URI . $js_file,
         array(),
         HAKAJOBS_VERSION,
         true
@@ -231,10 +238,21 @@ function hakajobs_filter_job_query($query) {
 
         // Filter: Tipe Pekerjaan
         if (!empty($_GET['tipe'])) {
+            $tipe_val   = sanitize_text_field($_GET['tipe']);
+            $tipe_terms = array($tipe_val);
+            if ($tipe_val === 'part-time') {
+                $tipe_terms[] = 'paruh-waktu';
+            } elseif ($tipe_val === 'paruh-waktu') {
+                $tipe_terms[] = 'part-time';
+            } elseif ($tipe_val === 'full-time') {
+                $tipe_terms[] = 'penuh-waktu';
+            } elseif ($tipe_val === 'penuh-waktu') {
+                $tipe_terms[] = 'full-time';
+            }
             $tax_query[] = array(
                 'taxonomy' => 'tipe_pekerjaan',
                 'field'    => 'slug',
-                'terms'    => sanitize_text_field($_GET['tipe']),
+                'terms'    => $tipe_terms,
             );
         }
 
@@ -285,8 +303,8 @@ function hakajobs_fallback_menu($is_mobile = false) {
     $all_label  = get_theme_mod('hakajobs_nav_all_label', __('Semua', 'hakajobs'));
     $c1_label   = get_theme_mod('hakajobs_nav_custom1_label', __('Magang (Internship)', 'hakajobs'));
     $c1_url     = get_theme_mod('hakajobs_nav_custom1_url', get_post_type_archive_link('lowongan') . '?tipe=magang');
-    $c2_label   = get_theme_mod('hakajobs_nav_custom2_label', __('Paruh Waktu', 'hakajobs'));
-    $c2_url     = get_theme_mod('hakajobs_nav_custom2_url', get_post_type_archive_link('lowongan') . '?tipe=paruh-waktu');
+    $c2_label   = get_theme_mod('hakajobs_nav_custom2_label', __('Part-Time', 'hakajobs'));
+    $c2_url     = get_theme_mod('hakajobs_nav_custom2_url', get_post_type_archive_link('lowongan') . '?tipe=part-time');
     $post_label = get_theme_mod('hakajobs_post_job_label', __('Pasang Loker', 'hakajobs'));
     $post_url   = get_theme_mod('hakajobs_post_job_url', home_url('/pasang-loker/'));
     $show_post  = get_theme_mod('hakajobs_nav_show_post_job', '1');
@@ -309,6 +327,38 @@ function hakajobs_fallback_menu($is_mobile = false) {
     }
     echo '</ul>';
 }
+
+/**
+ * Otomatis sinkronisasi istilah taksonomi tipe pekerjaan dari Penuh Waktu -> Full-Time dan Paruh Waktu -> Part-Time
+ */
+function hakajobs_sync_job_types() {
+    if (get_option('hakajobs_job_types_synced_v2') === '1') {
+        return;
+    }
+
+    if (!taxonomy_exists('tipe_pekerjaan')) {
+        return;
+    }
+
+    $term_penuh = get_term_by('name', 'Penuh Waktu', 'tipe_pekerjaan');
+    if ($term_penuh && !is_wp_error($term_penuh)) {
+        wp_update_term($term_penuh->term_id, 'tipe_pekerjaan', array(
+            'name' => 'Full-Time',
+            'slug' => 'full-time',
+        ));
+    }
+
+    $term_paruh = get_term_by('name', 'Paruh Waktu', 'tipe_pekerjaan');
+    if ($term_paruh && !is_wp_error($term_paruh)) {
+        wp_update_term($term_paruh->term_id, 'tipe_pekerjaan', array(
+            'name' => 'Part-Time',
+            'slug' => 'part-time',
+        ));
+    }
+
+    update_option('hakajobs_job_types_synced_v2', '1');
+}
+add_action('init', 'hakajobs_sync_job_types', 20);
 
 /**
  * Increment view count on single lowongan

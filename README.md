@@ -82,7 +82,7 @@ Pencari kerja dapat menyaring loker berdasarkan:
 - Kata Kunci (Nama jabatan, skill, perusahaan)
 - Kategori Industri
 - Kota / Lokasi (termasuk tag Remote / WFH)
-- Tipe Pekerjaan (Penuh Waktu, Paruh Waktu, Kontrak, Magang, Freelance)
+- Tipe Pekerjaan (Full-Time, Part-Time, Kontrak, Magang, Freelance)
 - Tingkat Pengalaman (Fresh Graduate, 1-3 Tahun, > 3 Tahun)
 - Urutan (Terbaru, Terpopuler, Deadline Terdekat)
 
@@ -155,6 +155,15 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
    - **`streetAddress` Pemetaan:** Mengaitkan alamat fisik kantor (`_hakajobs_company_location`) langsung ke atribut `jobLocation.address.streetAddress`.
    - **Input & Fallback Cerdas `postalCode`:** Field baru Kode Pos di metabox, auto-ekstraksi 5 digit dari alamat kantor, dan fallback otomatis berdasarkan nama kota di Indonesia.
    - **Dukungan Pekerjaan Remote / WFH:** Otomatis menambahkan `"jobLocationType": "TELECOMMUTE"` ke schema Google jika lowongan bertipe Remote / WFH.
+
+15. **⚡ Peningkatan Kecepatan PageSpeed & Standarisasi Tipe Kerja (v1.0.22):**
+   - **Standarisasi Tipe Pekerjaan:** Mengubah istilah *Paruh Waktu* → *Part-Time* dan *Penuh Waktu* → *Full-Time* secara konsisten pada template, chip filter, fallback menu, formulir pasang loker, dan sinkronisasi otomatis database WordPress.
+   - **Pemuatan Aset Terkompresi (.min):** Otomatis memuat versi minified (`main.min.css`, `main.min.js`, `pasang-loker.min.css`) menghemat ~40KB transfer dan waktu render.
+   - **Preconnect & DNS-Prefetch Resource Hints:** Koneksi paralel ke Google Fonts sebelum rendering dimulai untuk memangkas FCP dan LCP.
+   - **Eliminasi Render-Blocking JavaScript:** Penambahan atribut `defer` otomatis pada skrip tema utama.
+   - **Pembersihan Bloat WordPress Core:** Menghapus skrip/style emoji bawaan, wp-embed, dan inline duotone SVG yang tidak diperlukan di frontend.
+   - **Optimasi Gambar Anti-CLS:** Atribut dimensi lebar/tinggi eksplisit, `decoding="async"`, dan `fetchpriority="high"` untuk logo hero lowongan kerja.
+   - **Conditional Gutenberg Block CSS:** Melepas CSS blok yang tidak digunakan pada halaman lowongan kerja untuk memperingan ukuran halaman.
 
 
 ## 🔍 Panduan Optimasi SEO & Indeks Cepat Google

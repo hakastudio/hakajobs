@@ -120,7 +120,7 @@ function hakajobs_register_taxonomies() {
         'show_in_rest'      => true,
     ));
 
-    // 3. Tipe Pekerjaan (Penuh Waktu, Paruh Waktu, Kontrak, Magang, Freelance, Remote)
+    // 3. Tipe Pekerjaan (Full-Time, Part-Time, Kontrak, Magang, Freelance, Remote)
     $type_labels = array(
         'name'              => _x('Tipe Pekerjaan', 'taxonomy general name', 'hakajobs'),
         'singular_name'     => _x('Tipe Pekerjaan', 'taxonomy singular name', 'hakajobs'),

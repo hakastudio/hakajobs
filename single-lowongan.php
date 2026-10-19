@@ -99,7 +99,7 @@ while (have_posts()) : the_post();
                 
                 <div class="hk-single-header-top">
                     <div class="hk-single-company-logo">
-                        <?php echo hakajobs_get_company_logo($post_id, 80); ?>
+                        <?php echo hakajobs_get_company_logo($post_id, 80, true); ?>
                     </div>
 
                     <div class="hk-single-header-details">
@@ -434,7 +434,7 @@ while (have_posts()) : the_post();
                                 <span class="hk-overview-value">
                                     <?php
                                     $types = get_the_terms($post_id, 'tipe_pekerjaan');
-                                    echo (!empty($types) && !is_wp_error($types)) ? esc_html($types[0]->name) : 'Penuh Waktu';
+                                    echo (!empty($types) && !is_wp_error($types)) ? esc_html($types[0]->name) : 'Full-Time';
                                     ?>
                                 </span>
                             </div>
