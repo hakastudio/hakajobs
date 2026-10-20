@@ -912,18 +912,37 @@ function hakajobs_schema_job_posting() {
         }
     }
 
-    $clean_content = wp_strip_all_tags(get_post_field('post_content', $post_id));
-    if (empty($clean_content)) {
-        $clean_content = get_the_title($post_id) . ' di ' . ($company_name ? $company_name : get_bloginfo('name'));
+    $raw_content = get_post_field('post_content', $post_id);
+    if (!empty($raw_content)) {
+        // Format content with paragraphs & allow Google-recommended safe HTML tags (p, br, ul, ol, li, strong, b, em, i, h2, h3, h4)
+        $formatted_content = wpautop($raw_content);
+        $allowed_html = array(
+            'p'      => array(),
+            'br'     => array(),
+            'ul'     => array(),
+            'ol'     => array(),
+            'li'     => array(),
+            'strong' => array(),
+            'b'      => array(),
+            'em'     => array(),
+            'i'      => array(),
+            'h2'     => array(),
+            'h3'     => array(),
+            'h4'     => array(),
+        );
+        $clean_content = wp_kses($formatted_content, $allowed_html);
+    } else {
+        $clean_content = '<p>' . esc_html(get_the_title($post_id) . ' di ' . ($company_name ? $company_name : get_bloginfo('name'))) . '</p>';
     }
 
     $schema = array(
         '@context'        => 'https://schema.org/',
         '@type'           => 'JobPosting',
         'title'           => get_the_title($post_id),
-        'description'     => esc_html($clean_content),
+        'description'     => $clean_content,
         'datePosted'      => get_the_date('c', $post_id),
         'employmentType'  => $employment_type,
+        'directApply'     => true,
         'hiringOrganization' => array(
             '@type'  => 'Organization',
             'name'   => $company_name ? $company_name : get_bloginfo('name'),
@@ -944,6 +963,10 @@ function hakajobs_schema_job_posting() {
 
     if ($is_remote) {
         $schema['jobLocationType'] = 'TELECOMMUTE';
+        $schema['applicantLocationRequirements'] = array(
+            '@type' => 'Country',
+            'name'  => 'Indonesia',
+        );
     }
 
     // Attach baseSalary structured data if numeric amount is available
@@ -961,7 +984,7 @@ function hakajobs_schema_job_posting() {
     }
 
     echo "\n<!-- Schema.org JobPosting by Hakajobs -->\n";
-    echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+    echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . '</script>' . "\n";
 }
 add_action('wp_head', 'hakajobs_schema_job_posting');
 

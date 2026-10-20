@@ -230,3 +230,27 @@ function hakajobs_schema_breadcrumbs() {
     echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . '</script>' . "\n";
 }
 add_action('wp_head', 'hakajobs_schema_breadcrumbs', 3);
+
+/**
+ * Automatically prevent duplicate JobPosting schema from Rank Math on single lowongan.
+ * Hakajobs already outputs fully structured Google-compliant JobPosting JSON-LD.
+ */
+add_filter('rank_math/json_ld', function ($data, $jsonld) {
+    if (is_singular('lowongan')) {
+        if (isset($data['JobPosting'])) {
+            unset($data['JobPosting']);
+        }
+        if (isset($data['richSnippet'])) {
+            unset($data['richSnippet']);
+        }
+    }
+    return $data;
+}, 99, 2);
+
+add_filter('rank_math/snippet/rich_snippet', function ($snippet) {
+    if (is_singular('lowongan')) {
+        return false;
+    }
+    return $snippet;
+}, 99);
+
