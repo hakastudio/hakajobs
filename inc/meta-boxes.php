@@ -39,6 +39,15 @@ function hakajobs_add_job_meta_boxes() {
         'side',
         'default'
     );
+
+    add_meta_box(
+        'hakajobs_seo_rankmath_helper',
+        __('🎯 Asisten SEO Rank Math (Slug ≤ 75 Karakter & Snippet)', 'hakajobs'),
+        'hakajobs_render_seo_rankmath_helper_box',
+        array('lowongan', 'post'),
+        'side',
+        'high'
+    );
 }
 add_action('add_meta_boxes', 'hakajobs_add_job_meta_boxes');
 
@@ -273,12 +282,264 @@ function hakajobs_render_job_benefits_box($post) {
 }
 
 /**
+ * Render Rank Math SEO & Slug Helper Meta Box (Side Panel)
+ */
+function hakajobs_render_seo_rankmath_helper_box($post) {
+    wp_nonce_field('hakajobs_seo_meta_nonce_action', 'hakajobs_seo_meta_nonce');
+
+    $slug = $post->post_name;
+    if (empty($slug)) {
+        $slug = sanitize_title($post->post_title);
+    }
+
+    $is_lowongan = ($post->post_type === 'lowongan');
+    $url_prefix  = home_url('/' . ($is_lowongan ? 'lowongan/' : ''));
+    $prefix_len  = mb_strlen($url_prefix);
+    ?>
+    <style>
+        .hk-seo-box { font-size: 12px; color: #334155; line-height: 1.5; }
+        .hk-seo-section { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0; }
+        .hk-seo-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .hk-seo-label { font-weight: 700; color: #0f172a; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .hk-seo-input { width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-family: monospace; box-sizing: border-box; }
+        .hk-seo-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; margin-top: 6px; }
+        .hk-seo-badge.good { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+        .hk-seo-badge.warn { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+        .hk-seo-btn { display: inline-flex; align-items: center; gap: 5px; width: 100%; justify-content: center; background: #0284c7; color: #fff; border: none; padding: 7px 10px; border-radius: 5px; font-weight: 600; font-size: 11px; cursor: pointer; margin-top: 8px; transition: background 0.2s; }
+        .hk-seo-btn:hover { background: #0369a1; color: #fff; }
+        .hk-checklist { list-style: none; padding: 0; margin: 6px 0 0 0; }
+        .hk-checklist li { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 5px; font-size: 11px; color: #475569; }
+        .hk-checklist input[type="checkbox"] { margin-top: 2px; }
+    </style>
+
+    <div class="hk-seo-box">
+        <!-- 1. SLUG / URL LENGTH MONITOR -->
+        <div class="hk-seo-section">
+            <div class="hk-seo-label">
+                <span>🔗 Slug / Permalink (Rank Math ≤ 75)</span>
+                <span id="hk_slug_len_text" style="font-weight:700;">0 karakter</span>
+            </div>
+            
+            <input type="text" id="hk_seo_slug_input" name="hakajobs_custom_slug" class="hk-seo-input" value="<?php echo esc_attr($slug); ?>" placeholder="loker-posisi-perusahaan-kota" />
+            
+            <div style="margin-top:6px; font-size:11px; color:#64748b; word-break:break-all;">
+                <strong>Preview URL:</strong><br>
+                <code id="hk_full_url_preview"><?php echo esc_url($url_prefix . ($slug ? $slug . '/' : '')); ?></code>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                <span style="font-size:11px; color:#64748b;">Total Panjang URL: <strong id="hk_total_url_len">0</strong> / 75</span>
+            </div>
+
+            <div id="hk_slug_status_badge" class="hk-seo-badge good">
+                ✓ Sesuai Standar Rank Math (≤ 75 Karakter)
+            </div>
+
+            <button type="button" id="hk_btn_optimize_slug" class="hk-seo-btn">
+                ⚡ Bersihkan & Ringkas Slug Otomatis (Maks 50 Karakter)
+            </button>
+            <small style="color:#64748b; font-size:10px; display:block; margin-top:4px;">
+                *Menghilangkan kata hubung (stop words: <em>dan, di, ke, untuk, loker, lowongan</em>) dan membatasi panjang agar lulus tes Rank Math.
+            </small>
+        </div>
+
+        <!-- 2. TITLE & META DESCRIPTION LIVE COUNTER -->
+        <div class="hk-seo-section">
+            <div class="hk-seo-label">
+                <span>📝 Panjang Judul (Title SEO)</span>
+                <span id="hk_title_len_text">0 / 60</span>
+            </div>
+            <div style="font-size:11px; color:#64748b;">
+                Target ideal SERP: <strong>50 – 60 karakter</strong> agar tidak terpotong (...).
+            </div>
+            <div id="hk_title_badge" class="hk-seo-badge good" style="margin-top:4px;">
+                Siap Dicek
+            </div>
+        </div>
+
+        <!-- 3. CHECKLIST STANDAR RANK MATH -->
+        <div class="hk-seo-section">
+            <div class="hk-seo-label">
+                <span>✅ Checklist Rank Math 100/100</span>
+            </div>
+            <ul class="hk-checklist">
+                <li>
+                    <input type="checkbox" id="chk_rm_1" checked disabled />
+                    <label for="chk_rm_1">Total URL ≤ 75 Karakter (URL Length Test)</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="chk_rm_2" />
+                    <label for="chk_rm_2">Focus Keyword ada di Judul SEO</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="chk_rm_3" />
+                    <label for="chk_rm_3">Focus Keyword ada di dalam Slug</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="chk_rm_4" />
+                    <label for="chk_rm_4">Deskripsi 120–160 karakter & ada CTA</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="chk_rm_5" />
+                    <label for="chk_rm_5">H2 terstruktur (Kualifikasi & Cara Lamar)</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        var urlPrefix = <?php echo json_encode($url_prefix); ?>;
+        var prefixLen = <?php echo (int) $prefix_len; ?>;
+        
+        var slugInput = document.getElementById('hk_seo_slug_input');
+        var slugLenText = document.getElementById('hk_slug_len_text');
+        var fullUrlPreview = document.getElementById('hk_full_url_preview');
+        var totalUrlLen = document.getElementById('hk_total_url_len');
+        var badge = document.getElementById('hk_slug_status_badge');
+        var btnOptimize = document.getElementById('hk_btn_optimize_slug');
+
+        var titleLenText = document.getElementById('hk_title_len_text');
+        var titleBadge = document.getElementById('hk_title_badge');
+
+        function updateSlugMetrics() {
+            var rawSlug = (slugInput ? slugInput.value.trim() : '');
+            var slugClean = rawSlug.toLowerCase().replace(/[^a-z0-9-_]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+            var slugLen = slugClean.length;
+            var fullUrl = urlPrefix + (slugClean ? slugClean + '/' : '');
+            var totalLen = fullUrl.length;
+
+            if (slugLenText) slugLenText.textContent = slugLen + ' char';
+            if (fullUrlPreview) fullUrlPreview.textContent = fullUrl;
+            if (totalUrlLen) totalUrlLen.textContent = totalLen;
+
+            if (badge) {
+                if (totalLen <= 75) {
+                    badge.className = 'hk-seo-badge good';
+                    badge.innerHTML = '✓ Sesuai Standar Rank Math (' + totalLen + ' ≤ 75)';
+                } else {
+                    badge.className = 'hk-seo-badge warn';
+                    badge.innerHTML = '⚠️ Terlalu Panjang (' + totalLen + ' > 75) Gagal Rank Math!';
+                }
+            }
+        }
+
+        function updateTitleMetrics() {
+            var titleInput = document.getElementById('title') || document.querySelector('.editor-post-title__input');
+            var titleVal = (titleInput ? (titleInput.value || titleInput.innerText || '') : '').trim();
+            var len = titleVal.length;
+
+            if (titleLenText) {
+                titleLenText.textContent = len + ' / 60';
+            }
+            if (titleBadge) {
+                if (len >= 45 && len <= 60) {
+                    titleBadge.className = 'hk-seo-badge good';
+                    titleBadge.textContent = '✓ Panjang Judul Sangat Ideal (' + len + ' char)';
+                } else if (len > 60) {
+                    titleBadge.className = 'hk-seo-badge warn';
+                    titleBadge.textContent = '⚠️ Terlalu Panjang (> 60 char, akan terpotong di Google)';
+                } else if (len > 0) {
+                    titleBadge.className = 'hk-seo-badge';
+                    titleBadge.style.background = '#fef3c7';
+                    titleBadge.style.color = '#92400e';
+                    titleBadge.textContent = 'ℹ️ Pendek (' + len + ' char) - Tambah nama lokasi/kota';
+                }
+            }
+        }
+
+        // Auto Slug Optimizer: Menghilangkan Stop Words Indonesia & Inggris, batasi maks 50 karakter
+        function cleanAndOptimizeSlug() {
+            var titleInput = document.getElementById('title') || document.querySelector('.editor-post-title__input');
+            var baseText = (slugInput && slugInput.value.trim()) ? slugInput.value : (titleInput ? (titleInput.value || titleInput.innerText || '') : '');
+            
+            if (!baseText) {
+                alert('Silakan isi judul artikel terlebih dahulu.');
+                return;
+            }
+
+            var stopWords = [
+                'dan', 'di', 'ke', 'dari', 'untuk', 'pada', 'adalah', 'dengan', 'ini', 'itu', 
+                'atau', 'yang', 'juga', 'oleh', 'karena', 'sebagai', 'tentang', 'agar', 
+                'info', 'loker', 'lowongan', 'kerja', 'terbaru', 'hari', 'ini', 'rekrutmen', 
+                'buka', 'pt', 'cv', 'group', 'the', 'a', 'an', 'in', 'at', 'to', 'for', 'and', 'of'
+            ];
+
+            var words = baseText.toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .split(' ');
+
+            var filteredWords = [];
+            for (var i = 0; i < words.length; i++) {
+                var w = words[i].trim();
+                if (w && stopWords.indexOf(w) === -1) {
+                    filteredWords.push(w);
+                }
+            }
+
+            // Jika semua terfilter, gunakan kata asli
+            if (filteredWords.length === 0) {
+                filteredWords = words;
+            }
+
+            var optimizedSlug = filteredWords.join('-');
+
+            // Batasi panjang slug maksimal 45-50 karakter agar total URL aman < 75 karakter
+            if (optimizedSlug.length > 48) {
+                optimizedSlug = optimizedSlug.substring(0, 48);
+                var lastDash = optimizedSlug.lastIndexOf('-');
+                if (lastDash > 15) {
+                    optimizedSlug = optimizedSlug.substring(0, lastDash);
+                }
+            }
+
+            if (slugInput) {
+                slugInput.value = optimizedSlug;
+            }
+
+            // Sync with WP core post_name if exists
+            var wpSlugField = document.getElementById('post_name');
+            if (wpSlugField) {
+                wpSlugField.value = optimizedSlug;
+            }
+
+            updateSlugMetrics();
+        }
+
+        if (slugInput) {
+            slugInput.addEventListener('input', updateSlugMetrics);
+        }
+        if (btnOptimize) {
+            btnOptimize.addEventListener('click', cleanAndOptimizeSlug);
+        }
+
+        var postTitle = document.getElementById('title');
+        if (postTitle) {
+            postTitle.addEventListener('input', updateTitleMetrics);
+        }
+
+        // Run once on load
+        setTimeout(function() {
+            updateSlugMetrics();
+            updateTitleMetrics();
+        }, 500);
+    })();
+    </script>
+    <?php
+}
+
+/**
  * Save Meta Box Data
  */
 function hakajobs_save_job_meta($post_id) {
     // Check nonce
     if (!isset($_POST['hakajobs_job_meta_nonce']) || !wp_verify_nonce($_POST['hakajobs_job_meta_nonce'], 'hakajobs_job_meta_nonce_action')) {
-        return;
+        // Also check if from seo nonce
+        if (!isset($_POST['hakajobs_seo_meta_nonce']) || !wp_verify_nonce($_POST['hakajobs_seo_meta_nonce'], 'hakajobs_seo_meta_nonce_action')) {
+            return;
+        }
     }
 
     // Check autosave
@@ -289,6 +550,22 @@ function hakajobs_save_job_meta($post_id) {
     // Check user permissions
     if (!current_user_can('edit_post', $post_id)) {
         return;
+    }
+
+    // Handle Custom Slug if edited via Rank Math Helper Meta Box
+    if (isset($_POST['hakajobs_custom_slug'])) {
+        $custom_slug = sanitize_title($_POST['hakajobs_custom_slug']);
+        if (!empty($custom_slug)) {
+            $current_slug = get_post_field('post_name', $post_id);
+            if ($custom_slug !== $current_slug) {
+                remove_action('save_post_lowongan', 'hakajobs_save_job_meta');
+                wp_update_post(array(
+                    'ID'        => $post_id,
+                    'post_name' => $custom_slug,
+                ));
+                add_action('save_post_lowongan', 'hakajobs_save_job_meta');
+            }
+        }
     }
 
     // Save fields
@@ -319,3 +596,57 @@ function hakajobs_save_job_meta($post_id) {
     }
 }
 add_action('save_post_lowongan', 'hakajobs_save_job_meta');
+
+/**
+ * Auto-trim auto-generated slug to max 48-50 characters so that the entire URL
+ * (home_url + /lowongan/ + slug) always strictly adheres to Rank Math's <= 75 character limit.
+ */
+function hakajobs_rankmath_slug_auto_truncate($slug, $post_ID, $post_status, $post_type) {
+    if (!in_array($post_type, array('lowongan', 'post'))) {
+        return $slug;
+    }
+
+    $max_slug_len = 48;
+    if (mb_strlen($slug) > $max_slug_len) {
+        $truncated = mb_substr($slug, 0, $max_slug_len);
+        $last_dash  = mb_strrpos($truncated, '-');
+        if ($last_dash !== false && $last_dash > 15) {
+            $slug = mb_substr($truncated, 0, $last_dash);
+        } else {
+            $slug = $truncated;
+        }
+    }
+
+    return $slug;
+}
+add_filter('wp_unique_post_slug', 'hakajobs_rankmath_slug_auto_truncate', 10, 4);
+
+/**
+ * Save custom slug for standard blog posts (non-lowongan)
+ */
+function hakajobs_save_post_slug_meta($post_id) {
+    if (!isset($_POST['hakajobs_seo_meta_nonce']) || !wp_verify_nonce($_POST['hakajobs_seo_meta_nonce'], 'hakajobs_seo_meta_nonce_action')) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    if (isset($_POST['hakajobs_custom_slug'])) {
+        $custom_slug = sanitize_title($_POST['hakajobs_custom_slug']);
+        if (!empty($custom_slug)) {
+            $current_slug = get_post_field('post_name', $post_id);
+            if ($custom_slug !== $current_slug) {
+                remove_action('save_post_post', 'hakajobs_save_post_slug_meta');
+                wp_update_post(array(
+                    'ID'        => $post_id,
+                    'post_name' => $custom_slug,
+                ));
+                add_action('save_post_post', 'hakajobs_save_post_slug_meta');
+            }
+        }
+    }
+}
+add_action('save_post_post', 'hakajobs_save_post_slug_meta');

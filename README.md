@@ -1,4 +1,4 @@
-# Hakajobs — Tema WordPress Portal Lowongan Kerja (Tanpa Login)
+﻿# Hakajobs — Tema WordPress Portal Lowongan Kerja (Tanpa Login)
 
 Tema WordPress profesional, modern, dan berkecepatan tinggi yang dirancang khusus untuk situs portal info lowongan kerja (job board) **tanpa sistem login yang rumit** bagi pelamar maupun perusahaan.
 
@@ -270,32 +270,147 @@ Untuk memastikan tampilan kartu lowongan terlihat proporsional dan memenuhi stan
 
 ---
 
-## ✍️ Standar Penulisan Artikel Lowongan Kerja (SEO & Google Jobs Friendly)
+## ✍️ Pedoman Penulisan Artikel Lowongan Kerja (SEO & Rank Math 100/100)
 
-Agar lowongan kerja cepat diindeks Google, lolos kurasi Google Jobs, dan nyaman dibaca pelamar melalui ponsel:
+Panduan wajib bagi admin/penulis sebelum mempublikasikan lowongan agar lulus semua tes Rank Math, cepat terindeks Google, dan nyaman dibaca pelamar di ponsel.
 
-### 1. Format Judul Tulisan (Title)
-Gunakan format yang jelas, padat, dan mencantumkan posisi kerja utama:
-* **Pola:** `[Nama Posisi Pekerjaan] – [Nama Perusahaan] – [Kota/Lokasi]`
-* **Contoh:**
-  - `Customer Service WhatsApp – PT Sinar Abadi – Surabaya`
-  - `Admin Gudang & Logistik – CV Maju Jaya – Jakarta Barat`
-  - `Content Creator TikTok – Remote Indonesia`
-* *Tips:* Hindari kata clickbait berlebihan (seperti *"HOT LOKER CEPAT LAMAR"*) karena bot Google for Jobs membaca judul murni sebagai nama jabatan resmi (`title`).
+### Ringkasan Aturan Cepat (Cheat Sheet)
 
-### 2. Pengisian Kolom Meta Box Lowongan (Wajib Diisi)
-* **Nama Perusahaan:** Masukkan nama resmi PT/CV/Brand.
-* **Website Perusahaan:** (Opsional) URL situs resmi perusahaan.
-* **Lokasi & Alamat:** Tulis alamat lengkap kantor/penempatan.
-* **Rentang Gaji:** Contoh: `Rp 4.500.000 - Rp 6.000.000` atau `Kompetitif`. *(Lowongan dengan nominal gaji mendapat klik hingga 2x lebih tinggi di Google Jobs)*.
-* **Batas Waktu Lamaran (Deadline):** Pilih tanggal berakhirnya lowongan agar badge hitung mundur aktif dan parameter `validThrough` otomatis tersinkronisasi ke Schema Google.
-* **Metode Lamaran:**
-  - WhatsApp HRD (format `628xxxxxxxxxx` langsung tanpa spasi/simbol)
-  - Email Lamaran (contoh: `karir@perusahaan.com`)
-  - Link Eksternal (Google Form / Portal Karir Resmi)
+| Elemen | Batas Karakter | Contoh |
+| :--- | :---: | :--- |
+| **Title SEO (Judul Artikel)** | **45 – 60 char** | `Loker Admin & Kasir – PT Sinar Jaya Lampung` |
+| **Slug (URL Permalink)** | **Maks ≤ 48 char** | `loker-admin-kasir-sinar-jaya-lampung` |
+| **Total Panjang URL** | **Maks ≤ 75 char** | `https://situsanda.com/lowongan/loker-admin-kasir-sinar-jaya-lampung/` |
+| **Meta Description** | **120 – 155 char** | `Info loker PT Sinar Jaya Lampung posisi Admin & Kasir. Cek kualifikasi, gaji, dan cara melamar langsung via WhatsApp!` |
+| **H1 (Judul Halaman)** | **Bebas (boleh > 60)** | `Lowongan Kerja Admin & Kasir – PT Sinar Jaya Lampung` |
+| **Focus Keyword (Rank Math)** | **2 – 4 kata** | `loker admin lampung` |
 
-### 3. Struktur Template Isi Konten (Content Body)
-Gunakan heading H2/H3 dan bullet list (`ul` / `li`) seperti pola berikut:
+> **Aturan Emas:** Total panjang URL (domain + path + slug + trailing slash) **tidak boleh melebihi 75 karakter** agar lulus tes URL Length Rank Math. Tema sudah menyediakan meta box "Asisten SEO Rank Math" di sidebar kanan editor yang menghitung ini secara real-time.
+
+---
+
+### 1. Cara Menulis Judul Artikel (Title SEO) — Maks 60 Karakter
+
+**Pola yang Direkomendasikan:**
+```
+Loker [Posisi] – [Nama Perusahaan] [Kota]
+```
+
+**Contoh Benar (✅):**
+| Judul | Panjang |
+| :--- | :---: |
+| `Loker Admin & Kasir – PT Sinar Jaya Lampung` | 46 char ✅ |
+| `Loker AMM Group Lampung: GRO, Waiter, Kasir` | 46 char ✅ |
+| `Lowongan Kerja Barista – Kopi Nusantara Bandung` | 50 char ✅ |
+
+**Contoh Salah (❌):**
+| Judul | Panjang | Masalah |
+| :--- | :---: | :--- |
+| `Guest Relationship Officer, Cashier, Waiter, Commis Cook – AMM Group Lampung` | 78 char ❌ | Terpotong di Google, nama perusahaan hilang |
+| `INFO LOKER TERBARU 2026 GAJI BESAR BURUAN DAFTAR` | 50 char ❌ | Clickbait, bukan nama jabatan resmi |
+
+**Tips Judul:**
+- Awali dengan kata **"Loker"** atau **"Lowongan Kerja"** (kata kunci pencarian terbesar).
+- Jika posisi terlalu banyak, singkat dengan akronim (`GRO`, `CS`) atau ambil 2–3 posisi utama saja.
+- Hindari kata huruf besar semua (`ALL CAPS`) dan kata clickbait seperti *"HOT"*, *"VIRAL"*, *"CEPAT LAMAR"*.
+- Google for Jobs membaca judul murni sebagai nama jabatan resmi (`title`) — bukan slogan promosi.
+
+---
+
+### 2. Cara Membuat Slug URL — Maks 48 Karakter
+
+Slug adalah bagian URL setelah `/lowongan/`. Tema Hakajobs **secara otomatis memotong slug > 48 karakter** saat post disimpan, tetapi hasilnya lebih baik jika Anda tulis manual.
+
+**Pola Slug:**
+```
+loker-[posisi-utama]-[perusahaan]-[kota]
+```
+
+**Contoh Benar (✅):**
+| Slug | Panjang |
+| :--- | :---: |
+| `loker-admin-kasir-sinar-jaya-lampung` | 37 char ✅ |
+| `loker-amm-group-lampung` | 24 char ✅ |
+| `loker-barista-kopi-nusantara-bandung` | 37 char ✅ |
+
+**Aturan Slug:**
+1. **Gunakan huruf kecil semua** — jangan huruf besar.
+2. **Pisahkan kata dengan tanda hubung** (`-`) — bukan garis bawah (`_`) atau spasi.
+3. **Buang semua stop words:** *dan, di, ke, dari, untuk, pada, yang, atau, adalah, dengan, ini, itu*.
+4. **Buang kata redundan:** *info, loker, lowongan, kerja, terbaru, rekrutmen, pt, cv, group*.
+5. **Jangan copy-paste judul langsung.** Ringkas hanya kata kunci inti.
+6. **Gunakan tombol "⚡ Bersihkan & Ringkas Slug Otomatis"** di meta box Asisten SEO Rank Math untuk membersihkan stop words otomatis.
+
+**Rumus Hitung Total URL:**
+```
+Total URL = panjang(https://situsanda.com/lowongan/) + panjang(slug) + 1 (trailing slash)
+```
+Contoh: `https://hakajobs.com/lowongan/` = 30 char → slug maksimal = 75 - 30 - 1 = **44 char**.
+Sesuaikan dengan panjang domain Anda!
+
+---
+
+### 3. Cara Menulis Meta Description — 120 sampai 155 Karakter
+
+Meta description adalah teks ringkasan yang muncul di bawah judul di Google. Jika menggunakan Rank Math, isi di kolom "Description" Rank Math. Jika tidak ada Rank Math, tema otomatis membuat deskripsi dari meta box.
+
+**Pola:**
+```
+Info loker [Perusahaan] [Kota] posisi [Posisi]. Cek kualifikasi lengkap dan cara melamar [via WhatsApp/Email] di sini!
+```
+
+**Contoh Benar (✅):**
+- `Info loker AMM Group Lampung untuk posisi GRO, Cashier, Waiter, & Commis Cook. Cek kualifikasi lengkap dan cara melamarnya di sini!` (133 char ✅)
+
+**Yang Harus Dihindari (❌):**
+- **Jangan tulis alamat email/nomor WA di deskripsi** — pencari kerja akan langsung menghubungi tanpa masuk ke website Anda (kehilangan trafik).
+- **Jangan melebihi 160 karakter** — Google akan memotong dengan "...".
+- **Jangan biarkan kosong** — Google akan mengambil teks acak dari konten halaman.
+
+---
+
+### 4. Cara Menentukan Focus Keyword Rank Math
+
+Focus keyword adalah kata kunci utama yang ingin Anda ranking di Google. Masukkan di kolom "Focus Keyword" Rank Math.
+
+**Aturan:**
+- Gunakan **2 hingga 4 kata** yang benar-benar diketik orang di Google.
+- Pastikan focus keyword **ada di judul, slug, paragraf pertama, dan minimal 1 heading H2**.
+- Pisahkan keyword tambahan (secondary) di kolom terpisah Rank Math.
+
+**Pola Focus Keyword untuk Loker:**
+```
+loker [posisi/perusahaan] [kota]
+```
+
+**Contoh:**
+| Focus Keyword (Utama) | Keyword Tambahan |
+| :--- | :--- |
+| `loker amm group lampung` | `loker waiter lampung`, `loker fnb lampung` |
+| `loker admin bandar lampung` | `loker sma lampung`, `lowongan admin lampung` |
+| `loker barista bandung` | `loker cafe bandung`, `loker part time bandung` |
+
+---
+
+### 5. Pengisian Meta Box Lowongan (Wajib Diisi)
+
+| Kolom Meta Box | Aturan Pengisian | Contoh |
+| :--- | :--- | :--- |
+| **Nama Perusahaan** | Nama resmi PT/CV/Brand | `PT AMM Group Indonesia` |
+| **Website Perusahaan** | (Opsional) URL situs resmi | `https://ammgroup.co.id` |
+| **Alamat Kantor** | Alamat spesifik penempatan kerja | `Jl. Raden Intan No. 12, Tanjung Karang` |
+| **Kode Pos** | 5 digit kode pos kantor | `35111` |
+| **Rentang Gaji** | Format: `Rp X.XXX.XXX - Rp X.XXX.XXX` | `Rp 3.500.000 - Rp 5.000.000` |
+| **Deadline** | Tanggal batas akhir lamaran | `2026-10-31` |
+| **Metode Lamaran** | WhatsApp HRD / Email / Link Eksternal | `628123456789` (tanpa spasi/+) |
+
+> **Tips Gaji:** Lowongan yang mencantumkan nominal gaji mendapatkan klik hingga **2x lebih tinggi** di Google Jobs dibanding yang bertuliskan "Kompetitif".
+
+---
+
+### 6. Struktur Isi Konten (Content Body)
+
+Gunakan heading H2 dan bullet list seperti pola berikut di editor WordPress:
 
 ```markdown
 ## Tentang Perusahaan
@@ -321,6 +436,43 @@ Gunakan heading H2/H3 dan bullet list (`ul` / `li`) seperti pola berikut:
 ## Cara Melamar
 Kirimkan berkas lamaran berupa Surat Lamaran, CV terbaru, dan Portofolio ke kontak HRD yang tertera pada tombol di bawah sebelum tanggal batas waktu berakhir.
 ```
+
+**Aturan Konten:**
+- Paragraf pertama **wajib menyebut focus keyword** dalam 100 kata pertama.
+- Gunakan **minimal 3 heading H2** (Tentang Perusahaan, Job Description, Kualifikasi).
+- Gunakan **bullet list** (`-` atau `*`) untuk setiap poin persyaratan — bukan paragraf panjang.
+- Panjang konten minimal **300 kata** agar Rank Math memberikan skor hijau pada Content Length Test.
+
+---
+
+### 7. Checklist Final Sebelum Publish (Rank Math 100/100)
+
+Periksa semua poin ini sebelum menekan tombol **Publikasikan**:
+
+- [ ] ✅ **Title SEO** ≤ 60 karakter, mengandung focus keyword + nama kota.
+- [ ] ✅ **Slug URL** ≤ 48 karakter, total URL ≤ 75 karakter (cek di meta box Asisten SEO).
+- [ ] ✅ **Meta Description** 120–155 karakter, ada CTA, TIDAK ada email/WA langsung.
+- [ ] ✅ **Focus Keyword** Rank Math terisi 2–4 kata.
+- [ ] ✅ **Focus keyword muncul di:** judul, slug, paragraf pertama, minimal 1 heading H2.
+- [ ] ✅ **Konten** minimal 300 kata, menggunakan H2 terstruktur & bullet list.
+- [ ] ✅ **Meta box lowongan** terisi: Nama Perusahaan, Gaji, Lokasi, Deadline, Metode Lamaran.
+- [ ] ✅ **Featured Image** (logo perusahaan) terunggah, rasio 1:1, minimal 256x256 px.
+- [ ] ✅ **Taksonomi** terisi: Kategori Loker, Lokasi, Tipe Pekerjaan.
+
+---
+
+### 8. Contoh Kasus Lengkap: Artikel AMM Group
+
+Berikut contoh pengisian yang **benar** untuk lowongan dengan banyak posisi:
+
+| Elemen | Contoh Pengisian |
+| :--- | :--- |
+| **Title SEO** | `Loker AMM Group Lampung: GRO, Waiter, Kasir` (46 char) |
+| **H1 Halaman** | `Lowongan Kerja AMM Group Lampung: GRO, Cashier, Waiter, Commis Cook` |
+| **Slug** | `loker-amm-group-lampung` (24 char) |
+| **Meta Description** | `Info loker AMM Group Lampung untuk posisi GRO, Cashier, Waiter, & Commis Cook. Cek kualifikasi lengkap dan cara melamarnya di sini!` (133 char) |
+| **Focus Keyword** | `loker amm group lampung` |
+| **Secondary Keywords** | `loker waiter lampung`, `loker fnb lampung`, `loker cashier bandar lampung` |
 
 ---
 
@@ -358,9 +510,17 @@ Berikut langkah konfigurasi Rank Math yang direkomendasikan:
 
 ### 4. Menentukan Focus Keyword pada Loker
 Saat menyunting artikel lowongan kerja, masukkan kata kunci yang spesifik dengan intensi pencarian kerja lokal, misalnya:
-- `Lowongan Admin Jakarta`
-- `Loker CS WhatsApp Surabaya`
-- `Lowongan Kerja Barista Bandung`
+- `loker admin lampung`
+- `loker waiter bandar lampung`
+- `lowongan kerja barista bandung`
+
+### 5. Meta Box "Asisten SEO Rank Math" (Fitur Bawaan Hakajobs)
+Tema ini menyediakan panel bantuan SEO di **sidebar kanan editor** yang menampilkan:
+- **Live URL Length Counter** — Menghitung panjang total URL secara real-time dan membandingkannya dengan batas 75 karakter Rank Math.
+- **Slug Editor** — Kolom input slug terpisah yang bisa diedit langsung dari sidebar.
+- **Tombol Optimasi Otomatis** — Menghapus stop words (dan, di, ke, untuk, pt, cv, group, dll.) dan memotong slug ke panjang aman dalam 1 klik.
+- **Title Length Indicator** — Memantau panjang judul dan memberi badge hijau/merah.
+- **Checklist Rank Math** — Daftar cek manual poin-poin penting untuk mencapai skor 100/100.
 
 ---
 
@@ -397,4 +557,5 @@ add_filter('hakajobs_github_repo_url', function() {
 ---
 
 © Hakajobs Studio. Dibuat dengan standar WordPress modern & ramah SEO.
+
 
