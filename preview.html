@@ -9,7 +9,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css?v=2.2">
+    <link rel="stylesheet" href="assets/css/pasang-loker.css?v=2.2">
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('hk_theme');
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (saved === 'dark' || (!saved && prefersDark)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            } catch(e) {}
+        })();
+    </script>
     <style>
         /* Interactive Preview Switcher Bar */
         .preview-bar {
@@ -76,6 +90,65 @@
         .preview-view.active {
             display: block;
         }
+        /* Variation Switcher Bar */
+        .preview-variation-bar {
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-family: var(--hk-font-sans);
+            font-size: 12px;
+            color: #cbd5e1;
+            position: relative;
+            z-index: 9;
+        }
+        .preview-var-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .preview-var-label {
+            font-weight: 700;
+            color: #38bdf8;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .hero-style-btn, .pl-hero-style-btn {
+            background: #0f172a;
+            border: 1px solid #475569;
+            color: #cbd5e1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+        .hero-style-btn:hover, .pl-hero-style-btn:hover {
+            border-color: #0284c7;
+            color: #fff;
+        }
+        .hero-style-btn.active, .pl-hero-style-btn.active {
+            background: #0284c7;
+            border-color: #0284c7;
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);
+        }
+        .preview-var-hint {
+            font-size: 11px;
+            color: #94a3b8;
+            font-style: italic;
+        }
         @media (max-width: 768px) {
             .preview-bar {
                 padding: 10px 14px;
@@ -91,8 +164,12 @@
                 font-size: 11px;
                 white-space: nowrap;
             }
+            .preview-variation-bar {
+                padding: 8px 14px;
+            }
         }
-        body.is-screenshot .preview-bar {
+        body.is-screenshot .preview-bar,
+        body.is-screenshot .preview-variation-bar {
             display: none !important;
         }
         body.is-screenshot .hk-hero-section {
@@ -148,8 +225,14 @@
             <button class="preview-tab-btn active" onclick="switchView('front')">🏠 Beranda (Front Page)</button>
             <button class="preview-tab-btn" onclick="switchView('single')">📄 Detail Lowongan (Single Job)</button>
             <button class="preview-tab-btn" onclick="switchView('archive')">📂 Arsip & Filter (Directory)</button>
+            <button class="preview-tab-btn" onclick="switchView('pasangloker')">💼 Pasang Loker (Landing)</button>
         </div>
         <div style="display:flex; align-items:center; gap:16px;">
+            <div style="display:flex; align-items:center; gap:6px; background:#1e293b; padding:3px 6px; border-radius:8px; border:1px solid #334155;">
+                <span style="font-size:11px; color:#cbd5e1; font-weight:600;">🌓 Mode:</span>
+                <button type="button" id="preview-btn-light" onclick="setHakajobsTheme('light')" style="background:#0284c7; border:none; color:#fff; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" title="Mode Terang">☀️ Terang</button>
+                <button type="button" id="preview-btn-dark" onclick="setHakajobsTheme('dark')" style="background:transparent; border:none; color:#cbd5e1; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" title="Mode Gelap">🌙 Gelap</button>
+            </div>
             <div style="display:flex; align-items:center; gap:6px;">
                 <span style="font-size:11px; color:#cbd5e1; font-weight:600;">📏 Ukuran Logo:</span>
                 <input type="range" id="logoSizeSlider" min="24" max="64" value="42" step="2" oninput="changeLogoSize(this.value)" style="width:75px; cursor:pointer;" title="Geser untuk mengatur tinggi logo">
@@ -164,6 +247,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Secondary Variation Switcher Bar -->
+    <div class="preview-variation-bar" id="preview-variation-bar">
+        <!-- Variation group for Front Page Hero -->
+        <div class="preview-var-group" id="var-group-front">
+            <span class="preview-var-label">✨ Variasi Hero Beranda:</span>
+            <button type="button" class="hero-style-btn active" data-hero="pasang-loker" onclick="setHeroStyle('pasang-loker')">1. Navy Sleek (Default)</button>
+            <button type="button" class="hero-style-btn" data-hero="light" onclick="setHeroStyle('light')">2. Clean Light (Terang)</button>
+            <button type="button" class="hero-style-btn" data-hero="split" onclick="setHeroStyle('split')">3. Split 2-Kolom (Modern Asymmetric)</button>
+            <button type="button" class="hero-style-btn" data-hero="compact" onclick="setHeroStyle('compact')">4. Compact Fokus (Search-First)</button>
+        </div>
+
+        <!-- Variation group for Pasang Loker Page Hero -->
+        <div class="preview-var-group" id="var-group-pasangloker" style="display:none;">
+            <span class="preview-var-label">💼 Variasi Hero Pasang Loker:</span>
+            <button type="button" class="pl-hero-style-btn active" data-plhero="default" onclick="setPlHeroStyle('default')">1. Navy Klasik (Center + Wave)</button>
+            <button type="button" class="pl-hero-style-btn" data-plhero="converter" onclick="setPlHeroStyle('converter')">2. Split Converter (B2B 2-Kolom)</button>
+            <button type="button" class="pl-hero-style-btn" data-plhero="minimal" onclick="setPlHeroStyle('minimal')">3. Minimalist Modern (Clean Slate)</button>
+        </div>
+
+        <span class="preview-var-hint" id="preview-var-hint">Bisa diatur melalui WP Customizer</span>
+    </div>
+
     <!-- Main Header -->
     <header class="hk-site-header">
         <div class="hk-container hk-header-inner">
@@ -183,11 +289,22 @@
                     <li><a href="javascript:void(0)" onclick="switchView('archive')">Semua</a></li>
                     <li><a href="javascript:void(0)" onclick="switchView('archive')">Magang (Internship)</a></li>
                     <li><a href="javascript:void(0)" onclick="switchView('archive')">Part-Time</a></li>
-                    <li><a href="javascript:void(0)" class="hk-menu-highlight">Pasang Loker</a></li>
+                    <li><a href="javascript:void(0)" onclick="switchView('pasangloker')" class="hk-menu-highlight">Pasang Loker</a></li>
                 </ul>
             </nav>
 
             <div class="hk-header-actions">
+                <!-- Dark Mode Toggle Button -->
+                <button type="button" class="hk-theme-toggle" id="hk-theme-toggle" aria-label="Ganti Mode Gelap/Terang" title="Mode Gelap / Terang">
+                    <span class="hk-theme-icon-sun" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </span>
+                    <span class="hk-theme-icon-moon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </span>
+                </button>
+
+                <!-- Saved Jobs Counter Button -->
                 <button type="button" class="hk-btn-saved-trigger" id="hk-saved-jobs-toggle" aria-label="Buka Lowongan Tersimpan" title="Lowongan Tersimpan">
                     <svg class="hk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
                     <span class="hk-saved-count-badge" id="hk-saved-badge">0</span>
@@ -207,15 +324,46 @@
         </div>
     </header>
 
+    <!-- Mobile Drawer Navigation -->
+    <div class="hk-mobile-drawer" id="hk-mobile-drawer" aria-hidden="true">
+        <div class="hk-mobile-drawer-header">
+            <span class="hk-mobile-drawer-title">Hakajobs</span>
+            <button type="button" class="hk-drawer-close" id="hk-drawer-close" aria-label="Tutup Menu">&times;</button>
+        </div>
+        <div class="hk-mobile-drawer-body">
+            <ul class="hk-mobile-nav-list">
+                <li><a href="javascript:void(0)" onclick="switchView('front'); document.getElementById('hk-drawer-close').click();">Beranda</a></li>
+                <li><a href="javascript:void(0)" onclick="switchView('archive'); document.getElementById('hk-drawer-close').click();">Semua Lowongan</a></li>
+                <li><a href="javascript:void(0)" onclick="switchView('archive'); document.getElementById('hk-drawer-close').click();">Magang (Internship)</a></li>
+                <li><a href="javascript:void(0)" onclick="switchView('archive'); document.getElementById('hk-drawer-close').click();">Part-Time</a></li>
+            </ul>
+
+            <div class="hk-mobile-drawer-theme">
+                <span class="hk-drawer-theme-label">🌓 Mode Tampilan</span>
+                <div class="hk-drawer-theme-switch">
+                    <button type="button" class="hk-drawer-theme-btn" data-theme="light">☀️ Terang</button>
+                    <button type="button" class="hk-drawer-theme-btn" data-theme="dark">🌙 Gelap</button>
+                </div>
+            </div>
+
+            <div class="hk-mobile-drawer-cta">
+                <a href="javascript:void(0)" onclick="switchView('pasangloker'); document.getElementById('hk-drawer-close').click();" class="hk-btn hk-btn-primary hk-btn-block">
+                    + Pasang Loker
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="hk-drawer-backdrop" id="hk-drawer-backdrop"></div>
+
     <!-- ====================================================================
          VIEW 1: FRONT PAGE
          ==================================================================== -->
     <div id="view-front" class="preview-view active">
-        <!-- Hero Search Section -->
-        <!-- Hero Search Section (Pasang Loker Theme) -->
-        <section class="hk-hero-section hk-hero-pasangloker-theme">
+        <!-- Hero Search Section with 4 Design Variations -->
+        <section class="hk-hero-section hk-hero-pasangloker-theme" id="front-hero-section">
             <div class="hk-container">
-                <div class="hk-hero-content">
+                <!-- 1, 2, 4: Standard / Light / Compact Center Layout -->
+                <div class="hk-hero-content" id="front-hero-standard">
                     <div class="hk-hero-badge">💼 Portal Loker Terpercaya & Lamar Langsung</div>
                     <h1 class="hk-hero-title">Temukan Lowongan Kerja Impian & <span class="hk-hero-highlight">Lamar Langsung ke Rekruter</span></h1>
                     <p class="hk-hero-desc">Ribuan info loker terkurasi setiap hari. Terhubung langsung melalui WhatsApp HRD, Email, dan Karir Resmi tanpa proses pembuatan akun yang berbelit.</p>
@@ -279,10 +427,95 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 3: Split 2-Kolom Layout (Asymmetric Modern & Trust Showcase) -->
+                <div class="hk-hero-split-grid" id="front-hero-split" style="display:none;">
+                    <div class="hk-hero-split-left">
+                        <div class="hk-hero-badge">💼 Portal Loker Terpercaya & Lamar Langsung</div>
+                        <h1 class="hk-hero-title">Temukan Lowongan Kerja Impian & <span class="hk-hero-highlight">Lamar Langsung ke Rekruter</span></h1>
+                        <p class="hk-hero-desc">Ribuan info loker terkurasi setiap hari. Terhubung langsung melalui WhatsApp HRD, Email, dan Karir Resmi tanpa proses pembuatan akun yang berbelit.</p>
+
+                        <div class="hk-hero-search-box">
+                            <form onsubmit="event.preventDefault(); switchView('archive');" class="hk-search-form">
+                                <div class="hk-search-field-group">
+                                    <div class="hk-search-field hk-field-keyword">
+                                        <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" placeholder="Posisi, keahlian, atau perusahaan..." value="Frontend Developer">
+                                    </div>
+                                    <div class="hk-search-field hk-field-category">
+                                        <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                        <select>
+                                            <option>IT & Rekayasa Software</option>
+                                            <option>Pemasaran Digital</option>
+                                            <option>Desain Grafis</option>
+                                            <option>Akuntansi & Keuangan</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="hk-search-submit-btn">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <span>Cari Loker</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="hk-quick-filters">
+                            <span class="hk-quick-label">Pencarian Populer:</span>
+                            <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-chip">🌐 Remote / WFH</a>
+                            <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-chip">🎓 Fresh Graduate</a>
+                            <a href="javascript:void(0)" onclick="switchView('archive')" class="hk-chip">💼 Magang (Intern)</a>
+                        </div>
+                    </div>
+
+                    <div class="hk-hero-split-right">
+                        <div class="hk-hero-showcase-card">
+                            <div class="hk-showcase-header">
+                                <span class="hk-showcase-tag">✨ PENGALAMAN TERBAIK</span>
+                                <h3 class="hk-showcase-title">Keunggulan Lamar di Hakajobs</h3>
+                            </div>
+                            <div class="hk-showcase-list">
+                                <div class="hk-showcase-item">
+                                    <div class="hk-showcase-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    </div>
+                                    <div class="hk-showcase-text">
+                                        <strong>Lamar Cepat Tanpa Akun</strong>
+                                        <p>Langsung terhubung ke WhatsApp HRD atau link karir resmi tanpa registrasi berbelit.</p>
+                                    </div>
+                                </div>
+                                <div class="hk-showcase-item">
+                                    <div class="hk-showcase-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    </div>
+                                    <div class="hk-showcase-text">
+                                        <strong>100% Bebas Biaya & Penipuan</strong>
+                                        <p>Semua info loker dikurasi manual. Waspada penipuan, rekrutmen resmi tidak dipungut biaya.</p>
+                                    </div>
+                                </div>
+                                <div class="hk-showcase-item">
+                                    <div class="hk-showcase-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    </div>
+                                    <div class="hk-showcase-text">
+                                        <strong>Update Loker Setiap Hari</strong>
+                                        <p>Info posisi baru dengan batas pendaftaran akurat dan respon cepat 1×24 jam.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hk-showcase-footer">
+                                <span>500+ Lowongan Aktif</span>
+                                <span class="hk-showcase-dot">•</span>
+                                <span>25+ Kategori Bidang</span>
+                                <span class="hk-showcase-dot">•</span>
+                                <span>100% Gratis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Hero Wave Bottom Transition -->
-            <div class="hk-hero-wave" aria-hidden="true">
+            <div class="hk-hero-wave" id="front-hero-wave" aria-hidden="true">
                 <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                     <path d="M0 60L60 50C120 40 240 20 360 16.7C480 13.3 600 26.7 720 33.3C840 40 960 40 1080 33.3C1200 26.7 1320 13.3 1380 6.7L1440 0V60H1380C1320 60 1200 60 1080 60C960 60 840 60 720 60C600 60 480 60 360 60C240 60 120 60 60 60H0Z" fill="var(--hk-bg-body, #f8fafc)" />
                 </svg>
@@ -844,10 +1077,22 @@
                             <h1 class="hk-single-job-title">Senior Frontend Developer (React / Next.js)</h1>
 
                             <div class="hk-single-meta-strip">
-                                <span class="hk-meta-pill">📍 Jakarta Pusat / Remote</span>
-                                <span class="hk-meta-pill hk-pill-salary">💰 Rp 14.000.000 - Rp 20.000.000 / Bulan</span>
-                                <span class="hk-meta-pill">🕒 Diterbitkan 2 jam lalu</span>
-                                <span class="hk-meta-pill">👁️ 342 kali dilihat</span>
+                                <span class="hk-meta-pill">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    Jakarta Pusat / Remote
+                                </span>
+                                <span class="hk-meta-pill hk-pill-salary">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                                    Rp 14.000.000 - Rp 20.000.000 / Bulan
+                                </span>
+                                <span class="hk-meta-pill">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    Diterbitkan 2 jam lalu
+                                </span>
+                                <span class="hk-meta-pill">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    342 kali dilihat
+                                </span>
                             </div>
 
                             <div class="hk-single-type-badges">
@@ -1196,6 +1441,423 @@
         </main>
     </div>
 
+    <!-- ====================================================================
+         VIEW 4: PASANG LOKER LANDING PAGE
+         ==================================================================== -->
+    <div id="view-pasangloker" class="preview-view">
+        <main id="hk-main-pasangloker" class="hk-pasang-loker-page">
+
+            <!-- Hero Section with 3 Variations (Default Navy, Converter Split, Minimal Clean) -->
+            <section class="hkpl-hero hkpl-hero-default" id="pl-hero-section">
+                <div class="hk-container">
+                    <!-- Default & Minimal Layout (Center Aligned) -->
+                    <div id="pl-hero-standard">
+                        <div class="hkpl-hero-badge">
+                            <span>💼</span> Platform Loker Terpercaya
+                        </div>
+
+                        <h1 class="hkpl-hero-title">
+                            Pasang Lowongan Kerja,<br>
+                            <span class="hkpl-hero-highlight">Temukan Kandidat Terbaik</span>
+                        </h1>
+
+                        <p class="hkpl-hero-sub">
+                            Jangkau ribuan pencari kerja aktif di wilayah Anda. Proses cepat, tayang dalam 1×24 jam, langsung ke target yang tepat.
+                        </p>
+
+                        <div class="hkpl-hero-stats">
+                            <div class="hkpl-stat">
+                                <span class="hkpl-stat-num">10rb+</span>
+                                <span class="hkpl-stat-label">Pencari Kerja Aktif</span>
+                            </div>
+                            <div class="hkpl-stat-sep"></div>
+                            <div class="hkpl-stat">
+                                <span class="hkpl-stat-num">500+</span>
+                                <span class="hkpl-stat-label">Lowongan Tayang</span>
+                            </div>
+                            <div class="hkpl-stat-sep"></div>
+                            <div class="hkpl-stat">
+                                <span class="hkpl-stat-num">1×24 Jam</span>
+                                <span class="hkpl-stat-label">Waktu Tayang</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Converter Split 2-Kolom Layout (B2B Fast-Track) -->
+                    <div class="hkpl-converter-grid" id="pl-hero-converter" style="display:none;">
+                        <div class="hkpl-converter-left">
+                            <div class="hkpl-hero-badge">
+                                <span>💼</span> Platform Rekrutmen Terpercaya
+                            </div>
+
+                            <h1 class="hkpl-hero-title">
+                                Pasang Lowongan Kerja,<br>
+                                <span class="hkpl-hero-highlight">Temukan Kandidat Terbaik</span>
+                            </h1>
+
+                            <p class="hkpl-hero-sub">
+                                Jangkau ribuan pencari kerja aktif di wilayah Anda. Proses cepat, tayang dalam 1×24 jam, langsung ke target yang tepat.
+                            </p>
+
+                            <div class="hkpl-converter-benefits">
+                                <div class="hkpl-benefit-row">
+                                    <span class="hkpl-check">✓</span>
+                                    <span>Tayang Cepat 1×24 Jam setelah konfirmasi admin</span>
+                                </div>
+                                <div class="hkpl-benefit-row">
+                                    <span class="hkpl-check">✓</span>
+                                    <span>Pelamar langsung menghubungi WhatsApp / Email HRD Anda</span>
+                                </div>
+                                <div class="hkpl-benefit-row">
+                                    <span class="hkpl-check">✓</span>
+                                    <span>Paket fleksibel mulai dari Gratis hingga Prioritas Urgent</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hkpl-converter-right">
+                            <div class="hkpl-converter-card">
+                                <span class="hkpl-card-badge">FAST TRACK REKRUTMEN</span>
+                                <h3 class="hkpl-card-title">Pasang Lowongan Sekarang</h3>
+                                <p class="hkpl-card-desc">Konsultasikan kebutuhan rekrutmen atau kirim draft info loker langsung ke tim admin kami.</p>
+
+                                <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Hakajobs%2C%20saya%20ingin%20konsultasi%20pasang%20loker" target="_blank" rel="noopener noreferrer" class="hk-btn hkpl-btn-consult-wa">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                    <span>Hubungi WhatsApp Admin</span>
+                                </a>
+
+                                <div class="hkpl-card-note">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    <span>100% Aman • Langsung Dibalas Tim Admin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Wave Bottom Transition (Classic Mode) -->
+                <div class="hkpl-hero-wave" id="pl-hero-wave">
+                    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0 60L60 50C120 40 240 20 360 16.7C480 13.3 600 26.7 720 33.3C840 40 960 40 1080 33.3C1200 26.7 1320 13.3 1380 6.7L1440 0V60H1380C1320 60 1200 60 1080 60C960 60 840 60 720 60C600 60 480 60 360 60C240 60 120 60 60 60H0Z" fill="var(--hk-bg-body, #f8fafc)"/></svg>
+                </div>
+            </section>
+
+            <!-- Keunggulan Pasang Loker -->
+            <section class="hkpl-features">
+                <div class="hk-container">
+                    <div class="hkpl-features-grid">
+                        <div class="hkpl-feature-card">
+                            <div class="hkpl-feature-icon">🎯</div>
+                            <h3>Tepat Sasaran</h3>
+                            <p>Lowongan Anda tampil ke pencari kerja yang aktif mencari di daerah & bidang yang relevan.</p>
+                        </div>
+                        <div class="hkpl-feature-card">
+                            <div class="hkpl-feature-icon">⚡</div>
+                            <h3>Tayang Cepat</h3>
+                            <p>Verifikasi & publikasi dalam 1×24 jam. Hubungi admin sekarang dan loker langsung naik.</p>
+                        </div>
+                        <div class="hkpl-feature-card">
+                            <div class="hkpl-feature-icon">🛡️</div>
+                            <h3>Bebas Spam</h3>
+                            <p>Setiap lowongan diverifikasi admin. Tidak ada loker palsu atau penipuan yang merugikan brand Anda.</p>
+                        </div>
+                        <div class="hkpl-feature-card">
+                            <div class="hkpl-feature-icon">🔍</div>
+                            <h3>SEO Google Jobs</h3>
+                            <p>Loker Anda otomatis muncul di Google Jobs berkat schema JobPosting terstruktur.</p>
+                        </div>
+                        <div class="hkpl-feature-card">
+                            <div class="hkpl-feature-icon">📲</div>
+                            <h3>Lamaran via WA</h3>
+                            <p>Kandidat melamar langsung ke WhatsApp / email HRD Anda. Tidak perlu sistem login rumit.</p>
+                        </div>
+                        <div class="hkpl-feature-card">
+                            <div class="hkpl-feature-icon">📊</div>
+                            <h3>Branding Perusahaan</h3>
+                            <p>Logo perusahaan tampil menonjol di setiap kartu lowongan. Tingkatkan brand awareness Anda.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Paket Tarif Pasang Loker -->
+            <section class="hkpl-pricing" id="paket-loker">
+                <div class="hk-container">
+                    <div class="hkpl-section-header">
+                        <span class="hkpl-section-badge">PILIH PAKET</span>
+                        <h2>Tarif Pasang Loker</h2>
+                        <p>Pilih paket yang sesuai kebutuhan rekrutmen perusahaan Anda</p>
+                    </div>
+
+                    <div class="hkpl-pricing-grid">
+                        <!-- Paket Basic -->
+                        <div class="hkpl-pricing-card">
+                            <div class="hkpl-pricing-header">
+                                <div class="hkpl-pricing-icon">📋</div>
+                                <h3 class="hkpl-pricing-name">Basic</h3>
+                                <div class="hkpl-pricing-price">
+                                    <span class="hkpl-price-amount">Gratis</span>
+                                </div>
+                                <p class="hkpl-pricing-desc">Cocok untuk UKM dan startup yang baru mulai rekrut</p>
+                            </div>
+                            <ul class="hkpl-pricing-features">
+                                <li><span class="hkpl-check">✓</span> Tayang 30 hari</li>
+                                <li><span class="hkpl-check">✓</span> Tampil di halaman arsip loker</li>
+                                <li><span class="hkpl-check">✓</span> Logo perusahaan (avatar inisial)</li>
+                                <li><span class="hkpl-check">✓</span> Muncul di Google Jobs (SEO)</li>
+                                <li><span class="hkpl-check">✓</span> Lamaran via WA / Email / Web</li>
+                                <li><span class="hkpl-muted">✗</span> Badge Featured / Urgent</li>
+                                <li><span class="hkpl-muted">✗</span> Prioritas tampil di atas</li>
+                                <li><span class="hkpl-muted">✗</span> Logo perusahaan (upload sendiri)</li>
+                            </ul>
+                            <a href="#form-loker" class="hkpl-btn hkpl-btn-outline" id="hkpl-btn-basic">
+                                Chat Admin
+                            </a>
+                        </div>
+
+                        <!-- Paket Featured (POPULER) -->
+                        <div class="hkpl-pricing-card hkpl-pricing-popular">
+                            <div class="hkpl-popular-badge">Paling Populer</div>
+                            <div class="hkpl-pricing-header">
+                                <div class="hkpl-pricing-icon">🌟</div>
+                                <h3 class="hkpl-pricing-name">Featured</h3>
+                                <div class="hkpl-pricing-price">
+                                    <span class="hkpl-price-amount">Rp 50.000</span>
+                                    <span class="hkpl-price-period">/ 30 hari</span>
+                                </div>
+                                <p class="hkpl-pricing-desc">Untuk perusahaan yang ingin mendapat lebih banyak pelamar berkualitas</p>
+                            </div>
+                            <ul class="hkpl-pricing-features">
+                                <li><span class="hkpl-check">✓</span> Tayang 30 hari</li>
+                                <li><span class="hkpl-check">✓</span> Badge <strong>"Featured"</strong> di kartu loker</li>
+                                <li><span class="hkpl-check">✓</span> Prioritas tampil di urutan atas</li>
+                                <li><span class="hkpl-check">✓</span> Upload logo perusahaan sendiri</li>
+                                <li><span class="hkpl-check">✓</span> Muncul di Google Jobs (SEO)</li>
+                                <li><span class="hkpl-check">✓</span> Lamaran via WA / Email / Web</li>
+                                <li><span class="hkpl-check">✓</span> Preview kartu loker sebelum tayang</li>
+                                <li><span class="hkpl-check">✓</span> Notifikasi WhatsApp ke Admin</li>
+                            </ul>
+                            <a href="#form-loker" class="hkpl-btn hkpl-btn-primary" id="hkpl-btn-featured">
+                                Pasang Sekarang
+                            </a>
+                        </div>
+
+                        <!-- Paket Urgent (Tanpa emoji 🔥) -->
+                        <div class="hkpl-pricing-card">
+                            <div class="hkpl-pricing-header">
+                                <div class="hkpl-pricing-icon">⚡</div>
+                                <h3 class="hkpl-pricing-name">Urgent</h3>
+                                <div class="hkpl-pricing-price">
+                                    <span class="hkpl-price-amount">Rp 75.000</span>
+                                    <span class="hkpl-price-period">/ 14 hari</span>
+                                </div>
+                                <p class="hkpl-pricing-desc">Rekrut cepat! Untuk posisi yang harus diisi dalam waktu singkat</p>
+                            </div>
+                            <ul class="hkpl-pricing-features">
+                                <li><span class="hkpl-check">✓</span> Tayang 14 hari (rekrut cepat)</li>
+                                <li><span class="hkpl-check">✓</span> Badge <strong>"Urgent"</strong> mencolok</li>
+                                <li><span class="hkpl-check">✓</span> <strong>Posisi teratas</strong> di atas Featured</li>
+                                <li><span class="hkpl-check">✓</span> Upload logo perusahaan sendiri</li>
+                                <li><span class="hkpl-check">✓</span> Muncul di Google Jobs (SEO)</li>
+                                <li><span class="hkpl-check">✓</span> Lamaran via WA / Email / Web</li>
+                                <li><span class="hkpl-check">✓</span> Preview kartu loker sebelum tayang</li>
+                                <li><span class="hkpl-check">✓</span> Prioritas respons admin hari ini</li>
+                            </ul>
+                            <a href="#form-loker" class="hkpl-btn hkpl-btn-urgent" id="hkpl-btn-urgent">
+                                Pasang Urgent
+                            </a>
+                        </div>
+                    </div>
+
+                    <p class="hkpl-pricing-note">
+                        💡 Catatan: Harga dapat disesuaikan. Hubungi admin untuk paket bundling atau diskon khusus pengguna pertama.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Cara Pasang (3 Langkah Cepat) -->
+            <section class="hkpl-how">
+                <div class="hk-container">
+                    <div class="hkpl-section-header">
+                        <h2>Cara Pasang Loker</h2>
+                        <p>Hanya 3 langkah, loker Anda langsung tayang</p>
+                    </div>
+                    <div class="hkpl-steps">
+                        <div class="hkpl-step">
+                            <div class="hkpl-step-num">1</div>
+                            <div class="hkpl-step-body">
+                                <h3>Kirim Detail Lowongan</h3>
+                                <p>Hubungi admin via WhatsApp atau form dengan info lengkap: nama perusahaan, posisi, lokasi, gaji, dan kontak HRD.</p>
+                            </div>
+                        </div>
+                        <div class="hkpl-step-arrow">→</div>
+                        <div class="hkpl-step">
+                            <div class="hkpl-step-num">2</div>
+                            <div class="hkpl-step-body">
+                                <h3>Verifikasi & Pembayaran</h3>
+                                <p>Admin memverifikasi data dan mengkonfirmasi paket pilihan Anda. Pembayaran untuk paket berbayar via transfer bank / e-wallet.</p>
+                            </div>
+                        </div>
+                        <div class="hkpl-step-arrow">→</div>
+                        <div class="hkpl-step">
+                            <div class="hkpl-step-num">3</div>
+                            <div class="hkpl-step-body">
+                                <h3>Loker Tayang!</h3>
+                                <p>Lowongan Anda langsung tayang dan dapat ditemukan oleh ribuan pencari kerja aktif, termasuk melalui Google Jobs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Form Kirim Data Loker -->
+            <section class="hkpl-form-section" id="form-loker">
+                <div class="hk-container">
+                    <div class="hkpl-form-wrap">
+                        <div class="hkpl-form-info">
+                            <h2>Kirim Data Lowongan</h2>
+                            <p>Isi form di samping dan admin akan segera menghubungi Anda dalam waktu 1×24 jam.</p>
+
+                            <a href="https://wa.me/6281234567890" class="hkpl-contact-wa" target="_blank" rel="noopener" id="hkpl-contact-wa-link">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp Admin Sekarang
+                            </a>
+
+                            <a href="mailto:admin@hakajobs.id" class="hkpl-contact-email" id="hkpl-contact-email-link">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+                                admin@hakajobs.id
+                            </a>
+                        </div>
+
+                        <form class="hkpl-form" id="hkpl-submission-form" onsubmit="event.preventDefault(); alert('Formulir terverifikasi! Di tema WordPress aktif, data akan langsung diteruskan ke WhatsApp HRD Admin.');">
+                            <div class="hkpl-form-row hkpl-form-row-2">
+                                <div class="hkpl-form-group">
+                                    <label for="hkpl-company">Nama Perusahaan <span class="hkpl-required">*</span></label>
+                                    <input type="text" id="hkpl-company" name="company" placeholder="PT Maju Bersama" required>
+                                </div>
+                                <div class="hkpl-form-group">
+                                    <label for="hkpl-position">Posisi / Jabatan <span class="hkpl-required">*</span></label>
+                                    <input type="text" id="hkpl-position" name="position" placeholder="Staff Administrasi" required>
+                                </div>
+                            </div>
+                            <div class="hkpl-form-row hkpl-form-row-2">
+                                <div class="hkpl-form-group">
+                                    <label for="hkpl-location">Lokasi Kerja <span class="hkpl-required">*</span></label>
+                                    <input type="text" id="hkpl-location" name="location" placeholder="Jakarta / Bandung / Remote">
+                                </div>
+                                <div class="hkpl-form-group">
+                                    <label for="hkpl-jobtype">Tipe Pekerjaan</label>
+                                    <select id="hkpl-jobtype" name="jobtype">
+                                        <option value="">-- Pilih Tipe --</option>
+                                        <option>Full-Time</option>
+                                        <option>Part-Time</option>
+                                        <option>Magang (Internship)</option>
+                                        <option>Freelance / Kontrak</option>
+                                        <option>Remote / WFH</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hkpl-form-row hkpl-form-row-2">
+                                <div class="hkpl-form-group">
+                                    <label for="hkpl-salary">Kisaran Gaji</label>
+                                    <input type="text" id="hkpl-salary" name="salary" placeholder="Rp 4.000.000 – Rp 6.000.000">
+                                </div>
+                                <div class="hkpl-form-group">
+                                    <label for="hkpl-deadline">Deadline Lamaran</label>
+                                    <input type="date" id="hkpl-deadline" name="deadline">
+                                </div>
+                            </div>
+                            <div class="hkpl-form-group">
+                                <label for="hkpl-desc">Deskripsi Singkat Pekerjaan <span class="hkpl-required">*</span></label>
+                                <textarea id="hkpl-desc" name="description" rows="4" placeholder="Tugas utama, syarat & kualifikasi yang dibutuhkan..." required></textarea>
+                            </div>
+                            <div class="hkpl-form-row hkpl-form-row-2">
+                                <div class="hkpl-form-group">
+                                    <label for="hkpl-contact">Kontak HRD (WA/Email) <span class="hkpl-required">*</span></label>
+                                    <input type="text" id="hkpl-contact" name="contact" placeholder="08xxxxxxxxxx / hrd@perusahaan.com" required>
+                                </div>
+                                <div class="hkpl-form-group">
+                                    <label for="hkpl-package">Paket yang Dipilih</label>
+                                    <select id="hkpl-package" name="package">
+                                        <option value="Basic">Basic (Gratis)</option>
+                                        <option value="Featured" selected>Featured (Rp 50.000)</option>
+                                        <option value="Urgent">Urgent (Rp 75.000)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="hkpl-btn hkpl-btn-primary hkpl-btn-submit" id="hkpl-submit-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+                                Kirim via WhatsApp
+                            </button>
+                            <p class="hkpl-form-note">Form ini akan membuka WhatsApp dengan data yang sudah terisi otomatis.</p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Pasang Loker -->
+            <section class="hkpl-faq">
+                <div class="hk-container">
+                    <div class="hkpl-section-header">
+                        <h2>Pertanyaan Umum</h2>
+                    </div>
+                    <div class="hkpl-faq-list" id="hkpl-faq-list">
+                        <div class="hkpl-faq-item">
+                            <button type="button" class="hkpl-faq-q" onclick="togglePlFaq(this)" aria-expanded="false">
+                                <span>Berapa lama loker saya akan tayang?</span>
+                                <svg class="hkpl-faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="hkpl-faq-a" hidden>
+                                <p>Admin akan memproses dan mempublikasikan lowongan Anda dalam 1×24 jam setelah data diterima dan (untuk paket berbayar) pembayaran dikonfirmasi.</p>
+                            </div>
+                        </div>
+                        <div class="hkpl-faq-item">
+                            <button type="button" class="hkpl-faq-q" onclick="togglePlFaq(this)" aria-expanded="false">
+                                <span>Format apa yang harus saya kirimkan?</span>
+                                <svg class="hkpl-faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="hkpl-faq-a" hidden>
+                                <p>Anda bisa mengisi form di halaman ini dan otomatis terformat, atau kirim langsung via WhatsApp dengan format: Nama Perusahaan, Posisi, Lokasi, Gaji, Deadline, Deskripsi, dan Kontak HRD.</p>
+                            </div>
+                        </div>
+                        <div class="hkpl-faq-item">
+                            <button type="button" class="hkpl-faq-q" onclick="togglePlFaq(this)" aria-expanded="false">
+                                <span>Apakah lowongan saya muncul di Google?</span>
+                                <svg class="hkpl-faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="hkpl-faq-a" hidden>
+                                <p>Ya! Setiap lowongan yang tayang otomatis dilengkapi schema JobPosting yang diakui Google. Loker Anda berpotensi muncul di Google Jobs dan hasil pencarian organik.</p>
+                            </div>
+                        </div>
+                        <div class="hkpl-faq-item">
+                            <button type="button" class="hkpl-faq-q" onclick="togglePlFaq(this)" aria-expanded="false">
+                                <span>Metode pembayaran apa yang diterima?</span>
+                                <svg class="hkpl-faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="hkpl-faq-a" hidden>
+                                <p>Transfer bank (BCA, BRI, BNI, Mandiri), GoPay, OVO, DANA, dan ShopeePay. Hubungi admin untuk rekening terbaru.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Bottom -->
+            <section class="hkpl-cta-bottom">
+                <div class="hk-container">
+                    <h2>Siap Menemukan Karyawan Terbaik?</h2>
+                    <p>Bergabung bersama ratusan perusahaan yang sudah mempercayakan rekrutmen mereka di Hakajobs</p>
+                    <div class="hkpl-cta-actions">
+                        <a href="https://wa.me/6281234567890" class="hkpl-btn hkpl-btn-wa" target="_blank" rel="noopener" id="hkpl-cta-wa-bottom">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Chat WhatsApp Admin
+                        </a>
+                        <a href="#paket-loker" class="hkpl-btn hkpl-btn-outline-white" id="hkpl-cta-lihat-paket">Lihat Paket →</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
     <!-- Fraud Alert Banner -->
     <section class="hk-fraud-alert-section">
         <div class="hk-container">
@@ -1254,7 +1916,7 @@
                     <h4 class="hk-footer-heading">Navigasi</h4>
                     <ul class="hk-footer-links">
                         <li><a href="javascript:void(0)" onclick="switchView('archive')">Cari Lowongan</a></li>
-                        <li><a href="javascript:void(0)">Pasang Loker</a></li>
+                        <li><a href="javascript:void(0)" onclick="switchView('pasangloker')">Pasang Loker</a></li>
                         <li><a href="javascript:void(0)">Kebijakan Privasi</a></li>
                     </ul>
                 </div>
@@ -1317,19 +1979,169 @@
                 activeBtn.classList.add('active');
             }
 
+            // Toggle variation bar button groups based on active view
+            var varFront = document.getElementById('var-group-front');
+            var varPl = document.getElementById('var-group-pasangloker');
+            var varHint = document.getElementById('preview-var-hint');
+            var varBar = document.getElementById('preview-variation-bar');
+
+            if (varFront && varPl) {
+                if (viewName === 'front') {
+                    varBar.style.display = 'flex';
+                    varFront.style.display = 'flex';
+                    varPl.style.display = 'none';
+                    if (varHint) varHint.textContent = 'Pilih variasi Hero Beranda untuk melihat perbedaannya';
+                } else if (viewName === 'pasangloker') {
+                    varBar.style.display = 'flex';
+                    varFront.style.display = 'none';
+                    varPl.style.display = 'flex';
+                    if (varHint) varHint.textContent = 'Pilih variasi Hero Pasang Loker untuk melihat perbedaannya';
+                } else {
+                    varFront.style.display = 'none';
+                    varPl.style.display = 'none';
+                    if (varHint) varHint.textContent = 'Kustomisasi Tema WordPress Hakajobs (Tanpa Login)';
+                }
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setHeroStyle(style) {
+            // Update buttons
+            document.querySelectorAll('.hero-style-btn').forEach(function(btn) {
+                btn.classList.toggle('active', btn.getAttribute('data-hero') === style);
+            });
+
+            var heroSec = document.getElementById('front-hero-section');
+            var stdContent = document.getElementById('front-hero-standard');
+            var splitContent = document.getElementById('front-hero-split');
+            var wave = document.getElementById('front-hero-wave');
+
+            if (!heroSec || !stdContent || !splitContent) return;
+
+            // Remove existing theme classes
+            heroSec.classList.remove(
+                'hk-hero-pasangloker-theme',
+                'hk-hero-light-theme',
+                'hk-hero-split-theme',
+                'hk-hero-compact-theme'
+            );
+
+            var styleNames = {
+                'pasang-loker': 'Navy Sleek (Default)',
+                'light': 'Clean Light (Terang)',
+                'split': 'Split 2-Kolom (Modern Asymmetric)',
+                'compact': 'Compact Fokus (Search-First)'
+            };
+
+            if (style === 'split') {
+                heroSec.classList.add('hk-hero-split-theme');
+                stdContent.style.display = 'none';
+                splitContent.style.display = 'grid';
+                if (wave) wave.style.display = 'block';
+            } else {
+                stdContent.style.display = 'block';
+                splitContent.style.display = 'none';
+                if (wave) wave.style.display = 'block';
+
+                if (style === 'light') {
+                    heroSec.classList.add('hk-hero-light-theme');
+                } else if (style === 'compact') {
+                    heroSec.classList.add('hk-hero-compact-theme');
+                } else {
+                    heroSec.classList.add('hk-hero-pasangloker-theme');
+                }
+            }
+
+            showToast('Gaya Hero Beranda: ' + (styleNames[style] || style));
+        }
+
+        function setPlHeroStyle(style) {
+            // Update buttons
+            document.querySelectorAll('.pl-hero-style-btn').forEach(function(btn) {
+                btn.classList.toggle('active', btn.getAttribute('data-plhero') === style);
+            });
+
+            var plSec = document.getElementById('pl-hero-section');
+            var stdContent = document.getElementById('pl-hero-standard');
+            var convContent = document.getElementById('pl-hero-converter');
+            var wave = document.getElementById('pl-hero-wave');
+
+            if (!plSec || !stdContent || !convContent) return;
+
+            plSec.classList.remove(
+                'hkpl-hero-default',
+                'hkpl-hero-converter',
+                'hkpl-hero-minimal'
+            );
+
+            var plStyleNames = {
+                'default': 'Navy Klasik (Center + Wave)',
+                'converter': 'Split Converter (B2B 2-Kolom)',
+                'minimal': 'Minimalist Modern (Clean Slate)'
+            };
+
+            if (style === 'converter') {
+                plSec.classList.add('hkpl-hero-converter');
+                stdContent.style.display = 'none';
+                convContent.style.display = 'grid';
+                if (wave) wave.style.display = 'none';
+            } else if (style === 'minimal') {
+                plSec.classList.add('hkpl-hero-minimal');
+                stdContent.style.display = 'block';
+                convContent.style.display = 'none';
+                if (wave) wave.style.display = 'none';
+            } else {
+                plSec.classList.add('hkpl-hero-default');
+                stdContent.style.display = 'block';
+                convContent.style.display = 'none';
+                if (wave) wave.style.display = 'block';
+            }
+
+            showToast('Gaya Hero Pasang Loker: ' + (plStyleNames[style] || style));
+        }
+
+        function togglePlFaq(btn) {
+            var item = btn.closest('.hkpl-faq-item');
+            var ans = item.querySelector('.hkpl-faq-a');
+            var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+            // Close other items
+            document.querySelectorAll('.hkpl-faq-item').forEach(function(other) {
+                if (other !== item) {
+                    other.classList.remove('hkpl-faq-open');
+                    var b = other.querySelector('.hkpl-faq-q');
+                    var a = other.querySelector('.hkpl-faq-a');
+                    if (b) b.setAttribute('aria-expanded', 'false');
+                    if (a) a.hidden = true;
+                }
+            });
+
+            if (isExpanded) {
+                btn.setAttribute('aria-expanded', 'false');
+                if (ans) ans.hidden = true;
+                item.classList.remove('hkpl-faq-open');
+            } else {
+                btn.setAttribute('aria-expanded', 'true');
+                if (ans) ans.hidden = false;
+                item.classList.add('hkpl-faq-open');
+            }
+        }
+
+        function showToast(msg) {
+            var toast = document.getElementById('hk-toast');
+            if (toast) {
+                toast.textContent = msg;
+                toast.classList.add('hk-toast-show');
+                setTimeout(function(){ toast.classList.remove('hk-toast-show'); }, 2200);
+            }
         }
 
         function setThemeColor(primary, hover) {
             document.documentElement.style.setProperty('--hk-primary', primary);
             document.documentElement.style.setProperty('--hk-primary-hover', hover);
             document.documentElement.style.setProperty('--hk-btt-color', primary);
-            var toast = document.getElementById('hk-toast');
-            if (toast) {
-                toast.textContent = 'Warna tema diubah ke: ' + primary;
-                toast.classList.add('hk-toast-show');
-                setTimeout(function(){ toast.classList.remove('hk-toast-show'); }, 2000);
-            }
+            showToast('Warna tema diubah ke: ' + primary);
         }
 
         function changeLogoSize(val) {

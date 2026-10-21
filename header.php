@@ -14,6 +14,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <script>
+        (function() {
+            try {
+                var defaultSetting = <?php echo json_encode(get_theme_mod('hakajobs_default_theme_mode', 'system')); ?>;
+                var saved = localStorage.getItem('hk_theme');
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var activeTheme = 'light';
+                if (saved === 'dark' || saved === 'light') {
+                    activeTheme = saved;
+                } else if (defaultSetting === 'dark') {
+                    activeTheme = 'dark';
+                } else if (defaultSetting === 'light') {
+                    activeTheme = 'light';
+                } else if (prefersDark) {
+                    activeTheme = 'dark';
+                }
+                document.documentElement.setAttribute('data-theme', activeTheme);
+            } catch(e) {}
+        })();
+    </script>
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -109,6 +129,21 @@
 
             <!-- Header Action Controls -->
             <div class="hk-header-actions">
+                <!-- Dark Mode Toggle Button -->
+                <?php 
+                $show_theme_toggle = get_theme_mod('hakajobs_show_theme_toggle', '1');
+                if ($show_theme_toggle === '1'): 
+                ?>
+                <button type="button" class="hk-theme-toggle" id="hk-theme-toggle" aria-label="<?php esc_attr_e('Ganti Mode Gelap/Terang', 'hakajobs'); ?>" title="<?php esc_attr_e('Mode Gelap / Terang', 'hakajobs'); ?>">
+                    <span class="hk-theme-icon-sun" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </span>
+                    <span class="hk-theme-icon-moon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </span>
+                </button>
+                <?php endif; ?>
+
                 <!-- Saved Jobs Counter Button -->
                 <?php if ($show_bookmark === '1'): ?>
                 <button type="button" class="hk-btn-saved-trigger" id="hk-saved-jobs-toggle" aria-label="<?php esc_attr_e('Buka Lowongan Tersimpan', 'hakajobs'); ?>" title="<?php esc_attr_e('Lowongan Tersimpan', 'hakajobs'); ?>">
@@ -158,6 +193,15 @@
                 hakajobs_fallback_menu(true);
             }
             ?>
+            <?php if ($show_theme_toggle === '1'): ?>
+            <div class="hk-mobile-drawer-theme">
+                <span class="hk-drawer-theme-label"><?php _e('🌓 Mode Tampilan', 'hakajobs'); ?></span>
+                <div class="hk-drawer-theme-switch">
+                    <button type="button" class="hk-drawer-theme-btn" data-theme="light"><?php _e('☀️ Terang', 'hakajobs'); ?></button>
+                    <button type="button" class="hk-drawer-theme-btn" data-theme="dark"><?php _e('🌙 Gelap', 'hakajobs'); ?></button>
+                </div>
+            </div>
+            <?php endif; ?>
             <?php 
             $show_cta = get_theme_mod('hakajobs_show_cta_btn', '1');
             if ($show_cta === '1' && !empty($post_job_label)): 

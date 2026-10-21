@@ -108,6 +108,37 @@ function hakajobs_customize_register($wp_customize) {
         'section' => 'hakajobs_color_section',
     )));
 
+    // Mode Tampilan Awal (Dark Mode / Light Mode)
+    $wp_customize->add_setting('hakajobs_default_theme_mode', array(
+        'default'           => 'system',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_default_theme_mode', array(
+        'label'       => __('Mode Tampilan Default', 'hakajobs'),
+        'description' => __('Pilih mode tampilan awal untuk pengunjung baru.', 'hakajobs'),
+        'section'     => 'hakajobs_color_section',
+        'type'        => 'select',
+        'choices'     => array(
+            'system' => __('Otomatis (Ikuti Pengaturan HP / Laptop Pengunjung)', 'hakajobs'),
+            'light'  => __('Selalu Terang (Light Mode)', 'hakajobs'),
+            'dark'   => __('Selalu Gelap (Dark Mode)', 'hakajobs'),
+        ),
+    ));
+
+    // Opsi Tombol Switcher Mode Gelap di Header
+    $wp_customize->add_setting('hakajobs_show_theme_toggle', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_show_theme_toggle', array(
+        'label'       => __('Tampilkan Tombol Mode Gelap di Header', 'hakajobs'),
+        'description' => __('Izinkan pengunjung beralih antara Mode Terang dan Gelap via tombol matahari/bulan.', 'hakajobs'),
+        'section'     => 'hakajobs_color_section',
+        'type'        => 'checkbox',
+    ));
+
     // =========================================================================
     // SECTION 2 — HEADER & NAVIGASI MENU
     // =========================================================================
@@ -494,11 +525,13 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_hero_style', array(
         'type'        => 'select',
         'label'       => __('Gaya Desain Hero Beranda', 'hakajobs'),
-        'description' => __('Pilih gaya visual hero beranda. Gaya Pasang Loker menggunakan latar dark navy modern dengan aksen cyan glow.', 'hakajobs'),
+        'description' => __('Pilih gaya visual hero beranda.', 'hakajobs'),
         'section'     => 'hakajobs_hero_section',
         'choices'     => array(
-            'pasang-loker' => __('Gaya Pasang Loker (Dark Navy & Aksen Cyan - Rekomendasi)', 'hakajobs'),
+            'pasang-loker' => __('Gaya Navy Sleek (Dark Navy & Clean Search - Rekomendasi)', 'hakajobs'),
             'light'        => __('Gaya Terang Minimalis (Clean Light)', 'hakajobs'),
+            'split'        => __('Gaya Split 2-Kolom (Asymmetric Modern & Trust Showcase)', 'hakajobs'),
+            'compact'      => __('Gaya Compact Fokus (High-Efficiency Search)', 'hakajobs'),
         ),
     ));
 
@@ -1313,6 +1346,23 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     // --- 2. HERO / BANNER UTAMA ---
+    $wp_customize->add_setting('hakajobs_pl_hero_style', array(
+        'default'           => 'default',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_hero_style', array(
+        'type'        => 'select',
+        'label'       => __('Gaya Desain Hero Pasang Loker', 'hakajobs'),
+        'description' => __('Pilih gaya visual hero halaman pasang loker.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+        'choices'     => array(
+            'default'   => __('Gaya Dark Navy Klasik (Statistik Center & Gelombang)', 'hakajobs'),
+            'converter' => __('Gaya Split B2B Converter (2-Kolom & Aksi Cepat)', 'hakajobs'),
+            'minimal'   => __('Gaya Minimalist Modern (Clean Slate & Fokus Paket)', 'hakajobs'),
+        ),
+    ));
+
     $wp_customize->add_setting('hakajobs_pl_hero_badge', array(
         'default'           => __('Platform Loker Terpercaya', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',

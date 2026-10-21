@@ -339,6 +339,101 @@ button, input, select, textarea {
     display: none;
 }
 
+.hk-theme-toggle {
+    background: transparent;
+    border: 1px solid var(--hk-border);
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: var(--hk-radius-md);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--hk-text-main);
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    position: relative;
+}
+
+.hk-theme-toggle:hover {
+    background: var(--hk-bg-body);
+    border-color: var(--hk-border-hover);
+    color: var(--hk-primary);
+}
+
+.hk-theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.hk-theme-icon-sun,
+.hk-theme-icon-moon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.hk-theme-icon-sun {
+    display: none;
+}
+
+.hk-theme-icon-moon {
+    display: inline-flex;
+}
+
+/* Mobile Drawer Theme Row */
+.hk-mobile-drawer-theme {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    margin: 16px 0;
+    background: var(--hk-bg-body);
+    border: 1px solid var(--hk-border);
+    border-radius: var(--hk-radius-md);
+}
+
+.hk-drawer-theme-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--hk-text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.hk-drawer-theme-switch {
+    display: inline-flex;
+    align-items: center;
+    background: var(--hk-bg-surface);
+    border: 1px solid var(--hk-border);
+    padding: 3px;
+    border-radius: 20px;
+    gap: 2px;
+}
+
+.hk-drawer-theme-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 10px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--hk-text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+}
+
+.hk-drawer-theme-btn.is-active {
+    background: var(--hk-primary);
+    color: #ffffff;
+}
+
 .hk-btn-header-cta {
     background-color: var(--hk-dark);
     color: #fff !important;
@@ -401,6 +496,201 @@ button, input, select, textarea {
     inset: 0;
     background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(2, 132, 199, 0.22) 0%, transparent 70%);
     pointer-events: none;
+}
+
+/* Hero - Split 2-Kolom (Asymmetric Modern & Trust Showcase) */
+.hk-hero-section.hk-hero-split-theme {
+    background: linear-gradient(135deg, #0b1528 0%, #0c203a 50%, #0f2c4c 100%);
+    color: #ffffff;
+    padding: 68px 0 64px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hk-hero-split-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 420px;
+    gap: 48px;
+    align-items: center;
+}
+
+.hk-hero-split-left {
+    text-align: left;
+}
+
+.hk-hero-split-theme .hk-hero-title {
+    text-align: left;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: #ffffff;
+}
+
+.hk-hero-split-theme .hk-hero-desc {
+    text-align: left;
+    margin: 0 0 28px 0;
+    max-width: 580px;
+    color: #94a3b8;
+    font-size: 15.5px;
+}
+
+.hk-hero-split-theme .hk-hero-search-box {
+    margin-bottom: 18px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.4);
+}
+
+.hk-hero-split-theme .hk-quick-filters {
+    justify-content: flex-start;
+}
+
+.hk-hero-split-theme .hk-quick-label {
+    color: #94a3b8;
+}
+
+/* Right Showcase Card */
+.hk-hero-showcase-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: var(--hk-radius-lg, 16px);
+    padding: 28px;
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    text-align: left;
+}
+
+.hk-showcase-header {
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #334155;
+}
+
+.hk-showcase-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #38bdf8;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.hk-showcase-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0;
+}
+
+.hk-showcase-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.hk-showcase-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.hk-showcase-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.hk-showcase-text strong {
+    display: block;
+    font-size: 14px;
+    color: #f8fafc;
+    margin-bottom: 3px;
+}
+
+.hk-showcase-text p {
+    font-size: 12.5px;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.45;
+}
+
+.hk-showcase-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #cbd5e1;
+    background: #0f172a;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+}
+
+.hk-showcase-dot {
+    color: #64748b;
+}
+
+/* Hero - Compact & Search-First */
+.hk-hero-section.hk-hero-compact-theme {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 44px 0 36px;
+    border-bottom: 1px solid #334155;
+}
+
+.hk-hero-compact-theme .hk-hero-content {
+    max-width: 780px;
+}
+
+.hk-hero-compact-theme .hk-hero-title {
+    font-size: clamp(24px, 3.5vw, 34px);
+    margin-bottom: 8px;
+    color: #f8fafc;
+}
+
+.hk-hero-compact-theme .hk-hero-desc {
+    font-size: 14.5px;
+    margin-bottom: 20px;
+    color: #94a3b8;
+}
+
+.hk-hero-compact-theme .hk-hero-search-box {
+    margin-bottom: 14px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.4);
+}
+
+.hk-hero-compact-theme .hk-hero-badge {
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    font-size: 12px;
+}
+
+@media (max-width: 960px) {
+    .hk-hero-split-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .hk-hero-split-left {
+        text-align: center;
+    }
+    .hk-hero-split-theme .hk-hero-title,
+    .hk-hero-split-theme .hk-hero-desc {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .hk-hero-split-theme .hk-quick-filters {
+        justify-content: center;
+    }
 }
 
 .hk-hero-content {
@@ -952,8 +1242,8 @@ button, input, select, textarea {
 }
 
 .hk-salary-highlight {
-    font-weight: 700;
-    color: var(--hk-accent);
+    font-weight: 600;
+    color: var(--hk-text-main);
 }
 
 .hk-category-tag {
@@ -973,18 +1263,24 @@ button, input, select, textarea {
 
 .hk-badge {
     font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
+    font-weight: 500;
+    padding: 3px 8px;
     border-radius: var(--hk-radius-sm);
     background: #f1f5f9;
-    color: var(--hk-text-main);
+    color: #475569;
+    border: 1px solid #e2e8f0;
 }
 
-.hk-badge-fulltime { background: #e0f2fe; color: #0369a1; }
-.hk-badge-parttime { background: #fef3c7; color: #92400e; }
-.hk-badge-internship { background: #fae8ff; color: #86198f; }
-.hk-badge-contract { background: #ffedd5; color: #9a3412; }
-.hk-badge-remote { background: #dcfce7; color: #15803d; font-weight: 700; }
+.hk-badge-fulltime,
+.hk-badge-parttime,
+.hk-badge-internship,
+.hk-badge-contract,
+.hk-badge-remote {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    font-weight: 500;
+}
 
 /* Card Footer */
 .hk-job-card-footer {
@@ -1525,10 +1821,10 @@ button, input, select, textarea {
 }
 
 .hk-pill-salary {
-    border-color: #99f6e4;
-    background: var(--hk-accent-light);
-    color: var(--hk-accent-hover);
-    font-weight: 700;
+    border-color: var(--hk-border);
+    background: #fff;
+    color: var(--hk-text-main);
+    font-weight: 600;
 }
 
 .hk-single-type-badges {
@@ -2869,7 +3165,8 @@ button, input, select, textarea {
         gap: 6px;
         flex-shrink: 0;
     }
-    .hk-btn-saved-trigger {
+    .hk-btn-saved-trigger,
+    .hk-theme-toggle {
         width: 42px;
         height: 42px;
         min-width: 42px;
@@ -2879,7 +3176,7 @@ button, input, select, textarea {
         align-items: center;
         justify-content: center;
         border-radius: 10px;
-        background: #ffffff;
+        background: var(--hk-bg-surface);
         border: 1px solid var(--hk-border);
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         position: relative;
@@ -2896,21 +3193,21 @@ button, input, select, textarea {
         padding: 0;
         border-radius: 10px;
         border: 1px solid var(--hk-border);
-        background: #ffffff;
+        background: var(--hk-bg-surface);
         cursor: pointer;
         gap: 4.5px;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         transition: border-color 0.15s ease, background-color 0.15s ease;
     }
     .hk-mobile-menu-toggle:active {
-        background-color: #f1f5f9;
+        background-color: var(--hk-bg-body);
         transform: scale(0.96);
     }
     .hk-hamburger-line {
         display: block;
         width: 20px;
         height: 2.5px;
-        background-color: #0f172a !important;
+        background-color: var(--hk-text-main) !important;
         margin: 0 !important;
         border-radius: 3px;
         transition: all 0.2s ease;
@@ -3769,5 +4066,1050 @@ button, input, select, textarea {
 .hk-deadline-closed-text {
     color: #b91c1c !important;
 }
+
+/* ==========================================================================
+   DARK MODE SYSTEM (WCAG AA Compliant, Anti-Slop, Slate-Refined)
+   ========================================================================== */
+html[data-theme="dark"] {
+    --hk-primary: #38bdf8 !important;
+    --hk-primary-hover: #7dd3fc !important;
+    --hk-primary-light: rgba(56, 189, 248, 0.15) !important;
+
+    --hk-accent: #2dd4bf !important;
+    --hk-accent-hover: #5eead4 !important;
+    --hk-accent-light: rgba(45, 212, 191, 0.15) !important;
+
+    --hk-wa-green: #22c55e !important;
+    --hk-wa-green-hover: #4ade80 !important;
+    --hk-wa-light: rgba(34, 197, 94, 0.15) !important;
+
+    --hk-urgent: #fb923c !important;
+    --hk-urgent-light: rgba(251, 146, 60, 0.15) !important;
+
+    --hk-dark: #f8fafc !important;
+    --hk-text-main: #f1f5f9 !important;
+    --hk-text-muted: #94a3b8 !important;
+    --hk-text-light: #64748b !important;
+
+    --hk-bg-body: #0b1120 !important;
+    --hk-bg-surface: #1e293b !important;
+    --hk-border: #334155 !important;
+    --hk-border-hover: #475569 !important;
+
+    --hk-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4) !important;
+    --hk-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3) !important;
+    --hk-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Base Body in Dark Mode */
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+    background-color: #0b1120 !important;
+    color: #f1f5f9 !important;
+    color-scheme: dark;
+}
+
+/* Site Topbar & Header */
+html[data-theme="dark"] .hk-topbar {
+    background-color: #070d18 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-site-header {
+    background-color: #0f172a !important;
+    border-bottom: 1px solid #1e293b !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme="dark"] .hk-site-header.is-scrolled {
+    background-color: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6) !important;
+    border-bottom-color: #334155 !important;
+}
+
+html[data-theme="dark"] .hk-site-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-site-tagline {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-main-navigation a {
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-main-navigation a:hover,
+html[data-theme="dark"] .hk-main-navigation .hk-menu-highlight {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-btn-saved-trigger,
+html[data-theme="dark"] .hk-theme-toggle {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-btn-saved-trigger:hover,
+html[data-theme="dark"] .hk-theme-toggle:hover {
+    background: #334155 !important;
+    border-color: #475569 !important;
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-btn-header-cta {
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+}
+
+html[data-theme="dark"] .hk-btn-header-cta:hover {
+    background-color: #0369a1 !important;
+}
+
+html[data-theme="dark"] .hk-mobile-menu-toggle {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .hk-hamburger-line {
+    background-color: #f8fafc !important;
+}
+
+/* Hero Section in Dark Mode */
+html[data-theme="dark"] .hk-hero-section.hk-hero-pasangloker-theme {
+    background: linear-gradient(135deg, #050b14 0%, #0c1a2e 50%, #0f2744 100%) !important;
+}
+
+html[data-theme="dark"] .hk-hero-section.hk-hero-light-theme {
+    background: linear-gradient(180deg, #0c1829 0%, #0b1120 100%) !important;
+    border-bottom-color: #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-hero-search-box {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7) !important;
+}
+
+html[data-theme="dark"] .hk-search-field {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .hk-search-field:focus-within {
+    border-color: #38bdf8 !important;
+    background: #0f172a !important;
+}
+
+html[data-theme="dark"] .hk-search-field input,
+html[data-theme="dark"] .hk-search-field select {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-search-field select option {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-search-icon {
+    color: #64748b !important;
+}
+
+html[data-theme="dark"] .hk-chip {
+    background: rgba(30, 41, 59, 0.85) !important;
+    border: 1px solid #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-chip:hover {
+    background: #334155 !important;
+    color: #38bdf8 !important;
+    border-color: #475569 !important;
+}
+
+html[data-theme="dark"] .hk-hero-stats {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .hk-hero-wave path {
+    fill: #0b1120 !important;
+}
+
+/* Spotlight & Section Headings */
+html[data-theme="dark"] .hk-spotlight-section {
+    background-color: #0b1120 !important;
+    border-bottom: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-section-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-section-subtitle {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-section-badge {
+    background: rgba(56, 189, 248, 0.12) !important;
+    border: 1px solid rgba(56, 189, 248, 0.25) !important;
+    color: #38bdf8 !important;
+}
+
+/* Job Cards */
+html[data-theme="dark"] .hk-job-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+html[data-theme="dark"] .hk-job-card:hover {
+    border-color: #475569 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="dark"] .hk-job-featured {
+    border-color: #0284c7 !important;
+    background: linear-gradient(180deg, #1e293b 0%, #0f2744 100%) !important;
+}
+
+html[data-theme="dark"] .hk-job-closed {
+    background: #131d2e !important;
+    border-color: #1e293b !important;
+    opacity: 0.75;
+}
+
+html[data-theme="dark"] .hk-card-company {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-job-title a {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-job-title a:hover {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-job-desc {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-card-meta-item {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-card-meta-item svg {
+    color: #64748b !important;
+}
+
+html[data-theme="dark"] .hk-company-initials {
+    background: #0f172a !important;
+    color: #38bdf8 !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-btn-detail {
+    background: #334155 !important;
+    color: #f8fafc !important;
+    border: 1px solid #475569 !important;
+}
+
+html[data-theme="dark"] .hk-btn-detail:hover {
+    background: #475569 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .hk-btn-bookmark {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-btn-bookmark:hover {
+    background: #334155 !important;
+    border-color: #475569 !important;
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-btn-bookmark.is-saved {
+    background: rgba(225, 29, 72, 0.15) !important;
+    border-color: rgba(225, 29, 72, 0.35) !important;
+    color: #fb7185 !important;
+}
+
+/* Badges in Dark Mode - Clean & Unified Neutral Slate */
+html[data-theme="dark"] .hk-badge,
+html[data-theme="dark"] .hk-badge-fulltime,
+html[data-theme="dark"] .hk-badge-parttime,
+html[data-theme="dark"] .hk-badge-internship,
+html[data-theme="dark"] .hk-badge-contract,
+html[data-theme="dark"] .hk-badge-remote {
+    background: #0f172a !important;
+    color: #cbd5e1 !important;
+    border: 1px solid #334155 !important;
+    font-weight: 500 !important;
+}
+
+html[data-theme="dark"] .hk-badge:hover {
+    border-color: #475569 !important;
+    color: #f8fafc !important;
+}
+
+/* Sidebar & Widgets */
+html[data-theme="dark"] .hk-widget-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-widget-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-widget-text {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-widget-link {
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-widget-link:hover {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-badge-count {
+    background: #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-card-post-job {
+    background: linear-gradient(135deg, #1e293b 0%, #0f2744 100%) !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-tips-card {
+    background: rgba(234, 88, 12, 0.08) !important;
+    border: 1px solid rgba(234, 88, 12, 0.25) !important;
+}
+
+html[data-theme="dark"] .hk-tips-list li {
+    color: #fdba74 !important;
+}
+
+/* How It Works Steps */
+html[data-theme="dark"] .hk-how-section {
+    background: #0b1120 !important;
+}
+
+html[data-theme="dark"] .hk-step-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-step-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-step-desc {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-step-number {
+    background: rgba(56, 189, 248, 0.15) !important;
+    color: #38bdf8 !important;
+}
+
+/* Anti-Fraud Alert Callout */
+html[data-theme="dark"] .hk-fraud-alert-section {
+    background: #0b1120 !important;
+}
+
+html[data-theme="dark"] .hk-fraud-alert-card {
+    background: rgba(234, 88, 12, 0.08) !important;
+    border: 1px solid rgba(234, 88, 12, 0.25) !important;
+}
+
+html[data-theme="dark"] .hk-fraud-alert-title {
+    color: #fdba74 !important;
+}
+
+html[data-theme="dark"] .hk-fraud-alert-desc {
+    color: #cbd5e1 !important;
+}
+
+/* Single Lowongan Page */
+html[data-theme="dark"] .hk-breadcrumbs {
+    background: #0f172a !important;
+    border-bottom: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-breadcrumbs-list a {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-breadcrumbs-list a:hover {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-breadcrumbs-list .hk-current {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-single-header-section {
+    background-color: #0b1120 !important;
+    border-bottom: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-single-header-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+}
+
+html[data-theme="dark"] .hk-single-company-line .hk-company-name {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-single-company-line .hk-company-web-link {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-single-job-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-meta-pill {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-pill-salary {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="dark"] .hk-pill-salary svg {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-salary-highlight {
+    color: #f1f5f9 !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="dark"] .hk-salary-highlight svg,
+html[data-theme="dark"] .hk-salary-highlight .hk-icon {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-pill-expiring {
+    background: rgba(245, 158, 11, 0.1) !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+    color: #fbbf24 !important;
+}
+
+html[data-theme="dark"] .hk-pill-closed {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    color: #f87171 !important;
+}
+
+html[data-theme="dark"] .hk-admin-broadcast-banner {
+    background: #0c2340 !important;
+    border: 1px solid #1e3a5f !important;
+}
+
+/* Single Content Main Card */
+html[data-theme="dark"] .hk-single-content,
+html[data-theme="dark"] .hk-job-content-card,
+html[data-theme="dark"] .hk-company-card,
+html[data-theme="dark"] .hk-apply-card,
+html[data-theme="dark"] .hk-share-card,
+html[data-theme="dark"] .hk-page-card,
+html[data-theme="dark"] .hk-article-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+/* Single Job Excerpt / Ringkasan Box */
+html[data-theme="dark"] .hk-single-excerpt {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    border-left: 4px solid #38bdf8 !important;
+    color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .hk-single-excerpt strong {
+    color: #38bdf8 !important;
+}
+
+/* Alert Expiring / Batas Waktu Lamaran - Clean Slate Card with Left Amber Accent */
+html[data-theme="dark"] .hk-job-alert-expiring {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-left: 4px solid #f59e0b !important;
+    box-shadow: none !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-expiring strong {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-expiring p {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-expiring p strong {
+    color: #fbbf24 !important;
+}
+
+/* Alert Closed / Lamaran Ditutup */
+html[data-theme="dark"] .hk-job-alert-closed {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-left: 4px solid #ef4444 !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-closed strong {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-closed p {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-closed p strong {
+    color: #f87171 !important;
+}
+
+/* Typography & Descriptions in Job Article & Pages */
+html[data-theme="dark"] .hk-typography,
+html[data-theme="dark"] .hk-typography p,
+html[data-theme="dark"] .hk-typography li,
+html[data-theme="dark"] .hk-typography span,
+html[data-theme="dark"] .hk-job-description-box,
+html[data-theme="dark"] .hk-job-description-box p,
+html[data-theme="dark"] .hk-job-description-box li,
+html[data-theme="dark"] .hk-job-description,
+html[data-theme="dark"] .hk-job-description p,
+html[data-theme="dark"] .hk-job-description li,
+html[data-theme="dark"] .hk-single-content p,
+html[data-theme="dark"] .hk-single-content li,
+html[data-theme="dark"] .hk-article-content,
+html[data-theme="dark"] .hk-article-content p,
+html[data-theme="dark"] .hk-page-content,
+html[data-theme="dark"] .hk-page-content p {
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-box-heading,
+html[data-theme="dark"] .hk-typography h1,
+html[data-theme="dark"] .hk-typography h2,
+html[data-theme="dark"] .hk-typography h3,
+html[data-theme="dark"] .hk-typography h4,
+html[data-theme="dark"] .hk-typography h5,
+html[data-theme="dark"] .hk-typography h6,
+html[data-theme="dark"] .hk-typography strong,
+html[data-theme="dark"] .hk-typography .wp-block-heading,
+html[data-theme="dark"] .hk-job-description-box h2,
+html[data-theme="dark"] .hk-job-description-box h3,
+html[data-theme="dark"] .hk-job-description-box strong,
+html[data-theme="dark"] .hk-job-description h2,
+html[data-theme="dark"] .hk-job-description h3,
+html[data-theme="dark"] .hk-job-description h4,
+html[data-theme="dark"] .hk-job-description strong,
+html[data-theme="dark"] .hk-single-content h1,
+html[data-theme="dark"] .hk-single-content h2,
+html[data-theme="dark"] .hk-single-content h3,
+html[data-theme="dark"] .hk-single-content h4,
+html[data-theme="dark"] .hk-single-content strong,
+html[data-theme="dark"] .hk-article-title,
+html[data-theme="dark"] .hk-page-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-typography a,
+html[data-theme="dark"] .hk-job-description-box a,
+html[data-theme="dark"] .hk-single-content .hk-typography a {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-typography a:hover,
+html[data-theme="dark"] .hk-job-description-box a:hover,
+html[data-theme="dark"] .hk-single-content .hk-typography a:hover {
+    color: #7dd3fc !important;
+}
+
+/* Benefits Grid */
+html[data-theme="dark"] .hk-job-benefits-box {
+    border-top: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-benefit-item {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .hk-benefit-icon {
+    color: #38bdf8 !important;
+}
+
+/* Notes & Warnings in Single Job - Clean Slate with Left Accent Stripe */
+html[data-theme="dark"] .hk-job-notes-box {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-left: 4px solid #10b981 !important;
+}
+
+html[data-theme="dark"] .hk-notes-heading {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-notes-text {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-warning {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-left: 4px solid #ef4444 !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-warning strong {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-job-alert-warning p {
+    color: #94a3b8 !important;
+}
+
+/* WhatsApp Channel Banner in Job - Refined & High Contrast */
+html[data-theme="dark"] .hk-public-wa-channel-box {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-left: 4px solid #16a34a !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+}
+
+html[data-theme="dark"] .hk-wa-channel-icon-wrap {
+    background: rgba(22, 163, 74, 0.15) !important;
+    color: #22c55e !important;
+}
+
+html[data-theme="dark"] .hk-wa-channel-tag {
+    background: rgba(22, 163, 74, 0.12) !important;
+    border: 1px solid rgba(22, 163, 74, 0.3) !important;
+    color: #4ade80 !important;
+}
+
+html[data-theme="dark"] .hk-wa-channel-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-wa-channel-desc {
+    color: #94a3b8 !important;
+}
+
+/* WhatsApp Channel CTA Button - Ultra Crisp & Explicitly White */
+html[data-theme="dark"] .hk-btn-wa-channel,
+html[data-theme="dark"] .hk-single-content a.hk-btn-wa-channel,
+html[data-theme="dark"] a.hk-btn-wa-channel,
+.hk-btn-wa-channel,
+.hk-single-content a.hk-btn-wa-channel {
+    background: #16a34a !important;
+    color: #ffffff !important;
+    border: 1px solid #22c55e !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .hk-btn-wa-channel *,
+html[data-theme="dark"] .hk-btn-wa-channel span,
+html[data-theme="dark"] a.hk-btn-wa-channel span,
+.hk-btn-wa-channel span {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .hk-btn-wa-channel svg,
+html[data-theme="dark"] a.hk-btn-wa-channel svg,
+.hk-btn-wa-channel svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+html[data-theme="dark"] .hk-btn-wa-channel:hover,
+html[data-theme="dark"] a.hk-btn-wa-channel:hover,
+.hk-btn-wa-channel:hover {
+    background: #15803d !important;
+    color: #ffffff !important;
+}
+
+/* Share Bar & Buttons */
+html[data-theme="dark"] .hk-job-share-bar {
+    border-top: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-share-label {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-share-btn {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-share-btn:hover {
+    border-color: #38bdf8 !important;
+    color: #38bdf8 !important;
+}
+
+/* Sticky Apply Sidebar Card */
+html[data-theme="dark"] .hk-sticky-apply-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="dark"] .hk-apply-subtext {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-apply-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-btn-single-bookmark {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-btn-single-bookmark:hover {
+    background: #334155 !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
+}
+
+html[data-theme="dark"] .hk-btn-single-bookmark.is-saved {
+    background: rgba(225, 29, 72, 0.15) !important;
+    border-color: rgba(225, 29, 72, 0.35) !important;
+    color: #fb7185 !important;
+}
+
+html[data-theme="dark"] .hk-btn-single-bookmark.is-saved svg {
+    fill: #fb7185 !important;
+}
+
+html[data-theme="dark"] .hk-apply-channel-note {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-overview-list {
+    border-top: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-overview-heading {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-overview-item {
+    border-bottom: 1px dashed #334155 !important;
+}
+
+html[data-theme="dark"] .hk-overview-label {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-overview-value {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-overview-value small {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-company-mini-header {
+    border-top: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-company-name-mini {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-company-loc-mini {
+    color: #94a3b8 !important;
+}
+
+/* Category & Cloud Tags */
+html[data-theme="dark"] .hk-category-tag,
+html[data-theme="dark"] .hk-cloud-pill {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-cloud-pill:hover {
+    border-color: #38bdf8 !important;
+    color: #38bdf8 !important;
+}
+
+/* Related Jobs */
+html[data-theme="dark"] .hk-related-jobs-wrap {
+    border-top: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-related-title {
+    color: #f8fafc !important;
+}
+
+/* Mobile Sticky Bottom Bar */
+html[data-theme="dark"] .hk-mobile-sticky-bar {
+    background: #0f172a !important;
+    border-top: 1px solid #1e293b !important;
+    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="dark"] .hk-bar-company {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-bar-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-btn-subtle {
+    background: #334155 !important;
+    color: #f8fafc !important;
+    border: 1px solid #475569 !important;
+}
+
+html[data-theme="dark"] .hk-btn-subtle:hover {
+    background: #475569 !important;
+}
+
+/* Archive & Directory Page */
+html[data-theme="dark"] .hk-archive-page {
+    background: #0b1120 !important;
+}
+
+html[data-theme="dark"] .hk-archive-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-archive-subtitle {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-filter-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-filter-header-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-filter-label {
+    color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .hk-filter-input,
+html[data-theme="dark"] .hk-filter-select {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-filter-select option {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-filter-input:focus,
+html[data-theme="dark"] .hk-filter-select:focus {
+    background: #0f172a !important;
+    border-color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-radio-item span {
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-results-count {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-pagination .page-numbers {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-pagination .page-numbers:hover {
+    background: #334155 !important;
+    color: #38bdf8 !important;
+    border-color: #475569 !important;
+}
+
+html[data-theme="dark"] .hk-pagination .page-numbers.current {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: #0284c7 !important;
+}
+
+/* Saved Jobs Modal & Mobile Nav Drawer */
+html[data-theme="dark"] .hk-saved-modal-content {
+    background: #0f172a !important;
+    border-left: 1px solid #1e293b !important;
+    box-shadow: -5px 0 35px rgba(0, 0, 0, 0.7) !important;
+}
+
+html[data-theme="dark"] .hk-saved-modal-header,
+html[data-theme="dark"] .hk-saved-modal-footer {
+    border-color: #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-saved-modal-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-saved-modal-subtitle {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-saved-item {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-saved-item-title a {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-saved-item-title a:hover {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-mobile-drawer {
+    background: #0f172a !important;
+    border-left: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-mobile-drawer-header {
+    border-bottom: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-mobile-drawer-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-mobile-nav-list a {
+    color: #cbd5e1 !important;
+    border-bottom: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-mobile-nav-list a:hover {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-mobile-drawer-theme {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .hk-drawer-theme-label {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-drawer-theme-switch {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .hk-drawer-theme-btn {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-drawer-theme-btn.is-active {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+}
+
+/* Footer in Dark Mode */
+html[data-theme="dark"] .hk-site-footer {
+    background-color: #070d18 !important;
+    border-top: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .hk-footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .hk-copyright strong {
+    color: #f1f5f9 !important;
+}
+
+/* Ad Placements */
+html[data-theme="dark"] .hk-ad-placeholder {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .hk-ad-ph-info strong {
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .hk-ad-ph-info span {
+    color: #64748b !important;
+}
+
+/* Toast */
+html[data-theme="dark"] .hk-toast {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Status Closed & Urgent Pill Overrides */
+html[data-theme="dark"] .hk-job-closed-banner {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+html[data-theme="dark"] .hk-btn-closed-pill {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #fca5a5 !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+html[data-theme="dark"] .hk-deadline-urgent {
+    color: #fb923c !important;
+    background: rgba(249, 115, 22, 0.15) !important;
+    border-color: rgba(249, 115, 22, 0.3) !important;
+}
+
+html[data-theme="dark"] .hk-deadline-closed {
+    color: #f87171 !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+html[data-theme="dark"] .hk-deadline-closed-text {
+    color: #f87171 !important;
+}
+
 
 

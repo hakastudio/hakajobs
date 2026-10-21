@@ -194,46 +194,114 @@ if (!wp_style_is('hakajobs-pasang-loker', 'enqueued')) {
 
 <main id="hk-main" class="hk-pasang-loker-page">
 
+    <?php
+    $pl_hero_style = get_theme_mod('hakajobs_pl_hero_style', 'default');
+    $pl_hero_class = 'hkpl-hero-default';
+    if ($pl_hero_style === 'converter') {
+        $pl_hero_class = 'hkpl-hero-converter';
+    } elseif ($pl_hero_style === 'minimal') {
+        $pl_hero_class = 'hkpl-hero-minimal';
+    }
+    ?>
     <!-- ===================== HERO SECTION ===================== -->
-    <section class="hkpl-hero">
+    <section class="hkpl-hero <?php echo esc_attr($pl_hero_class); ?>">
         <div class="hk-container">
-            <?php if (!empty($pl_hero_badge)): ?>
-            <div class="hkpl-hero-badge">
-                <span>💼</span> <?php echo esc_html($pl_hero_badge); ?>
-            </div>
+            <?php if ($pl_hero_style === 'converter'): ?>
+                <div class="hkpl-converter-grid">
+                    <div class="hkpl-converter-left">
+                        <?php if (!empty($pl_hero_badge)): ?>
+                        <div class="hkpl-hero-badge">
+                            <span>💼</span> <?php echo esc_html($pl_hero_badge); ?>
+                        </div>
+                        <?php endif; ?>
+
+                        <h1 class="hkpl-hero-title">
+                            <?php echo esc_html($pl_hero_title); ?><br>
+                            <span class="hkpl-hero-highlight"><?php echo esc_html($pl_hero_highlight); ?></span>
+                        </h1>
+
+                        <?php if (!empty($pl_hero_sub)): ?>
+                        <p class="hkpl-hero-sub">
+                            <?php echo esc_html($pl_hero_sub); ?>
+                        </p>
+                        <?php endif; ?>
+
+                        <div class="hkpl-converter-benefits">
+                            <div class="hkpl-benefit-row">
+                                <span class="hkpl-check">✓</span>
+                                <span><?php _e('Tayang Cepat 1×24 Jam setelah konfirmasi admin', 'hakajobs'); ?></span>
+                            </div>
+                            <div class="hkpl-benefit-row">
+                                <span class="hkpl-check">✓</span>
+                                <span><?php _e('Pelamar langsung menghubungi WhatsApp / Email HRD Anda', 'hakajobs'); ?></span>
+                            </div>
+                            <div class="hkpl-benefit-row">
+                                <span class="hkpl-check">✓</span>
+                                <span><?php _e('Paket fleksibel mulai dari Gratis hingga Prioritas Urgent', 'hakajobs'); ?></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hkpl-converter-right">
+                        <div class="hkpl-converter-card">
+                            <span class="hkpl-card-badge"><?php _e('FAST TRACK REKRUTMEN', 'hakajobs'); ?></span>
+                            <h3 class="hkpl-card-title"><?php _e('Pasang Lowongan Sekarang', 'hakajobs'); ?></h3>
+                            <p class="hkpl-card-desc"><?php _e('Konsultasikan kebutuhan rekrutmen atau kirim draft info loker langsung ke tim admin kami.', 'hakajobs'); ?></p>
+                            
+                            <a href="<?php echo esc_url($wa_url_featured); ?>" target="_blank" rel="noopener noreferrer" class="hk-btn hkpl-btn-consult-wa">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span><?php _e('Hubungi WhatsApp Admin', 'hakajobs'); ?></span>
+                            </a>
+
+                            <div class="hkpl-card-note">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span><?php _e('100% Aman • Langsung Dibalas Tim Admin', 'hakajobs'); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
+                <!-- Default / Minimal Layout -->
+                <?php if (!empty($pl_hero_badge)): ?>
+                <div class="hkpl-hero-badge">
+                    <span>💼</span> <?php echo esc_html($pl_hero_badge); ?>
+                </div>
+                <?php endif; ?>
+
+                <h1 class="hkpl-hero-title">
+                    <?php echo esc_html($pl_hero_title); ?><br>
+                    <span class="hkpl-hero-highlight"><?php echo esc_html($pl_hero_highlight); ?></span>
+                </h1>
+
+                <?php if (!empty($pl_hero_sub)): ?>
+                <p class="hkpl-hero-sub">
+                    <?php echo esc_html($pl_hero_sub); ?>
+                </p>
+                <?php endif; ?>
+
+                <div class="hkpl-hero-stats">
+                    <div class="hkpl-stat">
+                        <span class="hkpl-stat-num"><?php echo esc_html($pl_stat1_num); ?></span>
+                        <span class="hkpl-stat-label"><?php echo esc_html($pl_stat1_label); ?></span>
+                    </div>
+                    <div class="hkpl-stat-sep"></div>
+                    <div class="hkpl-stat">
+                        <span class="hkpl-stat-num"><?php echo esc_html($pl_stat2_num); ?></span>
+                        <span class="hkpl-stat-label"><?php echo esc_html($pl_stat2_label); ?></span>
+                    </div>
+                    <div class="hkpl-stat-sep"></div>
+                    <div class="hkpl-stat">
+                        <span class="hkpl-stat-num"><?php echo esc_html($pl_stat3_num); ?></span>
+                        <span class="hkpl-stat-label"><?php echo esc_html($pl_stat3_label); ?></span>
+                    </div>
+                </div>
             <?php endif; ?>
-
-            <h1 class="hkpl-hero-title">
-                <?php echo esc_html($pl_hero_title); ?><br>
-                <span class="hkpl-hero-highlight"><?php echo esc_html($pl_hero_highlight); ?></span>
-            </h1>
-
-            <?php if (!empty($pl_hero_sub)): ?>
-            <p class="hkpl-hero-sub">
-                <?php echo esc_html($pl_hero_sub); ?>
-            </p>
-            <?php endif; ?>
-
-            <div class="hkpl-hero-stats">
-                <div class="hkpl-stat">
-                    <span class="hkpl-stat-num"><?php echo esc_html($pl_stat1_num); ?></span>
-                    <span class="hkpl-stat-label"><?php echo esc_html($pl_stat1_label); ?></span>
-                </div>
-                <div class="hkpl-stat-sep"></div>
-                <div class="hkpl-stat">
-                    <span class="hkpl-stat-num"><?php echo esc_html($pl_stat2_num); ?></span>
-                    <span class="hkpl-stat-label"><?php echo esc_html($pl_stat2_label); ?></span>
-                </div>
-                <div class="hkpl-stat-sep"></div>
-                <div class="hkpl-stat">
-                    <span class="hkpl-stat-num"><?php echo esc_html($pl_stat3_num); ?></span>
-                    <span class="hkpl-stat-label"><?php echo esc_html($pl_stat3_label); ?></span>
-                </div>
-            </div>
         </div>
+        <?php if ($pl_hero_style === 'default'): ?>
         <div class="hkpl-hero-wave">
-            <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0 60L60 50C120 40 240 20 360 16.7C480 13.3 600 26.7 720 33.3C840 40 960 40 1080 33.3C1200 26.7 1320 13.3 1380 6.7L1440 0V60H1380C1320 60 1200 60 1080 60C960 60 840 60 720 60C600 60 480 60 360 60C240 60 120 60 60 60H0Z" fill="#f8fafc"/></svg>
+            <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0 60L60 50C120 40 240 20 360 16.7C480 13.3 600 26.7 720 33.3C840 40 960 40 1080 33.3C1200 26.7 1320 13.3 1380 6.7L1440 0V60H1380C1320 60 1200 60 1080 60C960 60 840 60 720 60C600 60 480 60 360 60C240 60 120 60 60 60H0Z" fill="var(--hk-bg-body, #f8fafc)"/></svg>
         </div>
+        <?php endif; ?>
     </section>
 
     <!-- ===================== KEUNGGULAN ===================== -->

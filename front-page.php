@@ -52,106 +52,226 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
 
 <main id="hk-main" class="hk-site-main">
 
-    <!-- Hero Search Section (Aksen Pasang Loker / Terang) -->
-    <section class="hk-hero-section <?php echo ($hero_style === 'pasang-loker') ? 'hk-hero-pasangloker-theme' : 'hk-hero-light-theme'; ?>">
+    <?php
+    $hero_theme_class = 'hk-hero-pasangloker-theme';
+    if ($hero_style === 'light') {
+        $hero_theme_class = 'hk-hero-light-theme';
+    } elseif ($hero_style === 'split') {
+        $hero_theme_class = 'hk-hero-split-theme';
+    } elseif ($hero_style === 'compact') {
+        $hero_theme_class = 'hk-hero-compact-theme';
+    }
+    ?>
+    <section class="hk-hero-section <?php echo esc_attr($hero_theme_class); ?>">
         <div class="hk-container">
-            <div class="hk-hero-content">
-                <?php if (!empty($hero_badge)): ?>
-                    <div class="hk-hero-badge">
-                        <?php echo esc_html($hero_badge); ?>
-                    </div>
-                <?php endif; ?>
-
-                <h1 class="hk-hero-title">
-                    <?php echo $display_title; ?>
-                </h1>
-
-                <p class="hk-hero-desc">
-                    <?php echo nl2br(esc_html($hero_subtitle)); ?>
-                </p>
-
-                <!-- Main Hero Search Bar -->
-                <div class="hk-hero-search-box">
-                    <form action="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" method="get" class="hk-search-form">
-                        <input type="hidden" name="post_type" value="lowongan">
-
-                        <div class="hk-search-field-group">
-                            <div class="hk-search-field hk-field-keyword">
-                                <label for="hk-search-keyword" class="hk-sr-only"><?php _e('Kata Kunci', 'hakajobs'); ?></label>
-                                <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                <input type="text" id="hk-search-keyword" name="s_keyword" placeholder="<?php echo esc_attr($hero_placeholder); ?>" autocomplete="off" />
+            <?php if ($hero_style === 'split'): ?>
+                <div class="hk-hero-split-grid">
+                    <div class="hk-hero-split-left">
+                        <?php if (!empty($hero_badge)): ?>
+                            <div class="hk-hero-badge">
+                                <?php echo esc_html($hero_badge); ?>
                             </div>
+                        <?php endif; ?>
 
-                            <div class="hk-search-field hk-field-category">
-                                <label for="hk-search-category" class="hk-sr-only"><?php _e('Kategori', 'hakajobs'); ?></label>
-                                <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                                <select id="hk-search-category" name="kategori">
-                                    <option value=""><?php _e('Semua Kategori', 'hakajobs'); ?></option>
-                                    <?php
-                                    $cats = get_terms(array('taxonomy' => 'kategori_lowongan', 'hide_empty' => false));
-                                    if (!empty($cats) && !is_wp_error($cats)) {
-                                        foreach ($cats as $cat) {
-                                            echo '<option value="' . esc_attr($cat->slug) . '">' . esc_html($cat->name) . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+                        <h1 class="hk-hero-title">
+                            <?php echo $display_title; ?>
+                        </h1>
 
-                            <div class="hk-search-field hk-field-location">
-                                <label for="hk-search-location" class="hk-sr-only"><?php _e('Lokasi', 'hakajobs'); ?></label>
-                                <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <select id="hk-search-location" name="lokasi">
-                                    <option value=""><?php _e('Semua Lokasi / Kota', 'hakajobs'); ?></option>
-                                    <?php
-                                    $locs = get_terms(array('taxonomy' => 'lokasi_lowongan', 'hide_empty' => false));
-                                    if (!empty($locs) && !is_wp_error($locs)) {
-                                        foreach ($locs as $loc) {
-                                            echo '<option value="' . esc_attr($loc->slug) . '">' . esc_html($loc->name) . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+                        <p class="hk-hero-desc">
+                            <?php echo nl2br(esc_html($hero_subtitle)); ?>
+                        </p>
 
-                            <button type="submit" class="hk-search-submit-btn">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                <span><?php echo esc_html($hero_search_btn); ?></span>
-                            </button>
+                        <!-- Main Hero Search Bar -->
+                        <div class="hk-hero-search-box">
+                            <form action="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" method="get" class="hk-search-form">
+                                <input type="hidden" name="post_type" value="lowongan">
+
+                                <div class="hk-search-field-group">
+                                    <div class="hk-search-field hk-field-keyword">
+                                        <label for="hk-search-keyword-split" class="hk-sr-only"><?php _e('Kata Kunci', 'hakajobs'); ?></label>
+                                        <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" id="hk-search-keyword-split" name="s_keyword" placeholder="<?php echo esc_attr($hero_placeholder); ?>" autocomplete="off" />
+                                    </div>
+
+                                    <div class="hk-search-field hk-field-category">
+                                        <label for="hk-search-category-split" class="hk-sr-only"><?php _e('Kategori', 'hakajobs'); ?></label>
+                                        <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                        <select id="hk-search-category-split" name="kategori">
+                                            <option value=""><?php _e('Semua Kategori', 'hakajobs'); ?></option>
+                                            <?php
+                                            $cats = get_terms(array('taxonomy' => 'kategori_lowongan', 'hide_empty' => false));
+                                            if (!empty($cats) && !is_wp_error($cats)) {
+                                                foreach ($cats as $cat) {
+                                                    echo '<option value="' . esc_attr($cat->slug) . '">' . esc_html($cat->name) . '</option>';
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="hk-search-submit-btn">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <span><?php echo esc_html($hero_search_btn); ?></span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
 
-                <!-- Popular Quick Filters -->
-                <div class="hk-quick-filters">
-                    <span class="hk-quick-label"><?php _e('Pencarian Populer:', 'hakajobs'); ?></span>
-                    <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=remote" class="hk-chip">🌐 Remote / WFH</a>
-                    <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?pengalaman=fresh-graduate" class="hk-chip">🎓 Fresh Graduate</a>
-                    <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=magang" class="hk-chip">💼 Magang (Intern)</a>
-                    <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=full-time" class="hk-chip">⏰ Full-Time</a>
-                </div>
+                        <!-- Popular Quick Filters -->
+                        <div class="hk-quick-filters">
+                            <span class="hk-quick-label"><?php _e('Pencarian Populer:', 'hakajobs'); ?></span>
+                            <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=remote" class="hk-chip">🌐 Remote / WFH</a>
+                            <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?pengalaman=fresh-graduate" class="hk-chip">🎓 Fresh Graduate</a>
+                            <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=magang" class="hk-chip">💼 Magang (Intern)</a>
+                            <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=full-time" class="hk-chip">⏰ Full-Time</a>
+                        </div>
+                    </div>
 
-                <?php if ($show_stats === '1'): ?>
-                <!-- Hero Live Stats Strip (Aksen Pasang Loker) -->
-                <div class="hk-hero-stats">
-                    <div class="hk-stat-item">
-                        <span class="hk-stat-num"><?php echo esc_html($stat1_num); ?></span>
-                        <span class="hk-stat-label"><?php echo esc_html($stat1_label); ?></span>
-                    </div>
-                    <div class="hk-stat-sep"></div>
-                    <div class="hk-stat-item">
-                        <span class="hk-stat-num"><?php echo esc_html($stat2_num); ?></span>
-                        <span class="hk-stat-label"><?php echo esc_html($stat2_label); ?></span>
-                    </div>
-                    <div class="hk-stat-sep"></div>
-                    <div class="hk-stat-item">
-                        <span class="hk-stat-num"><?php echo esc_html($stat3_num); ?></span>
-                        <span class="hk-stat-label"><?php echo esc_html($stat3_label); ?></span>
+                    <div class="hk-hero-split-right">
+                        <div class="hk-hero-showcase-card">
+                            <div class="hk-showcase-header">
+                                <span class="hk-showcase-tag">✨ PENGALAMAN TERBAIK</span>
+                                <h3 class="hk-showcase-title"><?php _e('Keunggulan Lamar di Hakajobs', 'hakajobs'); ?></h3>
+                            </div>
+                            <div class="hk-showcase-list">
+                                <div class="hk-showcase-item">
+                                    <div class="hk-showcase-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    </div>
+                                    <div class="hk-showcase-text">
+                                        <strong><?php _e('Lamar Cepat Tanpa Akun', 'hakajobs'); ?></strong>
+                                        <p><?php _e('Langsung terhubung ke WhatsApp HRD atau link karir resmi tanpa registrasi berbelit.', 'hakajobs'); ?></p>
+                                    </div>
+                                </div>
+                                <div class="hk-showcase-item">
+                                    <div class="hk-showcase-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    </div>
+                                    <div class="hk-showcase-text">
+                                        <strong><?php _e('100% Bebas Biaya & Penipuan', 'hakajobs'); ?></strong>
+                                        <p><?php _e('Semua info loker dikurasi manual. Waspada penipuan, rekrutmen resmi tidak dipungut biaya.', 'hakajobs'); ?></p>
+                                    </div>
+                                </div>
+                                <div class="hk-showcase-item">
+                                    <div class="hk-showcase-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    </div>
+                                    <div class="hk-showcase-text">
+                                        <strong><?php _e('Update Loker Setiap Hari', 'hakajobs'); ?></strong>
+                                        <p><?php _e('Info posisi baru dengan batas pendaftaran akurat dan respon cepat 1×24 jam.', 'hakajobs'); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hk-showcase-footer">
+                                <span><?php echo esc_html($stat1_num); ?> <?php echo esc_html($stat1_label); ?></span>
+                                <span class="hk-showcase-dot">•</span>
+                                <span><?php echo esc_html($stat2_num); ?> <?php echo esc_html($stat2_label); ?></span>
+                                <span class="hk-showcase-dot">•</span>
+                                <span>100% Gratis</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <?php endif; ?>
+            <?php else: ?>
+                <!-- Standard Center Layout (Pasang-Loker / Light / Compact) -->
+                <div class="hk-hero-content">
+                    <?php if (!empty($hero_badge)): ?>
+                        <div class="hk-hero-badge">
+                            <?php echo esc_html($hero_badge); ?>
+                        </div>
+                    <?php endif; ?>
 
-            </div>
+                    <h1 class="hk-hero-title">
+                        <?php echo $display_title; ?>
+                    </h1>
+
+                    <p class="hk-hero-desc">
+                        <?php echo nl2br(esc_html($hero_subtitle)); ?>
+                    </p>
+
+                    <!-- Main Hero Search Bar -->
+                    <div class="hk-hero-search-box">
+                        <form action="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" method="get" class="hk-search-form">
+                            <input type="hidden" name="post_type" value="lowongan">
+
+                            <div class="hk-search-field-group">
+                                <div class="hk-search-field hk-field-keyword">
+                                    <label for="hk-search-keyword" class="hk-sr-only"><?php _e('Kata Kunci', 'hakajobs'); ?></label>
+                                    <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    <input type="text" id="hk-search-keyword" name="s_keyword" placeholder="<?php echo esc_attr($hero_placeholder); ?>" autocomplete="off" />
+                                </div>
+
+                                <div class="hk-search-field hk-field-category">
+                                    <label for="hk-search-category" class="hk-sr-only"><?php _e('Kategori', 'hakajobs'); ?></label>
+                                    <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                    <select id="hk-search-category" name="kategori">
+                                        <option value=""><?php _e('Semua Kategori', 'hakajobs'); ?></option>
+                                        <?php
+                                        $cats = get_terms(array('taxonomy' => 'kategori_lowongan', 'hide_empty' => false));
+                                        if (!empty($cats) && !is_wp_error($cats)) {
+                                            foreach ($cats as $cat) {
+                                                echo '<option value="' . esc_attr($cat->slug) . '">' . esc_html($cat->name) . '</option>';
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="hk-search-field hk-field-location">
+                                    <label for="hk-search-location" class="hk-sr-only"><?php _e('Lokasi', 'hakajobs'); ?></label>
+                                    <svg class="hk-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <select id="hk-search-location" name="lokasi">
+                                        <option value=""><?php _e('Semua Lokasi / Kota', 'hakajobs'); ?></option>
+                                        <?php
+                                        $locs = get_terms(array('taxonomy' => 'lokasi_lowongan', 'hide_empty' => false));
+                                        if (!empty($locs) && !is_wp_error($locs)) {
+                                            foreach ($locs as $loc) {
+                                                echo '<option value="' . esc_attr($loc->slug) . '">' . esc_html($loc->name) . '</option>';
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="hk-search-submit-btn">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    <span><?php echo esc_html($hero_search_btn); ?></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Popular Quick Filters -->
+                    <div class="hk-quick-filters">
+                        <span class="hk-quick-label"><?php _e('Pencarian Populer:', 'hakajobs'); ?></span>
+                        <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=remote" class="hk-chip">🌐 Remote / WFH</a>
+                        <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?pengalaman=fresh-graduate" class="hk-chip">🎓 Fresh Graduate</a>
+                        <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=magang" class="hk-chip">💼 Magang (Intern)</a>
+                        <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=full-time" class="hk-chip">⏰ Full-Time</a>
+                    </div>
+
+                    <?php if ($show_stats === '1' && $hero_style !== 'compact'): ?>
+                    <!-- Hero Live Stats Strip (Aksen Pasang Loker) -->
+                    <div class="hk-hero-stats">
+                        <div class="hk-stat-item">
+                            <span class="hk-stat-num"><?php echo esc_html($stat1_num); ?></span>
+                            <span class="hk-stat-label"><?php echo esc_html($stat1_label); ?></span>
+                        </div>
+                        <div class="hk-stat-sep"></div>
+                        <div class="hk-stat-item">
+                            <span class="hk-stat-num"><?php echo esc_html($stat2_num); ?></span>
+                            <span class="hk-stat-label"><?php echo esc_html($stat2_label); ?></span>
+                        </div>
+                        <div class="hk-stat-sep"></div>
+                        <div class="hk-stat-item">
+                            <span class="hk-stat-num"><?php echo esc_html($stat3_num); ?></span>
+                            <span class="hk-stat-label"><?php echo esc_html($stat3_label); ?></span>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                </div>
+            <?php endif; ?>
         </div>
 
         <?php if ($show_wave === '1' && $hero_style === 'pasang-loker'): ?>
