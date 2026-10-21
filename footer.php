@@ -220,7 +220,7 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
                                 <li><a href="<?php echo esc_url(get_theme_mod('hakajobs_post_job_url', home_url('/pasang-loker/'))); ?>"><?php _e('Pasang Info Lowongan (Admin)', 'hakajobs'); ?></a></li>
                                 <li><a href="<?php echo esc_url(home_url('/tentang-kami/')); ?>"><?php _e('Tentang Kami', 'hakajobs'); ?></a></li>
                                 <li><a href="<?php echo esc_url(home_url('/kontak/')); ?>"><?php _e('Hubungi Pengelola', 'hakajobs'); ?></a></li>
-                                <li><a href="<?php echo esc_url(home_url('/kebijakan-privasi/')); ?>"><?php _e('Kebijakan Privasi', 'hakajobs'); ?></a></li>
+                                <li><a href="<?php echo esc_url(function_exists('get_privacy_policy_url') && get_privacy_policy_url() ? get_privacy_policy_url() : home_url('/privacy-policy/')); ?>"><?php _e('Kebijakan Privasi', 'hakajobs'); ?></a></li>
                             </ul>
                         <?php endif; ?>
                     <?php endif; ?>
@@ -286,9 +286,12 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
         $cookie_text     = get_theme_mod('hakajobs_cookie_text', __('Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda, mengingat preferensi tampilan mode gelap, serta meningkatkan kenyamanan pencarian kerja Anda.', 'hakajobs'));
         $cookie_accept   = get_theme_mod('hakajobs_cookie_btn_accept', __('Aktifkan Cookie', 'hakajobs'));
         $cookie_decline  = get_theme_mod('hakajobs_cookie_btn_decline', __('Hanya Esensial', 'hakajobs'));
-        $cookie_priv_url = get_theme_mod('hakajobs_cookie_privacy_link', home_url('/kebijakan-privasi/'));
+        $default_priv_url = function_exists('get_privacy_policy_url') && get_privacy_policy_url() 
+            ? get_privacy_policy_url() 
+            : home_url('/privacy-policy/');
+        $cookie_priv_url = get_theme_mod('hakajobs_cookie_privacy_link', $default_priv_url);
         if (empty($cookie_priv_url)) {
-            $cookie_priv_url = home_url('/kebijakan-privasi/');
+            $cookie_priv_url = $default_priv_url;
         }
         $cookie_priv_lbl = get_theme_mod('hakajobs_cookie_privacy_label', __('Kebijakan Privasi', 'hakajobs'));
     ?>

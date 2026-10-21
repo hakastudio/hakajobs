@@ -2472,7 +2472,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_cookie_privacy_link', array(
         'type'        => 'url',
         'label'       => __('Tautan Kebijakan Privasi (URL)', 'hakajobs'),
-        'description' => __('Default: otomatis mengarah ke halaman /kebijakan-privasi/ jika dikosongkan.', 'hakajobs'),
+        'description' => __('Default: otomatis mengarah ke halaman /privacy-policy/ (atau halaman privasi WP) jika dikosongkan.', 'hakajobs'),
         'section'     => 'hakajobs_cookie_section',
     ));
 
