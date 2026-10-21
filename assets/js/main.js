@@ -9,10 +9,11 @@
  * - Toast Notifications
  */
 
-document.addEventListener('DOMContentLoaded', function () {
+(function () {
     'use strict';
 
-    var STORAGE_KEY = 'hk_saved_jobs_v1';
+    function initHakajobs() {
+        var STORAGE_KEY = 'hk_saved_jobs_v1';
 
     // Helper: Get Saved Jobs from LocalStorage
     function getSavedJobs() {
@@ -416,26 +417,73 @@ document.addEventListener('DOMContentLoaded', function () {
         var selectedText = selection.toString();
         if (!selectedText || !selectedText.trim()) return;
 
-        // Skip if user is copying from form inputs/textareas
+        // Skip if user is copying from form inputs/textareas or contenteditable elements
         var activeEl = document.activeElement;
         if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
             return;
         }
 
-        // Target article pages or content areas
-        var isSinglePage = document.querySelector('.hk-single-job-page, .hk-single-standard-page, .hk-job-description-box, .hk-article-content, .hk-page-content');
-        if (!isSinglePage) return;
+        // Also check if selection node is inside an input or textarea
+        var anchor = selection.anchorNode;
+        var parentEl = anchor ? (anchor.nodeType === 1 ? anchor : anchor.parentElement) : null;
+        if (parentEl && parentEl.closest('input, textarea, [contenteditable="true"]')) {
+            return;
+        }
 
-        // Get site name and current URL
-        var siteName = (window.HakajobsData && HakajobsData.siteName) ? HakajobsData.siteName : (document.title ? document.title.split(' - ')[0].split(' | ')[0] : 'Website');
-        var pageUrl = window.location.href.split('#')[0];
+        // 1. Get Site Name (Sesuaikan Nama Website)
+        var siteName = '';
+        if (window.HakajobsData && HakajobsData.siteName) {
+            siteName = HakajobsData.siteName;
+        } else {
+            var siteTitleEl = document.querySelector('.hk-site-title, .site-title');
+            if (siteTitleEl && siteTitleEl.textContent.trim()) {
+                siteName = siteTitleEl.textContent.trim();
+            } else if (document.title) {
+                siteName = document.title.split(' - ')[0].split(' | ')[0].trim();
+            } else {
+                siteName = 'Hakajobs';
+            }
+        }
 
-        // Determine if it is a job posting or general article
-        var isJob = document.querySelector('.hk-single-job-page, .hk-job-description-box') !== null;
-        var label = isJob ? 'Lowongan ini telah tayang di ' : 'Artikel ini telah tayang di ';
+        // 2. Get Article / Job Title & Link (judul Artikel yang dicopy & link artikel)
+        var articleTitle = '';
+        var articleUrl = '';
 
-        var attribution = '\n\n' + label + siteName + ':\n' + pageUrl;
-        var fullText = selectedText + attribution;
+        // If copying inside a specific job card (.hk-job-card)
+        var jobCard = parentEl ? parentEl.closest('.hk-job-card') : null;
+        if (jobCard) {
+            var cardTitle = jobCard.querySelector('.hk-job-title a, .hk-job-title, h3 a, h3');
+            if (cardTitle && cardTitle.textContent.trim()) {
+                articleTitle = cardTitle.textContent.trim();
+            }
+            var cardLink = jobCard.querySelector('a.hk-job-title, .hk-job-title a, a.hk-btn-primary, h3 a');
+            if (cardLink && cardLink.href) {
+                articleUrl = cardLink.href.split('#')[0];
+            }
+        }
+
+        // If not found from a card, get from single page heading or document
+        if (!articleTitle) {
+            var heading = document.querySelector('.hk-single-job-title, .hk-entry-title, .entry-title, .hk-page-title, h1');
+            if (heading && heading.textContent.trim()) {
+                articleTitle = heading.textContent.trim();
+            } else if (document.title) {
+                articleTitle = document.title.split(' - ')[0].split(' | ')[0].trim();
+            } else {
+                articleTitle = siteName;
+            }
+        }
+
+        if (!articleUrl) {
+            articleUrl = window.location.href.split('#')[0];
+        }
+
+        articleTitle = articleTitle.replace(/\s+/g, ' ').trim();
+
+        // 3. User format:
+        // Baca lowongan di " [Nama Website] ", " [judul Artikel yang dicopy] " selengkapnya " [link artikel yang dicopy] " .
+        var attributionText = '\n\nBaca lowongan di "' + siteName + '", "' + articleTitle + '" selengkapnya "' + articleUrl + '" .';
+        var fullText = selectedText + attributionText;
 
         if (e.clipboardData) {
             e.clipboardData.setData('text/plain', fullText);
@@ -445,10 +493,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 for (var i = 0; i < selection.rangeCount; ++i) {
                     htmlContainer.appendChild(selection.getRangeAt(i).cloneContents());
                 }
-                var htmlAttribution = '<br><br><p>' + label + '<strong>' + siteName + '</strong>:<br><a href="' + pageUrl + '">' + pageUrl + '</a></p>';
+                var htmlAttribution = '<br><br><p>Baca lowongan di &ldquo;<strong>' + escapeHtml(siteName) + '</strong>&rdquo;, &ldquo;<em>' + escapeHtml(articleTitle) + '</em>&rdquo; selengkapnya &ldquo;<a href="' + escapeHtml(articleUrl) + '">' + escapeHtml(articleUrl) + '</a>&rdquo; .</p>';
                 e.clipboardData.setData('text/html', htmlContainer.innerHTML + htmlAttribution);
             } catch (err) {
-                // Ignore fallback to plain text
+                // Fallback to plain text already set
             }
 
             e.preventDefault();
@@ -459,10 +507,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Show toast notification
         if (typeof showToast === 'function') {
-            var copiedMsg = (window.HakajobsData && HakajobsData.strings && HakajobsData.strings.copiedSource)
-                ? HakajobsData.strings.copiedSource
-                : 'Teks disalin beserta link sumber!';
-            showToast(copiedMsg);
+            showToast('📋 Teks disalin beserta sumber: ' + siteName);
         }
     });
 
@@ -576,4 +621,128 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initial UI Sync
     updateSavedUI();
-});
+
+    // =========================================================================
+    // Cookie & Notification Consent Controller
+    // =========================================================================
+    var COOKIE_KEY = 'hk_cookie_consent';
+
+    function getCookieValue(name) {
+        var prefix = name + '=';
+        var decoded = decodeURIComponent(document.cookie);
+        var ca = decoded.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(prefix) === 0) {
+                return c.substring(prefix.length, c.length);
+            }
+        }
+        return null;
+    }
+
+    function setCookieValue(name, value, days) {
+        var expires = '';
+        if (days) {
+            var d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = '; expires=' + d.toUTCString();
+        }
+        document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/; SameSite=Lax';
+    }
+
+    function hideCookiePopup() {
+        var popup = document.getElementById('hk-cookie-popup');
+        if (!popup) return;
+        popup.classList.remove('is-visible');
+        popup.classList.add('is-hiding');
+        popup.setAttribute('aria-hidden', 'true');
+        setTimeout(function () {
+            popup.classList.remove('is-hiding');
+        }, 350);
+    }
+
+    function showCookiePopup() {
+        var popup = document.getElementById('hk-cookie-popup');
+        if (!popup) return;
+        popup.classList.remove('is-hiding');
+        popup.classList.add('is-visible');
+        popup.setAttribute('aria-hidden', 'false');
+    }
+
+    function initCookieNotice() {
+        var popup = document.getElementById('hk-cookie-popup');
+        if (!popup) return;
+
+        var stored = null;
+        try {
+            stored = localStorage.getItem(COOKIE_KEY);
+        } catch (e) {}
+
+        var cookieConsent = getCookieValue(COOKIE_KEY) || stored;
+        if (!cookieConsent) {
+            // Smooth entrance delay
+            setTimeout(showCookiePopup, 600);
+        }
+
+        // Accept Button ("Aktifkan Cookie")
+        var acceptBtn = document.getElementById('hk-cookie-accept-btn');
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                setCookieValue(COOKIE_KEY, 'accepted', 30);
+                try {
+                    localStorage.setItem(COOKIE_KEY, 'accepted');
+                    localStorage.setItem('hk_cookie_consent_time', new Date().toISOString());
+                } catch (err) {}
+                hideCookiePopup();
+                showToast('🍪 Cookie & preferensi berhasil diaktifkan!');
+            });
+        }
+
+        // Decline Button ("Hanya Esensial")
+        var declineBtn = document.getElementById('hk-cookie-decline-btn');
+        if (declineBtn) {
+            declineBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                setCookieValue(COOKIE_KEY, 'essential', 14);
+                try {
+                    localStorage.setItem(COOKIE_KEY, 'essential');
+                } catch (err) {}
+                hideCookiePopup();
+                showToast('Preferensi cookie esensial disimpan.');
+            });
+        }
+
+        // Close 'X' Button
+        var closeBtn = document.getElementById('hk-cookie-close-btn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                setCookieValue(COOKIE_KEY, 'dismissed', 7);
+                try {
+                    localStorage.setItem(COOKIE_KEY, 'dismissed');
+                } catch (err) {}
+                hideCookiePopup();
+            });
+        }
+    }
+
+    // Expose reset method for testing / interactive demos
+    window.resetHakajobsCookieConsent = function () {
+        document.cookie = COOKIE_KEY + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        try {
+            localStorage.removeItem(COOKIE_KEY);
+        } catch (e) {}
+        showCookiePopup();
+        showToast('Pop-up cookie di-reset. Menampilkan kembali...');
+    };
+
+        initCookieNotice();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHakajobs);
+    } else {
+        initHakajobs();
+    }
+})();

@@ -3049,6 +3049,241 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
+   Cookie & Notification Consent Popup (Anti-Slop, Accessible, Ergonomic)
+   ========================================================================== */
+.hk-cookie-popup {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 99999;
+    max-width: 420px;
+    width: calc(100% - 48px);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.hk-cookie-popup.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.hk-cookie-popup.is-hiding {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.97);
+}
+
+.hk-cookie-popup-inner {
+    position: relative;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--hk-border);
+    border-radius: 18px;
+    padding: 20px 22px;
+    box-shadow: 0 18px 42px -6px rgba(15, 23, 42, 0.18), 0 6px 14px rgba(15, 23, 42, 0.08);
+}
+
+.hk-cookie-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    color: var(--hk-text-muted);
+    font-size: 22px;
+    line-height: 1;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s ease, color 0.18s ease;
+    padding: 0;
+    z-index: 3;
+}
+
+.hk-cookie-close-btn:hover {
+    background: var(--hk-bg-body);
+    color: var(--hk-text-main);
+}
+
+.hk-cookie-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.hk-cookie-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--hk-primary);
+    background: var(--hk-primary-light);
+    padding: 4px 10px;
+    border-radius: var(--hk-radius-pill);
+    letter-spacing: 0.02em;
+}
+
+.hk-cookie-badge-icon {
+    font-size: 13px;
+    line-height: 1;
+}
+
+.hk-cookie-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--hk-text-main);
+    margin: 0 0 6px 0;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    padding-right: 32px;
+}
+
+.hk-cookie-desc {
+    font-size: 13px;
+    color: var(--hk-text-muted);
+    line-height: 1.55;
+    margin: 0 0 16px 0;
+}
+
+.hk-cookie-link {
+    color: var(--hk-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+    transition: color 0.15s ease;
+}
+
+.hk-cookie-link:hover {
+    color: var(--hk-primary-hover);
+}
+
+.hk-cookie-actions {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+.hk-cookie-actions .hk-btn {
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.18s ease;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.hk-cookie-btn-accept {
+    background: var(--hk-primary);
+    color: #ffffff !important;
+    border: none;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+
+.hk-cookie-btn-accept:hover {
+    background: var(--hk-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
+}
+
+.hk-cookie-btn-decline {
+    background: var(--hk-bg-body);
+    color: var(--hk-text-muted);
+    border: 1px solid var(--hk-border);
+}
+
+.hk-cookie-btn-decline:hover {
+    background: var(--hk-border);
+    color: var(--hk-text-main);
+}
+
+/* Mobile & Small Screen Adaptation */
+@media (max-width: 640px) {
+    .hk-cookie-popup {
+        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+        left: 14px;
+        right: 14px;
+        width: auto;
+        max-width: 440px;
+        margin: 0 auto;
+        transform: translateY(20px) scale(0.98);
+    }
+    .hk-cookie-popup-inner {
+        padding: 16px 18px 18px;
+        border-radius: 16px;
+        box-shadow: 0 12px 36px -4px rgba(15, 23, 42, 0.28), 0 4px 12px rgba(15, 23, 42, 0.12);
+    }
+    .hk-cookie-close-btn {
+        top: 10px;
+        right: 10px;
+        width: 38px;
+        height: 38px;
+        font-size: 24px;
+    }
+    .hk-cookie-top {
+        margin-bottom: 8px;
+    }
+    .hk-cookie-badge {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+    .hk-cookie-title {
+        font-size: 15px;
+        margin: 0 0 5px 0;
+        padding-right: 36px;
+    }
+    .hk-cookie-desc {
+        font-size: 12.5px;
+        line-height: 1.5;
+        margin: 0 0 14px 0;
+    }
+    .hk-cookie-actions {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .hk-cookie-actions .hk-btn {
+        min-height: 44px;
+        padding: 10px 10px;
+        font-size: 13px;
+        border-radius: 9px;
+    }
+}
+
+/* Extra Compact for Very Narrow Phones (<= 360px) */
+@media (max-width: 360px) {
+    .hk-cookie-popup {
+        bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+        left: 10px;
+        right: 10px;
+    }
+    .hk-cookie-popup-inner {
+        padding: 14px 14px 16px;
+    }
+    .hk-cookie-actions {
+        grid-template-columns: 1fr;
+        gap: 7px;
+    }
+}
+
+/* ==========================================================================
    Back to Top Floating Button
    ========================================================================== */
 .hk-back-to-top {
@@ -4068,7 +4303,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   DARK MODE SYSTEM (WCAG AA Compliant, Anti-Slop, Slate-Refined)
+   DARK MODE SYSTEM (WCAG AA Compliant, Deep Obsidian & High Legibility)
    ========================================================================== */
 html[data-theme="dark"] {
     --hk-primary: #38bdf8 !important;
@@ -4091,42 +4326,42 @@ html[data-theme="dark"] {
     --hk-text-muted: #94a3b8 !important;
     --hk-text-light: #64748b !important;
 
-    --hk-bg-body: #0b1120 !important;
-    --hk-bg-surface: #1e293b !important;
-    --hk-border: #334155 !important;
-    --hk-border-hover: #475569 !important;
+    --hk-bg-body: #050811 !important;
+    --hk-bg-surface: #0b1324 !important;
+    --hk-border: #1b2842 !important;
+    --hk-border-hover: #2d3d5e !important;
 
-    --hk-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4) !important;
-    --hk-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3) !important;
-    --hk-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4) !important;
+    --hk-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5) !important;
+    --hk-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.4) !important;
+    --hk-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Base Body in Dark Mode */
 html[data-theme="dark"],
 html[data-theme="dark"] body {
-    background-color: #0b1120 !important;
+    background-color: #050811 !important;
     color: #f1f5f9 !important;
     color-scheme: dark;
 }
 
 /* Site Topbar & Header */
 html[data-theme="dark"] .hk-topbar {
-    background-color: #070d18 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: #03050c !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
     color: #94a3b8 !important;
 }
 
 html[data-theme="dark"] .hk-site-header {
-    background-color: #0f172a !important;
-    border-bottom: 1px solid #1e293b !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+    background-color: #070c18 !important;
+    border-bottom: 1px solid #1b2842 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45) !important;
 }
 
 html[data-theme="dark"] .hk-site-header.is-scrolled {
-    background-color: rgba(15, 23, 42, 0.95) !important;
+    background-color: rgba(7, 12, 24, 0.95) !important;
     backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6) !important;
-    border-bottom-color: #334155 !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7) !important;
+    border-bottom-color: #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-site-title {
@@ -4148,15 +4383,15 @@ html[data-theme="dark"] .hk-main-navigation .hk-menu-highlight {
 
 html[data-theme="dark"] .hk-btn-saved-trigger,
 html[data-theme="dark"] .hk-theme-toggle {
-    background: #1e293b !important;
-    border-color: #334155 !important;
+    background: #0b1324 !important;
+    border-color: #1b2842 !important;
     color: #cbd5e1 !important;
 }
 
 html[data-theme="dark"] .hk-btn-saved-trigger:hover,
 html[data-theme="dark"] .hk-theme-toggle:hover {
-    background: #334155 !important;
-    border-color: #475569 !important;
+    background: #152238 !important;
+    border-color: #2d3d5e !important;
     color: #38bdf8 !important;
 }
 
@@ -4171,8 +4406,8 @@ html[data-theme="dark"] .hk-btn-header-cta:hover {
 }
 
 html[data-theme="dark"] .hk-mobile-menu-toggle {
-    background: #1e293b !important;
-    border-color: #334155 !important;
+    background: #0b1324 !important;
+    border-color: #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-hamburger-line {
@@ -4181,37 +4416,38 @@ html[data-theme="dark"] .hk-hamburger-line {
 
 /* Hero Section in Dark Mode */
 html[data-theme="dark"] .hk-hero-section.hk-hero-pasangloker-theme {
-    background: linear-gradient(135deg, #050b14 0%, #0c1a2e 50%, #0f2744 100%) !important;
+    background: linear-gradient(135deg, #03060f 0%, #07101e 50%, #0a192f 100%) !important;
 }
 
 html[data-theme="dark"] .hk-hero-section.hk-hero-light-theme {
-    background: linear-gradient(180deg, #0c1829 0%, #0b1120 100%) !important;
-    border-bottom-color: #1e293b !important;
+    background: linear-gradient(180deg, #070e1c 0%, #050811 100%) !important;
+    border-bottom-color: #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-hero-search-box {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
-    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7) !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8) !important;
 }
 
 html[data-theme="dark"] .hk-search-field {
-    background: #0f172a !important;
-    border-color: #334155 !important;
+    background: #070c18 !important;
+    border-color: #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-search-field:focus-within {
     border-color: #38bdf8 !important;
-    background: #0f172a !important;
+    background: #0b1426 !important;
 }
 
 html[data-theme="dark"] .hk-search-field input,
 html[data-theme="dark"] .hk-search-field select {
     color: #f8fafc !important;
+    background: transparent !important;
 }
 
 html[data-theme="dark"] .hk-search-field select option {
-    background-color: #0f172a !important;
+    background-color: #0b1426 !important;
     color: #f8fafc !important;
 }
 
@@ -4220,30 +4456,30 @@ html[data-theme="dark"] .hk-search-icon {
 }
 
 html[data-theme="dark"] .hk-chip {
-    background: rgba(30, 41, 59, 0.85) !important;
-    border: 1px solid #334155 !important;
+    background: rgba(11, 19, 36, 0.9) !important;
+    border: 1px solid #1b2842 !important;
     color: #cbd5e1 !important;
 }
 
 html[data-theme="dark"] .hk-chip:hover {
-    background: #334155 !important;
+    background: #152238 !important;
     color: #38bdf8 !important;
-    border-color: #475569 !important;
+    border-color: #2d3d5e !important;
 }
 
 html[data-theme="dark"] .hk-hero-stats {
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
 html[data-theme="dark"] .hk-hero-wave path {
-    fill: #0b1120 !important;
+    fill: #050811 !important;
 }
 
 /* Spotlight & Section Headings */
 html[data-theme="dark"] .hk-spotlight-section {
-    background-color: #0b1120 !important;
-    border-bottom: 1px solid #1e293b !important;
+    background-color: #050811 !important;
+    border-bottom: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-section-title {
@@ -4262,25 +4498,26 @@ html[data-theme="dark"] .hk-section-badge {
 
 /* Job Cards */
 html[data-theme="dark"] .hk-job-card {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
 }
 
 html[data-theme="dark"] .hk-job-card:hover {
-    border-color: #475569 !important;
+    background: #0f1a30 !important;
+    border-color: #2d3d5e !important;
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
 }
 
 html[data-theme="dark"] .hk-job-featured {
     border-color: #0284c7 !important;
-    background: linear-gradient(180deg, #1e293b 0%, #0f2744 100%) !important;
+    background: linear-gradient(180deg, #0b1324 0%, #091729 100%) !important;
 }
 
 html[data-theme="dark"] .hk-job-closed {
-    background: #131d2e !important;
-    border-color: #1e293b !important;
+    background: #080d19 !important;
+    border-color: #1b2842 !important;
     opacity: 0.75;
 }
 
@@ -4309,31 +4546,31 @@ html[data-theme="dark"] .hk-card-meta-item svg {
 }
 
 html[data-theme="dark"] .hk-company-initials {
-    background: #0f172a !important;
+    background: #070c18 !important;
     color: #38bdf8 !important;
-    border: 1px solid #334155 !important;
+    border: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-btn-detail {
-    background: #334155 !important;
+    background: #152238 !important;
     color: #f8fafc !important;
-    border: 1px solid #475569 !important;
+    border: 1px solid #2d3d5e !important;
 }
 
 html[data-theme="dark"] .hk-btn-detail:hover {
-    background: #475569 !important;
+    background: #1b2842 !important;
     color: #ffffff !important;
 }
 
 html[data-theme="dark"] .hk-btn-bookmark {
-    background: #0f172a !important;
-    border: 1px solid #334155 !important;
+    background: #070c18 !important;
+    border: 1px solid #1b2842 !important;
     color: #94a3b8 !important;
 }
 
 html[data-theme="dark"] .hk-btn-bookmark:hover {
-    background: #334155 !important;
-    border-color: #475569 !important;
+    background: #152238 !important;
+    border-color: #2d3d5e !important;
     color: #f8fafc !important;
 }
 
@@ -4343,28 +4580,28 @@ html[data-theme="dark"] .hk-btn-bookmark.is-saved {
     color: #fb7185 !important;
 }
 
-/* Badges in Dark Mode - Clean & Unified Neutral Slate */
+/* Badges in Dark Mode */
 html[data-theme="dark"] .hk-badge,
 html[data-theme="dark"] .hk-badge-fulltime,
 html[data-theme="dark"] .hk-badge-parttime,
 html[data-theme="dark"] .hk-badge-internship,
 html[data-theme="dark"] .hk-badge-contract,
 html[data-theme="dark"] .hk-badge-remote {
-    background: #0f172a !important;
+    background: #070c18 !important;
     color: #cbd5e1 !important;
-    border: 1px solid #334155 !important;
+    border: 1px solid #1b2842 !important;
     font-weight: 500 !important;
 }
 
 html[data-theme="dark"] .hk-badge:hover {
-    border-color: #475569 !important;
+    border-color: #2d3d5e !important;
     color: #f8fafc !important;
 }
 
 /* Sidebar & Widgets */
 html[data-theme="dark"] .hk-widget-card {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-widget-title {
@@ -4384,13 +4621,13 @@ html[data-theme="dark"] .hk-widget-link:hover {
 }
 
 html[data-theme="dark"] .hk-badge-count {
-    background: #334155 !important;
+    background: #152238 !important;
     color: #cbd5e1 !important;
 }
 
 html[data-theme="dark"] .hk-card-post-job {
-    background: linear-gradient(135deg, #1e293b 0%, #0f2744 100%) !important;
-    border: 1px solid #334155 !important;
+    background: linear-gradient(135deg, #0b1324 0%, #091729 100%) !important;
+    border: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-tips-card {
@@ -4404,12 +4641,12 @@ html[data-theme="dark"] .hk-tips-list li {
 
 /* How It Works Steps */
 html[data-theme="dark"] .hk-how-section {
-    background: #0b1120 !important;
+    background: #050811 !important;
 }
 
 html[data-theme="dark"] .hk-step-card {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-step-title {
@@ -4427,7 +4664,7 @@ html[data-theme="dark"] .hk-step-number {
 
 /* Anti-Fraud Alert Callout */
 html[data-theme="dark"] .hk-fraud-alert-section {
-    background: #0b1120 !important;
+    background: #050811 !important;
 }
 
 html[data-theme="dark"] .hk-fraud-alert-card {
@@ -4445,8 +4682,8 @@ html[data-theme="dark"] .hk-fraud-alert-desc {
 
 /* Single Lowongan Page */
 html[data-theme="dark"] .hk-breadcrumbs {
-    background: #0f172a !important;
-    border-bottom: 1px solid #1e293b !important;
+    background: #070c18 !important;
+    border-bottom: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-breadcrumbs-list a {
@@ -4462,14 +4699,14 @@ html[data-theme="dark"] .hk-breadcrumbs-list .hk-current {
 }
 
 html[data-theme="dark"] .hk-single-header-section {
-    background-color: #0b1120 !important;
-    border-bottom: 1px solid #1e293b !important;
+    background-color: #050811 !important;
+    border-bottom: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-single-header-card {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
 }
 
 html[data-theme="dark"] .hk-single-company-line .hk-company-name {
@@ -4485,14 +4722,14 @@ html[data-theme="dark"] .hk-single-job-title {
 }
 
 html[data-theme="dark"] .hk-meta-pill {
-    background: #0f172a !important;
-    border: 1px solid #334155 !important;
+    background: #070c18 !important;
+    border: 1px solid #1b2842 !important;
     color: #cbd5e1 !important;
 }
 
 html[data-theme="dark"] .hk-pill-salary {
-    background: #0f172a !important;
-    border: 1px solid #334155 !important;
+    background: #070c18 !important;
+    border: 1px solid #1b2842 !important;
     color: #f1f5f9 !important;
     font-weight: 600 !important;
 }
@@ -4524,8 +4761,8 @@ html[data-theme="dark"] .hk-pill-closed {
 }
 
 html[data-theme="dark"] .hk-admin-broadcast-banner {
-    background: #0c2340 !important;
-    border: 1px solid #1e3a5f !important;
+    background: #091729 !important;
+    border: 1px solid #162a42 !important;
 }
 
 /* Single Content Main Card */
@@ -4536,14 +4773,14 @@ html[data-theme="dark"] .hk-apply-card,
 html[data-theme="dark"] .hk-share-card,
 html[data-theme="dark"] .hk-page-card,
 html[data-theme="dark"] .hk-article-card {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
 }
 
-/* Single Job Excerpt / Ringkasan Box */
+/* Single Job Excerpt */
 html[data-theme="dark"] .hk-single-excerpt {
-    background: #0f172a !important;
-    border: 1px solid #334155 !important;
+    background: #070c18 !important;
+    border: 1px solid #1b2842 !important;
     border-left: 4px solid #38bdf8 !important;
     color: #e2e8f0 !important;
 }
@@ -4552,10 +4789,10 @@ html[data-theme="dark"] .hk-single-excerpt strong {
     color: #38bdf8 !important;
 }
 
-/* Alert Expiring / Batas Waktu Lamaran - Clean Slate Card with Left Amber Accent */
+/* Alert Expiring */
 html[data-theme="dark"] .hk-job-alert-expiring {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
     border-left: 4px solid #f59e0b !important;
     box-shadow: none !important;
 }
@@ -4572,10 +4809,10 @@ html[data-theme="dark"] .hk-job-alert-expiring p strong {
     color: #fbbf24 !important;
 }
 
-/* Alert Closed / Lamaran Ditutup */
+/* Alert Closed */
 html[data-theme="dark"] .hk-job-alert-closed {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
     border-left: 4px solid #ef4444 !important;
 }
 
@@ -4651,12 +4888,12 @@ html[data-theme="dark"] .hk-single-content .hk-typography a:hover {
 
 /* Benefits Grid */
 html[data-theme="dark"] .hk-job-benefits-box {
-    border-top: 1px solid #334155 !important;
+    border-top: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-benefit-item {
-    background: #0f172a !important;
-    border: 1px solid #334155 !important;
+    background: #070c18 !important;
+    border: 1px solid #1b2842 !important;
     color: #f1f5f9 !important;
 }
 
@@ -4664,10 +4901,10 @@ html[data-theme="dark"] .hk-benefit-icon {
     color: #38bdf8 !important;
 }
 
-/* Notes & Warnings in Single Job - Clean Slate with Left Accent Stripe */
+/* Notes & Warnings */
 html[data-theme="dark"] .hk-job-notes-box {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
     border-left: 4px solid #10b981 !important;
 }
 
@@ -4680,8 +4917,8 @@ html[data-theme="dark"] .hk-notes-text {
 }
 
 html[data-theme="dark"] .hk-job-alert-warning {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
     border-left: 4px solid #ef4444 !important;
 }
 
@@ -4693,12 +4930,12 @@ html[data-theme="dark"] .hk-job-alert-warning p {
     color: #94a3b8 !important;
 }
 
-/* WhatsApp Channel Banner in Job - Refined & High Contrast */
+/* WhatsApp Channel Banner in Job */
 html[data-theme="dark"] .hk-public-wa-channel-box {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
     border-left: 4px solid #16a34a !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
 }
 
 html[data-theme="dark"] .hk-wa-channel-icon-wrap {
@@ -4720,7 +4957,7 @@ html[data-theme="dark"] .hk-wa-channel-desc {
     color: #94a3b8 !important;
 }
 
-/* WhatsApp Channel CTA Button - Ultra Crisp & Explicitly White */
+/* WhatsApp Channel CTA Button */
 html[data-theme="dark"] .hk-btn-wa-channel,
 html[data-theme="dark"] .hk-single-content a.hk-btn-wa-channel,
 html[data-theme="dark"] a.hk-btn-wa-channel,
@@ -4757,7 +4994,7 @@ html[data-theme="dark"] a.hk-btn-wa-channel:hover,
 
 /* Share Bar & Buttons */
 html[data-theme="dark"] .hk-job-share-bar {
-    border-top: 1px solid #334155 !important;
+    border-top: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-share-label {
@@ -4765,8 +5002,8 @@ html[data-theme="dark"] .hk-share-label {
 }
 
 html[data-theme="dark"] .hk-share-btn {
-    background: #0f172a !important;
-    border-color: #334155 !important;
+    background: #070c18 !important;
+    border-color: #1b2842 !important;
     color: #cbd5e1 !important;
 }
 
@@ -4777,9 +5014,9 @@ html[data-theme="dark"] .hk-share-btn:hover {
 
 /* Sticky Apply Sidebar Card */
 html[data-theme="dark"] .hk-sticky-apply-card {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
 }
 
 html[data-theme="dark"] .hk-apply-subtext {
@@ -4791,15 +5028,15 @@ html[data-theme="dark"] .hk-apply-title {
 }
 
 html[data-theme="dark"] .hk-btn-single-bookmark {
-    background: #0f172a !important;
-    border-color: #334155 !important;
+    background: #070c18 !important;
+    border-color: #1b2842 !important;
     color: #cbd5e1 !important;
 }
 
 html[data-theme="dark"] .hk-btn-single-bookmark:hover {
-    background: #334155 !important;
+    background: #152238 !important;
     color: #f8fafc !important;
-    border-color: #475569 !important;
+    border-color: #2d3d5e !important;
 }
 
 html[data-theme="dark"] .hk-btn-single-bookmark.is-saved {
@@ -4817,7 +5054,7 @@ html[data-theme="dark"] .hk-apply-channel-note {
 }
 
 html[data-theme="dark"] .hk-overview-list {
-    border-top: 1px solid #334155 !important;
+    border-top: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-overview-heading {
@@ -4825,7 +5062,7 @@ html[data-theme="dark"] .hk-overview-heading {
 }
 
 html[data-theme="dark"] .hk-overview-item {
-    border-bottom: 1px dashed #334155 !important;
+    border-bottom: 1px dashed #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-overview-label {
@@ -4841,7 +5078,7 @@ html[data-theme="dark"] .hk-overview-value small {
 }
 
 html[data-theme="dark"] .hk-company-mini-header {
-    border-top: 1px solid #334155 !important;
+    border-top: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-company-name-mini {
@@ -4855,8 +5092,8 @@ html[data-theme="dark"] .hk-company-loc-mini {
 /* Category & Cloud Tags */
 html[data-theme="dark"] .hk-category-tag,
 html[data-theme="dark"] .hk-cloud-pill {
-    background: #0f172a !important;
-    border: 1px solid #334155 !important;
+    background: #070c18 !important;
+    border: 1px solid #1b2842 !important;
     color: #cbd5e1 !important;
 }
 
@@ -4867,7 +5104,7 @@ html[data-theme="dark"] .hk-cloud-pill:hover {
 
 /* Related Jobs */
 html[data-theme="dark"] .hk-related-jobs-wrap {
-    border-top: 1px solid #334155 !important;
+    border-top: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-related-title {
@@ -4876,9 +5113,9 @@ html[data-theme="dark"] .hk-related-title {
 
 /* Mobile Sticky Bottom Bar */
 html[data-theme="dark"] .hk-mobile-sticky-bar {
-    background: #0f172a !important;
-    border-top: 1px solid #1e293b !important;
-    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.5) !important;
+    background: #070c18 !important;
+    border-top: 1px solid #1b2842 !important;
+    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.6) !important;
 }
 
 html[data-theme="dark"] .hk-bar-company {
@@ -4890,18 +5127,18 @@ html[data-theme="dark"] .hk-bar-title {
 }
 
 html[data-theme="dark"] .hk-btn-subtle {
-    background: #334155 !important;
+    background: #152238 !important;
     color: #f8fafc !important;
-    border: 1px solid #475569 !important;
+    border: 1px solid #2d3d5e !important;
 }
 
 html[data-theme="dark"] .hk-btn-subtle:hover {
-    background: #475569 !important;
+    background: #1b2842 !important;
 }
 
 /* Archive & Directory Page */
 html[data-theme="dark"] .hk-archive-page {
-    background: #0b1120 !important;
+    background: #050811 !important;
 }
 
 html[data-theme="dark"] .hk-archive-title {
@@ -4913,8 +5150,8 @@ html[data-theme="dark"] .hk-archive-subtitle {
 }
 
 html[data-theme="dark"] .hk-filter-card {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-filter-header-title {
@@ -4927,20 +5164,24 @@ html[data-theme="dark"] .hk-filter-label {
 
 html[data-theme="dark"] .hk-filter-input,
 html[data-theme="dark"] .hk-filter-select {
-    background: #0f172a !important;
-    border: 1px solid #334155 !important;
+    background: #070c18 !important;
+    border: 1.5px solid #1b2842 !important;
     color: #f8fafc !important;
+    -webkit-text-fill-color: #f8fafc !important;
 }
 
 html[data-theme="dark"] .hk-filter-select option {
-    background-color: #0f172a !important;
+    background-color: #0b1426 !important;
     color: #f8fafc !important;
 }
 
 html[data-theme="dark"] .hk-filter-input:focus,
 html[data-theme="dark"] .hk-filter-select:focus {
-    background: #0f172a !important;
+    background: #0b1426 !important;
     border-color: #38bdf8 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
 }
 
 html[data-theme="dark"] .hk-radio-item span {
@@ -4952,15 +5193,15 @@ html[data-theme="dark"] .hk-results-count {
 }
 
 html[data-theme="dark"] .hk-pagination .page-numbers {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
     color: #cbd5e1 !important;
 }
 
 html[data-theme="dark"] .hk-pagination .page-numbers:hover {
-    background: #334155 !important;
+    background: #152238 !important;
     color: #38bdf8 !important;
-    border-color: #475569 !important;
+    border-color: #2d3d5e !important;
 }
 
 html[data-theme="dark"] .hk-pagination .page-numbers.current {
@@ -4971,14 +5212,14 @@ html[data-theme="dark"] .hk-pagination .page-numbers.current {
 
 /* Saved Jobs Modal & Mobile Nav Drawer */
 html[data-theme="dark"] .hk-saved-modal-content {
-    background: #0f172a !important;
-    border-left: 1px solid #1e293b !important;
-    box-shadow: -5px 0 35px rgba(0, 0, 0, 0.7) !important;
+    background: #070c18 !important;
+    border-left: 1px solid #1b2842 !important;
+    box-shadow: -5px 0 35px rgba(0, 0, 0, 0.8) !important;
 }
 
 html[data-theme="dark"] .hk-saved-modal-header,
 html[data-theme="dark"] .hk-saved-modal-footer {
-    border-color: #1e293b !important;
+    border-color: #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-saved-modal-title {
@@ -4990,8 +5231,8 @@ html[data-theme="dark"] .hk-saved-modal-subtitle {
 }
 
 html[data-theme="dark"] .hk-saved-item {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-saved-item-title a {
@@ -5003,12 +5244,12 @@ html[data-theme="dark"] .hk-saved-item-title a:hover {
 }
 
 html[data-theme="dark"] .hk-mobile-drawer {
-    background: #0f172a !important;
-    border-left: 1px solid #1e293b !important;
+    background: #070c18 !important;
+    border-left: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-mobile-drawer-header {
-    border-bottom: 1px solid #1e293b !important;
+    border-bottom: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-mobile-drawer-title {
@@ -5017,7 +5258,7 @@ html[data-theme="dark"] .hk-mobile-drawer-title {
 
 html[data-theme="dark"] .hk-mobile-nav-list a {
     color: #cbd5e1 !important;
-    border-bottom: 1px solid #1e293b !important;
+    border-bottom: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-mobile-nav-list a:hover {
@@ -5025,8 +5266,8 @@ html[data-theme="dark"] .hk-mobile-nav-list a:hover {
 }
 
 html[data-theme="dark"] .hk-mobile-drawer-theme {
-    background: #1e293b !important;
-    border-color: #334155 !important;
+    background: #0b1324 !important;
+    border-color: #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-drawer-theme-label {
@@ -5034,8 +5275,8 @@ html[data-theme="dark"] .hk-drawer-theme-label {
 }
 
 html[data-theme="dark"] .hk-drawer-theme-switch {
-    background: #0f172a !important;
-    border-color: #334155 !important;
+    background: #070c18 !important;
+    border-color: #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-drawer-theme-btn {
@@ -5049,12 +5290,12 @@ html[data-theme="dark"] .hk-drawer-theme-btn.is-active {
 
 /* Footer in Dark Mode */
 html[data-theme="dark"] .hk-site-footer {
-    background-color: #070d18 !important;
-    border-top: 1px solid #1e293b !important;
+    background-color: #03050c !important;
+    border-top: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
 html[data-theme="dark"] .hk-copyright strong {
@@ -5063,8 +5304,8 @@ html[data-theme="dark"] .hk-copyright strong {
 
 /* Ad Placements */
 html[data-theme="dark"] .hk-ad-placeholder {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
+    background: #0b1324 !important;
+    border: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hk-ad-ph-info strong {
@@ -5079,7 +5320,7 @@ html[data-theme="dark"] .hk-ad-ph-info span {
 html[data-theme="dark"] .hk-toast {
     background: #0284c7 !important;
     color: #ffffff !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Status Closed & Urgent Pill Overrides */
@@ -5111,5 +5352,98 @@ html[data-theme="dark"] .hk-deadline-closed-text {
     color: #f87171 !important;
 }
 
+/* ==========================================================================
+   GLOBAL FORM CONTROLS IN DARK MODE (100% Guaranteed Legibility)
+   ========================================================================== */
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="email"],
+html[data-theme="dark"] input[type="tel"],
+html[data-theme="dark"] input[type="url"],
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] input[type="date"],
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+    background-color: #070c18 !important;
+    border: 1.5px solid #1b2842 !important;
+    color: #f8fafc !important;
+    -webkit-text-fill-color: #f8fafc !important;
+}
 
+html[data-theme="dark"] input[type="text"]:focus,
+html[data-theme="dark"] input[type="email"]:focus,
+html[data-theme="dark"] input[type="tel"]:focus,
+html[data-theme="dark"] input[type="url"]:focus,
+html[data-theme="dark"] input[type="search"]:focus,
+html[data-theme="dark"] input[type="date"]:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] select:focus {
+    background-color: #0b1426 !important;
+    border-color: #38bdf8 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
+    outline: none !important;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+    color: #64748b !important;
+    -webkit-text-fill-color: #64748b !important;
+}
+
+html[data-theme="dark"] select option {
+    background-color: #0b1426 !important;
+    color: #f8fafc !important;
+}
+
+/* Cookie Popup in Dark Mode */
+html[data-theme="dark"] .hk-cookie-popup-inner {
+    background: rgba(11, 19, 36, 0.96) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid #1b2842 !important;
+    box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="dark"] .hk-cookie-badge {
+    background: rgba(56, 189, 248, 0.12) !important;
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-cookie-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-cookie-desc {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .hk-cookie-link {
+    color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .hk-cookie-close-btn {
+    color: #64748b !important;
+}
+
+html[data-theme="dark"] .hk-cookie-close-btn:hover {
+    background: #152238 !important;
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hk-cookie-btn-accept {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .hk-cookie-btn-decline {
+    background: #152238 !important;
+    color: #cbd5e1 !important;
+    border-color: #2d3d5e !important;
+}
+
+html[data-theme="dark"] .hk-cookie-btn-decline:hover {
+    background: #1b2842 !important;
+    color: #ffffff !important;
+}
 

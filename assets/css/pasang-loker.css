@@ -781,8 +781,8 @@
 .hkpl-form-group select:focus,
 .hkpl-form-group textarea:focus {
     border-color: var(--hk-primary);
-    box-shadow: 0 0 0 3px rgba(2,132,199,0.1);
-    background: #fff;
+    box-shadow: 0 0 0 3px rgba(2,132,199,0.15);
+    background: var(--hk-bg-surface);
 }
 
 .hkpl-form-group textarea {
@@ -1015,35 +1015,58 @@
 }
 
 /* ==========================================================================
-   DARK MODE SUPPORT (PASANG LOKER)
+   DARK MODE SUPPORT (PASANG LOKER — Deep Obsidian & Accessible)
    ========================================================================== */
 html[data-theme="dark"] .hkpl-pkg-card,
 html[data-theme="dark"] .hkpl-form-card,
+html[data-theme="dark"] .hkpl-form-wrap,
 html[data-theme="dark"] .hkpl-faq-item,
 html[data-theme="dark"] .hkpl-guide-card,
 html[data-theme="dark"] .hkpl-sidebar-card,
-html[data-theme="dark"] .hkpl-content-card {
-    background: #1e293b !important;
-    border-color: #334155 !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+html[data-theme="dark"] .hkpl-content-card,
+html[data-theme="dark"] .hkpl-step,
+html[data-theme="dark"] .hkpl-pricing-note {
+    background: #0b1324 !important;
+    border-color: #1b2842 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="dark"] .hkpl-how {
+    background: #070c18 !important;
+}
+
+html[data-theme="dark"] .hkpl-form-section {
+    background: #050811 !important;
+}
+
+html[data-theme="dark"] .hkpl-step {
+    background: #070c18 !important;
+}
+
+html[data-theme="dark"] .hkpl-pricing-note {
+    color: #94a3b8 !important;
 }
 
 html[data-theme="dark"] .hkpl-custom-content {
-    background: #0b1120 !important;
-    border-color: #1e293b !important;
+    background: #050811 !important;
+    border-color: #1b2842 !important;
 }
 
 html[data-theme="dark"] .hkpl-pkg-title,
 html[data-theme="dark"] .hkpl-form-title,
+html[data-theme="dark"] .hkpl-form-info h2,
 html[data-theme="dark"] .hkpl-faq-q,
-html[data-theme="dark"] .hkpl-guide-title {
+html[data-theme="dark"] .hkpl-guide-title,
+html[data-theme="dark"] .hkpl-step-body h3 {
     color: #f8fafc !important;
 }
 
 html[data-theme="dark"] .hkpl-pkg-sub,
 html[data-theme="dark"] .hkpl-form-sub,
+html[data-theme="dark"] .hkpl-form-info > p,
 html[data-theme="dark"] .hkpl-faq-a,
-html[data-theme="dark"] .hkpl-guide-desc {
+html[data-theme="dark"] .hkpl-guide-desc,
+html[data-theme="dark"] .hkpl-step-body p {
     color: #94a3b8 !important;
 }
 
@@ -1051,23 +1074,78 @@ html[data-theme="dark"] .hkpl-pkg-features li {
     color: #cbd5e1 !important;
 }
 
+/* Form Input & Textarea Visibility Fix in Dark Mode */
+html[data-theme="dark"] .hkpl-form-group input,
+html[data-theme="dark"] .hkpl-form-group select,
+html[data-theme="dark"] .hkpl-form-group textarea,
 html[data-theme="dark"] .hkpl-input,
 html[data-theme="dark"] .hkpl-select,
 html[data-theme="dark"] .hkpl-textarea {
-    background: #0f172a !important;
-    border-color: #334155 !important;
+    background: #070c18 !important;
+    border: 1.5px solid #1b2842 !important;
     color: #f8fafc !important;
+    -webkit-text-fill-color: #f8fafc !important;
 }
 
+html[data-theme="dark"] .hkpl-form-group input:focus,
+html[data-theme="dark"] .hkpl-form-group select:focus,
+html[data-theme="dark"] .hkpl-form-group textarea:focus,
 html[data-theme="dark"] .hkpl-input:focus,
 html[data-theme="dark"] .hkpl-select:focus,
 html[data-theme="dark"] .hkpl-textarea:focus {
     border-color: #38bdf8 !important;
-    background: #0f172a !important;
+    background: #0b1426 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
+    outline: none !important;
 }
 
+html[data-theme="dark"] .hkpl-form-group input::placeholder,
+html[data-theme="dark"] .hkpl-form-group textarea::placeholder,
+html[data-theme="dark"] .hkpl-input::placeholder,
+html[data-theme="dark"] .hkpl-textarea::placeholder {
+    color: #64748b !important;
+    -webkit-text-fill-color: #64748b !important;
+}
+
+html[data-theme="dark"] .hkpl-form-group select option {
+    background-color: #0b1426 !important;
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .hkpl-form-group input[type="date"] {
+    color-scheme: dark;
+}
+
+html[data-theme="dark"] .hkpl-form-group label,
 html[data-theme="dark"] .hkpl-label {
     color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .hkpl-contact-email {
+    background: rgba(56, 189, 248, 0.1) !important;
+    color: #38bdf8 !important;
+    border-color: rgba(56, 189, 248, 0.25) !important;
+}
+
+html[data-theme="dark"] .hkpl-contact-wa {
+    background: rgba(34, 197, 94, 0.12) !important;
+    color: #4ade80 !important;
+    border-color: rgba(34, 197, 94, 0.25) !important;
+}
+
+html[data-theme="dark"] .hkpl-faq {
+    background: #050811 !important;
+}
+
+html[data-theme="dark"] .hkpl-faq-q:hover {
+    background: #070c18 !important;
+}
+
+html[data-theme="dark"] .hkpl-faq-a p {
+    border-top: 1px solid #1b2842 !important;
+    color: #94a3b8 !important;
 }
 
 html[data-theme="dark"] .hkpl-pkg-popular {
@@ -1075,22 +1153,23 @@ html[data-theme="dark"] .hkpl-pkg-popular {
 }
 
 html[data-theme="dark"] .hkpl-hero.hkpl-hero-converter {
-    background: linear-gradient(135deg, #050b14 0%, #0c1a2e 50%, #0f2744 100%) !important;
-    border-bottom: 1px solid #1e293b !important;
+    background: linear-gradient(135deg, #03060f 0%, #07101e 50%, #0a192f 100%) !important;
+    border-bottom: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hkpl-hero.hkpl-hero-minimal {
-    background: #0b1120 !important;
-    border-bottom: 1px solid #1e293b !important;
+    background: #070c18 !important;
+    border-bottom: 1px solid #1b2842 !important;
 }
 
 html[data-theme="dark"] .hkpl-converter-card {
-    background: #1e293b !important;
-    border-color: #334155 !important;
-    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.6) !important;
+    background: #0b1324 !important;
+    border-color: #1b2842 !important;
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7) !important;
 }
 
 html[data-theme="dark"] .hkpl-benefit-row {
     color: #cbd5e1 !important;
 }
+
 

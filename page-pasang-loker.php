@@ -563,21 +563,21 @@ if (!wp_style_is('hakajobs-pasang-loker', 'enqueued')) {
                     <div class="hkpl-form-row hkpl-form-row-2">
                         <div class="hkpl-form-group">
                             <label for="hkpl-company"><?php _e('Nama Perusahaan', 'hakajobs'); ?> <span class="hkpl-required">*</span></label>
-                            <input type="text" id="hkpl-company" name="company" placeholder="<?php esc_attr_e('PT Maju Bersama', 'hakajobs'); ?>" required>
+                            <input type="text" id="hkpl-company" name="company" class="hkpl-input" placeholder="<?php esc_attr_e('PT Maju Bersama', 'hakajobs'); ?>" required>
                         </div>
                         <div class="hkpl-form-group">
                             <label for="hkpl-position"><?php _e('Posisi / Jabatan', 'hakajobs'); ?> <span class="hkpl-required">*</span></label>
-                            <input type="text" id="hkpl-position" name="position" placeholder="<?php esc_attr_e('Staff Administrasi', 'hakajobs'); ?>" required>
+                            <input type="text" id="hkpl-position" name="position" class="hkpl-input" placeholder="<?php esc_attr_e('Staff Administrasi', 'hakajobs'); ?>" required>
                         </div>
                     </div>
                     <div class="hkpl-form-row hkpl-form-row-2">
                         <div class="hkpl-form-group">
                             <label for="hkpl-location"><?php _e('Lokasi Kerja', 'hakajobs'); ?> <span class="hkpl-required">*</span></label>
-                            <input type="text" id="hkpl-location" name="location" placeholder="<?php esc_attr_e('Bandar Lampung / Jakarta / Remote', 'hakajobs'); ?>">
+                            <input type="text" id="hkpl-location" name="location" class="hkpl-input" placeholder="<?php esc_attr_e('Bandar Lampung / Jakarta / Remote', 'hakajobs'); ?>">
                         </div>
                         <div class="hkpl-form-group">
                             <label for="hkpl-jobtype"><?php _e('Tipe Pekerjaan', 'hakajobs'); ?></label>
-                            <select id="hkpl-jobtype" name="jobtype">
+                            <select id="hkpl-jobtype" name="jobtype" class="hkpl-select">
                                 <option value="">-- <?php _e('Pilih Tipe', 'hakajobs'); ?> --</option>
                                 <option>Full-Time</option>
                                 <option>Part-Time</option>
@@ -590,25 +590,25 @@ if (!wp_style_is('hakajobs-pasang-loker', 'enqueued')) {
                     <div class="hkpl-form-row hkpl-form-row-2">
                         <div class="hkpl-form-group">
                             <label for="hkpl-salary"><?php _e('Kisaran Gaji', 'hakajobs'); ?></label>
-                            <input type="text" id="hkpl-salary" name="salary" placeholder="<?php esc_attr_e('Rp 3.000.000 – Rp 5.000.000', 'hakajobs'); ?>">
+                            <input type="text" id="hkpl-salary" name="salary" class="hkpl-input" placeholder="<?php esc_attr_e('Rp 3.000.000 – Rp 5.000.000', 'hakajobs'); ?>">
                         </div>
                         <div class="hkpl-form-group">
                             <label for="hkpl-deadline"><?php _e('Deadline Lamaran', 'hakajobs'); ?></label>
-                            <input type="date" id="hkpl-deadline" name="deadline">
+                            <input type="date" id="hkpl-deadline" name="deadline" class="hkpl-input">
                         </div>
                     </div>
                     <div class="hkpl-form-group">
                         <label for="hkpl-desc"><?php _e('Deskripsi Singkat Pekerjaan', 'hakajobs'); ?> <span class="hkpl-required">*</span></label>
-                        <textarea id="hkpl-desc" name="description" rows="4" placeholder="<?php esc_attr_e('Tugas utama, syarat & kualifikasi yang dibutuhkan...', 'hakajobs'); ?>" required></textarea>
+                        <textarea id="hkpl-desc" name="description" rows="4" class="hkpl-textarea" placeholder="<?php esc_attr_e('Tugas utama, syarat & kualifikasi yang dibutuhkan...', 'hakajobs'); ?>" required></textarea>
                     </div>
                     <div class="hkpl-form-row hkpl-form-row-2">
                         <div class="hkpl-form-group">
                             <label for="hkpl-contact"><?php _e('Kontak HRD (WA/Email)', 'hakajobs'); ?> <span class="hkpl-required">*</span></label>
-                            <input type="text" id="hkpl-contact" name="contact" placeholder="<?php esc_attr_e('08xxxxxxxxxx / hrd@perusahaan.com', 'hakajobs'); ?>" required>
+                            <input type="text" id="hkpl-contact" name="contact" class="hkpl-input" placeholder="<?php esc_attr_e('08xxxxxxxxxx / hrd@perusahaan.com', 'hakajobs'); ?>" required>
                         </div>
                         <div class="hkpl-form-group">
                             <label for="hkpl-package"><?php _e('Paket yang Dipilih', 'hakajobs'); ?></label>
-                            <select id="hkpl-package" name="package">
+                            <select id="hkpl-package" name="package" class="hkpl-select">
                                 <option value="<?php echo esc_attr($pl_basic_name); ?>"><?php echo esc_html($pl_basic_name); ?> (<?php echo esc_html($pl_basic_price); ?>)</option>
                                 <option value="<?php echo esc_attr($pl_featured_name); ?>" selected><?php echo esc_html($pl_featured_name); ?> (<?php echo esc_html($pl_featured_price); ?>)</option>
                                 <option value="<?php echo esc_attr($pl_urgent_name); ?>"><?php echo esc_html($pl_urgent_name); ?> (<?php echo esc_html($pl_urgent_price); ?>)</option>

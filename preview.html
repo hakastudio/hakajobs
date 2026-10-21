@@ -245,6 +245,7 @@
                 <button type="button" onclick="setThemeColor('#4f46e5', '#4338ca')" title="Ungu Indigo" style="width:18px;height:18px;border-radius:50%;background:#4f46e5;border:2px solid #fff;cursor:pointer;"></button>
                 <button type="button" onclick="setThemeColor('#ea580c', '#c2410c')" title="Oranye Amber" style="width:18px;height:18px;border-radius:50%;background:#ea580c;border:2px solid #fff;cursor:pointer;"></button>
             </div>
+            <button type="button" onclick="resetHakajobsCookieConsent()" style="background:#1e293b; border:1px solid #334155; color:#38bdf8; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" title="Reset dan Munculkan Kembali Pop-up Cookie">🍪 Uji Pop-up Cookie</button>
         </div>
     </div>
 
@@ -1732,21 +1733,21 @@
                             <div class="hkpl-form-row hkpl-form-row-2">
                                 <div class="hkpl-form-group">
                                     <label for="hkpl-company">Nama Perusahaan <span class="hkpl-required">*</span></label>
-                                    <input type="text" id="hkpl-company" name="company" placeholder="PT Maju Bersama" required>
+                                    <input type="text" id="hkpl-company" name="company" class="hkpl-input" placeholder="PT Maju Bersama" required>
                                 </div>
                                 <div class="hkpl-form-group">
                                     <label for="hkpl-position">Posisi / Jabatan <span class="hkpl-required">*</span></label>
-                                    <input type="text" id="hkpl-position" name="position" placeholder="Staff Administrasi" required>
+                                    <input type="text" id="hkpl-position" name="position" class="hkpl-input" placeholder="Staff Administrasi" required>
                                 </div>
                             </div>
                             <div class="hkpl-form-row hkpl-form-row-2">
                                 <div class="hkpl-form-group">
                                     <label for="hkpl-location">Lokasi Kerja <span class="hkpl-required">*</span></label>
-                                    <input type="text" id="hkpl-location" name="location" placeholder="Jakarta / Bandung / Remote">
+                                    <input type="text" id="hkpl-location" name="location" class="hkpl-input" placeholder="Jakarta / Bandung / Remote">
                                 </div>
                                 <div class="hkpl-form-group">
                                     <label for="hkpl-jobtype">Tipe Pekerjaan</label>
-                                    <select id="hkpl-jobtype" name="jobtype">
+                                    <select id="hkpl-jobtype" name="jobtype" class="hkpl-select">
                                         <option value="">-- Pilih Tipe --</option>
                                         <option>Full-Time</option>
                                         <option>Part-Time</option>
@@ -1759,25 +1760,25 @@
                             <div class="hkpl-form-row hkpl-form-row-2">
                                 <div class="hkpl-form-group">
                                     <label for="hkpl-salary">Kisaran Gaji</label>
-                                    <input type="text" id="hkpl-salary" name="salary" placeholder="Rp 4.000.000 – Rp 6.000.000">
+                                    <input type="text" id="hkpl-salary" name="salary" class="hkpl-input" placeholder="Rp 4.000.000 – Rp 6.000.000">
                                 </div>
                                 <div class="hkpl-form-group">
                                     <label for="hkpl-deadline">Deadline Lamaran</label>
-                                    <input type="date" id="hkpl-deadline" name="deadline">
+                                    <input type="date" id="hkpl-deadline" name="deadline" class="hkpl-input">
                                 </div>
                             </div>
                             <div class="hkpl-form-group">
                                 <label for="hkpl-desc">Deskripsi Singkat Pekerjaan <span class="hkpl-required">*</span></label>
-                                <textarea id="hkpl-desc" name="description" rows="4" placeholder="Tugas utama, syarat & kualifikasi yang dibutuhkan..." required></textarea>
+                                <textarea id="hkpl-desc" name="description" rows="4" class="hkpl-textarea" placeholder="Tugas utama, syarat & kualifikasi yang dibutuhkan..." required></textarea>
                             </div>
                             <div class="hkpl-form-row hkpl-form-row-2">
                                 <div class="hkpl-form-group">
                                     <label for="hkpl-contact">Kontak HRD (WA/Email) <span class="hkpl-required">*</span></label>
-                                    <input type="text" id="hkpl-contact" name="contact" placeholder="08xxxxxxxxxx / hrd@perusahaan.com" required>
+                                    <input type="text" id="hkpl-contact" name="contact" class="hkpl-input" placeholder="08xxxxxxxxxx / hrd@perusahaan.com" required>
                                 </div>
                                 <div class="hkpl-form-group">
                                     <label for="hkpl-package">Paket yang Dipilih</label>
-                                    <select id="hkpl-package" name="package">
+                                    <select id="hkpl-package" name="package" class="hkpl-select">
                                         <option value="Basic">Basic (Gratis)</option>
                                         <option value="Featured" selected>Featured (Rp 50.000)</option>
                                         <option value="Urgent">Urgent (Rp 75.000)</option>
@@ -1955,8 +1956,35 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
     </button>
 
+    <!-- Cookie & Notification Consent Popup -->
+    <aside class="hk-cookie-popup" id="hk-cookie-popup" role="region" aria-label="Pemberitahuan Cookie" aria-hidden="true">
+        <div class="hk-cookie-popup-inner">
+            <button type="button" class="hk-cookie-close-btn" id="hk-cookie-close-btn" aria-label="Tutup">&times;</button>
+            <div class="hk-cookie-top">
+                <span class="hk-cookie-badge">
+                    <span class="hk-cookie-badge-icon">🍪</span>
+                    <span>Privasi & Kenyamanan</span>
+                </span>
+            </div>
+            <h4 class="hk-cookie-title">Kami Menggunakan Cookie</h4>
+            <p class="hk-cookie-desc">
+                Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda, mengingat preferensi tampilan mode gelap, serta meningkatkan kenyamanan pencarian kerja Anda.
+                <a href="#kebijakan-privasi" class="hk-cookie-link" onclick="alert('Membuka rincian Kebijakan Privasi Hakajobs.'); return false;">Kebijakan Privasi</a>
+            </p>
+            <div class="hk-cookie-actions">
+                <button type="button" class="hk-btn hk-btn-primary hk-cookie-btn-accept" id="hk-cookie-accept-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Aktifkan Cookie</span>
+                </button>
+                <button type="button" class="hk-btn hk-btn-subtle hk-cookie-btn-decline" id="hk-cookie-decline-btn">
+                    <span>Hanya Esensial</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
     <!-- Theme JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js?v=2.3"></script>
 
     <script>
         function switchView(viewName) {
@@ -2154,6 +2182,19 @@
             document.querySelectorAll('.hk-site-title').forEach(function(el){ el.style.fontSize = titleSize + 'px'; });
             document.querySelectorAll('.hk-custom-logo img, .custom-logo').forEach(function(el){ el.style.maxHeight = val + 'px'; });
         }
+
+        window.resetHakajobsCookieConsent = function() {
+            var key = 'hk_cookie_consent';
+            document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            try { localStorage.removeItem(key); } catch (e) {}
+            var p = document.getElementById('hk-cookie-popup');
+            if (p) {
+                p.classList.remove('is-hiding');
+                p.classList.add('is-visible');
+                p.setAttribute('aria-hidden', 'false');
+            }
+            showToast('Pop-up cookie di-reset. Menampilkan kembali...');
+        };
 
         if (window.location.search.indexOf('screenshot') !== -1) {
             document.body.classList.add('is-screenshot');

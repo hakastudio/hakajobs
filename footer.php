@@ -277,6 +277,52 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
     </button>
     <?php endif; ?>
 
+    <!-- Cookie & Notification Consent Popup -->
+    <?php
+    $enable_cookie = get_theme_mod('hakajobs_enable_cookie_notice', '1');
+    if ($enable_cookie === '1'):
+        $cookie_badge    = get_theme_mod('hakajobs_cookie_badge', __('🍪 Privasi & Kenyamanan', 'hakajobs'));
+        $cookie_title    = get_theme_mod('hakajobs_cookie_title', __('Kami Menggunakan Cookie', 'hakajobs'));
+        $cookie_text     = get_theme_mod('hakajobs_cookie_text', __('Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda, mengingat preferensi tampilan mode gelap, serta meningkatkan kenyamanan pencarian kerja Anda.', 'hakajobs'));
+        $cookie_accept   = get_theme_mod('hakajobs_cookie_btn_accept', __('Aktifkan Cookie', 'hakajobs'));
+        $cookie_decline  = get_theme_mod('hakajobs_cookie_btn_decline', __('Hanya Esensial', 'hakajobs'));
+        $cookie_priv_url = get_theme_mod('hakajobs_cookie_privacy_link', home_url('/kebijakan-privasi/'));
+        if (empty($cookie_priv_url)) {
+            $cookie_priv_url = home_url('/kebijakan-privasi/');
+        }
+        $cookie_priv_lbl = get_theme_mod('hakajobs_cookie_privacy_label', __('Kebijakan Privasi', 'hakajobs'));
+    ?>
+    <aside class="hk-cookie-popup" id="hk-cookie-popup" role="region" aria-label="<?php esc_attr_e('Pemberitahuan Cookie', 'hakajobs'); ?>" aria-hidden="true">
+        <div class="hk-cookie-popup-inner">
+            <button type="button" class="hk-cookie-close-btn" id="hk-cookie-close-btn" aria-label="<?php esc_attr_e('Tutup', 'hakajobs'); ?>">&times;</button>
+            <div class="hk-cookie-top">
+                <span class="hk-cookie-badge">
+                    <span class="hk-cookie-badge-icon">🍪</span>
+                    <span><?php echo esc_html($cookie_badge); ?></span>
+                </span>
+            </div>
+            <h4 class="hk-cookie-title"><?php echo esc_html($cookie_title); ?></h4>
+            <p class="hk-cookie-desc">
+                <?php echo esc_html($cookie_text); ?>
+                <?php if (!empty($cookie_priv_url)): ?>
+                    <a href="<?php echo esc_url($cookie_priv_url); ?>" class="hk-cookie-link" target="_blank" rel="noopener"><?php echo esc_html($cookie_priv_lbl); ?></a>
+                <?php endif; ?>
+            </p>
+            <div class="hk-cookie-actions">
+                <button type="button" class="hk-btn hk-btn-primary hk-cookie-btn-accept" id="hk-cookie-accept-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span><?php echo esc_html($cookie_accept); ?></span>
+                </button>
+                <?php if (!empty($cookie_decline)): ?>
+                <button type="button" class="hk-btn hk-btn-subtle hk-cookie-btn-decline" id="hk-cookie-decline-btn">
+                    <span><?php echo esc_html($cookie_decline); ?></span>
+                </button>
+                <?php endif; ?>
+            </div>
+        </div>
+    </aside>
+    <?php endif; ?>
+
 </div><!-- #hk-page -->
 
 <?php wp_footer(); ?>
