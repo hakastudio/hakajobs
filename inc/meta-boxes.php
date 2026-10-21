@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Custom Meta Boxes for Lowongan Kerja
  *
@@ -146,11 +146,11 @@ function hakajobs_render_job_details_box($post) {
         <span style="border-left: 1px solid #cbd5e1; height: 20px; margin: 0 8px;"></span>
         <label>
             <input type="checkbox" name="hakajobs_is_featured" value="1" <?php checked($is_featured, '1'); ?> />
-            ⭐ <?php _e('Tandai Lowongan Sorotan (Featured)', 'hakajobs'); ?>
+            <?php _e('Tandai Lowongan Sorotan (Featured)', 'hakajobs'); ?>
         </label>
         <label>
             <input type="checkbox" name="hakajobs_is_urgent" value="1" <?php checked($is_urgent, '1'); ?> />
-            🔥 <?php _e('Dibutuhkan Segera (Urgent)', 'hakajobs'); ?>
+            <?php _e('Dibutuhkan Segera (Urgent)', 'hakajobs'); ?>
         </label>
     </div>
     <?php

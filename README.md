@@ -1,4 +1,4 @@
-﻿# Hakajobs — Tema WordPress Portal Lowongan Kerja (Tanpa Login)
+# Hakajobs — Tema WordPress Portal Lowongan Kerja (Tanpa Login)
 
 Tema WordPress profesional, modern, dan berkecepatan tinggi yang dirancang khusus untuk situs portal info lowongan kerja (job board) **tanpa sistem login yang rumit** bagi pelamar maupun perusahaan.
 
@@ -556,6 +556,6 @@ add_filter('hakajobs_github_repo_url', function() {
 
 ---
 
-© Hakajobs Studio. Dibuat dengan standar WordPress modern & ramah SEO.
+© Haka Digital Network. Dibuat dengan standar WordPress modern & ramah SEO.
 
 

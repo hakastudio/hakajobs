@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.24');
+define('HAKAJOBS_VERSION', '1.0.25');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -388,4 +388,16 @@ function hakajobs_create_default_pages() {
     }
 }
 add_action('after_switch_theme', 'hakajobs_create_default_pages');
+
+/**
+ * Hilangkan tag judul screen-reader "Paginasi pos" dari output the_posts_pagination()
+ * Memastikan tampilan paginasi bersih tanpa teks heading yang bocor ke visual pengguna.
+ */
+function hakajobs_navigation_markup_template($template, $class) {
+    return '
+    <nav class="navigation %1$s" aria-label="%4$s">
+        <div class="nav-links">%3$s</div>
+    </nav>';
+}
+add_filter('navigation_markup_template', 'hakajobs_navigation_markup_template', 10, 2);
 

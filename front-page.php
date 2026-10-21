@@ -193,8 +193,8 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
         ));
 
         if ($featured_query->have_posts()):
-            $featured_badge = get_theme_mod('hakajobs_featured_badge', __('🔥 Lowongan Prioritas', 'hakajobs'));
-            $featured_title = get_theme_mod('hakajobs_featured_section_title', __('🔥 Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera', 'hakajobs'));
+            $featured_badge = get_theme_mod('hakajobs_featured_badge', __('Lowongan Prioritas', 'hakajobs'));
+            $featured_title = get_theme_mod('hakajobs_featured_section_title', __('Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera', 'hakajobs'));
             $featured_sub   = get_theme_mod('hakajobs_featured_section_subtitle', __('Peluang karir terbaik dengan respon rekrutmen tercepat. Kirim lamaranmu sebelum kuota penuh!', 'hakajobs'));
             $featured_link  = get_theme_mod('hakajobs_featured_section_link_text', __('Lihat Semua', 'hakajobs'));
 

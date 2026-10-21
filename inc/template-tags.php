@@ -551,10 +551,10 @@ function hakajobs_render_job_card($post_id = null) {
                                 </span>
                             <?php endif; ?>
                             <?php if ($is_urgent === '1'): ?>
-                                <span class="hk-pill hk-pill-urgent">🔥 <?php _e('Urgent', 'hakajobs'); ?></span>
+                                <span class="hk-pill hk-pill-urgent"><?php _e('Urgent', 'hakajobs'); ?></span>
                             <?php endif; ?>
                             <?php if ($is_featured === '1'): ?>
-                                <span class="hk-pill hk-pill-featured">⭐ <?php _e('Sorotan', 'hakajobs'); ?></span>
+                                <span class="hk-pill hk-pill-featured"><?php _e('Sorotan', 'hakajobs'); ?></span>
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>

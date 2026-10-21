@@ -246,9 +246,11 @@ $has_active_filters = (!empty($current_keyword) || !empty($current_kategori) || 
                     <div class="hk-pagination-wrap">
                         <?php
                         the_posts_pagination(array(
-                            'mid_size'  => 2,
-                            'prev_text' => '&larr; ' . __('Sebelumnya', 'hakajobs'),
-                            'next_text' => __('Selanjutnya', 'hakajobs') . ' &rarr;',
+                            'mid_size'           => 2,
+                            'prev_text'          => '&larr; ' . __('Sebelumnya', 'hakajobs'),
+                            'next_text'          => __('Selanjutnya', 'hakajobs') . ' &rarr;',
+                            'screen_reader_text' => __('Paginasi Lowongan', 'hakajobs'),
+                            'aria_label'         => __('Paginasi Lowongan Kerja', 'hakajobs'),
                         ));
                         ?>
                     </div>

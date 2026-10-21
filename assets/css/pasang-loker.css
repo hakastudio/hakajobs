@@ -810,3 +810,34 @@
         width: 100%;
     }
 }
+
+/* ==========================================================================
+   Custom Content from WordPress Page Editor
+   ========================================================================== */
+.hkpl-custom-content {
+    padding: 56px 0;
+    background: var(--hk-bg-surface);
+    border-top: 1px solid var(--hk-border);
+    border-bottom: 1px solid var(--hk-border);
+}
+
+.hkpl-content-card {
+    background: var(--hk-bg-surface);
+    border: 1px solid var(--hk-border);
+    border-radius: 16px;
+    padding: 36px;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: var(--hk-shadow-sm);
+}
+
+@media (max-width: 768px) {
+    .hkpl-custom-content {
+        padding: 36px 0;
+    }
+    .hkpl-content-card {
+        padding: 24px 18px;
+        border-radius: 12px;
+    }
+}
+

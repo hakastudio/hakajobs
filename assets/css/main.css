@@ -100,15 +100,33 @@ button, input, select, textarea {
     padding-right: 20px;
 }
 
+/* WordPress Screen Reader Text & Accessibility */
+.screen-reader-text,
 .hk-sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.screen-reader-text:focus {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 8px 16px !important;
+    margin: auto !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+    background: #ffffff;
+    color: var(--hk-primary);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
 }
 
 /* ==========================================================================
@@ -2082,6 +2100,10 @@ button, input, select, textarea {
 .hk-pagination-wrap {
     margin-top: 36px;
     text-align: center;
+}
+.hk-pagination-wrap .screen-reader-text,
+.navigation.pagination .screen-reader-text {
+    display: none !important;
 }
 .hk-pagination-wrap .nav-links {
     display: inline-flex;

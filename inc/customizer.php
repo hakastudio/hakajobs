@@ -701,7 +701,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_featured_badge', array(
         'type'        => 'text',
         'label'       => __('Teks Badge / Label Bagian', 'hakajobs'),
-        'description' => __('Contoh: 🔥 Lowongan Prioritas, ⭐ Lowongan Pilihan, dsb.', 'hakajobs'),
+        'description' => __('Contoh: Lowongan Prioritas, Lowongan Pilihan, dsb.', 'hakajobs'),
         'section'     => 'hakajobs_hero_section',
     ));
 
@@ -1282,12 +1282,12 @@ function hakajobs_customize_register($wp_customize) {
     // =========================================================================
     $wp_customize->add_section('hakajobs_postjob_section', array(
         'title'       => __('Halaman Pasang Loker & Tarif', 'hakajobs'),
-        'description' => __('Atur nomor WhatsApp admin, email, dan tarif paket di halaman /pasang-loker/.', 'hakajobs'),
+        'description' => __('Atur semua konten di halaman /pasang-loker/: nomor WhatsApp admin, banner hero, daftar tarif, keunggulan, langkah pasang, hingga banner CTA.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 95,
     ));
 
-    // Nomor WhatsApp Admin
+    // --- 1. KONTAK & PENGIRIMAN ---
     $wp_customize->add_setting('hakajobs_contact_wa', array(
         'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',
@@ -1300,7 +1300,6 @@ function hakajobs_customize_register($wp_customize) {
         'section'     => 'hakajobs_postjob_section',
     ));
 
-    // Email Kontak Admin
     $wp_customize->add_setting('hakajobs_contact_email', array(
         'default'           => '',
         'sanitize_callback' => 'sanitize_email',
@@ -1313,7 +1312,310 @@ function hakajobs_customize_register($wp_customize) {
         'section'     => 'hakajobs_postjob_section',
     ));
 
-    // Tarif Paket Featured
+    // --- 2. HERO / BANNER UTAMA ---
+    $wp_customize->add_setting('hakajobs_pl_hero_badge', array(
+        'default'           => __('Platform Loker Terpercaya', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_hero_badge', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Teks Badge Atas', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_hero_title', array(
+        'default'           => __('Pasang Lowongan Kerja,', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_hero_title', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Judul Baris Pertama', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_hero_highlight', array(
+        'default'           => __('Temukan Kandidat Terbaik', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_hero_highlight', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Judul Baris Kedua (Warna Sorotan)', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_hero_sub', array(
+        'default'           => __('Jangkau ribuan pencari kerja aktif di wilayah Anda. Proses cepat, tayang dalam 1×24 jam, langsung ke target yang tepat.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_hero_sub', array(
+        'type'        => 'textarea',
+        'label'       => __('Hero — Deskripsi / Subjudul', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // Hero Stats
+    $wp_customize->add_setting('hakajobs_pl_stat1_num', array(
+        'default'           => '10rb+',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_stat1_num', array(
+        'type'        => 'text',
+        'label'       => __('Hero Stat 1 — Angka', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+    $wp_customize->add_setting('hakajobs_pl_stat1_label', array(
+        'default'           => __('Pencari Kerja Aktif', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_stat1_label', array(
+        'type'        => 'text',
+        'label'       => __('Hero Stat 1 — Keterangan', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_stat2_num', array(
+        'default'           => '500+',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_stat2_num', array(
+        'type'        => 'text',
+        'label'       => __('Hero Stat 2 — Angka', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+    $wp_customize->add_setting('hakajobs_pl_stat2_label', array(
+        'default'           => __('Lowongan Tayang', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_stat2_label', array(
+        'type'        => 'text',
+        'label'       => __('Hero Stat 2 — Keterangan', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_stat3_num', array(
+        'default'           => '1×24 Jam',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_stat3_num', array(
+        'type'        => 'text',
+        'label'       => __('Hero Stat 3 — Angka', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+    $wp_customize->add_setting('hakajobs_pl_stat3_label', array(
+        'default'           => __('Waktu Tayang', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_stat3_label', array(
+        'type'        => 'text',
+        'label'       => __('Hero Stat 3 — Keterangan', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // --- 3. PENGATURAN TAMPILAN BAGIAN (VISIBILITY) ---
+    $wp_customize->add_setting('hakajobs_pl_show_features', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_show_features', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bagian Keunggulan Platform (6 Kartu)', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_show_how', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_show_how', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bagian Cara Pasang Loker (3 Langkah)', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_show_form', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_show_form', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Form Pengajuan Lowongan', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_show_faq', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_show_faq', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bagian Pertanyaan Umum (FAQ)', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_show_cta', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_show_cta', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Banner Ajakan Bawah (CTA WhatsApp)', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_show_page_content', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_show_page_content', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Konten Tambahan dari Editor Laman WordPress', 'hakajobs'),
+        'description' => __('Jika dicentang, teks atau blok yang Anda tulis di menu Laman > Pasang Loker akan tampil di halaman.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // --- 4. PAKET TARIF ---
+    $wp_customize->add_setting('hakajobs_pl_pricing_badge', array(
+        'default'           => __('Pilih Paket', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_pricing_badge', array(
+        'type'        => 'text',
+        'label'       => __('Tarif — Teks Badge', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_pricing_title', array(
+        'default'           => __('Tarif Pasang Loker', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_pricing_title', array(
+        'type'        => 'text',
+        'label'       => __('Tarif — Judul Utama', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_pricing_subtitle', array(
+        'default'           => __('Pilih paket yang sesuai kebutuhan rekrutmen Anda', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_pricing_subtitle', array(
+        'type'        => 'text',
+        'label'       => __('Tarif — Subjudul / Keterangan', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // Paket 1: Basic
+    $wp_customize->add_setting('hakajobs_pl_basic_name', array(
+        'default'           => 'Basic',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_basic_name', array(
+        'type'        => 'text',
+        'label'       => __('Paket 1 — Nama Paket', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_basic_price', array(
+        'default'           => 'Gratis',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_basic_price', array(
+        'type'        => 'text',
+        'label'       => __('Paket 1 — Harga / Tarif', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_basic_period', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_basic_period', array(
+        'type'        => 'text',
+        'label'       => __('Paket 1 — Periode Waktu (opsional)', 'hakajobs'),
+        'description' => __('Contoh: "/ 30 hari" atau kosongkan jika tidak diperlukan.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_basic_desc', array(
+        'default'           => __('Cocok untuk UKM dan startup yang baru mulai rekrut', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_basic_desc', array(
+        'type'        => 'text',
+        'label'       => __('Paket 1 — Deskripsi Singkat', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_basic_features', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_basic_features', array(
+        'type'        => 'textarea',
+        'label'       => __('Paket 1 — Daftar Fasilitas (Kustom)', 'hakajobs'),
+        'description' => __('Tuliskan satu fasilitas per baris. Beri awalan "-" atau "x" untuk fitur yang tidak didapat (tanda silang merah). Kosongkan untuk memakai fitur bawaan.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_basic_btn', array(
+        'default'           => __('Chat Admin', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_basic_btn', array(
+        'type'        => 'text',
+        'label'       => __('Paket 1 — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // Paket 2: Featured
+    $wp_customize->add_setting('hakajobs_pl_featured_badge', array(
+        'default'           => __('Paling Populer', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_featured_badge', array(
+        'type'        => 'text',
+        'label'       => __('Paket 2 — Label Badge Unggulan', 'hakajobs'),
+        'description' => __('Contoh: "Paling Populer", "Rekomendasi", dsb.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_featured_name', array(
+        'default'           => 'Featured',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_featured_name', array(
+        'type'        => 'text',
+        'label'       => __('Paket 2 — Nama Paket', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
     $wp_customize->add_setting('hakajobs_price_featured', array(
         'default'           => 'Rp 50.000',
         'sanitize_callback' => 'sanitize_text_field',
@@ -1321,12 +1623,67 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_price_featured', array(
         'type'        => 'text',
-        'label'       => __('Tarif Paket Featured', 'hakajobs'),
-        'description' => __('Label harga paket Featured (Populer). Contoh: "Rp 50.000" atau "Rp 99.000".', 'hakajobs'),
+        'label'       => __('Paket 2 — Harga / Tarif', 'hakajobs'),
         'section'     => 'hakajobs_postjob_section',
     ));
 
-    // Tarif Paket Urgent
+    $wp_customize->add_setting('hakajobs_pl_featured_period', array(
+        'default'           => '/ 30 hari',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_featured_period', array(
+        'type'        => 'text',
+        'label'       => __('Paket 2 — Periode Waktu', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_featured_desc', array(
+        'default'           => __('Untuk perusahaan yang ingin mendapat lebih banyak pelamar berkualitas', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_featured_desc', array(
+        'type'        => 'text',
+        'label'       => __('Paket 2 — Deskripsi Singkat', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_featured_features', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_featured_features', array(
+        'type'        => 'textarea',
+        'label'       => __('Paket 2 — Daftar Fasilitas (Kustom)', 'hakajobs'),
+        'description' => __('Tuliskan satu fasilitas per baris. Kosongkan untuk memakai fitur bawaan.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_featured_btn', array(
+        'default'           => __('Pasang Sekarang', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_featured_btn', array(
+        'type'        => 'text',
+        'label'       => __('Paket 2 — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // Paket 3: Urgent
+    $wp_customize->add_setting('hakajobs_pl_urgent_name', array(
+        'default'           => 'Urgent',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_urgent_name', array(
+        'type'        => 'text',
+        'label'       => __('Paket 3 — Nama Paket', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
     $wp_customize->add_setting('hakajobs_price_urgent', array(
         'default'           => 'Rp 75.000',
         'sanitize_callback' => 'sanitize_text_field',
@@ -1334,8 +1691,218 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_price_urgent', array(
         'type'        => 'text',
-        'label'       => __('Tarif Paket Urgent', 'hakajobs'),
-        'description' => __('Label harga paket Urgent (Prioritas). Contoh: "Rp 75.000" atau "Rp 150.000".', 'hakajobs'),
+        'label'       => __('Paket 3 — Harga / Tarif', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_urgent_period', array(
+        'default'           => '/ 14 hari',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_urgent_period', array(
+        'type'        => 'text',
+        'label'       => __('Paket 3 — Periode Waktu', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_urgent_desc', array(
+        'default'           => __('Rekrut cepat! Untuk posisi yang harus diisi dalam waktu singkat', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_urgent_desc', array(
+        'type'        => 'text',
+        'label'       => __('Paket 3 — Deskripsi Singkat', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_urgent_features', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_urgent_features', array(
+        'type'        => 'textarea',
+        'label'       => __('Paket 3 — Daftar Fasilitas (Kustom)', 'hakajobs'),
+        'description' => __('Tuliskan satu fasilitas per baris. Kosongkan untuk memakai fitur bawaan.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_urgent_btn', array(
+        'default'           => __('Pasang Urgent', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_urgent_btn', array(
+        'type'        => 'text',
+        'label'       => __('Paket 3 — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_pricing_note', array(
+        'default'           => __('💡 Catatan: Harga dapat disesuaikan. Hubungi admin untuk paket bundling atau diskon khusus pengguna pertama.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_pricing_note', array(
+        'type'        => 'textarea',
+        'label'       => __('Tarif — Catatan Kaki Bawah Tabel', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // --- 5. CARA PASANG LOKER ---
+    $wp_customize->add_setting('hakajobs_pl_how_title', array(
+        'default'           => __('Cara Pasang Loker', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_how_title', array(
+        'type'        => 'text',
+        'label'       => __('Cara Pasang — Judul Bagian', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_how_subtitle', array(
+        'default'           => __('Hanya 3 langkah, loker Anda langsung tayang', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_how_subtitle', array(
+        'type'        => 'text',
+        'label'       => __('Cara Pasang — Subjudul', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_step1_title', array(
+        'default'           => __('Kirim Detail Lowongan', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_step1_title', array(
+        'type'        => 'text',
+        'label'       => __('Langkah 1 — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+    $wp_customize->add_setting('hakajobs_pl_step1_desc', array(
+        'default'           => __('Hubungi admin via WhatsApp atau email dengan info lengkap: nama perusahaan, posisi, lokasi, gaji, dan kontak HRD.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_step1_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Langkah 1 — Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_step2_title', array(
+        'default'           => __('Verifikasi & Pembayaran', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_step2_title', array(
+        'type'        => 'text',
+        'label'       => __('Langkah 2 — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+    $wp_customize->add_setting('hakajobs_pl_step2_desc', array(
+        'default'           => __('Admin memverifikasi data dan mengkonfirmasi paket pilihan Anda. Pembayaran untuk paket berbayar bisa via transfer bank atau dompet digital.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_step2_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Langkah 2 — Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_step3_title', array(
+        'default'           => __('Loker Tayang!', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_step3_title', array(
+        'type'        => 'text',
+        'label'       => __('Langkah 3 — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+    $wp_customize->add_setting('hakajobs_pl_step3_desc', array(
+        'default'           => __('Lowongan Anda langsung tayang dan dapat ditemukan oleh ribuan pencari kerja aktif, termasuk melalui Google Jobs.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_step3_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Langkah 3 — Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // --- 6. FORM PENGAJUAN DATA ---
+    $wp_customize->add_setting('hakajobs_pl_form_title', array(
+        'default'           => __('Kirim Data Lowongan', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_form_title', array(
+        'type'        => 'text',
+        'label'       => __('Form — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_form_desc', array(
+        'default'           => __('Isi form di bawah ini dan admin akan segera menghubungi Anda dalam waktu 1×24 jam.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_form_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Form — Keterangan / Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_form_btn', array(
+        'default'           => __('Kirim via WhatsApp', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_form_btn', array(
+        'type'        => 'text',
+        'label'       => __('Form — Teks Tombol Kirim', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    // --- 7. BANNER AJAKAN BAWAH (CTA BOTTOM) ---
+    $wp_customize->add_setting('hakajobs_pl_cta_title', array(
+        'default'           => __('Siap Menemukan Karyawan Terbaik?', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_cta_title', array(
+        'type'        => 'text',
+        'label'       => __('CTA Bawah — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_cta_desc', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_cta_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('CTA Bawah — Deskripsi (opsional)', 'hakajobs'),
+        'description' => __('Kosongkan untuk memakai teks standar nama situs.', 'hakajobs'),
+        'section'     => 'hakajobs_postjob_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_pl_cta_btn', array(
+        'default'           => __('Chat WhatsApp Admin', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_pl_cta_btn', array(
+        'type'        => 'text',
+        'label'       => __('CTA Bawah — Teks Tombol WhatsApp', 'hakajobs'),
         'section'     => 'hakajobs_postjob_section',
     ));
 
