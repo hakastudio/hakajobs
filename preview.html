@@ -9,21 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="assets/css/main.css?v=2.2">
-    <link rel="stylesheet" href="assets/css/pasang-loker.css?v=2.2">
-    <script>
-        (function() {
-            try {
-                var saved = localStorage.getItem('hk_theme');
-                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (saved === 'dark' || (!saved && prefersDark)) {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                }
-            } catch(e) {}
-        })();
-    </script>
+    <link rel="stylesheet" href="assets/css/main.css?v=2.3">
+    <link rel="stylesheet" href="assets/css/pasang-loker.css?v=2.3">
+
     <style>
         /* Interactive Preview Switcher Bar */
         .preview-bar {
@@ -228,11 +216,7 @@
             <button class="preview-tab-btn" onclick="switchView('pasangloker')">💼 Pasang Loker (Landing)</button>
         </div>
         <div style="display:flex; align-items:center; gap:16px;">
-            <div style="display:flex; align-items:center; gap:6px; background:#1e293b; padding:3px 6px; border-radius:8px; border:1px solid #334155;">
-                <span style="font-size:11px; color:#cbd5e1; font-weight:600;">🌓 Mode:</span>
-                <button type="button" id="preview-btn-light" onclick="setHakajobsTheme('light')" style="background:#0284c7; border:none; color:#fff; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" title="Mode Terang">☀️ Terang</button>
-                <button type="button" id="preview-btn-dark" onclick="setHakajobsTheme('dark')" style="background:transparent; border:none; color:#cbd5e1; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;" title="Mode Gelap">🌙 Gelap</button>
-            </div>
+
             <div style="display:flex; align-items:center; gap:6px;">
                 <span style="font-size:11px; color:#cbd5e1; font-weight:600;">📏 Ukuran Logo:</span>
                 <input type="range" id="logoSizeSlider" min="24" max="64" value="42" step="2" oninput="changeLogoSize(this.value)" style="width:75px; cursor:pointer;" title="Geser untuk mengatur tinggi logo">
@@ -295,15 +279,7 @@
             </nav>
 
             <div class="hk-header-actions">
-                <!-- Dark Mode Toggle Button -->
-                <button type="button" class="hk-theme-toggle" id="hk-theme-toggle" aria-label="Ganti Mode Gelap/Terang" title="Mode Gelap / Terang">
-                    <span class="hk-theme-icon-sun" aria-hidden="true">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    </span>
-                    <span class="hk-theme-icon-moon" aria-hidden="true">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                    </span>
-                </button>
+
 
                 <!-- Saved Jobs Counter Button -->
                 <button type="button" class="hk-btn-saved-trigger" id="hk-saved-jobs-toggle" aria-label="Buka Lowongan Tersimpan" title="Lowongan Tersimpan">
@@ -339,13 +315,7 @@
                 <li><a href="javascript:void(0)" onclick="switchView('archive'); document.getElementById('hk-drawer-close').click();">Part-Time</a></li>
             </ul>
 
-            <div class="hk-mobile-drawer-theme">
-                <span class="hk-drawer-theme-label">🌓 Mode Tampilan</span>
-                <div class="hk-drawer-theme-switch">
-                    <button type="button" class="hk-drawer-theme-btn" data-theme="light">☀️ Terang</button>
-                    <button type="button" class="hk-drawer-theme-btn" data-theme="dark">🌙 Gelap</button>
-                </div>
-            </div>
+
 
             <div class="hk-mobile-drawer-cta">
                 <a href="javascript:void(0)" onclick="switchView('pasangloker'); document.getElementById('hk-drawer-close').click();" class="hk-btn hk-btn-primary hk-btn-block">
@@ -1968,7 +1938,7 @@
             </div>
             <h4 class="hk-cookie-title">Kami Menggunakan Cookie</h4>
             <p class="hk-cookie-desc">
-                Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda, mengingat preferensi tampilan mode gelap, serta meningkatkan kenyamanan pencarian kerja Anda.
+                Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda, mengingat preferensi kenyamanan Anda, serta meningkatkan pengalaman pencarian kerja Anda.
                 <a href="#privacy-policy" class="hk-cookie-link" onclick="alert('Membuka rincian Kebijakan Privasi (/privacy-policy/).'); return false;">Kebijakan Privasi</a>
             </p>
             <div class="hk-cookie-actions">

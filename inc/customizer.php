@@ -53,8 +53,8 @@ function hakajobs_customize_register($wp_customize) {
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_primary_color', array(
-        'label'       => __('Warna Utama Mode Terang (Tombol, Link)', 'hakajobs'),
-        'description' => __('Warna dominan tema di mode terang — tombol, link, dan elemen sorotan.', 'hakajobs'),
+        'label'       => __('Warna Utama (Tombol, Link)', 'hakajobs'),
+        'description' => __('Warna dominan tema — tombol, link, dan elemen sorotan.', 'hakajobs'),
         'section'     => 'hakajobs_color_section',
     )));
 
@@ -64,7 +64,7 @@ function hakajobs_customize_register($wp_customize) {
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_primary_hover_color', array(
-        'label'   => __('Warna Hover Tombol Utama (Mode Terang)', 'hakajobs'),
+        'label'   => __('Warna Hover Tombol Utama', 'hakajobs'),
         'section' => 'hakajobs_color_section',
     )));
 
@@ -74,18 +74,8 @@ function hakajobs_customize_register($wp_customize) {
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_dark_color', array(
-        'label'       => __('Warna Gelap Bar (Topbar & Footer Mode Terang)', 'hakajobs'),
-        'description' => __('Latar bilah atas dan footer saat dalam mode terang.', 'hakajobs'),
-        'section'     => 'hakajobs_color_section',
-    )));
-
-    $wp_customize->add_setting('hakajobs_accent_color', array(
-        'default'           => '#0f766e',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_accent_color', array(
-        'label'       => __('Warna Aksen (Label Gaji & Sorotan)', 'hakajobs'),
+        'label'       => __('Warna Gelap Bar (Topbar & Footer)', 'hakajobs'),
+        'description' => __('Latar bilah atas dan footer.', 'hakajobs'),
         'section'     => 'hakajobs_color_section',
     )));
 
@@ -105,94 +95,8 @@ function hakajobs_customize_register($wp_customize) {
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_body_bg', array(
-        'label'   => __('Warna Latar Belakang (Mode Terang)', 'hakajobs'),
+        'label'   => __('Warna Latar Belakang (Body)', 'hakajobs'),
         'section' => 'hakajobs_color_section',
-    )));
-
-    // --- Mode Tampilan & Switcher ---
-    $wp_customize->add_setting('hakajobs_default_theme_mode', array(
-        'default'           => 'system',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control('hakajobs_default_theme_mode', array(
-        'label'       => __('Mode Tampilan Default', 'hakajobs'),
-        'description' => __('Pilih mode tampilan awal untuk pengunjung baru.', 'hakajobs'),
-        'section'     => 'hakajobs_color_section',
-        'type'        => 'select',
-        'choices'     => array(
-            'system' => __('Otomatis (Ikuti Pengaturan HP / Laptop Pengunjung)', 'hakajobs'),
-            'light'  => __('Selalu Terang (Light Mode)', 'hakajobs'),
-            'dark'   => __('Selalu Gelap (Dark Mode)', 'hakajobs'),
-        ),
-    ));
-
-    $wp_customize->add_setting('hakajobs_show_theme_toggle', array(
-        'default'           => '1',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control('hakajobs_show_theme_toggle', array(
-        'label'       => __('Tampilkan Tombol Mode Gelap di Header', 'hakajobs'),
-        'description' => __('Izinkan pengunjung beralih antara Mode Terang dan Gelap via tombol matahari/bulan.', 'hakajobs'),
-        'section'     => 'hakajobs_color_section',
-        'type'        => 'checkbox',
-    ));
-
-    // --- Kustomisasi Warna Mode Gelap (Dark Mode Deep Dark) ---
-    $wp_customize->add_setting('hakajobs_dark_body_bg', array(
-        'default'           => '#050811',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_dark_body_bg', array(
-        'label'       => __('Warna Latar Mode Gelap (Body)', 'hakajobs'),
-        'description' => __('Warna latar belakang keseluruhan situs di mode gelap (default: #050811 lebih pekat & gelap).', 'hakajobs'),
-        'section'     => 'hakajobs_color_section',
-    )));
-
-    $wp_customize->add_setting('hakajobs_dark_surface_bg', array(
-        'default'           => '#0b1324',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_dark_surface_bg', array(
-        'label'       => __('Warna Kartu & Permukaan Mode Gelap', 'hakajobs'),
-        'description' => __('Latar kartu loker, form, dan kontainer di mode gelap (default: #0b1324 lebih gelap).', 'hakajobs'),
-        'section'     => 'hakajobs_color_section',
-    )));
-
-    $wp_customize->add_setting('hakajobs_dark_border_color', array(
-        'default'           => '#1b2842',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_dark_border_color', array(
-        'label'       => __('Warna Garis Batas (Border) Mode Gelap', 'hakajobs'),
-        'description' => __('Warna garis tepi kartu dan pemisah di mode gelap (default: #1b2842 halus & elegan).', 'hakajobs'),
-        'section'     => 'hakajobs_color_section',
-    )));
-
-    $wp_customize->add_setting('hakajobs_dark_primary_color', array(
-        'default'           => '#38bdf8',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_dark_primary_color', array(
-        'label'       => __('Warna Utama & Link Mode Gelap', 'hakajobs'),
-        'description' => __('Warna tombol dan link aktif saat mode gelap (default: #38bdf8).', 'hakajobs'),
-        'section'     => 'hakajobs_color_section',
-    )));
-
-    $wp_customize->add_setting('hakajobs_dark_text_color', array(
-        'default'           => '#f8fafc',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hakajobs_dark_text_color', array(
-        'label'       => __('Warna Teks Utama Mode Gelap', 'hakajobs'),
-        'description' => __('Warna judul dan teks isi saat mode gelap (default: #f8fafc cerah & kontras tinggi).', 'hakajobs'),
-        'section'     => 'hakajobs_color_section',
     )));
 
     // =========================================================================
@@ -2431,7 +2335,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_setting('hakajobs_cookie_text', array(
-        'default'           => 'Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda, mengingat preferensi tampilan mode gelap, serta meningkatkan kenyamanan pencarian kerja Anda.',
+        'default'           => 'Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda serta meningkatkan kenyamanan pencarian kerja Anda.',
         'sanitize_callback' => 'sanitize_textarea_field',
         'transport'         => 'refresh',
     ));
@@ -2521,7 +2425,6 @@ function hakajobs_customizer_css() {
     $primary        = get_theme_mod('hakajobs_primary_color', '#0284c7');
     $primary_hover  = get_theme_mod('hakajobs_primary_hover_color', '#0369a1');
     $dark           = get_theme_mod('hakajobs_dark_color', '#0f172a');
-    $accent         = get_theme_mod('hakajobs_accent_color', '#0f766e');
     $wa_color       = get_theme_mod('hakajobs_wa_color', '#16a34a');
     $body_bg        = get_theme_mod('hakajobs_body_bg', '#f8fafc');
     $btt_color      = get_theme_mod('hakajobs_backtotop_color', '#0284c7');
@@ -2531,58 +2434,22 @@ function hakajobs_customizer_css() {
     $logo_icon_size = get_theme_mod('hakajobs_logo_icon_size', 26);
     $hero_bg_start  = get_theme_mod('hakajobs_hero_bg_start', '#0f172a');
     $hero_bg_end    = get_theme_mod('hakajobs_hero_bg_end', '#0f3460');
-
-    // Dark Mode Settings
-    $dark_body_bg   = get_theme_mod('hakajobs_dark_body_bg', '#050811');
-    $dark_surface   = get_theme_mod('hakajobs_dark_surface_bg', '#0b1324');
-    $dark_border    = get_theme_mod('hakajobs_dark_border_color', '#1b2842');
-    $dark_primary   = get_theme_mod('hakajobs_dark_primary_color', '#38bdf8');
-    $dark_text      = get_theme_mod('hakajobs_dark_text_color', '#f8fafc');
     ?>
     <style id="hakajobs-customizer-inline-css">
         :root {
             --hk-primary: <?php echo esc_attr($primary); ?>;
             --hk-primary-hover: <?php echo esc_attr($primary_hover); ?>;
             --hk-dark: <?php echo esc_attr($dark); ?>;
-            --hk-accent: <?php echo esc_attr($accent); ?>;
             --hk-wa-green: <?php echo esc_attr($wa_color); ?>;
             --hk-bg-body: <?php echo esc_attr($body_bg); ?>;
             --hk-btt-color: <?php echo esc_attr($btt_color); ?>;
         }
-        html:not([data-theme="dark"]) .hk-topbar,
-        html:not([data-theme="dark"]) .hk-site-footer {
+        .hk-topbar,
+        .hk-site-footer {
             background-color: var(--hk-dark) !important;
         }
-        html:not([data-theme="dark"]) .hk-hero-pasangloker-theme {
+        .hk-hero-pasangloker-theme {
             background: linear-gradient(135deg, <?php echo esc_attr($hero_bg_start); ?> 0%, #0c2340 50%, <?php echo esc_attr($hero_bg_end); ?> 100%) !important;
-        }
-        /* Customizer Dark Mode Overrides */
-        html[data-theme="dark"] {
-            --hk-bg-body: <?php echo esc_attr($dark_body_bg); ?> !important;
-            --hk-bg-surface: <?php echo esc_attr($dark_surface); ?> !important;
-            --hk-border: <?php echo esc_attr($dark_border); ?> !important;
-            --hk-primary: <?php echo esc_attr($dark_primary); ?> !important;
-            --hk-text-main: <?php echo esc_attr($dark_text); ?> !important;
-        }
-        html[data-theme="dark"],
-        html[data-theme="dark"] body {
-            background-color: var(--hk-bg-body) !important;
-            color: var(--hk-text-main) !important;
-        }
-        html[data-theme="dark"] .hk-job-card,
-        html[data-theme="dark"] .hkpl-pkg-card,
-        html[data-theme="dark"] .hkpl-form-wrap,
-        html[data-theme="dark"] .hkpl-form-card,
-        html[data-theme="dark"] .hkpl-faq-item,
-        html[data-theme="dark"] .hkpl-content-card,
-        html[data-theme="dark"] .hk-widget-card,
-        html[data-theme="dark"] .hk-single-header-card,
-        html[data-theme="dark"] .hk-single-content,
-        html[data-theme="dark"] .hk-page-card,
-        html[data-theme="dark"] .hk-article-card,
-        html[data-theme="dark"] .hk-sticky-apply-card {
-            background-color: var(--hk-bg-surface) !important;
-            border-color: var(--hk-border) !important;
         }
         .hk-back-to-top {
             background-color: var(--hk-btt-color) !important;

@@ -385,8 +385,11 @@
                 }
 
                 // Back to Top visibility
+                if (!backToTopBtn) {
+                    backToTopBtn = document.getElementById('hk-back-to-top');
+                }
                 if (backToTopBtn) {
-                    if (scrollY > 280) {
+                    if (scrollY > 200) {
                         backToTopBtn.classList.add('is-visible');
                     } else {
                         backToTopBtn.classList.remove('is-visible');
@@ -399,15 +402,17 @@
         }
     }, { passive: true });
 
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener('click', function (e) {
+    // Click handler for Back to Top Button (event delegation)
+    document.addEventListener('click', function (e) {
+        var btt = e.target.closest('#hk-back-to-top, .hk-back-to-top');
+        if (btt) {
             e.preventDefault();
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
-        });
-    }
+        }
+    });
 
     // Smart Anti Copy-Paste & Source Link Attribution
     document.addEventListener('copy', function (e) {
@@ -511,113 +516,13 @@
         }
     });
 
-    // =========================================================================
-    // Dark Mode / Theme Mode Controller
-    // =========================================================================
-    var THEME_KEY = 'hk_theme';
-
-    function getPreferredTheme() {
-        var stored = null;
-        try {
-            stored = localStorage.getItem(THEME_KEY);
-        } catch (e) {}
-        if (stored === 'dark' || stored === 'light') return stored;
-        return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    // Clean up any residual dark mode localStorage key and attribute
+    try {
+        localStorage.removeItem('hk_theme');
+    } catch (e) {}
+    if (document.documentElement.hasAttribute('data-theme')) {
+        document.documentElement.removeAttribute('data-theme');
     }
-
-    function applyTheme(theme, save) {
-        if (save) {
-            try {
-                localStorage.setItem(THEME_KEY, theme);
-            } catch (e) {}
-        }
-        document.documentElement.setAttribute('data-theme', theme);
-
-        // Update toggle buttons aria and title
-        var toggles = document.querySelectorAll('.hk-theme-toggle');
-        toggles.forEach(function (btn) {
-            btn.setAttribute('aria-label', theme === 'dark' ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Gelap');
-            btn.setAttribute('title', theme === 'dark' ? 'Mode Terang (Klik untuk ganti)' : 'Mode Gelap (Klik untuk ganti)');
-        });
-
-        // Update mobile drawer buttons if present
-        var mobileBtns = document.querySelectorAll('.hk-drawer-theme-btn');
-        mobileBtns.forEach(function (b) {
-            var bTheme = b.getAttribute('data-theme');
-            if (bTheme === theme) {
-                b.classList.add('is-active');
-            } else {
-                b.classList.remove('is-active');
-            }
-        });
-
-        // Sync preview bar buttons in preview.html if present
-        var prevLight = document.getElementById('preview-btn-light');
-        var prevDark = document.getElementById('preview-btn-dark');
-        if (prevLight && prevDark) {
-            if (theme === 'dark') {
-                prevDark.style.background = '#0284c7';
-                prevDark.style.color = '#ffffff';
-                prevLight.style.background = 'transparent';
-                prevLight.style.color = '#cbd5e1';
-            } else {
-                prevLight.style.background = '#0284c7';
-                prevLight.style.color = '#ffffff';
-                prevDark.style.background = 'transparent';
-                prevDark.style.color = '#cbd5e1';
-            }
-        }
-    }
-
-    function toggleTheme() {
-        var current = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
-        var next = current === 'dark' ? 'light' : 'dark';
-        applyTheme(next, true);
-        showToast(next === 'dark' ? '🌙 Mode Gelap diaktifkan' : '☀️ Mode Terang diaktifkan');
-    }
-
-    // Attach click for desktop & mobile theme toggles
-    document.addEventListener('click', function (e) {
-        var toggle = e.target.closest('.hk-theme-toggle');
-        if (toggle) {
-            e.preventDefault();
-            toggleTheme();
-            return;
-        }
-
-        var drawerBtn = e.target.closest('.hk-drawer-theme-btn');
-        if (drawerBtn) {
-            e.preventDefault();
-            var targetTheme = drawerBtn.getAttribute('data-theme');
-            if (targetTheme) {
-                applyTheme(targetTheme, true);
-                showToast(targetTheme === 'dark' ? '🌙 Mode Gelap diaktifkan' : '☀️ Mode Terang diaktifkan');
-            }
-        }
-    });
-
-    // Expose for external controls like preview bar
-    window.setHakajobsTheme = function (theme) {
-        applyTheme(theme, true);
-        showToast(theme === 'dark' ? '🌙 Mode Gelap diaktifkan' : '☀️ Mode Terang diaktifkan');
-    };
-    window.toggleHakajobsTheme = toggleTheme;
-
-    // Listen for OS scheme change if user hasn't explicitly set preference
-    if (window.matchMedia) {
-        try {
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-                var stored = null;
-                try { stored = localStorage.getItem(THEME_KEY); } catch (err) {}
-                if (!stored) {
-                    applyTheme(e.matches ? 'dark' : 'light', false);
-                }
-            });
-        } catch (e) {}
-    }
-
-    // Initial Theme Sync
-    applyTheme(getPreferredTheme(), false);
 
     // Initial UI Sync
     updateSavedUI();

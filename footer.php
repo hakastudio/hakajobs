@@ -271,7 +271,7 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
     <div class="hk-toast" id="hk-toast" role="status" aria-live="polite"></div>
 
     <!-- Floating Back to Top Button -->
-    <?php if ($enable_btt === '1'): ?>
+    <?php if (!empty($enable_btt) && $enable_btt !== '0' && $enable_btt !== false): ?>
     <button type="button" class="hk-back-to-top" id="hk-back-to-top" aria-label="<?php esc_attr_e('Kembali ke Atas', 'hakajobs'); ?>" title="<?php esc_attr_e('Kembali ke Atas', 'hakajobs'); ?>">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
     </button>
@@ -283,7 +283,7 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
     if ($enable_cookie === '1'):
         $cookie_badge    = get_theme_mod('hakajobs_cookie_badge', __('🍪 Privasi & Kenyamanan', 'hakajobs'));
         $cookie_title    = get_theme_mod('hakajobs_cookie_title', __('Kami Menggunakan Cookie', 'hakajobs'));
-        $cookie_text     = get_theme_mod('hakajobs_cookie_text', __('Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda, mengingat preferensi tampilan mode gelap, serta meningkatkan kenyamanan pencarian kerja Anda.', 'hakajobs'));
+        $cookie_text     = get_theme_mod('hakajobs_cookie_text', __('Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda serta meningkatkan kenyamanan pencarian kerja Anda.', 'hakajobs'));
         $cookie_accept   = get_theme_mod('hakajobs_cookie_btn_accept', __('Aktifkan Cookie', 'hakajobs'));
         $cookie_decline  = get_theme_mod('hakajobs_cookie_btn_decline', __('Hanya Esensial', 'hakajobs'));
         $default_priv_url = function_exists('get_privacy_policy_url') && get_privacy_policy_url() 
