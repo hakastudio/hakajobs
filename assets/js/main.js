@@ -691,6 +691,248 @@
     };
 
         initCookieNotice();
+
+        // Expose showToast globally
+        window.showToast = showToast;
+
+        // ==========================================================================
+        // Interactive Career Exam Simulation (Global & Auto-Delegation)
+        // ==========================================================================
+        window.articleAnswers = window.articleAnswers || {};
+
+        window.selectArticleAnswer = function(num, letter) {
+            if (!window.articleAnswers[num]) {
+                window.articleAnswers[num] = {};
+            }
+            window.articleAnswers[num].selected = letter;
+
+            var group = document.getElementById('options-group-' + num);
+            if (group) {
+                var buttons = group.querySelectorAll('.hk-soal-opt-btn');
+                buttons.forEach(function(btn) {
+                    btn.classList.remove('is-selected');
+                });
+            }
+
+            var activeBtn = document.getElementById('opt-btn-' + num + '-' + letter);
+            if (activeBtn) {
+                activeBtn.classList.add('is-selected');
+            }
+
+            var checkBtn = document.getElementById('btn-check-' + num);
+            if (checkBtn) {
+                checkBtn.disabled = false;
+            }
+        };
+
+        window.checkArticleAnswer = function(num) {
+            var answerData = window.articleAnswers[num];
+            if (!answerData || !answerData.selected) return;
+
+            var box = document.getElementById('soal-box-' + num);
+            if (!box) return;
+
+            var correctKey = box.getAttribute('data-key');
+            var isCorrect = (answerData.selected === correctKey);
+            answerData.correct = correctKey;
+            answerData.isCorrect = isCorrect;
+            answerData.checked = true;
+
+            var group = document.getElementById('options-group-' + num);
+            if (group) {
+                var buttons = group.querySelectorAll('.hk-soal-opt-btn');
+                buttons.forEach(function(btn) {
+                    btn.style.pointerEvents = 'none';
+                });
+            }
+
+            var selectedBtn = document.getElementById('opt-btn-' + num + '-' + answerData.selected);
+            var statusEl = document.getElementById('soal-status-' + num);
+
+            if (isCorrect) {
+                if (selectedBtn) selectedBtn.classList.add('is-correct');
+                if (statusEl) {
+                    statusEl.style.display = 'inline-block';
+                    statusEl.innerHTML = '<span style="color:#059669; background:#ecfdf5; padding:3px 8px; border-radius:4px; border:1px solid #a7f3d0;">✅ Jawaban Benar (+5 Poin)</span>';
+                }
+            } else {
+                if (selectedBtn) selectedBtn.classList.add('is-wrong');
+                var correctBtn = document.getElementById('opt-btn-' + num + '-' + correctKey);
+                if (correctBtn) correctBtn.classList.add('is-correct');
+                if (statusEl) {
+                    statusEl.style.display = 'inline-block';
+                    statusEl.innerHTML = '<span style="color:#dc2626; background:#fef2f2; padding:3px 8px; border-radius:4px; border:1px solid #fecdd3;">❌ Kurang Tepat (Kunci: ' + correctKey + ')</span>';
+                }
+            }
+
+            // Reveal explanation
+            var exp = document.getElementById('exp-' + num);
+            if (exp) {
+                exp.classList.remove('is-hidden');
+                exp.style.display = 'block';
+            }
+
+            var checkBtn = document.getElementById('btn-check-' + num);
+            if (checkBtn) {
+                checkBtn.disabled = true;
+                checkBtn.textContent = 'Evaluasi Selesai';
+            }
+
+            window.updateArticleScoreTracker();
+        };
+
+        window.toggleSoalExplanation = function(num) {
+            var exp = document.getElementById('exp-' + num);
+            if (!exp) return;
+            if (exp.classList.contains('is-hidden') || window.getComputedStyle(exp).display === 'none') {
+                exp.classList.remove('is-hidden');
+                exp.style.display = 'block';
+            } else {
+                exp.classList.add('is-hidden');
+                exp.style.display = 'none';
+            }
+        };
+
+        window.resetArticleAnswer = function(num) {
+            if (window.articleAnswers) {
+                delete window.articleAnswers[num];
+            }
+
+            var box = document.getElementById('soal-box-' + num);
+            if (!box) return;
+
+            var group = document.getElementById('options-group-' + num);
+            if (group) {
+                var buttons = group.querySelectorAll('.hk-soal-opt-btn');
+                buttons.forEach(function(btn) {
+                    btn.classList.remove('is-selected', 'is-correct', 'is-wrong');
+                    btn.style.pointerEvents = '';
+                });
+            }
+
+            var statusEl = document.getElementById('soal-status-' + num);
+            if (statusEl) {
+                statusEl.style.display = 'none';
+                statusEl.innerHTML = '';
+            }
+
+            var exp = document.getElementById('exp-' + num);
+            if (exp) {
+                exp.classList.add('is-hidden');
+                exp.style.display = 'none';
+            }
+
+            var checkBtn = document.getElementById('btn-check-' + num);
+            if (checkBtn) {
+                checkBtn.disabled = true;
+                checkBtn.textContent = 'Periksa Jawaban';
+            }
+
+            window.updateArticleScoreTracker();
+        };
+
+        window.resetAllArticleAnswers = function() {
+            for (var i = 1; i <= 30; i++) {
+                if (document.getElementById('soal-box-' + i)) {
+                    window.resetArticleAnswer(i);
+                }
+            }
+            if (typeof showToast === 'function') {
+                showToast('🔄 Seluruh latihan soal telah di-reset!');
+            }
+        };
+
+        window.updateArticleScoreTracker = function() {
+            var display = document.getElementById('hk-exam-score-display');
+            var status = document.getElementById('hk-exam-score-status');
+            if (!display || !status) return;
+
+            var totalQuestions = document.querySelectorAll('.hk-interactive-soal').length || 10;
+            var totalAnswered = 0;
+            var totalCorrect = 0;
+
+            for (var num in window.articleAnswers) {
+                var item = window.articleAnswers[num];
+                if (item && item.checked) {
+                    totalAnswered++;
+                    if (item.isCorrect) totalCorrect++;
+                }
+            }
+
+            var points = totalCorrect * 5;
+            display.textContent = totalCorrect + ' / ' + totalQuestions + ' Soal Benar (' + points + ' Poin)';
+
+            if (totalAnswered === 0) {
+                status.textContent = 'Pilih jawaban Anda (opsi A, B, C, D, E) pada setiap butir soal di bawah lalu klik "Periksa Jawaban" untuk mengecek ambang batas kelulusan Anda secara instan.';
+            } else if (totalAnswered < totalQuestions) {
+                status.innerHTML = 'Progress: <strong>' + totalAnswered + ' dari ' + totalQuestions + ' soal terjawab</strong>. Selesaikan sisa soal untuk melihat evaluasi kelulusan total.';
+            } else {
+                var threshold = Math.round(totalQuestions * 0.7);
+                if (totalCorrect >= threshold) {
+                    status.innerHTML = '<span style="color:#059669; font-weight:800;">🎉 LUAR BIASA! Skor Anda Melampaui Nilai Ambang Batas (Passing Grade) Resmi dengan Akurasi ' + Math.round((totalCorrect / totalQuestions) * 100) + '%. Pertahankan strategi ini!</span>';
+                } else {
+                    status.innerHTML = '<span style="color:#d97706; font-weight:800;">⚠️ Evaluasi: Skor Anda ' + points + ' poin. Pelajari kembali pembahasan di butir soal yang keliru untuk memperkuat konsep ujian sesungguhnya.</span>';
+                }
+            }
+        };
+
+        // Event delegation for Soal Interaktif
+        document.addEventListener('click', function(e) {
+            var optBtn = e.target.closest('.hk-soal-opt-btn');
+            if (optBtn) {
+                var soalBox = optBtn.closest('.hk-interactive-soal') || optBtn.closest('[id^="soal-box-"]');
+                if (soalBox) {
+                    var num = soalBox.getAttribute('data-soal-num') || soalBox.id.replace('soal-box-', '');
+                    var letter = optBtn.getAttribute('data-letter') || (optBtn.id ? optBtn.id.split('-').pop() : '');
+                    if (num && letter) {
+                        window.selectArticleAnswer(num, letter);
+                    }
+                }
+                return;
+            }
+
+            var checkBtn = e.target.closest('[id^="btn-check-"]');
+            if (checkBtn) {
+                var soalBox = checkBtn.closest('.hk-interactive-soal') || checkBtn.closest('[id^="soal-box-"]');
+                if (soalBox) {
+                    var num = soalBox.getAttribute('data-soal-num') || soalBox.id.replace('soal-box-', '');
+                    if (num) {
+                        window.checkArticleAnswer(num);
+                    }
+                }
+                return;
+            }
+
+            var toggleBtn = e.target.closest('.hk-soal-toggle-btn');
+            if (toggleBtn) {
+                var soalBox = toggleBtn.closest('.hk-interactive-soal') || toggleBtn.closest('[id^="soal-box-"]');
+                if (soalBox) {
+                    var num = soalBox.getAttribute('data-soal-num') || soalBox.id.replace('soal-box-', '');
+                    if (num) {
+                        window.toggleSoalExplanation(num);
+                    }
+                }
+                return;
+            }
+
+            var resetSingleBtn = e.target.closest('.hk-soal-action-row .hk-btn-subtle');
+            if (resetSingleBtn) {
+                var soalBox = resetSingleBtn.closest('.hk-interactive-soal') || resetSingleBtn.closest('[id^="soal-box-"]');
+                if (soalBox) {
+                    var num = soalBox.getAttribute('data-soal-num') || soalBox.id.replace('soal-box-', '');
+                    if (num) {
+                        window.resetArticleAnswer(num);
+                    }
+                }
+                return;
+            }
+
+            var resetAllBtn = e.target.closest('.hk-exam-score-right .hk-btn-subtle');
+            if (resetAllBtn) {
+                window.resetAllArticleAnswers();
+                return;
+            }
+        });
     }
 
     if (document.readyState === 'loading') {

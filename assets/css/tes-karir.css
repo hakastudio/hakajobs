@@ -1103,17 +1103,21 @@
 }
 
 /* Practice Questions Card inside Articles */
-.hk-soal-box {
-    background: #f8fafc;
-    border: 1px solid var(--hk-border);
+.hk-soal-box,
+.hk-interactive-soal {
+    background: #ffffff;
+    border: 1.5px solid var(--hk-border);
     border-radius: var(--hk-radius-lg);
-    padding: 22px;
-    margin: 24px 0;
-    transition: border-color 0.15s ease;
+    padding: 24px;
+    margin: 28px 0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.hk-soal-box:hover {
+.hk-soal-box:hover,
+.hk-interactive-soal:hover {
     border-color: #cbd5e1;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
 .hk-soal-header {

@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.33');
+define('HAKAJOBS_VERSION', '1.0.34');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -108,8 +108,15 @@ function hakajobs_enqueue_assets() {
         );
     }
 
-    // Tes & Karir Stylesheet
-    if (is_page_template('page-tes-karir.php') || is_page_template('page-test-karir.php') || is_page(array('tes-karir', 'test-karir', 'persiapan-karir', 'latihan-soal'))) {
+    // Tes & Karir Stylesheet (Loaded on career pages, single posts, and category archives)
+    if (
+        is_page_template('page-tes-karir.php') || 
+        is_page_template('page-test-karir.php') || 
+        is_page(array('tes-karir', 'test-karir', 'persiapan-karir', 'latihan-soal')) ||
+        is_single() ||
+        is_category() ||
+        is_archive()
+    ) {
         $tk_css = file_exists(HAKAJOBS_DIR . '/assets/css/tes-karir' . $min . '.css') ? '/assets/css/tes-karir' . $min . '.css' : '/assets/css/tes-karir.css';
         wp_enqueue_style(
             'hakajobs-tes-karir',
@@ -305,6 +312,21 @@ function hakajobs_filter_job_query($query) {
 add_action('pre_get_posts', 'hakajobs_filter_job_query');
 
 /**
+ * Dapatkan URL halaman Pusat Tes & Karir
+ */
+function hakajobs_get_career_url() {
+    $career_url = get_theme_mod('hakajobs_nav_career_url', '');
+    if (empty($career_url)) {
+        $career_page = get_page_by_path('tes-karir');
+        if (!$career_page) {
+            $career_page = get_page_by_path('test-karir');
+        }
+        $career_url = $career_page ? get_permalink($career_page->ID) : home_url('/tes-karir/');
+    }
+    return $career_url;
+}
+
+/**
  * Fallback Menu (dapat diatur via Customizer jika belum menggunakan Tampilan > Menu)
  *
  * @param bool $is_mobile
@@ -351,14 +373,7 @@ function hakajobs_fallback_menu($is_mobile = false) {
 
     // Link Halaman: Tes & Karir (Pusat Persiapan Karir & Latihan Tes Kerja)
     if ($show_career_menu === '1') {
-        $career_url = get_theme_mod('hakajobs_nav_career_url', '');
-        if (empty($career_url)) {
-            $career_page = get_page_by_path('tes-karir');
-            if (!$career_page) {
-                $career_page = get_page_by_path('test-karir');
-            }
-            $career_url = $career_page ? get_permalink($career_page->ID) : home_url('/tes-karir/');
-        }
+        $career_url = hakajobs_get_career_url();
         echo '<li><a href="' . esc_url($career_url) . '">' . esc_html($career_label) . '</a></li>';
     }
 
