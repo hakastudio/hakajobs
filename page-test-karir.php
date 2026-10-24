@@ -1,10 +1,10 @@
 <?php
 /**
- * Template Name: Pusat Tes & Karir (Alias test-karir)
- * Template Post Type: page
- *
  * File alias pendukung agar WordPress otomatis mengenali slug 'test-karir'
- * maupun 'tes-karir' dan langsung memuat template pusat tes & karir.
+ * dan langsung memuat template pusat tes & karir.
+ *
+ * (Header Template Name sengaja dihilangkan agar tidak menduplikasi
+ * pilihan template di dropdown Atribut Laman WordPress).
  *
  * @package Hakajobs
  */

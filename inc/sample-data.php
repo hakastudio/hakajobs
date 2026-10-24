@@ -33,26 +33,45 @@ function hakajobs_render_demo_page() {
         if (function_exists('hakajobs_create_default_pages')) {
             hakajobs_create_default_pages();
         }
-        echo '<div class="notice notice-success is-dismissible"><p><strong>Berhasil!</strong> ' . esc_html($count) . ' data lowongan kerja demo telah berhasil dibuat beserta kategori, lokasi, tipe pekerjaan, dan halaman Pasang Loker.</p></div>';
+        if (function_exists('hakajobs_generate_starter_articles')) {
+            hakajobs_generate_starter_articles();
+        }
+        echo '<div class="notice notice-success is-dismissible"><p><strong>Berhasil!</strong> ' . esc_html($count) . ' data lowongan kerja demo dan artikel panduan karir telah berhasil dibuat ke menu Pos dan Lowongan Kerja.</p></div>';
+    }
+
+    if (isset($_POST['hakajobs_install_articles']) && check_admin_referer('hakajobs_demo_nonce_action', 'hakajobs_demo_nonce')) {
+        $art_count = function_exists('hakajobs_generate_starter_articles') ? hakajobs_generate_starter_articles() : 0;
+        echo '<div class="notice notice-success is-dismissible"><p><strong>Berhasil!</strong> ' . esc_html($art_count) . ' artikel panduan tes & karir telah berhasil diterbitkan ke menu <strong>Pos &gt; Semua Pos</strong>.</p></div>';
     }
     ?>
     <div class="wrap" style="max-width:800px;">
-        <h1>📦 Pasang Data Demo Lowongan Kerja</h1>
-        <p>Fitur ini akan secara otomatis membuat contoh lowongan kerja, kategori industri, kota/lokasi, tipe kerja, gaji, nomor WhatsApp HRD, dan benefit pekerjaan agar website Anda langsung terlihat penuh dan siap digunakan seketika.</p>
+        <h1>📦 Pasang Data Demo Lowongan & Artikel Karir</h1>
+        <p>Fitur ini akan secara otomatis membuat contoh lowongan kerja dan artikel edukasi karir lengkap agar website Anda langsung terlihat aktif, profesional, dan siap digunakan.</p>
 
         <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:20px; margin-top:20px;">
-            <h3>Yang akan dibuat:</h3>
+            <h3>1. Data Demo Lowongan Kerja:</h3>
             <ul style="list-style:disc; margin-left:20px; line-height:1.8;">
-                <li><strong>Kategori:</strong> IT & Rekayasa Software, Pemasaran Digital & Media Sosial, Desain Grafis & Kreatif, Akuntansi & Keuangan, Layanan Pelanggan & Administrasi.</li>
-                <li><strong>Lokasi:</strong> Jakarta Pusat, Bandung, Surabaya, Yogyakarta, dan Remote / WFH (Bisa dari Rumah).</li>
-                <li><strong>Tipe Kerja:</strong> Full-Time, Remote / WFH, Part-Time, Magang (Internship), Kontrak.</li>
-                <li><strong>Contoh Loker:</strong> 6+ posisi lowongan kerja realistis lengkap dengan gaji, persyaratan, tanggung jawab, dan link lamaran cepat via WhatsApp / Email.</li>
+                <li><strong>Kategori:</strong> IT & Rekayasa Software, Pemasaran Digital, Desain Grafis, Akuntansi, Layanan Pelanggan.</li>
+                <li><strong>Lokasi & Tipe:</strong> Jakarta Pusat, Bandung, Surabaya, Yogyakarta, dan Remote / WFH.</li>
+                <li><strong>Contoh Loker:</strong> 6+ posisi lowongan kerja realistis lengkap dengan gaji, persyaratan, dan nomor WhatsApp lamaran.</li>
             </ul>
 
-            <form method="post" style="margin-top:24px;">
+            <form method="post" style="margin-top:20px;">
                 <?php wp_nonce_field('hakajobs_demo_nonce_action', 'hakajobs_demo_nonce'); ?>
                 <button type="submit" name="hakajobs_install_demo" class="button button-primary button-hero" onclick="return confirm('Apakah Anda yakin ingin membuat data demo lowongan kerja?');">
-                    🚀 Pasang Sekarang (1-Klik)
+                    🚀 Pasang Semua Demo (Loker + Artikel)
+                </button>
+            </form>
+        </div>
+
+        <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:20px; margin-top:20px;">
+            <h3>2. Khusus Artikel Panduan & Soal Karir (Menu Pos):</h3>
+            <p>Terbitkan 7 artikel panduan karir mendalam (Soal SKD CPNS 2026 HOTS, Rahasia Tes Kraepelin Psikotes, Panduan CV ATS, 20 Tanya Jawab Interview STAR, Ahli K3 Umum, TOEFL BUMN, dan Sertifikasi BNSP) ke dalam menu <strong>Pos &gt; Semua Pos</strong> agar Anda bisa mengedit tulisan, kategori, atau menambah materi secara bebas.</p>
+
+            <form method="post" style="margin-top:20px;">
+                <?php wp_nonce_field('hakajobs_demo_nonce_action', 'hakajobs_demo_nonce'); ?>
+                <button type="submit" name="hakajobs_install_articles" class="button button-secondary" onclick="return confirm('Terbitkan artikel materi karir ke menu Pos?');">
+                    📝 Terbitkan Artikel Materi Karir ke Menu Pos
                 </button>
             </form>
         </div>

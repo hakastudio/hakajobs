@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.31');
+define('HAKAJOBS_VERSION', '1.0.32');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -20,6 +20,7 @@ require_once HAKAJOBS_DIR . '/inc/post-types.php';
 require_once HAKAJOBS_DIR . '/inc/meta-boxes.php';
 require_once HAKAJOBS_DIR . '/inc/template-tags.php';
 require_once HAKAJOBS_DIR . '/inc/sample-data.php';
+require_once HAKAJOBS_DIR . '/inc/starter-articles.php';
 require_once HAKAJOBS_DIR . '/inc/seo.php';
 require_once HAKAJOBS_DIR . '/inc/ads.php';
 require_once HAKAJOBS_DIR . '/inc/customizer.php';
