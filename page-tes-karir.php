@@ -23,10 +23,6 @@ $tk_hero_badge       = get_theme_mod('hakajobs_tk_hero_badge', __('Pusat Persiap
 $tk_hero_title       = get_theme_mod('hakajobs_tk_hero_title', __('Pusat Persiapan Karir &', 'hakajobs'));
 $tk_hero_highlight   = get_theme_mod('hakajobs_tk_hero_highlight', __('Latihan Tes Kerja', 'hakajobs'));
 $tk_hero_desc        = get_theme_mod('hakajobs_tk_hero_desc', __('Tingkatkan peluang lolos seleksi kerja Anda. Pelajari kisi-kisi resmi soal CPNS, BUMN, psikotes kerja perusahaan swasta, hingga panduan resume ATS & teknik wawancara.', 'hakajobs'));
-$tk_search_ph        = get_theme_mod('hakajobs_tk_search_placeholder', __('Cari soal atau materi (contoh: TWK, AKHLAK, Psikotes, CV ATS)...', 'hakajobs'));
-$tk_search_btn       = get_theme_mod('hakajobs_tk_search_btn_text', __('Cari Materi', 'hakajobs'));
-$tk_quick_tags_str   = get_theme_mod('hakajobs_tk_quick_tags', 'SKD CPNS, AKHLAK BUMN, Kraepelin, CV ATS, K3 Umum');
-$tk_quick_tags       = array_filter(array_map('trim', explode(',', $tk_quick_tags_str)));
 
 $tk_show_page_content= get_theme_mod('hakajobs_tk_show_page_content', '1');
 
@@ -107,23 +103,6 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
             </p>
             <?php endif; ?>
 
-            <!-- Search Form (Clean Input Tanpa Tombol) -->
-            <div class="hk-tk-search-box">
-                <div class="hk-tk-search-field">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" id="hkTkSearchInput" placeholder="<?php echo esc_attr($tk_search_ph); ?>" aria-label="<?php esc_attr_e('Cari materi karir', 'hakajobs'); ?>">
-                </div>
-            </div>
-
-            <!-- Quick Search Tags -->
-            <?php if (!empty($tk_quick_tags)): ?>
-            <div class="hk-tk-quick-tags">
-                <span class="hk-tk-quick-label"><?php _e('Pencarian Populer:', 'hakajobs'); ?></span>
-                <?php foreach ($tk_quick_tags as $tag_item): ?>
-                <button type="button" class="hk-tk-tag-chip" data-query="<?php echo esc_attr($tag_item); ?>"><?php echo esc_html($tag_item); ?></button>
-                <?php endforeach; ?>
-            </div>
-            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -1279,54 +1258,6 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
         });
     });
 
-    // Tag clicks trigger instant search highlight
-    var tagButtons = document.querySelectorAll('.hk-tk-tag-chip');
-    tagButtons.forEach(function(tag) {
-        tag.addEventListener('click', function() {
-            var val = tag.getAttribute('data-query');
-            var input = document.getElementById('hkTkSearchInput');
-            if (input) {
-                input.value = val;
-                input.focus();
-            }
-            if (val.toLowerCase().indexOf('skd') !== -1 || val.toLowerCase().indexOf('twk') !== -1) {
-                window.openCareerArticle('skd');
-            } else if (val.toLowerCase().indexOf('cv') !== -1) {
-                window.openCareerArticle('cv');
-            } else if (val.toLowerCase().indexOf('k3') !== -1) {
-                window.openCareerArticle('k3');
-            } else if (val.toLowerCase().indexOf('kraepelin') !== -1 || val.toLowerCase().indexOf('psikotes') !== -1) {
-                window.openCareerArticle('psikotes');
-            } else {
-                window.openCareerArticle('skd');
-            }
-        });
-    });
-
-    var searchInput = document.getElementById('hkTkSearchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                var val = searchInput.value.trim().toLowerCase();
-                if (val) {
-                    if (val.indexOf('cv') !== -1) {
-                        window.openCareerArticle('cv');
-                    } else if (val.indexOf('k3') !== -1) {
-                        window.openCareerArticle('k3');
-                    } else if (val.indexOf('kraepelin') !== -1 || val.indexOf('psikotes') !== -1) {
-                        window.openCareerArticle('psikotes');
-                    } else if (val.indexOf('toefl') !== -1 || val.indexOf('inggris') !== -1) {
-                        window.openCareerArticle('toefl');
-                    } else if (val.indexOf('bnsp') !== -1 || val.indexOf('sertifikasi') !== -1) {
-                        window.openCareerArticle('bnsp');
-                    } else {
-                        window.openCareerArticle('skd');
-                    }
-                }
-            }
-        });
-    }
 
     // Initialize Quiz
     renderActiveQuiz('twk', 0);

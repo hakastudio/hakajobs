@@ -2464,29 +2464,6 @@ function hakajobs_customize_register($wp_customize) {
         'section'     => 'hakajobs_teskarir_section',
     ));
 
-    $wp_customize->add_setting('hakajobs_tk_search_placeholder', array(
-        'default'           => 'Cari soal atau materi (contoh: TWK, AKHLAK, Psikotes, CV ATS)...',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control('hakajobs_tk_search_placeholder', array(
-        'type'        => 'text',
-        'label'       => __('Hero — Placeholder Kotak Pencarian', 'hakajobs'),
-        'section'     => 'hakajobs_teskarir_section',
-    ));
-
-    $wp_customize->add_setting('hakajobs_tk_quick_tags', array(
-        'default'           => 'SKD CPNS, AKHLAK BUMN, Kraepelin, CV ATS, K3 Umum',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control('hakajobs_tk_quick_tags', array(
-        'type'        => 'text',
-        'label'       => __('Hero — Tag Pencarian Populer', 'hakajobs'),
-        'description' => __('Pisahkan dengan koma. Contoh: SKD CPNS, AKHLAK BUMN, Kraepelin, CV ATS', 'hakajobs'),
-        'section'     => 'hakajobs_teskarir_section',
-    ));
-
     // --- 2. INTEGRASI EDITOR LAMAN WP ---
     $wp_customize->add_setting('hakajobs_tk_show_page_content', array(
         'default'           => '1',

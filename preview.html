@@ -1921,23 +1921,6 @@
                         Tingkatkan peluang lolos seleksi kerja Anda. Pelajari kisi-kisi resmi soal CPNS, BUMN, psikotes kerja perusahaan swasta, hingga panduan resume ATS &amp; teknik wawancara kerja.
                     </p>
 
-                    <!-- Search Form (Clean Input Tanpa Tombol) -->
-                    <div class="hk-tk-search-box">
-                        <div class="hk-tk-search-field">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            <input type="text" id="hkTkSearchInput" placeholder="Cari soal atau materi (contoh: TWK, AKHLAK, Psikotes, CV ATS)..." aria-label="Cari materi karir">
-                        </div>
-                    </div>
-
-                    <!-- Quick Search Tags -->
-                    <div class="hk-tk-quick-tags">
-                        <span class="hk-tk-quick-label">Pencarian Populer:</span>
-                        <button type="button" class="hk-tk-tag-chip" data-query="SKD CPNS">SKD CPNS</button>
-                        <button type="button" class="hk-tk-tag-chip" data-query="AKHLAK BUMN">AKHLAK BUMN</button>
-                        <button type="button" class="hk-tk-tag-chip" data-query="Kraepelin">Psikotes Kraepelin</button>
-                        <button type="button" class="hk-tk-tag-chip" data-query="CV ATS">CV ATS</button>
-                        <button type="button" class="hk-tk-tag-chip" data-query="K3 Umum">Sertifikat K3</button>
-                    </div>
                 </div>
             </div>
         </section>
@@ -3470,42 +3453,6 @@
                 });
             });
 
-            var tagButtons = document.querySelectorAll('.hk-tk-tag-chip');
-            tagButtons.forEach(function(tag) {
-                tag.addEventListener('click', function() {
-                    var val = tag.getAttribute('data-query');
-                    var input = document.getElementById('hkTkSearchInput');
-                    if (input) {
-                        input.value = val;
-                        input.focus();
-                    }
-                    if (val.toLowerCase().indexOf('skd') !== -1 || val.toLowerCase().indexOf('twk') !== -1) {
-                        openCareerArticle('skd');
-                    } else if (val.toLowerCase().indexOf('cv') !== -1) {
-                        openCareerArticle('cv');
-                    } else if (val.toLowerCase().indexOf('k3') !== -1) {
-                        openCareerArticle('k3');
-                    } else if (val.toLowerCase().indexOf('kraepelin') !== -1 || val.toLowerCase().indexOf('psikotes') !== -1) {
-                        openCareerArticle('psikotes');
-                    } else {
-                        openCareerArticle('skd');
-                    }
-                });
-            });
-
-            var searchInput = document.getElementById('hkTkSearchInput');
-            if (searchInput) {
-                searchInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        var val = searchInput.value.trim();
-                        if (val) {
-                            showToast('Mencari materi: "' + val + '"');
-                            openCareerArticle('skd');
-                        }
-                    }
-                });
-            }
 
             // Copy CV Template Button
             document.addEventListener('click', function(e) {
