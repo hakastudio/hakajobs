@@ -11,6 +11,28 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Helper aman untuk mendapatkan atau membuat kategori (menggunakan wp_insert_term)
+ */
+function hakajobs_get_or_create_category($name, $parent_id = 0) {
+    if (empty($name)) {
+        return 0;
+    }
+    $term = term_exists($name, 'category');
+    if ($term) {
+        return is_array($term) ? (int)$term['term_id'] : (int)$term;
+    }
+    $args = array();
+    if ($parent_id > 0) {
+        $args['parent'] = (int)$parent_id;
+    }
+    $new_term = wp_insert_term($name, 'category', $args);
+    if (!is_wp_error($new_term) && isset($new_term['term_id'])) {
+        return (int)$new_term['term_id'];
+    }
+    return 0;
+}
+
+/**
  * Buat atau pastikan artikel panduan karir terbit di menu Pos
  */
 function hakajobs_generate_starter_articles() {
@@ -21,7 +43,10 @@ function hakajobs_generate_starter_articles() {
     }
 
     $created_count = 0;
-    $parent_cat_id = wp_create_category(__('Tips & Karir', 'hakajobs'));
+    $parent_cat_id = hakajobs_get_or_create_category(__('Tips & Karir', 'hakajobs'));
+
+    $admin_users = get_users(array('role' => 'administrator', 'number' => 1));
+    $author_id = !empty($admin_users) ? $admin_users[0]->ID : (get_current_user_id() ? get_current_user_id() : 1);
 
     foreach ($articles as $art) {
         $existing = get_page_by_title($art['title'], OBJECT, 'post');
@@ -30,10 +55,13 @@ function hakajobs_generate_starter_articles() {
         }
 
         // Kategori spesifik
-        $cat_ids = array($parent_cat_id);
+        $cat_ids = array();
+        if ($parent_cat_id > 0) {
+            $cat_ids[] = $parent_cat_id;
+        }
         if (!empty($art['category'])) {
-            $sub_cat_id = wp_create_category($art['category'], $parent_cat_id);
-            if ($sub_cat_id && !is_wp_error($sub_cat_id)) {
+            $sub_cat_id = hakajobs_get_or_create_category($art['category'], $parent_cat_id);
+            if ($sub_cat_id > 0) {
                 $cat_ids[] = $sub_cat_id;
             }
         }
@@ -43,7 +71,7 @@ function hakajobs_generate_starter_articles() {
             'post_content'  => $art['content'],
             'post_status'   => 'publish',
             'post_type'     => 'post',
-            'post_author'   => get_current_user_id() ? get_current_user_id() : 1,
+            'post_author'   => $author_id,
             'post_category' => $cat_ids,
             'tags_input'    => $art['tags'],
         ));
@@ -57,9 +85,12 @@ function hakajobs_generate_starter_articles() {
 }
 
 /**
- * Otomatis instal artikel awal satu kali jika Pos masih kosong
+ * Otomatis instal artikel awal satu kali di Dashboard Admin jika Pos masih kosong
  */
 function hakajobs_auto_install_starter_articles() {
+    if (!is_admin()) {
+        return;
+    }
     if (get_option('hakajobs_starter_articles_v1')) {
         return;
     }
@@ -72,4 +103,4 @@ function hakajobs_auto_install_starter_articles() {
 
     update_option('hakajobs_starter_articles_v1', '1');
 }
-add_action('init', 'hakajobs_auto_install_starter_articles', 25);
+add_action('admin_init', 'hakajobs_auto_install_starter_articles');
