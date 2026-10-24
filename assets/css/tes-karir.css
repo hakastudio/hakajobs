@@ -64,31 +64,36 @@
     margin: 0 auto 28px;
 }
 
-/* Search Box in Hero */
+/* Search Box in Hero (Tanpa Tombol) */
 .hk-tk-search-box {
     background: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: var(--hk-radius-lg);
-    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.45);
-    padding: 8px;
-    max-width: 680px;
-    margin: 0 auto 18px;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--hk-radius-pill, 9999px);
+    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.35);
+    padding: 4px 8px;
+    max-width: 640px;
+    margin: 0 auto 20px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.hk-tk-search-box:focus-within {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25), 0 20px 40px -10px rgba(0, 0, 0, 0.4);
 }
 
 .hk-tk-search-field {
     flex: 1;
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    height: 48px;
-    gap: 10px;
+    padding: 0 16px;
+    height: 50px;
+    gap: 12px;
 }
 
 .hk-tk-search-field svg {
-    color: var(--hk-text-light);
+    color: var(--hk-primary);
     flex-shrink: 0;
 }
 
@@ -96,31 +101,14 @@
     width: 100%;
     border: none;
     outline: none;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--hk-text-main);
     background: transparent;
 }
 
-.hk-tk-search-btn {
-    background: var(--hk-primary);
-    color: #ffffff;
-    border: none;
-    padding: 0 24px;
-    height: 48px;
-    border-radius: var(--hk-radius-md);
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-}
-
-.hk-tk-search-btn:hover {
-    background: var(--hk-primary-hover);
-    transform: translateY(-1px);
+.hk-tk-search-field input::placeholder {
+    color: #94a3b8;
 }
 
 .hk-tk-quick-tags {
@@ -1244,19 +1232,191 @@
     color: #0369a1;
 }
 
-/* Code / Template Display Box */
-.hk-template-display-box {
-    background: #1e293b;
-    color: #f8fafc;
-    border-radius: var(--hk-radius-md);
-    padding: 20px;
-    margin: 20px 0;
-    font-family: var(--hk-font-mono, monospace);
-    font-size: 13px;
-    line-height: 1.6;
-    overflow-x: auto;
+/* ==========================================================================
+   CV Template Card & Dedicated Copy Button
+   ========================================================================== */
+.hk-template-wrapper {
+    margin: 28px 0;
+    border-radius: var(--hk-radius-lg, 12px);
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
     border: 1px solid #334155;
+    background: #0f172a;
+}
+
+.hk-template-header {
+    background: #1e293b;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid #334155;
+    flex-wrap: wrap;
+}
+
+.hk-template-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #f1f5f9;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.hk-btn-copy-template {
+    background: var(--hk-primary, #0284c7) !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 8px 18px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    font-family: inherit !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    transition: all 0.15s ease !important;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35) !important;
+    line-height: 1 !important;
+}
+
+.hk-btn-copy-template:hover {
+    background: var(--hk-primary-hover, #0369a1) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.45) !important;
+}
+
+.hk-btn-copy-template:active {
+    transform: translateY(0) !important;
+}
+
+.hk-btn-copy-template.is-copied {
+    background: #10b981 !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35) !important;
+}
+
+.hk-template-display-box {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 22px;
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    overflow-x: auto;
+    border: none;
     white-space: pre-wrap;
+    word-break: break-word;
+    user-select: all;
+}
+
+/* ==========================================================================
+   Interactive Soal Action Row & Buttons (Rapi & Sejajar)
+   ========================================================================== */
+.hk-soal-action-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hk-border);
+}
+
+.hk-soal-action-row button,
+.hk-soal-action-row .hk-btn,
+.hk-soal-action-row .hk-soal-toggle-btn {
+    height: 38px !important;
+    padding: 0 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    font-family: inherit !important;
+    border-radius: 8px !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    transition: all 0.15s ease !important;
+    text-decoration: none !important;
+}
+
+/* Primary Button (Periksa Jawaban) */
+.hk-soal-action-row .hk-btn-primary,
+.hk-soal-action-row [id^="btn-check-"] {
+    background: var(--hk-primary) !important;
+    color: #ffffff !important;
+    border: 1.5px solid var(--hk-primary) !important;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2) !important;
+}
+
+.hk-soal-action-row .hk-btn-primary:hover:not(:disabled),
+.hk-soal-action-row [id^="btn-check-"]:hover:not(:disabled) {
+    background: var(--hk-primary-hover) !important;
+    border-color: var(--hk-primary-hover) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3) !important;
+}
+
+/* Disabled State for Periksa Jawaban */
+.hk-soal-action-row .hk-btn-primary:disabled,
+.hk-soal-action-row [id^="btn-check-"]:disabled {
+    background: #f1f5f9 !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #94a3b8 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.9 !important;
+}
+
+/* Toggle Kunci & Pembahasan */
+.hk-soal-action-row .hk-soal-toggle-btn {
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: var(--hk-primary) !important;
+}
+
+.hk-soal-action-row .hk-soal-toggle-btn:hover {
+    background: #f0f9ff !important;
+    border-color: var(--hk-primary) !important;
+    color: var(--hk-primary-hover) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Reset / Subtle Button */
+.hk-soal-action-row .hk-btn-subtle {
+    background: #f8fafc !important;
+    border: 1.5px solid var(--hk-border) !important;
+    color: var(--hk-text-muted) !important;
+}
+
+.hk-soal-action-row .hk-btn-subtle:hover {
+    background: #fee2e2 !important;
+    border-color: #fca5a5 !important;
+    color: #b91c1c !important;
+    transform: translateY(-1px) !important;
+}
+
+@media (max-width: 640px) {
+    .hk-soal-action-row {
+        gap: 8px;
+    }
+    .hk-soal-action-row button,
+    .hk-soal-action-row .hk-btn,
+    .hk-soal-action-row .hk-soal-toggle-btn {
+        height: 36px !important;
+        padding: 0 12px !important;
+        font-size: 12.5px !important;
+    }
+    .hk-soal-action-row .hk-btn-subtle {
+        margin-left: 0 !important;
+    }
 }
 
 /* Article Author Box */

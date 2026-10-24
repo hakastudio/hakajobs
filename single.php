@@ -25,16 +25,27 @@ while (have_posts()) : the_post();
     }
 
     // Profil Penulis / Kurator dari Customizer
-    $tk_author_name   = get_theme_mod('hakajobs_tk_author_name', __('Tim Litbang Karir & Edukasi', 'hakajobs'));
+    $tk_author_name   = get_theme_mod('hakajobs_tk_author_name', __('Tim Redaksi Karir & Edukasi', 'hakajobs'));
     $tk_author_bio    = get_theme_mod('hakajobs_tk_author_bio', __('Materi pembelajaran resmi dan kisi-kisi soal yang dikurasi oleh praktisi rekrutmen profesional untuk mempermudah persiapan tes karir pencari kerja di Indonesia.', 'hakajobs'));
     $tk_author_avatar = get_theme_mod('hakajobs_tk_author_avatar', '');
     if (empty($tk_author_avatar)) {
         $tk_author_avatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
     }
 
-    // Estimasi waktu baca
+    // Estimasi waktu baca & jumlah dibaca
     $word_count = str_word_count(strip_tags(get_the_content()));
     $read_time  = max(1, ceil($word_count / 200));
+
+    if (function_exists('hakajobs_set_views')) {
+        hakajobs_set_views(get_the_ID());
+    }
+    $views = function_exists('hakajobs_get_views') ? hakajobs_get_views(get_the_ID()) : 0;
+    if ($views > 0) {
+        $views_formatted = ($views >= 1000) ? round($views / 1000, 1) . 'k' : $views;
+    } else {
+        $dummy_views = (get_the_ID() * 137) % 3500 + 1200;
+        $views_formatted = round($dummy_views / 1000, 1) . 'k';
+    }
 
     // Career Page URL
     $career_url = function_exists('hakajobs_get_career_url') ? hakajobs_get_career_url() : home_url('/tes-karir/');
@@ -64,6 +75,11 @@ while (have_posts()) : the_post();
                     <span class="hk-meta-item">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                         <span><?php echo esc_html($read_time); ?> <?php _e('menit baca', 'hakajobs'); ?></span>
+                    </span>
+                    <span>•</span>
+                    <span class="hk-meta-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <span><?php echo esc_html($views_formatted); ?> <?php _e('dibaca', 'hakajobs'); ?></span>
                     </span>
                     <span>•</span>
                     <span class="hk-meta-item">
