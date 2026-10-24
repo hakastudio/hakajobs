@@ -2317,7 +2317,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_sidebar_show_jobseeker_cta', array(
         'type'        => 'checkbox',
         'label'       => __('5. Tampilkan Widget CTA "Sudah Siap Melamar Pekerjaan?"', 'hakajobs'),
-        'description' => __('Menampilkan kartu ajakan melamar lowongan kerja di sidebar kanan untuk pengunjung pencari kerja.', 'hakajobs'),
+        'description' => __('Menampilkan kartu ajakan melamar lowongan kerja di sidebar kanan (berlaku untuk Beranda, Arsip, dan Halaman Tes & Karir).', 'hakajobs'),
         'section'     => 'hakajobs_sidebar_section',
     ));
 
@@ -2340,6 +2340,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_sidebar_jobseeker_desc', array(
         'type'        => 'textarea',
         'label'       => __('CTA Pencari Kerja — Deskripsi / Ajakan', 'hakajobs'),
+        'description' => __('Teks ajakan melamar pekerjaan (otomatis diterapkan ke seluruh kartu CTA di sidebar website).', 'hakajobs'),
         'section'     => 'hakajobs_sidebar_section',
     ));
 
@@ -2935,6 +2936,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_tk_cta_loker_desc', array(
         'type'        => 'textarea',
         'label'       => __('CTA Sidebar — Deskripsi / Ajakan', 'hakajobs'),
+        'description' => __('Khusus untuk halaman Pusat Tes & Karir. Jika dibiarkan default, otomatis mengikuti teks yang disetel pada menu Sidebar Kanan.', 'hakajobs'),
         'section'     => 'hakajobs_teskarir_section',
     ));
 

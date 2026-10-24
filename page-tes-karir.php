@@ -78,18 +78,42 @@ if (empty($tk_author_avatar)) {
 }
 
 // CTA Siap Melamar Lowongan Kerja (Disetting di WP Dashboard)
-$tk_show_cta_loker   = get_theme_mod('hakajobs_tk_show_cta_loker', '1');
-$tk_cta_loker_title  = get_theme_mod('hakajobs_tk_cta_loker_title', __('Sudah Siap Melamar Pekerjaan?', 'hakajobs'));
-$tk_cta_loker_desc   = get_theme_mod('hakajobs_tk_cta_loker_desc', __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs'));
-$tk_cta_loker_btn    = get_theme_mod('hakajobs_tk_cta_loker_btn_text', __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'));
-$tk_cta_loker_url    = get_theme_mod('hakajobs_tk_cta_loker_btn_url', '');
+// Sinkron otomatis dengan menu "Sidebar Kanan" (Section 12) & "Halaman Pusat Tes & Karir" (Section 14)
+$sidebar_cta_show    = get_theme_mod('hakajobs_sidebar_show_jobseeker_cta', '1');
+$tk_show_cta_loker   = get_theme_mod('hakajobs_tk_show_cta_loker', $sidebar_cta_show);
+
+$sidebar_cta_title   = get_theme_mod('hakajobs_sidebar_jobseeker_title');
+$tk_cta_loker_title  = get_theme_mod('hakajobs_tk_cta_loker_title');
+$default_cta_title   = __('Sudah Siap Melamar Pekerjaan?', 'hakajobs');
+$tk_cta_loker_title  = (!empty($sidebar_cta_title) && (empty($tk_cta_loker_title) || $tk_cta_loker_title === $default_cta_title)) 
+    ? $sidebar_cta_title 
+    : (!empty($tk_cta_loker_title) ? $tk_cta_loker_title : $default_cta_title);
+
+$sidebar_cta_desc    = get_theme_mod('hakajobs_sidebar_jobseeker_desc');
+$tk_cta_loker_desc   = get_theme_mod('hakajobs_tk_cta_loker_desc');
+$default_cta_desc    = __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs');
+$tk_cta_loker_desc   = (!empty($sidebar_cta_desc) && (empty($tk_cta_loker_desc) || $tk_cta_loker_desc === $default_cta_desc)) 
+    ? $sidebar_cta_desc 
+    : (!empty($tk_cta_loker_desc) ? $tk_cta_loker_desc : $default_cta_desc);
+
+$sidebar_cta_btn     = get_theme_mod('hakajobs_sidebar_jobseeker_btn_text');
+$tk_cta_loker_btn    = get_theme_mod('hakajobs_tk_cta_loker_btn_text');
+$default_cta_btn     = __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs');
+$tk_cta_loker_btn    = (!empty($sidebar_cta_btn) && (empty($tk_cta_loker_btn) || $tk_cta_loker_btn === $default_cta_btn)) 
+    ? $sidebar_cta_btn 
+    : (!empty($tk_cta_loker_btn) ? $tk_cta_loker_btn : $default_cta_btn);
+
+$sidebar_cta_url     = get_theme_mod('hakajobs_sidebar_jobseeker_btn_url');
+$tk_cta_loker_url    = get_theme_mod('hakajobs_tk_cta_loker_btn_url');
 if (empty($tk_cta_loker_url)) {
-    $tk_cta_loker_url = get_post_type_archive_link('lowongan');
+    $tk_cta_loker_url = !empty($sidebar_cta_url) ? $sidebar_cta_url : get_post_type_archive_link('lowongan');
     if (empty($tk_cta_loker_url)) {
         $tk_cta_loker_url = home_url('/lowongan/');
     }
 }
-$tk_cta_loker_target = get_theme_mod('hakajobs_tk_cta_loker_btn_target', '_self');
+
+$sidebar_cta_target  = get_theme_mod('hakajobs_sidebar_jobseeker_btn_target', '_self');
+$tk_cta_loker_target = get_theme_mod('hakajobs_tk_cta_loker_btn_target', $sidebar_cta_target);
 
 // Enqueue styles jika belum terpanggil oleh wp_enqueue_scripts
 if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {

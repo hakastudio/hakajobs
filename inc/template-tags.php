@@ -1083,12 +1083,41 @@ function hakajobs_get_wa_broadcast_url($post_id = null) {
  * @param array $custom_args
  */
 function hakajobs_render_jobseeker_cta($custom_args = array()) {
+    $sidebar_title = get_theme_mod('hakajobs_sidebar_jobseeker_title');
+    $tk_title      = get_theme_mod('hakajobs_tk_cta_loker_title');
+    $default_title = __('Sudah Siap Melamar Pekerjaan?', 'hakajobs');
+    $title = (!empty($sidebar_title) && (empty($tk_title) || $tk_title === $default_title)) 
+        ? $sidebar_title 
+        : (!empty($tk_title) ? $tk_title : $default_title);
+
+    $sidebar_desc = get_theme_mod('hakajobs_sidebar_jobseeker_desc');
+    $tk_desc      = get_theme_mod('hakajobs_tk_cta_loker_desc');
+    $default_desc = __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs');
+    $desc = (!empty($sidebar_desc) && (empty($tk_desc) || $tk_desc === $default_desc)) 
+        ? $sidebar_desc 
+        : (!empty($tk_desc) ? $tk_desc : $default_desc);
+
+    $sidebar_btn = get_theme_mod('hakajobs_sidebar_jobseeker_btn_text');
+    $tk_btn      = get_theme_mod('hakajobs_tk_cta_loker_btn_text');
+    $default_btn = __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs');
+    $btn_text = (!empty($sidebar_btn) && (empty($tk_btn) || $tk_btn === $default_btn)) 
+        ? $sidebar_btn 
+        : (!empty($tk_btn) ? $tk_btn : $default_btn);
+
+    $sidebar_url = get_theme_mod('hakajobs_sidebar_jobseeker_btn_url');
+    $tk_url      = get_theme_mod('hakajobs_tk_cta_loker_btn_url');
+    $btn_url = !empty($sidebar_url) ? $sidebar_url : (!empty($tk_url) ? $tk_url : '');
+
+    $sidebar_target = get_theme_mod('hakajobs_sidebar_jobseeker_btn_target');
+    $tk_target      = get_theme_mod('hakajobs_tk_cta_loker_btn_target');
+    $target = !empty($sidebar_target) ? $sidebar_target : (!empty($tk_target) ? $tk_target : '_self');
+
     $defaults = array(
-        'title'    => get_theme_mod('hakajobs_tk_cta_loker_title', __('Sudah Siap Melamar Pekerjaan?', 'hakajobs')),
-        'desc'     => get_theme_mod('hakajobs_tk_cta_loker_desc', __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs')),
-        'btn_text' => get_theme_mod('hakajobs_tk_cta_loker_btn_text', __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs')),
-        'btn_url'  => get_theme_mod('hakajobs_tk_cta_loker_btn_url', ''),
-        'target'   => get_theme_mod('hakajobs_tk_cta_loker_btn_target', '_self'),
+        'title'    => $title,
+        'desc'     => $desc,
+        'btn_text' => $btn_text,
+        'btn_url'  => $btn_url,
+        'target'   => $target,
         'class'    => '',
     );
     $args = wp_parse_args($custom_args, $defaults);
