@@ -317,10 +317,38 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                     ?>
                         <article class="hk-tk-article-card">
                             <div class="hk-tk-article-thumb-wrap">
-                                <?php if (has_post_thumbnail()): ?>
-                                    <?php the_post_thumbnail('medium', array('class' => 'hk-tk-article-thumb')); ?>
-                                <?php else: ?>
-                                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=80" alt="<?php the_title_attribute(); ?>" class="hk-tk-article-thumb">
+                                <?php 
+                                if (has_post_thumbnail()): 
+                                    the_post_thumbnail('medium', array('class' => 'hk-tk-article-thumb')); 
+                                else: 
+                                    // Fallback kontekstual otomatis jika admin belum mengunggah Gambar Unggulan
+                                    $post_title_lower = strtolower(get_the_title());
+                                    $cats = get_the_category();
+                                    $cat_slug = !empty($cats) ? $cats[0]->slug : '';
+
+                                    if (strpos($post_title_lower, 'akhlak') !== false || strpos($post_title_lower, 'cpns') !== false || strpos($cat_slug, 'cpns') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop&q=80';
+                                    } elseif (strpos($post_title_lower, 'gaji') !== false || strpos($cat_slug, 'gaji') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=80';
+                                    } elseif (strpos($post_title_lower, 'interview') !== false || strpos($post_title_lower, 'wawancara') !== false || strpos($cat_slug, 'interview') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80';
+                                    } elseif (strpos($post_title_lower, 'portofolio') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&auto=format&fit=crop&q=80';
+                                    } elseif (strpos($post_title_lower, 'cover letter') !== false || strpos($post_title_lower, 'surat lamaran') !== false || strpos($post_title_lower, 'ats') !== false || strpos($cat_slug, 'cv') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=500&auto=format&fit=crop&q=80';
+                                    } elseif (strpos($post_title_lower, 'linkedin') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1616469829941-c7200edec809?w=500&auto=format&fit=crop&q=80';
+                                    } elseif (strpos($post_title_lower, 'psikotes') !== false || strpos($post_title_lower, 'wartegg') !== false || strpos($cat_slug, 'psikotes') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=80';
+                                    } elseif (strpos($post_title_lower, 'sertifikasi') !== false || strpos($post_title_lower, 'k3') !== false || strpos($post_title_lower, 'bnsp') !== false || strpos($post_title_lower, 'toefl') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&auto=format&fit=crop&q=80';
+                                    } elseif (strpos($post_title_lower, 'pkwt') !== false || strpos($post_title_lower, 'kontrak') !== false) {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=500&auto=format&fit=crop&q=80';
+                                    } else {
+                                        $fallback_img = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&auto=format&fit=crop&q=80';
+                                    }
+                                ?>
+                                    <img src="<?php echo esc_url($fallback_img); ?>" alt="<?php the_title_attribute(); ?>" class="hk-tk-article-thumb">
                                 <?php endif; ?>
                                 <span class="hk-tk-article-category-badge">
                                     <?php 
