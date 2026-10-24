@@ -2852,6 +2852,42 @@ function hakajobs_customize_register($wp_customize) {
         'label'       => __('Sidebar — Judul Kartu Sertifikasi', 'hakajobs'),
         'section'     => 'hakajobs_teskarir_section',
     ));
+
+    // --- 7. PROFIL PENULIS & KURATOR MATERI ---
+    $wp_customize->add_setting('hakajobs_tk_author_name', array(
+        'default'           => 'Tim Litbang Karir & Edukasi',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_author_name', array(
+        'type'        => 'text',
+        'label'       => __('Penulis — Nama Penulis / Tim Redaksi', 'hakajobs'),
+        'description' => __('Ubah nama penulis materi karir (contoh: Tim Litbang Karir, Tim Redaksi Info Loker Lampung, dll).', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_author_bio', array(
+        'default'           => 'Materi pembelajaran resmi dan kisi-kisi soal yang dikurasi oleh praktisi rekrutmen profesional untuk mempermudah persiapan tes karir pencari kerja di Indonesia.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_author_bio', array(
+        'type'        => 'textarea',
+        'label'       => __('Penulis — Deskripsi / Bio Penulis', 'hakajobs'),
+        'description' => __('Deskripsi singkat keahlian/profil tim penulis pada box profil di bawah artikel.', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_author_avatar', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'hakajobs_tk_author_avatar', array(
+        'label'       => __('Penulis — Foto / Avatar Penulis', 'hakajobs'),
+        'description' => __('Unggah foto avatar penulis. Biarkan kosong untuk menggunakan avatar default.', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    )));
 }
 add_action('customize_register', 'hakajobs_customize_register');
 

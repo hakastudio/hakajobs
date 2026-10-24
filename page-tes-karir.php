@@ -73,6 +73,14 @@ if (empty($tk_ebook_url)) {
 }
 $tk_cert_title       = get_theme_mod('hakajobs_tk_cert_title', __('Info Pelatihan & Sertifikasi', 'hakajobs'));
 
+// Profil Penulis & Kurator
+$tk_author_name      = get_theme_mod('hakajobs_tk_author_name', __('Tim Litbang Karir & Edukasi', 'hakajobs'));
+$tk_author_bio       = get_theme_mod('hakajobs_tk_author_bio', __('Materi pembelajaran resmi dan kisi-kisi soal yang dikurasi oleh praktisi rekrutmen profesional untuk mempermudah persiapan tes karir pencari kerja di Indonesia.', 'hakajobs'));
+$tk_author_avatar    = get_theme_mod('hakajobs_tk_author_avatar', '');
+if (empty($tk_author_avatar)) {
+    $tk_author_avatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
+}
+
 // Enqueue styles jika belum terpanggil oleh wp_enqueue_scripts
 if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
     $min = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
@@ -558,7 +566,7 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                     <span>•</span>
                     <span id="hkArticleReadTime">10 Menit Baca</span>
                     <span>•</span>
-                    <span id="hkArticleAuthor">Oleh Tim Litbang Karir Hakajobs</span>
+                    <span id="hkArticleAuthor"><?php printf(esc_html__('Oleh %s', 'hakajobs'), esc_html($tk_author_name)); ?></span>
                     <span>•</span>
                     <span>3.8k dibaca</span>
                 </div>
@@ -601,10 +609,10 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
 
             <!-- Author Box -->
             <div class="hk-article-author-box">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" alt="Penulis" class="hk-author-avatar">
+                <img src="<?php echo esc_url($tk_author_avatar); ?>" alt="<?php echo esc_attr($tk_author_name); ?>" class="hk-author-avatar" id="hkArticleAuthorAvatar">
                 <div class="hk-author-info">
-                    <h4>Tim Litbang Karir &amp; Psikotes Hakajobs</h4>
-                    <p>Materi pembelajaran resmi dan kisi-kisi soal yang dikurasi oleh praktisi rekrutmen profesional untuk mempermudah persiapan tes karir pencari kerja di Indonesia.</p>
+                    <h4 id="hkArticleAuthorBoxName"><?php echo esc_html($tk_author_name); ?></h4>
+                    <p id="hkArticleAuthorBoxBio"><?php echo esc_html($tk_author_bio); ?></p>
                 </div>
             </div>
 
@@ -656,6 +664,15 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
 
         var timeEl = document.getElementById('hkArticleReadTime');
         if (timeEl) timeEl.textContent = data.readTime;
+
+        var authorEl = document.getElementById('hkArticleAuthor');
+        var customAuthor = <?php echo json_encode($tk_author_name); ?>;
+        if (authorEl) authorEl.textContent = 'Oleh ' + (customAuthor || data.author || 'Tim Litbang Karir & Edukasi');
+
+        var authorBoxName = document.getElementById('hkArticleAuthorBoxName');
+        if (authorBoxName && customAuthor) {
+            authorBoxName.textContent = customAuthor;
+        }
 
         var bannerEl = document.getElementById('hkArticleBanner');
         if (bannerEl) {
