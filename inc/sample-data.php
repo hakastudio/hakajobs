@@ -66,14 +66,29 @@ function hakajobs_render_demo_page() {
 
         <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:20px; margin-top:20px;">
             <h3>2. Khusus Artikel Panduan & Soal Karir (Menu Pos):</h3>
-            <p>Terbitkan 7 artikel panduan karir mendalam (Soal SKD CPNS 2026 HOTS, Rahasia Tes Kraepelin Psikotes, Panduan CV ATS, 20 Tanya Jawab Interview STAR, Ahli K3 Umum, TOEFL BUMN, dan Sertifikasi BNSP) ke dalam menu <strong>Pos &gt; Semua Pos</strong> agar Anda bisa mengedit tulisan, kategori, atau menambah materi secara bebas.</p>
+            <p>Terbitkan <strong>16 artikel panduan karir komprehensif</strong> (Latihan Soal SKD CPNS 2026 HOTS, Simulasi 10 Soal AKHLAK BUMN, Rahasia Tes Kraepelin, Panduan Tes Wartegg &amp; Gambar Pohon/Orang, Panduan CV ATS, Cara Bikin Portofolio Fresh Graduate, 20 Tanya Jawab Interview STAR, Strategi Interview User, Trik Negosiasi Gaji UMR, Panduan K3 Kemenaker, TOEFL BUMN, Sertifikasi BNSP, Panduan Career Switch, Memahami Kontrak Kerja PKWT/PKWTT, dan 3 Template Surat Lamaran Kerja) ke dalam menu <strong>Pos &gt; Semua Pos</strong> agar Anda bisa mengedit tulisan, kategori, atau menambah materi secara bebas.</p>
 
             <form method="post" style="margin-top:20px;">
                 <?php wp_nonce_field('hakajobs_demo_nonce_action', 'hakajobs_demo_nonce'); ?>
-                <button type="submit" name="hakajobs_install_articles" class="button button-secondary" onclick="return confirm('Terbitkan artikel materi karir ke menu Pos?');">
-                    📝 Terbitkan Artikel Materi Karir ke Menu Pos
+                <button type="submit" name="hakajobs_install_articles" class="button button-secondary" onclick="return confirm('Terbitkan 16 artikel materi karir ke menu Pos?');">
+                    📝 Terbitkan 16 Artikel Materi Karir ke Menu Pos
                 </button>
             </form>
+        </div>
+
+        <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; padding:20px; margin-top:20px;">
+            <h3 style="color:#0369a1; margin-top:0;">⚙️ Pengaturan Kotak CTA "Sudah Siap Melamar Pekerjaan?":</h3>
+            <p style="color:#0c4a6e; line-height:1.6;">Anda dapat menyesuaikan teks judul, deskripsi ajakan, teks tombol, dan tautan link kotak CTA <strong>"Sudah Siap Melamar Pekerjaan?"</strong> secara langsung melalui WP Dashboard:</p>
+            <ul style="list-style:disc; margin-left:20px; line-height:1.8; color:#0c4a6e;">
+                <li><strong>Halaman Pusat Tes &amp; Karir</strong>: Masuk ke <em>Tampilan &gt; Sesuaikan &gt; Halaman Pusat Tes &amp; Karir &gt; Kotak CTA Siap Melamar Pekerjaan (Sidebar)</em>.</li>
+                <li><strong>Sidebar Kanan Beranda &amp; Blog</strong>: Masuk ke <em>Tampilan &gt; Sesuaikan &gt; Sidebar Kanan &gt; Widget CTA Pencari Kerja</em>.</li>
+                <li><strong>Widget Fleksibel</strong>: Masuk ke <em>Tampilan &gt; Widget</em>, gunakan widget <strong>[Hakajobs] CTA Siap Melamar Pekerjaan</strong> pada area sidebar atau footer manapun.</li>
+            </ul>
+            <div style="margin-top:16px;">
+                <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=hakajobs_teskarir_section')); ?>" class="button button-primary" target="_blank">
+                    🎨 Buka Pengaturan di WP Customizer &rarr;
+                </a>
+            </div>
         </div>
     </div>
     <?php

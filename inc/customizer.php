@@ -2308,6 +2308,79 @@ function hakajobs_customize_register($wp_customize) {
         ),
     ));
 
+    // --- WIDGET 5: CTA PENCARI KERJA (SUDAH SIAP MELAMAR PEKERJAAN?) ---
+    $wp_customize->add_setting('hakajobs_sidebar_show_jobseeker_cta', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_show_jobseeker_cta', array(
+        'type'        => 'checkbox',
+        'label'       => __('5. Tampilkan Widget CTA "Sudah Siap Melamar Pekerjaan?"', 'hakajobs'),
+        'description' => __('Menampilkan kartu ajakan melamar lowongan kerja di sidebar kanan untuk pengunjung pencari kerja.', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_jobseeker_title', array(
+        'default'           => __('Sudah Siap Melamar Pekerjaan?', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_jobseeker_title', array(
+        'type'        => 'text',
+        'label'       => __('CTA Pencari Kerja — Judul Widget', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_jobseeker_desc', array(
+        'default'           => __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_jobseeker_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('CTA Pencari Kerja — Deskripsi / Ajakan', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_jobseeker_btn_text', array(
+        'default'           => __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_jobseeker_btn_text', array(
+        'type'        => 'text',
+        'label'       => __('CTA Pencari Kerja — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_jobseeker_btn_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_jobseeker_btn_url', array(
+        'type'        => 'url',
+        'label'       => __('CTA Pencari Kerja — Tautan / URL Khusus', 'hakajobs'),
+        'description' => __('Biarkan kosong untuk otomatis mengarahkan ke halaman arsip lowongan (/lowongan/).', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_jobseeker_btn_target', array(
+        'default'           => '_self',
+        'sanitize_callback' => 'hakajobs_sanitize_select',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_jobseeker_btn_target', array(
+        'type'        => 'select',
+        'label'       => __('CTA Pencari Kerja — Target Buka Tautan', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+        'choices'     => array(
+            '_self'  => __('Buka di Tab yang Sama (_self)', 'hakajobs'),
+            '_blank' => __('Buka di Tab Baru (_blank)', 'hakajobs'),
+        ),
+    ));
+
     // =========================================================================
     // SECTION 13 — POP-UP COOKIE & NOTIFIKASI PENGUNJUNG
     // =========================================================================
@@ -2829,6 +2902,92 @@ function hakajobs_customize_register($wp_customize) {
         'description' => __('Unggah foto avatar penulis. Biarkan kosong untuk menggunakan avatar default.', 'hakajobs'),
         'section'     => 'hakajobs_teskarir_section',
     )));
+
+    // --- 8. KOTAK CTA SIAP MELAMAR PEKERJAAN (SIDEBAR HALAMAN TES & KARIR) ---
+    $wp_customize->add_setting('hakajobs_tk_show_cta_loker', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_show_cta_loker', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Kotak CTA Lowongan di Sidebar', 'hakajobs'),
+        'description' => __('Menampilkan kartu ajakan melamar lowongan kerja di bilah samping kanan.', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_cta_loker_title', array(
+        'default'           => __('Sudah Siap Melamar Pekerjaan?', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_cta_loker_title', array(
+        'type'        => 'text',
+        'label'       => __('CTA Sidebar — Judul Kartu', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_cta_loker_desc', array(
+        'default'           => __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_cta_loker_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('CTA Sidebar — Deskripsi / Ajakan', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_cta_loker_btn_text', array(
+        'default'           => __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_cta_loker_btn_text', array(
+        'type'        => 'text',
+        'label'       => __('CTA Sidebar — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_cta_loker_btn_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_cta_loker_btn_url', array(
+        'type'        => 'url',
+        'label'       => __('CTA Sidebar — Tautan / URL Khusus', 'hakajobs'),
+        'description' => __('Biarkan kosong untuk otomatis mengarahkan ke halaman arsip lowongan kerja (/lowongan/).', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_cta_loker_btn_target', array(
+        'default'           => '_self',
+        'sanitize_callback' => 'hakajobs_sanitize_select',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_cta_loker_btn_target', array(
+        'type'        => 'select',
+        'label'       => __('CTA Sidebar — Target Buka Tautan', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+        'choices'     => array(
+            '_self'  => __('Buka di Tab yang Sama (_self)', 'hakajobs'),
+            '_blank' => __('Buka di Tab Baru (_blank)', 'hakajobs'),
+        ),
+    ));
+
+    // --- 9. INTEGRASI CTA DI BAWAH ARTIKEL SINGLE POS ---
+    $wp_customize->add_setting('hakajobs_single_show_cta_loker', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_single_show_cta_loker', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Kartu CTA di Bawah Artikel Pos (Tips & Karir)', 'hakajobs'),
+        'description' => __('Jika dicentang, kartu ajakan melamar lowongan kerja ini akan otomatis tampil di bagian bawah setiap artikel Pos.', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
 }
 add_action('customize_register', 'hakajobs_customize_register');
 

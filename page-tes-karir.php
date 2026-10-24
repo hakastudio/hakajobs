@@ -77,6 +77,20 @@ if (empty($tk_author_avatar)) {
     $tk_author_avatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
 }
 
+// CTA Siap Melamar Lowongan Kerja (Disetting di WP Dashboard)
+$tk_show_cta_loker   = get_theme_mod('hakajobs_tk_show_cta_loker', '1');
+$tk_cta_loker_title  = get_theme_mod('hakajobs_tk_cta_loker_title', __('Sudah Siap Melamar Pekerjaan?', 'hakajobs'));
+$tk_cta_loker_desc   = get_theme_mod('hakajobs_tk_cta_loker_desc', __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs'));
+$tk_cta_loker_btn    = get_theme_mod('hakajobs_tk_cta_loker_btn_text', __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'));
+$tk_cta_loker_url    = get_theme_mod('hakajobs_tk_cta_loker_btn_url', '');
+if (empty($tk_cta_loker_url)) {
+    $tk_cta_loker_url = get_post_type_archive_link('lowongan');
+    if (empty($tk_cta_loker_url)) {
+        $tk_cta_loker_url = home_url('/lowongan/');
+    }
+}
+$tk_cta_loker_target = get_theme_mod('hakajobs_tk_cta_loker_btn_target', '_self');
+
 // Enqueue styles jika belum terpanggil oleh wp_enqueue_scripts
 if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
     $min = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
@@ -269,9 +283,9 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                     // Query artikel tips & karir dari Pos WordPress jika ada
                     $career_wp_query = new WP_Query(array(
                         'post_type'      => 'post',
-                        'posts_per_page' => 6,
+                        'posts_per_page' => 12,
                         'post_status'    => 'publish',
-                        'category_name'  => 'tips-karir,tes-karir,cpns,bumn,psikotes,karir,tips-melamar,interview,sertifikasi,cv',
+                        'category_name'  => 'tips-karir,tes-karir,cpns,bumn,cpns-bumn,psikotes,psikotes-kerja,karir,tips-melamar,interview,wawancara-kerja,sertifikasi,sertifikasi-profesi,cv,cv-berkas,gaji-negosiasi,pengembangan-karir',
                     ));
 
                     if ($career_wp_query->have_posts()):
@@ -327,7 +341,7 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                     <?php
                         endwhile;
                         wp_reset_postdata();
-                    endif;
+                    else:
                     ?>
                     
                     <!-- Article Card 1 -->
@@ -453,6 +467,7 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                             </div>
                         </div>
                     </article>
+                    <?php endif; ?>
 
                 </div>
             </div>
@@ -503,14 +518,28 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                     </ul>
                 </div>
 
-                <!-- CTA Back to Jobs -->
+                <!-- CTA Back to Jobs (Disetting di WP Dashboard > Customizer) -->
+                <?php if ($tk_show_cta_loker === '1'): ?>
                 <div class="hk-tk-cta-loker-card">
-                    <h4 class="hk-tk-cta-loker-title"><?php _e('Sudah Siap Melamar Pekerjaan?', 'hakajobs'); ?></h4>
-                    <p class="hk-tk-cta-loker-desc"><?php _e('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs'); ?></p>
-                    <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" class="hk-btn hk-btn-primary hk-btn-block">
-                        <?php _e('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'); ?> &rarr;
-                    </a>
+                    <?php if (!empty($tk_cta_loker_title)): ?>
+                        <h4 class="hk-tk-cta-loker-title"><?php echo esc_html($tk_cta_loker_title); ?></h4>
+                    <?php endif; ?>
+                    <?php if (!empty($tk_cta_loker_desc)): ?>
+                        <p class="hk-tk-cta-loker-desc"><?php echo nl2br(esc_html($tk_cta_loker_desc)); ?></p>
+                    <?php endif; ?>
+                    <?php if (!empty($tk_cta_loker_btn)): ?>
+                        <?php
+                        $btn_text_display = esc_html($tk_cta_loker_btn);
+                        if (strpos($btn_text_display, '→') === false && strpos($btn_text_display, '&rarr;') === false && strpos($btn_text_display, '->') === false) {
+                            $btn_text_display .= ' &rarr;';
+                        }
+                        ?>
+                        <a href="<?php echo esc_url($tk_cta_loker_url); ?>" target="<?php echo esc_attr($tk_cta_loker_target); ?>"<?php echo ($tk_cta_loker_target === '_blank') ? ' rel="noopener noreferrer"' : ''; ?> class="hk-btn hk-btn-primary hk-btn-block">
+                            <?php echo $btn_text_display; ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
+                <?php endif; ?>
 
             </aside>
 

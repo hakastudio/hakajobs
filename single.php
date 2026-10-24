@@ -17,7 +17,7 @@ while (have_posts()) : the_post();
     if (!empty($categories)) {
         foreach ($categories as $cat) {
             $slug = $cat->slug;
-            if (in_array($slug, array('tes-karir', 'test-karir', 'persiapan-karir', 'latihan-soal', 'cpns-bumn', 'psikotes-kerja', 'tips-karir', 'resume-cv-ats', 'interview-kerja', 'sertifikasi-profesi'))) {
+            if (in_array($slug, array('tes-karir', 'test-karir', 'persiapan-karir', 'latihan-soal', 'cpns-bumn', 'psikotes-kerja', 'tips-karir', 'resume-cv-ats', 'interview-kerja', 'sertifikasi-profesi', 'gaji-negosiasi', 'cv-berkas', 'pengembangan-karir', 'wawancara-kerja'))) {
                 $is_career = true;
                 break;
             }
@@ -129,6 +129,16 @@ while (have_posts()) : the_post();
                     <p><?php echo esc_html($is_career ? $tk_author_bio : (get_the_author_meta('description') ?: __('Penulis dan kontributor konten profesional di portal karir Hakajobs.', 'hakajobs'))); ?></p>
                 </div>
             </div>
+
+            <?php
+            // CTA Siap Melamar Pekerjaan (Disetting di WP Dashboard > Customizer)
+            $show_single_cta = get_theme_mod('hakajobs_single_show_cta_loker', '1');
+            if ($show_single_cta === '1' && function_exists('hakajobs_render_jobseeker_cta')) {
+                hakajobs_render_jobseeker_cta(array(
+                    'class' => 'hk-single-cta-loker',
+                ));
+            }
+            ?>
 
             <footer class="hk-article-footer">
                 <?php the_tags('<div class="hk-tags-list"><span>' . __('Tags:', 'hakajobs') . '</span> ', ' ', '</div>'); ?>

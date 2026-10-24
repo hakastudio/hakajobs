@@ -49,7 +49,15 @@ $popular_days       = get_theme_mod('hakajobs_sidebar_popular_days', '7');
 $popular_count      = intval(get_theme_mod('hakajobs_sidebar_popular_count', 5));
 $show_pop_views     = get_theme_mod('hakajobs_sidebar_popular_show_views', '1');
 
-// 5. Posisi Widget WordPress Kustom
+// 5. Pengaturan CTA Pencari Kerja (Siap Melamar Pekerjaan)
+$show_jobseeker_cta = get_theme_mod('hakajobs_sidebar_show_jobseeker_cta', '1');
+$jobseeker_title    = get_theme_mod('hakajobs_sidebar_jobseeker_title', __('Sudah Siap Melamar Pekerjaan?', 'hakajobs'));
+$jobseeker_desc     = get_theme_mod('hakajobs_sidebar_jobseeker_desc', __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs'));
+$jobseeker_btn_text = get_theme_mod('hakajobs_sidebar_jobseeker_btn_text', __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'));
+$jobseeker_btn_url  = get_theme_mod('hakajobs_sidebar_jobseeker_btn_url', '');
+$jobseeker_btn_target = get_theme_mod('hakajobs_sidebar_jobseeker_btn_target', '_self');
+
+// 6. Posisi Widget WordPress Kustom
 $wp_widgets_pos    = get_theme_mod('hakajobs_sidebar_wp_widgets_pos', 'after');
 $has_dynamic_wp    = is_active_sidebar('sidebar-right');
 ?>
@@ -252,6 +260,19 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
                     </p>
                 <?php endif; ?>
             </div>
+        <?php endif; ?>
+
+        <!-- 5. Widget CTA Pencari Kerja (Sudah Siap Melamar Pekerjaan?) -->
+        <?php if ($show_jobseeker_cta === '1' && function_exists('hakajobs_render_jobseeker_cta')): ?>
+            <?php
+            hakajobs_render_jobseeker_cta(array(
+                'title'    => $jobseeker_title,
+                'desc'     => $jobseeker_desc,
+                'btn_text' => $jobseeker_btn_text,
+                'btn_url'  => $jobseeker_btn_url,
+                'target'   => $jobseeker_btn_target,
+            ));
+            ?>
         <?php endif; ?>
 
     <?php endif; ?>

@@ -1077,3 +1077,122 @@ function hakajobs_get_wa_broadcast_url($post_id = null) {
     return 'https://api.whatsapp.com/send?text=' . rawurlencode($text);
 }
 
+/**
+ * Render CTA Card "Sudah Siap Melamar Pekerjaan?"
+ *
+ * @param array $custom_args
+ */
+function hakajobs_render_jobseeker_cta($custom_args = array()) {
+    $defaults = array(
+        'title'    => get_theme_mod('hakajobs_tk_cta_loker_title', __('Sudah Siap Melamar Pekerjaan?', 'hakajobs')),
+        'desc'     => get_theme_mod('hakajobs_tk_cta_loker_desc', __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs')),
+        'btn_text' => get_theme_mod('hakajobs_tk_cta_loker_btn_text', __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs')),
+        'btn_url'  => get_theme_mod('hakajobs_tk_cta_loker_btn_url', ''),
+        'target'   => get_theme_mod('hakajobs_tk_cta_loker_btn_target', '_self'),
+        'class'    => '',
+    );
+    $args = wp_parse_args($custom_args, $defaults);
+    if (empty($args['btn_url'])) {
+        $archive_link = get_post_type_archive_link('lowongan');
+        $args['btn_url'] = $archive_link ? $archive_link : home_url('/lowongan/');
+    }
+    ?>
+    <div class="hk-tk-cta-loker-card <?php echo esc_attr($args['class']); ?>">
+        <?php if (!empty($args['title'])): ?>
+            <h4 class="hk-tk-cta-loker-title"><?php echo esc_html($args['title']); ?></h4>
+        <?php endif; ?>
+        <?php if (!empty($args['desc'])): ?>
+            <p class="hk-tk-cta-loker-desc"><?php echo nl2br(esc_html($args['desc'])); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($args['btn_text'])): ?>
+            <a href="<?php echo esc_url($args['btn_url']); ?>" class="hk-btn hk-btn-primary hk-btn-block" target="<?php echo esc_attr($args['target']); ?>"<?php echo ($args['target'] === '_blank') ? ' rel="noopener noreferrer"' : ''; ?>>
+                <?php echo esc_html($args['btn_text']); ?> &rarr;
+            </a>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+/**
+ * Custom WordPress Widget: Hakajobs CTA Siap Melamar Pekerjaan
+ */
+class Hakajobs_Jobseeker_CTA_Widget extends WP_Widget {
+
+    public function __construct() {
+        parent::__construct(
+            'hakajobs_jobseeker_cta_widget',
+            __('[Hakajobs] CTA Siap Melamar Pekerjaan', 'hakajobs'),
+            array(
+                'description'                 => __('Menampilkan kartu ajakan melamar lowongan kerja terbaru (Sudah Siap Melamar Pekerjaan?) dengan tombol aksi.', 'hakajobs'),
+                'customize_selective_refresh' => true,
+            )
+        );
+    }
+
+    public function widget($args, $instance) {
+        $title    = !empty($instance['title']) ? $instance['title'] : get_theme_mod('hakajobs_tk_cta_loker_title', __('Sudah Siap Melamar Pekerjaan?', 'hakajobs'));
+        $desc     = !empty($instance['desc']) ? $instance['desc'] : get_theme_mod('hakajobs_tk_cta_loker_desc', __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs'));
+        $btn_text = !empty($instance['btn_text']) ? $instance['btn_text'] : get_theme_mod('hakajobs_tk_cta_loker_btn_text', __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'));
+        $btn_url  = !empty($instance['btn_url']) ? $instance['btn_url'] : get_theme_mod('hakajobs_tk_cta_loker_btn_url', '');
+        $new_tab  = !empty($instance['new_tab']) ? '_blank' : '_self';
+
+        echo $args['before_widget'];
+        hakajobs_render_jobseeker_cta(array(
+            'title'    => $title,
+            'desc'     => $desc,
+            'btn_text' => $btn_text,
+            'btn_url'  => $btn_url,
+            'target'   => $new_tab,
+        ));
+        echo $args['after_widget'];
+    }
+
+    public function form($instance) {
+        $title    = !empty($instance['title']) ? $instance['title'] : get_theme_mod('hakajobs_tk_cta_loker_title', __('Sudah Siap Melamar Pekerjaan?', 'hakajobs'));
+        $desc     = !empty($instance['desc']) ? $instance['desc'] : get_theme_mod('hakajobs_tk_cta_loker_desc', __('Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini.', 'hakajobs'));
+        $btn_text = !empty($instance['btn_text']) ? $instance['btn_text'] : get_theme_mod('hakajobs_tk_cta_loker_btn_text', __('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'));
+        $btn_url  = !empty($instance['btn_url']) ? $instance['btn_url'] : '';
+        $new_tab  = !empty($instance['new_tab']);
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php _e('Judul:', 'hakajobs'); ?></label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('desc')); ?>"><?php _e('Deskripsi:', 'hakajobs'); ?></label>
+            <textarea class="widefat" rows="3" id="<?php echo esc_attr($this->get_field_id('desc')); ?>" name="<?php echo esc_attr($this->get_field_name('desc')); ?>"><?php echo esc_textarea($desc); ?></textarea>
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('btn_text')); ?>"><?php _e('Teks Tombol:', 'hakajobs'); ?></label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('btn_text')); ?>" name="<?php echo esc_attr($this->get_field_name('btn_text')); ?>" type="text" value="<?php echo esc_attr($btn_text); ?>">
+        </p>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('btn_url')); ?>"><?php _e('URL / Tautan Tombol (Kosongkan untuk otomatis ke arsip lowongan):', 'hakajobs'); ?></label>
+            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('btn_url')); ?>" name="<?php echo esc_attr($this->get_field_name('btn_url')); ?>" type="url" value="<?php echo esc_attr($btn_url); ?>">
+        </p>
+        <p>
+            <input class="checkbox" type="checkbox" <?php checked($new_tab); ?> id="<?php echo esc_attr($this->get_field_id('new_tab')); ?>" name="<?php echo esc_attr($this->get_field_name('new_tab')); ?>" />
+            <label for="<?php echo esc_attr($this->get_field_id('new_tab')); ?>"><?php _e('Buka di tab baru (_blank)', 'hakajobs'); ?></label>
+        </p>
+        <?php
+    }
+
+    public function update($new_instance, $old_instance) {
+        $instance = array();
+        $instance['title']    = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
+        $instance['desc']     = (!empty($new_instance['desc'])) ? sanitize_textarea_field($new_instance['desc']) : '';
+        $instance['btn_text'] = (!empty($new_instance['btn_text'])) ? sanitize_text_field($new_instance['btn_text']) : '';
+        $instance['btn_url']  = (!empty($new_instance['btn_url'])) ? esc_url_raw($new_instance['btn_url']) : '';
+        $instance['new_tab']  = !empty($new_instance['new_tab']) ? 1 : 0;
+        return $instance;
+    }
+}
+
+/**
+ * Register custom Hakajobs widgets
+ */
+function hakajobs_register_custom_widgets() {
+    register_widget('Hakajobs_Jobseeker_CTA_Widget');
+}
+add_action('widgets_init', 'hakajobs_register_custom_widgets');
+
