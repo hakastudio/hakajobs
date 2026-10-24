@@ -14,7 +14,9 @@
  *  ├─ Section 9 : Monetisasi & Slot Banner Iklan
  *  ├─ Section 10: Halaman Pasang Loker & Tarif
  *  ├─ Section 11: Saluran WhatsApp & Broadcast Loker
- *  └─ Section 12: Sidebar Kanan (Beranda & Halaman Statis)
+ *  ├─ Section 12: Sidebar Kanan (Beranda & Halaman Statis)
+ *  ├─ Section 13: Pop-up Cookie & Notifikasi Pengunjung
+ *  └─ Section 14: Halaman Pusat Tes & Karir
  *
  * @package Hakajobs
  */
@@ -228,78 +230,75 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_nav_home_label', array(
         'type'        => 'text',
         'label'       => __('Menu: Label [Beranda]', 'hakajobs'),
-        'description' => __('Label menu beranda bawaan. Kosongkan jika ingin disembunyikan.', 'hakajobs'),
+        'description' => __('Label menu beranda bawaan saat belum ada menu aktif. Tips: Untuk menu kustom lengkap dengan Sub-Menu (Dropdown), buka Tampilan > Menu di WP-Admin lalu centang lokasi "Menu Utama (Header)".', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
     // Label Semua Lowongan
     $wp_customize->add_setting('hakajobs_nav_all_label', array(
-        'default'           => __('Semua', 'hakajobs'),
+        'default'           => __('Semua Lowongan', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('hakajobs_nav_all_label', array(
         'type'        => 'text',
-        'label'       => __('Menu: Label [Semua]', 'hakajobs'),
+        'label'       => __('Menu: Label [Semua Lowongan]', 'hakajobs'),
         'description' => __('Label menu arsip lowongan. Contoh: "Semua", "Semua Lowongan", atau kosongkan.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
-    // Label Menu 3 (Magang)
-    $wp_customize->add_setting('hakajobs_nav_custom1_label', array(
-        'default'           => __('Magang (Internship)', 'hakajobs'),
+    // Dropdown 1: Kategori Loker
+    $wp_customize->add_setting('hakajobs_nav_show_cat_menu', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+    ));
+    $wp_customize->add_control('hakajobs_nav_show_cat_menu', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Menu Dropdown [Kategori Loker]', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_nav_cat_label', array(
+        'default'           => __('Kategori Loker', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
     ));
-    $wp_customize->add_control('hakajobs_nav_custom1_label', array(
+    $wp_customize->add_control('hakajobs_nav_cat_label', array(
         'type'        => 'text',
-        'label'       => __('Menu: Label [Magang]', 'hakajobs'),
-        'description' => __('Label menu ketiga bawaan. Contoh: Magang (Internship).', 'hakajobs'),
+        'label'       => __('Menu: Label Dropdown [Kategori Loker]', 'hakajobs'),
+        'description' => __('Berisi sub-menu: Full-Time, Part-Time, Magang, Remote.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
-    // URL Menu 3 (Magang)
-    $wp_customize->add_setting('hakajobs_nav_custom1_url', array(
-        'default'           => '',
-        'sanitize_callback' => 'esc_url_raw',
+    // Dropdown 2: Tes & Karir (Artikel & Panduan)
+    $wp_customize->add_setting('hakajobs_nav_show_career_menu', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
     ));
-    $wp_customize->add_control('hakajobs_nav_custom1_url', array(
-        'type'        => 'url',
-        'label'       => __('Menu: URL [Magang]', 'hakajobs'),
-        'description' => __('Kosongkan untuk otomatis ke filter tipe Magang.', 'hakajobs'),
+    $wp_customize->add_control('hakajobs_nav_show_career_menu', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Menu Dropdown [Tes & Karir]', 'hakajobs'),
+        'description' => __('Menampilkan dropdown artikel: Soal SKD CPNS & BUMN, Psikotes, Persiapan CV, Panduan Wawancara, Info Sertifikasi.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
-    // Label Menu 4 (Part-Time)
-    $wp_customize->add_setting('hakajobs_nav_custom2_label', array(
-        'default'           => __('Part-Time', 'hakajobs'),
+    $wp_customize->add_setting('hakajobs_nav_career_label', array(
+        'default'           => __('Tes & Karir', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
     ));
-    $wp_customize->add_control('hakajobs_nav_custom2_label', array(
+    $wp_customize->add_control('hakajobs_nav_career_label', array(
         'type'        => 'text',
-        'label'       => __('Menu: Label [Part-Time]', 'hakajobs'),
-        'description' => __('Label menu keempat bawaan. Contoh: Part-Time.', 'hakajobs'),
-        'section'     => 'hakajobs_header_section',
-    ));
-
-    // URL Menu 4 (Part-Time)
-    $wp_customize->add_setting('hakajobs_nav_custom2_url', array(
-        'default'           => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    $wp_customize->add_control('hakajobs_nav_custom2_url', array(
-        'type'        => 'url',
-        'label'       => __('Menu: URL [Part-Time]', 'hakajobs'),
-        'description' => __('Kosongkan untuk otomatis ke filter tipe Part-Time.', 'hakajobs'),
+        'label'       => __('Menu: Label Dropdown [Tes & Karir]', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
     // Tampilkan Tombol Pasang Loker di Dalam Menu Navigasi
     $wp_customize->add_setting('hakajobs_nav_show_post_job', array(
-        'default'           => '1',
+        'default'           => '0',
         'sanitize_callback' => 'hakajobs_sanitize_checkbox',
     ));
     $wp_customize->add_control('hakajobs_nav_show_post_job', array(
         'type'        => 'checkbox',
         'label'       => __('Tampilkan Link [Pasang Loker] di Deretan Menu', 'hakajobs'),
+        'description' => __('Nonaktifkan pilihan ini agar tidak dobel dengan tombol CTA Pasang Loker di pojok kanan header.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
@@ -2019,7 +2018,7 @@ function hakajobs_customize_register($wp_customize) {
     // =========================================================================
     $wp_customize->add_section('hakajobs_sidebar_section', array(
         'title'       => __('Sidebar Kanan (Beranda & Halaman)', 'hakajobs'),
-        'description' => __('Atur tampilan dan isi widget sidebar kanan: Pasang Loker, Kategori Populer, Lokasi Kerja Teratas, dan Tips Melamar Efektif.', 'hakajobs'),
+        'description' => __('Atur tampilan dan isi widget sidebar kanan: Pasang Loker, Kategori Populer, Lokasi Kerja Teratas, dan Lowongan Terpopuler.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 36,
     ));
@@ -2236,39 +2235,72 @@ function hakajobs_customize_register($wp_customize) {
         ),
     ));
 
-    // --- WIDGET 4: TIPS MELAMAR EFEKTIF ---
-    $wp_customize->add_setting('hakajobs_sidebar_show_tips', array(
+    // --- WIDGET 4: LOWONGAN TERPOPULER (BERDASARKAN 7 HARI / CUSTOM) ---
+    $wp_customize->add_setting('hakajobs_sidebar_show_popular', array(
         'default'           => '1',
         'sanitize_callback' => 'hakajobs_sanitize_checkbox',
         'transport'         => 'refresh',
     ));
-    $wp_customize->add_control('hakajobs_sidebar_show_tips', array(
+    $wp_customize->add_control('hakajobs_sidebar_show_popular', array(
         'type'        => 'checkbox',
-        'label'       => __('4. Tampilkan Widget "💡 Tips Melamar Efektif"', 'hakajobs'),
+        'label'       => __('4. Tampilkan Widget "Lowongan Terpopuler"', 'hakajobs'),
         'section'     => 'hakajobs_sidebar_section',
     ));
 
-    $wp_customize->add_setting('hakajobs_sidebar_tips_title', array(
-        'default'           => __('💡 Tips Melamar Efektif', 'hakajobs'),
+    $wp_customize->add_setting('hakajobs_sidebar_popular_title', array(
+        'default'           => __('Lowongan Terpopuler', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
-    $wp_customize->add_control('hakajobs_sidebar_tips_title', array(
+    $wp_customize->add_control('hakajobs_sidebar_popular_title', array(
         'type'        => 'text',
-        'label'       => __('Judul Widget Tips', 'hakajobs'),
+        'label'       => __('Judul Widget Lowongan Terpopuler', 'hakajobs'),
         'section'     => 'hakajobs_sidebar_section',
     ));
 
-    $default_tips_text = "Sesuaikan CV Anda dengan kata kunci yang diminta pada kualifikasi lowongan.\nGunakan format PDF dengan nama file yang jelas (contoh: CV_NamaLengkap_Posisi.pdf).\nSaat melamar via WhatsApp, gunakan bahasa yang santun dan perkenalkan diri secara ringkas.";
-    $wp_customize->add_setting('hakajobs_sidebar_tips_content', array(
-        'default'           => $default_tips_text,
-        'sanitize_callback' => 'sanitize_textarea_field',
+    $wp_customize->add_setting('hakajobs_sidebar_popular_days', array(
+        'default'           => '7',
+        'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
-    $wp_customize->add_control('hakajobs_sidebar_tips_content', array(
-        'type'        => 'textarea',
-        'label'       => __('Daftar Butir Poin Tips', 'hakajobs'),
-        'description' => __('Ketik satu butir tips per baris (tekan Enter untuk poin baru). Setiap baris akan otomatis ditampilkan sebagai butir daftar berpeluru.', 'hakajobs'),
+    $wp_customize->add_control('hakajobs_sidebar_popular_days', array(
+        'type'        => 'select',
+        'label'       => __('Rentang Waktu Kepopuleran', 'hakajobs'),
+        'description' => __('Pilih rentang waktu lowongan yang dihitung kepopulerannya berdasarkan jumlah pembaca/view.', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+        'choices'     => array(
+            '7'   => __('7 Hari Terakhir (Rekomendasi)', 'hakajobs'),
+            '14'  => __('14 Hari Terakhir', 'hakajobs'),
+            '30'  => __('30 Hari Terakhir', 'hakajobs'),
+            'all' => __('Sepanjang Waktu (Semua Waktu)', 'hakajobs'),
+        ),
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_popular_count', array(
+        'default'           => 5,
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_popular_count', array(
+        'type'        => 'number',
+        'label'       => __('Jumlah Lowongan yang Ditampilkan', 'hakajobs'),
+        'section'     => 'hakajobs_sidebar_section',
+        'input_attrs' => array(
+            'min'  => 2,
+            'max'  => 10,
+            'step' => 1,
+        ),
+    ));
+
+    $wp_customize->add_setting('hakajobs_sidebar_popular_show_views', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_sidebar_popular_show_views', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Jumlah Dilihat (View Counter)', 'hakajobs'),
+        'description' => __('Menampilkan lencana jumlah pembaca pada setiap lowongan terpopuler.', 'hakajobs'),
         'section'     => 'hakajobs_sidebar_section',
     ));
 
@@ -2389,6 +2421,425 @@ function hakajobs_customize_register($wp_customize) {
         'type'        => 'text',
         'label'       => __('Teks Tautan Privasi', 'hakajobs'),
         'section'     => 'hakajobs_cookie_section',
+    ));
+
+    // =========================================================================
+    // SECTION 14 — HALAMAN PUSAT TES & KARIR
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_teskarir_section', array(
+        'title'       => __('Halaman Pusat Tes & Karir', 'hakajobs'),
+        'description' => __('Atur semua judul, tulisan, modul kisi-kisi, simulator kuis, bank soal, dan e-book download pada halaman /tes-karir/.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 98,
+    ));
+
+    // --- 1. HERO BANNER ---
+    $wp_customize->add_setting('hakajobs_tk_hero_badge', array(
+        'default'           => 'Pusat Persiapan Karir & Latihan Tes Kerja',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_hero_badge', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Teks Badge Atas', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_hero_title', array(
+        'default'           => 'Pusat Persiapan Karir &',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_hero_title', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Judul Utama (Baris 1)', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_hero_highlight', array(
+        'default'           => 'Latihan Tes Kerja',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_hero_highlight', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Judul Highlight Biru', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_hero_desc', array(
+        'default'           => 'Tingkatkan peluang lolos seleksi kerja Anda. Pelajari kisi-kisi resmi soal CPNS, BUMN, psikotes kerja perusahaan swasta, hingga panduan resume ATS & teknik wawancara.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_hero_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Hero — Deskripsi / Sub-judul', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_search_placeholder', array(
+        'default'           => 'Cari soal atau materi (contoh: TWK, AKHLAK, Psikotes, CV ATS)...',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_search_placeholder', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Placeholder Kotak Pencarian', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_search_btn_text', array(
+        'default'           => 'Cari Materi',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_search_btn_text', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Teks Tombol Cari', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_quick_tags', array(
+        'default'           => 'SKD CPNS, AKHLAK BUMN, Kraepelin, CV ATS, K3 Umum',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_quick_tags', array(
+        'type'        => 'text',
+        'label'       => __('Hero — Tag Pencarian Populer', 'hakajobs'),
+        'description' => __('Pisahkan dengan koma. Contoh: SKD CPNS, AKHLAK BUMN, Kraepelin, CV ATS', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // --- 2. INTEGRASI EDITOR LAMAN WP ---
+    $wp_customize->add_setting('hakajobs_tk_show_page_content', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_show_page_content', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Konten dari Editor Laman WordPress', 'hakajobs'),
+        'description' => __('Jika dicentang, teks/gambar/blok yang Anda ketik di menu WP Admin > Laman > Edit "Pusat Tes & Karir" akan tampil di bagian atas halaman.', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // --- 3. KATEGORI MODUL UTAMA ---
+    $wp_customize->add_setting('hakajobs_tk_show_modules', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_show_modules', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Bagian 4 Modul Utama', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_modules_title', array(
+        'default'           => 'Kategori Modul Utama',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_modules_title', array(
+        'type'        => 'text',
+        'label'       => __('Modul — Judul Seksi', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_modules_subtitle', array(
+        'default'           => 'Pilih kategori persiapan sesuai kebutuhan tahapan seleksi kerja Anda',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_modules_subtitle', array(
+        'type'        => 'text',
+        'label'       => __('Modul — Sub-judul Seksi', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // Modul 1
+    $wp_customize->add_setting('hakajobs_tk_mod1_title', array(
+        'default'           => 'Soal SKD CPNS & BUMN',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod1_title', array(
+        'type'        => 'text',
+        'label'       => __('Modul 1 — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_mod1_desc', array(
+        'default'           => 'Materi latihan resmi standar BKN & BUMN meliputi TWK, TIU, TKP, serta Core Values AKHLAK BUMN.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod1_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Modul 1 — Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_mod1_btn', array(
+        'default'           => 'Buka Modul CPNS/BUMN',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod1_btn', array(
+        'type'        => 'text',
+        'label'       => __('Modul 1 — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // Modul 2
+    $wp_customize->add_setting('hakajobs_tk_mod2_title', array(
+        'default'           => 'Psikotes & Ujian Swasta',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod2_title', array(
+        'type'        => 'text',
+        'label'       => __('Modul 2 — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_mod2_desc', array(
+        'default'           => 'Kisi-kisi tes psikologi kerja perusahaan swasta dan BUMN untuk mengukur ketahanan kerja & intelegensi.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod2_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Modul 2 — Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_mod2_btn', array(
+        'default'           => 'Buka Modul Psikotes',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod2_btn', array(
+        'type'        => 'text',
+        'label'       => __('Modul 2 — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // Modul 3
+    $wp_customize->add_setting('hakajobs_tk_mod3_title', array(
+        'default'           => 'Persiapan Berkas & CV ATS',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod3_title', array(
+        'type'        => 'text',
+        'label'       => __('Modul 3 — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_mod3_desc', array(
+        'default'           => 'Panduan penyusunan resume standar Applicant Tracking System (ATS) agar lolos seleksi berkas HRD.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod3_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Modul 3 — Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_mod3_btn', array(
+        'default'           => 'Buka Panduan CV',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod3_btn', array(
+        'type'        => 'text',
+        'label'       => __('Modul 3 — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // Modul 4
+    $wp_customize->add_setting('hakajobs_tk_mod4_title', array(
+        'default'           => 'Interview & Sertifikasi',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod4_title', array(
+        'type'        => 'text',
+        'label'       => __('Modul 4 — Judul', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_mod4_desc', array(
+        'default'           => 'Trik menjawab pertanyaan wawancara HRD & User serta info sertifikasi penunjang karir bergaji tinggi.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod4_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('Modul 4 — Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_mod4_btn', array(
+        'default'           => 'Buka Modul Interview',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_mod4_btn', array(
+        'type'        => 'text',
+        'label'       => __('Modul 4 — Teks Tombol', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // --- 4. SIMULASI KUIS INTERAKTIF ---
+    $wp_customize->add_setting('hakajobs_tk_show_quiz', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_show_quiz', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Simulator Kuis Interaktif', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_quiz_badge', array(
+        'default'           => 'Simulasi Interaktif',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_quiz_badge', array(
+        'type'        => 'text',
+        'label'       => __('Kuis — Teks Badge', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_quiz_title', array(
+        'default'           => 'Uji Pemahaman: Simulasi Soal Tes Kerja',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_quiz_title', array(
+        'type'        => 'text',
+        'label'       => __('Kuis — Judul Utama', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_quiz_subtitle', array(
+        'default'           => 'Pilih jawaban Anda di bawah untuk melihat kunci jawaban dan pembahasan lengkap secara instan.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_quiz_subtitle', array(
+        'type'        => 'textarea',
+        'label'       => __('Kuis — Sub-judul / Petunjuk', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // --- 5. BANK SOAL & ARTIKEL PANDUAN ---
+    $wp_customize->add_setting('hakajobs_tk_articles_title', array(
+        'default'           => 'Bank Soal & Panduan Karir Lengkap',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_articles_title', array(
+        'type'        => 'text',
+        'label'       => __('Artikel — Judul Seksi Bank Soal', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_articles_subtitle', array(
+        'default'           => 'Materi edukasi mendalam yang disusun untuk mempermudah persiapan tes Anda.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_articles_subtitle', array(
+        'type'        => 'text',
+        'label'       => __('Artikel — Sub-judul Seksi Bank Soal', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    // --- 6. SIDEBAR E-BOOK & SERTIFIKASI ---
+    $wp_customize->add_setting('hakajobs_tk_show_ebook', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_show_ebook', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Kartu Download E-Book di Sidebar', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_ebook_badge', array(
+        'default'           => 'Gratis Modul PDF',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_ebook_badge', array(
+        'type'        => 'text',
+        'label'       => __('E-Book — Teks Badge', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_ebook_title', array(
+        'default'           => 'E-Book Kit Persiapan Kerja 2026',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_ebook_title', array(
+        'type'        => 'text',
+        'label'       => __('E-Book — Judul Kartu', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_ebook_desc', array(
+        'default'           => 'Dapatkan kumpulan ringkasan rumus matematika cepat TIU, kisi-kisi psikotes, panduan wawancara kerja, dan template CV ATS Word siap pakai.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_ebook_desc', array(
+        'type'        => 'textarea',
+        'label'       => __('E-Book — Deskripsi', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_ebook_btn', array(
+        'default'           => 'Unduh E-Book Lengkap (PDF)',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_ebook_btn', array(
+        'type'        => 'text',
+        'label'       => __('E-Book — Teks Tombol Unduh', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_ebook_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_ebook_url', array(
+        'type'        => 'url',
+        'label'       => __('E-Book — URL Berkas PDF Khusus', 'hakajobs'),
+        'description' => __('Biarkan kosong untuk mengunduh berkas PDF resmi bawaan tema.', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
+    ));
+
+    $wp_customize->add_setting('hakajobs_tk_cert_title', array(
+        'default'           => 'Info Pelatihan & Sertifikasi',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_tk_cert_title', array(
+        'type'        => 'text',
+        'label'       => __('Sidebar — Judul Kartu Sertifikasi', 'hakajobs'),
+        'section'     => 'hakajobs_teskarir_section',
     ));
 }
 add_action('customize_register', 'hakajobs_customize_register');

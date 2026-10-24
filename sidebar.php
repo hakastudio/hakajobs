@@ -7,7 +7,7 @@
  * 2. Slot Iklan Banner Sidebar
  * 3. Kategori Populer
  * 4. Lokasi Kerja Teratas
- * 5. 💡 Tips Melamar Efektif
+ * 5. Lowongan Terpopuler (Berdasarkan 7 Hari / Custom)
  * Serta mendukung Widget Area WordPress kustom (Tampilan > Widget).
  *
  * @package Hakajobs
@@ -42,11 +42,12 @@ $locs_count        = intval(get_theme_mod('hakajobs_sidebar_locs_count', 8));
 $locs_hide_empty   = get_theme_mod('hakajobs_sidebar_locs_hide_empty', '0') === '1';
 $locs_orderby      = get_theme_mod('hakajobs_sidebar_locs_orderby', 'count');
 
-// 4. Pengaturan Tips Melamar Efektif
-$show_tips         = get_theme_mod('hakajobs_sidebar_show_tips', '1');
-$tips_title        = get_theme_mod('hakajobs_sidebar_tips_title', __('💡 Tips Melamar Efektif', 'hakajobs'));
-$default_tips      = "Sesuaikan CV Anda dengan kata kunci yang diminta pada kualifikasi lowongan.\nGunakan format PDF dengan nama file yang jelas (contoh: CV_NamaLengkap_Posisi.pdf).\nSaat melamar via WhatsApp, gunakan bahasa yang santun dan perkenalkan diri secara ringkas.";
-$tips_content      = get_theme_mod('hakajobs_sidebar_tips_content', $default_tips);
+// 4. Pengaturan Lowongan Terpopuler
+$show_popular       = get_theme_mod('hakajobs_sidebar_show_popular', '1');
+$popular_title      = get_theme_mod('hakajobs_sidebar_popular_title', __('Lowongan Terpopuler', 'hakajobs'));
+$popular_days       = get_theme_mod('hakajobs_sidebar_popular_days', '7');
+$popular_count      = intval(get_theme_mod('hakajobs_sidebar_popular_count', 5));
+$show_pop_views     = get_theme_mod('hakajobs_sidebar_popular_show_views', '1');
 
 // 5. Posisi Widget WordPress Kustom
 $wp_widgets_pos    = get_theme_mod('hakajobs_sidebar_wp_widgets_pos', 'after');
@@ -172,22 +173,83 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
             </div>
         <?php endif; ?>
 
-        <!-- 4. Widget 💡 Tips Melamar Efektif -->
-        <?php if ($show_tips === '1'): ?>
-            <div class="hk-widget-card hk-tips-card">
-                <?php if (!empty($tips_title)): ?>
-                    <h3 class="hk-widget-title"><?php echo esc_html($tips_title); ?></h3>
+        <!-- 4. Widget 🔥 Lowongan Terpopuler -->
+        <?php if ($show_popular === '1'): ?>
+            <div class="hk-widget-card hk-popular-jobs-widget">
+                <?php if (!empty($popular_title)): ?>
+                    <h3 class="hk-widget-title"><?php echo esc_html($popular_title); ?></h3>
                 <?php endif; ?>
 
                 <?php
-                $tips_lines = array_filter(array_map('trim', explode("\n", $tips_content)));
-                if (!empty($tips_lines)):
+                $pop_args = array(
+                    'post_type'      => 'lowongan',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => $popular_count,
+                    'meta_key'       => '_hakajobs_views_count',
+                    'orderby'        => 'meta_value_num',
+                    'order'          => 'DESC',
+                    'no_found_rows'  => true,
+                );
+
+                if ($popular_days !== 'all' && intval($popular_days) > 0) {
+                    $pop_args['date_query'] = array(
+                        array(
+                            'after'     => intval($popular_days) . ' days ago',
+                            'inclusive' => true,
+                        ),
+                    );
+                }
+
+                $popular_query = new WP_Query($pop_args);
+
+                // Fallback: Jika dalam rentang X hari belum ada lowongan, tampilkan lowongan terpopuler sepanjang waktu
+                if (!$popular_query->have_posts() && $popular_days !== 'all') {
+                    unset($pop_args['date_query']);
+                    $popular_query = new WP_Query($pop_args);
+                }
+
+                if ($popular_query->have_posts()):
                 ?>
-                    <ul class="hk-tips-list">
-                        <?php foreach ($tips_lines as $tip_line): ?>
-                            <li><?php echo esc_html($tip_line); ?></li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <div class="hk-popular-jobs-list">
+                        <?php 
+                        $pop_rank = 1;
+                        while ($popular_query->have_posts()): 
+                            $popular_query->the_post();
+                            $job_id   = get_the_ID();
+                            $company  = get_post_meta($job_id, '_hakajobs_company_name', true);
+                            $location = get_post_meta($job_id, '_hakajobs_job_location', true);
+                            $views    = hakajobs_get_views($job_id);
+                        ?>
+                            <a href="<?php the_permalink(); ?>" class="hk-popular-job-item">
+                                <span class="hk-popular-rank rank-<?php echo esc_attr($pop_rank); ?>"><?php echo esc_html($pop_rank); ?></span>
+                                <div class="hk-popular-job-info">
+                                    <h4 class="hk-popular-job-title"><?php the_title(); ?></h4>
+                                    <div class="hk-popular-job-meta">
+                                        <?php if (!empty($company)): ?>
+                                            <span class="hk-popular-company"><?php echo esc_html($company); ?></span>
+                                        <?php endif; ?>
+                                        <?php if (!empty($company) && !empty($location)): ?>
+                                            <span class="hk-popular-sep">•</span>
+                                        <?php endif; ?>
+                                        <?php if (!empty($location)): ?>
+                                            <span class="hk-popular-loc"><?php echo esc_html($location); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php if ($show_pop_views === '1' && $views > 0): ?>
+                                        <span class="hk-popular-views">👁️ <?php echo number_format_i18n($views); ?> <?php _e('dilihat', 'hakajobs'); ?></span>
+                                    <?php endif; ?>
+                                </div>
+                            </a>
+                        <?php 
+                            $pop_rank++;
+                        endwhile; 
+                        wp_reset_postdata();
+                        ?>
+                    </div>
+                <?php else: ?>
+                    <p style="font-size:13px; color:var(--hk-text-muted); margin:0;">
+                        <?php _e('Belum ada lowongan terpopuler saat ini.', 'hakajobs'); ?>
+                    </p>
                 <?php endif; ?>
             </div>
         <?php endif; ?>

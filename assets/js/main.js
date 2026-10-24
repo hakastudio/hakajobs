@@ -307,6 +307,54 @@
     if (drawerClose) drawerClose.addEventListener('click', closeMobileDrawer);
     if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeMobileDrawer);
 
+    // Setup Mobile Submenu Toggles in Drawer
+    function initMobileSubmenus() {
+        var mobileNavItems = document.querySelectorAll('.hk-mobile-nav-list .menu-item-has-children');
+        mobileNavItems.forEach(function (item) {
+            var parentLink = item.querySelector(':scope > a');
+            var subMenu = item.querySelector(':scope > .sub-menu');
+            if (!subMenu) return;
+
+            // Avoid double initialization
+            if (item.querySelector('.hk-mobile-submenu-toggle')) return;
+
+            var row = document.createElement('div');
+            row.className = 'hk-mobile-nav-link-row';
+
+            var toggleBtn = document.createElement('button');
+            toggleBtn.type = 'button';
+            toggleBtn.className = 'hk-mobile-submenu-toggle';
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            toggleBtn.setAttribute('aria-label', 'Buka Sub-Menu');
+            toggleBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+
+            function toggleSubmenu(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                var isOpen = item.classList.toggle('is-open');
+                toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            }
+
+            toggleBtn.addEventListener('click', toggleSubmenu);
+
+            // If parent link has '#' or empty href, clicking link also toggles submenu
+            if (parentLink) {
+                var href = parentLink.getAttribute('href');
+                if (!href || href === '#' || href === 'javascript:void(0)' || href === 'javascript:;') {
+                    parentLink.addEventListener('click', toggleSubmenu);
+                }
+                item.insertBefore(row, parentLink);
+                row.appendChild(parentLink);
+                row.appendChild(toggleBtn);
+            } else {
+                item.insertBefore(toggleBtn, subMenu);
+            }
+        });
+    }
+    initMobileSubmenus();
+
     // ESC key closes modals
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {

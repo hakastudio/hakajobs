@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.28');
+define('HAKAJOBS_VERSION', '1.0.29');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -102,6 +102,17 @@ function hakajobs_enqueue_assets() {
         wp_enqueue_style(
             'hakajobs-pasang-loker',
             HAKAJOBS_URI . $pl_css,
+            array('hakajobs-main-style'),
+            HAKAJOBS_VERSION
+        );
+    }
+
+    // Tes & Karir Stylesheet
+    if (is_page_template('page-tes-karir.php') || is_page(array('tes-karir', 'persiapan-karir', 'latihan-soal'))) {
+        $tk_css = file_exists(HAKAJOBS_DIR . '/assets/css/tes-karir' . $min . '.css') ? '/assets/css/tes-karir' . $min . '.css' : '/assets/css/tes-karir.css';
+        wp_enqueue_style(
+            'hakajobs-tes-karir',
+            HAKAJOBS_URI . $tk_css,
             array('hakajobs-main-style'),
             HAKAJOBS_VERSION
         );
@@ -300,28 +311,50 @@ add_action('pre_get_posts', 'hakajobs_filter_job_query');
 function hakajobs_fallback_menu($is_mobile = false) {
     $class      = $is_mobile ? 'hk-mobile-nav-list' : 'hk-nav-list';
     $home_label = get_theme_mod('hakajobs_nav_home_label', __('Beranda', 'hakajobs'));
-    $all_label  = get_theme_mod('hakajobs_nav_all_label', __('Semua', 'hakajobs'));
-    $c1_label   = get_theme_mod('hakajobs_nav_custom1_label', __('Magang (Internship)', 'hakajobs'));
-    $c1_url     = get_theme_mod('hakajobs_nav_custom1_url', get_post_type_archive_link('lowongan') . '?tipe=magang');
-    $c2_label   = get_theme_mod('hakajobs_nav_custom2_label', __('Part-Time', 'hakajobs'));
-    $c2_url     = get_theme_mod('hakajobs_nav_custom2_url', get_post_type_archive_link('lowongan') . '?tipe=part-time');
+    $all_label  = get_theme_mod('hakajobs_nav_all_label', __('Semua Lowongan', 'hakajobs'));
+    
+    // Dropdown 1: Kategori Loker
+    $show_cat_menu = get_theme_mod('hakajobs_nav_show_cat_menu', '1');
+    $cat_label     = get_theme_mod('hakajobs_nav_cat_label', __('Kategori Loker', 'hakajobs'));
+    
+    // Dropdown 2: Tes & Karir
+    $show_career_menu = get_theme_mod('hakajobs_nav_show_career_menu', '1');
+    $career_label     = get_theme_mod('hakajobs_nav_career_label', __('Tes & Karir', 'hakajobs'));
+
     $post_label = get_theme_mod('hakajobs_post_job_label', __('Pasang Loker', 'hakajobs'));
     $post_url   = get_theme_mod('hakajobs_post_job_url', home_url('/pasang-loker/'));
-    $show_post  = get_theme_mod('hakajobs_nav_show_post_job', '1');
+    $show_post  = get_theme_mod('hakajobs_nav_show_post_job', '0');
+
+    $archive_url = get_post_type_archive_link('lowongan');
 
     echo '<ul class="' . esc_attr($class) . '">';
     if (!empty($home_label)) {
         echo '<li><a href="' . esc_url(home_url('/')) . '">' . esc_html($home_label) . '</a></li>';
     }
     if (!empty($all_label)) {
-        echo '<li><a href="' . esc_url(get_post_type_archive_link('lowongan')) . '">' . esc_html($all_label) . '</a></li>';
+        echo '<li><a href="' . esc_url($archive_url) . '">' . esc_html($all_label) . '</a></li>';
     }
-    if (!empty($c1_label) && !empty($c1_url)) {
-        echo '<li><a href="' . esc_url($c1_url) . '">' . esc_html($c1_label) . '</a></li>';
+
+    // Dropdown: Kategori Loker
+    if ($show_cat_menu === '1') {
+        echo '<li class="menu-item-has-children">';
+        echo '<a href="' . esc_url($archive_url) . '">' . esc_html($cat_label) . '</a>';
+        echo '<ul class="sub-menu">';
+        echo '<li><a href="' . esc_url($archive_url . '?tipe=full-time') . '">' . __('Full-Time', 'hakajobs') . '</a></li>';
+        echo '<li><a href="' . esc_url($archive_url . '?tipe=part-time') . '">' . __('Part-Time', 'hakajobs') . '</a></li>';
+        echo '<li><a href="' . esc_url($archive_url . '?tipe=magang') . '">' . __('Magang (Internship)', 'hakajobs') . '</a></li>';
+        echo '<li><a href="' . esc_url($archive_url . '?tipe=remote') . '">' . __('Remote / WFH', 'hakajobs') . '</a></li>';
+        echo '</ul>';
+        echo '</li>';
     }
-    if (!empty($c2_label) && !empty($c2_url)) {
-        echo '<li><a href="' . esc_url($c2_url) . '">' . esc_html($c2_label) . '</a></li>';
+
+    // Link Halaman: Tes & Karir (Pusat Persiapan Karir & Latihan Tes Kerja)
+    if ($show_career_menu === '1') {
+        $career_page = get_page_by_path('tes-karir');
+        $career_url  = $career_page ? get_permalink($career_page->ID) : home_url('/tes-karir/');
+        echo '<li><a href="' . esc_url($career_url) . '">' . esc_html($career_label) . '</a></li>';
     }
+
     if ($show_post === '1' && !empty($post_label) && !empty($post_url)) {
         echo '<li><a href="' . esc_url($post_url) . '" class="hk-menu-highlight">' . esc_html($post_label) . '</a></li>';
     }

@@ -28,10 +28,12 @@ Hakajobs/
 ├── search.php                 # Template hasil pencarian lowongan
 ├── single.php                 # Template artikel berita/blog standar
 ├── page.php                   # Template halaman statis standar
-├── sidebar.php                # Bilah sisi kanan (Widget Pasang Loker, Kategori, Lokasi, Tips)
+├── category.php               # Template arsip artikel blog & kategori tips karir
+├── sidebar.php                # Bilah sisi kanan (Widget Pasang Loker, Kategori, Lokasi, Lowongan Terpopuler)
 ├── template-with-sidebar.php  # Template halaman statis dengan sidebar kanan
 ├── template-full-width.php   # Template halaman statis lebar penuh tanpa sidebar
 ├── page-pasang-loker.php      # Landing page Pasang Loker (Daftar paket harga & formulir pengajuan)
+├── page-tes-karir.php         # Template Pusat Tes & Karir (Soal SKD/BUMN, Psikotes, Panduan CV, Kuis CAT, E-Book)
 ├── page-saved.php             # Template khusus halaman "Lowongan Tersimpan"
 ├── 404.php                    # Halaman 404 ramah pengguna
 ├── screenshot.png             # Gambar pratinjau tema di dashboard WordPress
@@ -40,7 +42,11 @@ Hakajobs/
 │   │   ├── main.css           # Sumber stylesheet utama tema
 │   │   ├── main.min.css       # Versi minified produksi (otomatis dimuat)
 │   │   ├── pasang-loker.css   # Stylesheet khusus halaman pasang loker
-│   │   └── pasang-loker.min.css # Versi minified pasang loker
+│   │   ├── pasang-loker.min.css # Versi minified pasang loker
+│   │   ├── tes-karir.css      # Stylesheet khusus halaman Pusat Tes & Karir
+│   │   └── tes-karir.min.css  # Versi minified tes-karir
+│   ├── downloads/
+│   │   └── E-Book-Kit-Persiapan-Kerja-2026.pdf # Modul e-book panduan karir & ringkasan rumus siap unduh
 │   └── js/
 │       ├── main.js            # Skrip interaktif (LocalStorage bookmark, drawer, modal, back to top)
 │       └── main.min.js        # Versi minified produksi (otomatis dimuat)

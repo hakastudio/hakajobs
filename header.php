@@ -99,7 +99,7 @@
                         'theme_location' => 'primary-menu',
                         'menu_class'     => 'hk-nav-list',
                         'container'      => false,
-                        'depth'          => 2,
+                        'depth'          => 3,
                     ));
                 } else {
                     hakajobs_fallback_menu(false);
@@ -154,7 +154,7 @@
                     'theme_location' => 'primary-menu',
                     'menu_class'     => 'hk-mobile-nav-list',
                     'container'      => false,
-                    'depth'          => 2,
+                    'depth'          => 3,
                 ));
             } else {
                 hakajobs_fallback_menu(true);
