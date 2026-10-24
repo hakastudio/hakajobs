@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.29');
+define('HAKAJOBS_VERSION', '1.0.30');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -108,7 +108,7 @@ function hakajobs_enqueue_assets() {
     }
 
     // Tes & Karir Stylesheet
-    if (is_page_template('page-tes-karir.php') || is_page(array('tes-karir', 'persiapan-karir', 'latihan-soal'))) {
+    if (is_page_template('page-tes-karir.php') || is_page_template('page-test-karir.php') || is_page(array('tes-karir', 'test-karir', 'persiapan-karir', 'latihan-soal'))) {
         $tk_css = file_exists(HAKAJOBS_DIR . '/assets/css/tes-karir' . $min . '.css') ? '/assets/css/tes-karir' . $min . '.css' : '/assets/css/tes-karir.css';
         wp_enqueue_style(
             'hakajobs-tes-karir',
@@ -350,8 +350,14 @@ function hakajobs_fallback_menu($is_mobile = false) {
 
     // Link Halaman: Tes & Karir (Pusat Persiapan Karir & Latihan Tes Kerja)
     if ($show_career_menu === '1') {
-        $career_page = get_page_by_path('tes-karir');
-        $career_url  = $career_page ? get_permalink($career_page->ID) : home_url('/tes-karir/');
+        $career_url = get_theme_mod('hakajobs_nav_career_url', '');
+        if (empty($career_url)) {
+            $career_page = get_page_by_path('tes-karir');
+            if (!$career_page) {
+                $career_page = get_page_by_path('test-karir');
+            }
+            $career_url = $career_page ? get_permalink($career_page->ID) : home_url('/tes-karir/');
+        }
         echo '<li><a href="' . esc_url($career_url) . '">' . esc_html($career_label) . '</a></li>';
     }
 
@@ -404,23 +410,72 @@ function hakajobs_track_single_views() {
 add_action('wp_head', 'hakajobs_track_single_views');
 
 /**
- * Auto-create default pages (such as Pasang Loker) on theme activation
+ * Otomatis pastikan halaman default (Pasang Loker & Pusat Tes Karir) terbuat dan terbit di WordPress
  */
-function hakajobs_create_default_pages() {
+function hakajobs_ensure_default_pages() {
+    // 1. Halaman Pasang Loker
     if (!get_page_by_path('pasang-loker')) {
-        $page_id = wp_insert_post(array(
+        $pl_id = wp_insert_post(array(
             'post_title'     => __('Pasang Lowongan Kerja', 'hakajobs'),
             'post_name'      => 'pasang-loker',
             'post_status'    => 'publish',
             'post_type'      => 'page',
             'comment_status' => 'closed',
         ));
-        if ($page_id && !is_wp_error($page_id)) {
-            update_post_meta($page_id, '_wp_page_template', 'page-pasang-loker.php');
+        if ($pl_id && !is_wp_error($pl_id)) {
+            update_post_meta($pl_id, '_wp_page_template', 'page-pasang-loker.php');
+        }
+    }
+
+    // 2. Halaman Pusat Tes & Karir
+    if (!get_page_by_path('tes-karir') && !get_page_by_path('test-karir')) {
+        $tk_id = wp_insert_post(array(
+            'post_title'     => __('Pusat Tes & Karir', 'hakajobs'),
+            'post_name'      => 'tes-karir',
+            'post_status'    => 'publish',
+            'post_type'      => 'page',
+            'comment_status' => 'closed',
+        ));
+        if ($tk_id && !is_wp_error($tk_id)) {
+            update_post_meta($tk_id, '_wp_page_template', 'page-tes-karir.php');
         }
     }
 }
-add_action('after_switch_theme', 'hakajobs_create_default_pages');
+add_action('init', 'hakajobs_ensure_default_pages');
+add_action('after_switch_theme', 'hakajobs_ensure_default_pages');
+
+/**
+ * Interceptor Template: Memastikan URL /tes-karir/ atau /test-karir/ selalu memuat template page-tes-karir.php
+ * Mencegah 404 atau redirect ke beranda bila permalink belum di-flush atau laman belum terdaftar.
+ */
+function hakajobs_career_template_loader($template) {
+    global $wp_query;
+
+    if (is_page('tes-karir') || is_page('test-karir') || is_page_template('page-tes-karir.php') || is_page_template('page-test-karir.php')) {
+        $career_tpl = locate_template(array('page-tes-karir.php', 'page-test-karir.php'));
+        if ($career_tpl) {
+            return $career_tpl;
+        }
+    }
+
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+    $path = trim(parse_url($request_uri, PHP_URL_PATH), '/');
+    $segments = explode('/', $path);
+    $last_slug = end($segments);
+
+    if (in_array($last_slug, array('tes-karir', 'test-karir', 'persiapan-karir'), true)) {
+        $career_tpl = locate_template(array('page-tes-karir.php', 'page-test-karir.php'));
+        if ($career_tpl) {
+            $wp_query->is_404 = false;
+            $wp_query->is_page = true;
+            status_header(200);
+            return $career_tpl;
+        }
+    }
+
+    return $template;
+}
+add_filter('template_include', 'hakajobs_career_template_loader', 99);
 
 /**
  * Hilangkan tag judul screen-reader "Paginasi pos" dari output the_posts_pagination()

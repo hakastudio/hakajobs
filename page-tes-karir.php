@@ -72,6 +72,13 @@ if (empty($tk_ebook_url)) {
     $tk_ebook_url = get_template_directory_uri() . '/assets/downloads/E-Book-Kit-Persiapan-Kerja-2026.pdf';
 }
 $tk_cert_title       = get_theme_mod('hakajobs_tk_cert_title', __('Info Pelatihan & Sertifikasi', 'hakajobs'));
+
+// Enqueue styles jika belum terpanggil oleh wp_enqueue_scripts
+if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
+    $min = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
+    $tk_css = file_exists(HAKAJOBS_DIR . '/assets/css/tes-karir' . $min . '.css') ? '/assets/css/tes-karir' . $min . '.css' : '/assets/css/tes-karir.css';
+    wp_enqueue_style('hakajobs-tes-karir', HAKAJOBS_URI . $tk_css, array('hakajobs-main-style'), HAKAJOBS_VERSION);
+}
 ?>
 
 <!-- Hero Banner Section -->

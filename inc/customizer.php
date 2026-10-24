@@ -290,6 +290,17 @@ function hakajobs_customize_register($wp_customize) {
         'section'     => 'hakajobs_header_section',
     ));
 
+    $wp_customize->add_setting('hakajobs_nav_career_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('hakajobs_nav_career_url', array(
+        'type'        => 'url',
+        'label'       => __('Menu: URL Tautan [Tes & Karir]', 'hakajobs'),
+        'description' => __('Kosongkan untuk otomatis mengarah ke halaman /tes-karir/ bawaan tema.', 'hakajobs'),
+        'section'     => 'hakajobs_header_section',
+    ));
+
     // Tampilkan Tombol Pasang Loker di Dalam Menu Navigasi
     $wp_customize->add_setting('hakajobs_nav_show_post_job', array(
         'default'           => '0',
