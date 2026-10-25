@@ -940,8 +940,8 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
         // Real E-Book PDF Download trigger
         window.openEbookDownload = function() {
             var link = document.createElement('a');
-            link.href = 'assets/downloads/E-Book-Kit-Persiapan-Kerja-2026.pdf';
-            link.download = 'E-Book-Kit-Persiapan-Kerja-InfoLoker-Lampung-2026.pdf';
+            link.href = '<?php echo esc_url($tk_ebook_url); ?>';
+            link.download = 'E-Book-Kit-Persiapan-Kerja-<?php echo esc_attr(sanitize_title(get_bloginfo("name"))); ?>-2026.pdf';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

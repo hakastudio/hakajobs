@@ -104,7 +104,7 @@ function hakajobs_seo_meta_tags() {
 
     echo "\n<!-- Hakajobs SEO & Fast-Indexing Engine -->\n";
     if (!empty($description)) {
-        echo '<meta name="description" content="' . $description . '">' . "\n";
+        echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
     }
 
     // Google Search Robots
@@ -129,7 +129,7 @@ function hakajobs_seo_meta_tags() {
     echo '<meta property="og:type" content="' . esc_attr($og_type) . '">' . "\n";
     echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
     if (!empty($description)) {
-        echo '<meta property="og:description" content="' . $description . '">' . "\n";
+        echo '<meta property="og:description" content="' . esc_attr($description) . '">' . "\n";
     }
     if (!empty($canonical)) {
         echo '<meta property="og:url" content="' . esc_url($canonical) . '">' . "\n";
@@ -143,7 +143,7 @@ function hakajobs_seo_meta_tags() {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
     echo '<meta name="twitter:title" content="' . esc_attr($title) . '">' . "\n";
     if (!empty($description)) {
-        echo '<meta name="twitter:description" content="' . $description . '">' . "\n";
+        echo '<meta name="twitter:description" content="' . esc_attr($description) . '">' . "\n";
     }
     if (!empty($og_image)) {
         echo '<meta name="twitter:image" content="' . esc_url($og_image) . '">' . "\n";

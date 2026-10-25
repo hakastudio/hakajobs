@@ -16,7 +16,7 @@ get_header();
 // Ambil pengaturan kontak dari Customizer
 $wa_number  = get_theme_mod('hakajobs_contact_wa', '');
 $wa_clean   = preg_replace('/[^0-9]/', '', $wa_number);
-if (str_starts_with($wa_clean, '0')) {
+if (substr($wa_clean, 0, 1) === '0') {
     $wa_clean = '62' . substr($wa_clean, 1);
 }
 $contact_email = get_theme_mod('hakajobs_contact_email', get_bloginfo('admin_email'));
@@ -164,7 +164,7 @@ if (!function_exists('hakajobs_render_pl_feature_list')) {
             foreach ($lines as $line) {
                 $line = trim($line);
                 if (empty($line)) continue;
-                $is_muted = (str_starts_with($line, '-') || str_starts_with($line, 'x ') || str_starts_with($line, 'x:') || str_starts_with($line, '✗'));
+                $is_muted = (0 === strpos($line, '-') || 0 === strpos($line, 'x ') || 0 === strpos($line, 'x:') || 0 === strpos($line, '✗'));
                 $clean = preg_replace('/^[-x✗!:\s]+/', '', $line);
                 if ($is_muted) {
                     echo '<li><span class="hkpl-muted">✗</span> ' . esc_html($clean) . '</li>';

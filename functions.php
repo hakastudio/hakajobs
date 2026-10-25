@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.39');
+define('HAKAJOBS_VERSION', '1.0.40');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -230,7 +230,7 @@ function hakajobs_filter_job_query($query) {
     }
 
     // Apply to lowongan archive, search, or taxonomy
-    if ($query->is_post_type_archive('lowongan') || $query->is_tax(array('kategori_lowongan', 'lokasi_lowongan', 'tipe_pekerjaan', 'pengalaman_kerja')) || (is_search() && isset($_GET['post_type']) && $_GET['post_type'] === 'lowongan')) {
+    if ($query->is_post_type_archive('lowongan') || $query->is_tax(array('kategori_lowongan', 'lokasi_lowongan', 'tipe_pekerjaan', 'pengalaman_kerja')) || (is_search() && (!isset($_GET['post_type']) || $_GET['post_type'] === 'lowongan'))) {
         
         $query->set('post_type', 'lowongan');
         $query->set('posts_per_page', 12);
@@ -291,6 +291,8 @@ function hakajobs_filter_job_query($query) {
         // Keyword Search (by title or company name)
         if (!empty($_GET['s_keyword'])) {
             $query->set('s', sanitize_text_field($_GET['s_keyword']));
+        } elseif (!empty($_GET['s'])) {
+            $query->set('s', sanitize_text_field($_GET['s']));
         }
 
         // Sorting

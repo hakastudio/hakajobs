@@ -1,0 +1,3805 @@
+# Copyright (C) 2026 Haka Digital Network
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Hakajobs 1.0.39\n"
+"Report-Msgid-Bugs-To: https://github.com/hakastudio/hakajobs/issues\n"
+"POT-Creation-Date: 2026-10-25 15:45:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2026-YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Hakajobs POT Generator\n"
+"X-Domain: hakajobs\n"
+
+#: single-lowongan.php:194
+msgid "%d hari lagi"
+msgstr ""
+
+#: inc/seo.php:63
+msgid "(Lokasi: %s)"
+msgstr ""
+
+#: page-pasang-loker.php:607
+msgid "08xxxxxxxxxx / hrd@perusahaan.com"
+msgstr ""
+
+#: inc/customizer.php:2033
+msgid "1. Tampilkan Widget \"Pasang Loker\""
+msgstr ""
+
+#: page-pasang-loker.php:258
+msgid "100% Aman • Langsung Dibalas Tim Admin"
+msgstr ""
+
+#: front-page.php:151
+msgid "100% Bebas Biaya & Penipuan"
+msgstr ""
+
+#: inc/customizer.php:2259
+msgid "14 Hari Terakhir"
+msgstr ""
+
+#: front-page.php:25
+msgid "1×24 Jam"
+msgstr ""
+
+#: inc/customizer.php:774
+msgid "2 Kolom (Kartu lebih lebar & lega)"
+msgstr ""
+
+#: inc/customizer.php:2102
+msgid "2. Tampilkan Widget \"Kategori Populer\""
+msgstr ""
+
+#: inc/customizer.php:773
+msgid "3 Kolom (Rekomendasi untuk 6 kartu: 2 baris × 3 kolom)"
+msgstr ""
+
+#: inc/customizer.php:2167
+msgid "3. Tampilkan Widget \"Lokasi Kerja Teratas\""
+msgstr ""
+
+#: inc/customizer.php:2260
+msgid "30 Hari Terakhir"
+msgstr ""
+
+#: inc/customizer.php:775
+msgid "4 Kolom (Tampilan lebih rapat)"
+msgstr ""
+
+#: inc/customizer.php:2232
+msgid "4. Tampilkan Widget \"Lowongan Terpopuler\""
+msgstr ""
+
+#: inc/customizer.php:2319
+msgid "5. Tampilkan Widget CTA \"Sudah Siap Melamar Pekerjaan?\""
+msgstr ""
+
+#: inc/customizer.php:2258
+msgid "7 Hari Terakhir (Rekomendasi)"
+msgstr ""
+
+#: page-pasang-loker.php:455
+msgid "<strong>Posisi teratas</strong> di atas Featured"
+msgstr ""
+
+#: page-pasang-loker.php:661
+msgid "Ada! Hubungi admin untuk mendapatkan penawaran paket bundling jika Anda ingin memasang 3 lowongan atau lebih sekaligus."
+msgstr ""
+
+#: page-pasang-loker.php:641
+msgid "Admin akan memproses dan mempublikasikan lowongan Anda dalam 1×24 jam setelah data diterima dan (untuk paket berbayar) pembayaran dikonfirmasi."
+msgstr ""
+
+#: inc/customizer.php:1804
+#: page-pasang-loker.php:83
+msgid "Admin memverifikasi data dan mengkonfirmasi paket pilihan Anda. Pembayaran untuk paket berbayar bisa via transfer bank atau dompet digital."
+msgstr ""
+
+#: inc/meta-boxes.php:206
+msgid "Akan otomatis diformat ke format internasional WhatsApp (628...)."
+msgstr ""
+
+#: single-lowongan.php:356
+msgid "Aksi Lamaran"
+msgstr ""
+
+#: inc/customizer.php:1014
+msgid "Aktifkan (ON) atau nonaktifkan (OFF) deretan ikon media sosial di footer. Ikon hanya akan tampil jika tautan (link) diisi di bawah ini."
+msgstr ""
+
+#: footer.php:280
+msgid "Aktifkan Cookie"
+msgstr ""
+
+#: inc/customizer.php:1101
+msgid "Aktifkan Mesin SEO Otomatis"
+msgstr ""
+
+#: inc/customizer.php:1165
+msgid "Aktifkan Penayangan Iklan"
+msgstr ""
+
+#: inc/customizer.php:2402
+msgid "Aktifkan Pop-up Cookie / Notifikasi Pengunjung"
+msgstr ""
+
+#: inc/customizer.php:464
+msgid "Aktifkan Tombol \"Kembali ke Atas\""
+msgstr ""
+
+#: inc/meta-boxes.php:223
+msgid "Alamat Email Penerima Lamaran"
+msgstr ""
+
+#: inc/meta-boxes.php:97
+msgid "Alamat Lengkap Kantor / Jalan (streetAddress)"
+msgstr ""
+
+#: inc/meta-boxes.php:99
+msgid "Alamat spesifik kantor tempat bekerja (jalan, gedung, lantai). Terhubung ke streetAddress Google Jobs."
+msgstr ""
+
+#: single-lowongan.php:68
+msgid "Alat Admin"
+msgstr ""
+
+#: page-pasang-loker.php:645
+msgid "Anda bisa mengisi form di halaman ini dan otomatis terformat, atau kirim langsung via WhatsApp dengan format: Nama Perusahaan, Posisi, Lokasi, Gaji, Deadline, Deskripsi, dan Kontak HRD."
+msgstr ""
+
+#: front-page.php:414
+msgid "Anda dapat menambahkan lowongan kerja baru melalui dashboard WordPress atau menggunakan fitur 1-Klik Pasang Data Demo."
+msgstr ""
+
+#: page-pasang-loker.php:660
+msgid "Apakah ada diskon untuk beberapa posisi sekaligus?"
+msgstr ""
+
+#: page-pasang-loker.php:648
+msgid "Apakah lowongan saya muncul di Google?"
+msgstr ""
+
+#: inc/post-types.php:21
+msgid "Arsip Lowongan"
+msgstr ""
+
+#: category.php:68
+msgid "Artikel untuk topik ini sedang disiapkan. Silakan cek kembali nanti atau telusuri lowongan kerja yang tersedia."
+msgstr ""
+
+#: inc/customizer.php:2777
+msgid "Artikel — Judul Seksi Bank Soal"
+msgstr ""
+
+#: inc/customizer.php:2788
+msgid "Artikel — Sub-judul Seksi Bank Soal"
+msgstr ""
+
+#: inc/post-types.php:22
+msgid "Atribut Lowongan"
+msgstr ""
+
+#: inc/customizer.php:753
+msgid "Atur berapa banyak kartu lowongan yang ditampilkan. Default: 6 lowongan."
+msgstr ""
+
+#: inc/customizer.php:176
+msgid "Atur besar / kecil ukuran logo agar tidak kebesaran di header."
+msgstr ""
+
+#: inc/customizer.php:162
+msgid "Atur besar / kecil ukuran tinggi logo gambar agar pas dan tidak kebesaran di header. Rekomendasi: 32px - 52px (Default: 42px)."
+msgstr ""
+
+#: inc/customizer.php:1909
+msgid "Atur link Saluran WhatsApp resmi Anda untuk broadcast 1-klik loker dan banner undangan pengunjung."
+msgstr ""
+
+#: inc/customizer.php:109
+msgid "Atur logo, sticky header, tombol CTA, dan tautan cepat di bilah atas. Untuk mengedit item menu, buka: Tampilan → Menu."
+msgstr ""
+
+#: inc/customizer.php:2491
+msgid "Atur semua judul, tulisan, modul kisi-kisi, simulator kuis, bank soal, dan e-book download pada halaman /tes-karir/."
+msgstr ""
+
+#: inc/customizer.php:1263
+msgid "Atur semua konten di halaman /pasang-loker/: nomor WhatsApp admin, banner hero, daftar tarif, keunggulan, langkah pasang, hingga banner CTA."
+msgstr ""
+
+#: inc/customizer.php:2390
+msgid "Atur tampilan banner/pop-up persetujuan cookie & notifikasi privasi saat pengunjung pertama kali membuka website."
+msgstr ""
+
+#: inc/customizer.php:2007
+msgid "Atur tampilan dan isi widget sidebar kanan: Pasang Loker, Kategori Populer, Lokasi Kerja Teratas, dan Lowongan Terpopuler."
+msgstr ""
+
+#: inc/customizer.php:38
+msgid "Atur warna, header, navigasi, hero, dan semua teks tema dari sini."
+msgstr ""
+
+#: category.php:47
+#: index.php:31
+#: page-tes-karir.php:388
+msgid "Baca Selengkapnya"
+msgstr ""
+
+#: page-pasang-loker.php:419
+msgid "Badge <strong>\"Featured\"</strong> di kartu loker"
+msgstr ""
+
+#: page-pasang-loker.php:454
+msgid "Badge <strong>\"Urgent\"</strong> mencolok"
+msgstr ""
+
+#: page-pasang-loker.php:385
+msgid "Badge Featured / Urgent"
+msgstr ""
+
+#: inc/customizer.php:433
+msgid "Badge di kiri topbar (opsional). Contoh: \"Terverifikasi\", \"Resmi\", \"#1 di Indonesia\"."
+msgstr ""
+
+#: single.php:113
+msgid "Bagikan Panduan Ini:"
+msgstr ""
+
+#: single-lowongan.php:307
+msgid "Bagikan ke LinkedIn"
+msgstr ""
+
+#: single-lowongan.php:303
+msgid "Bagikan ke Telegram"
+msgstr ""
+
+#: single-lowongan.php:298
+msgid "Bagikan ke WhatsApp"
+msgstr ""
+
+#: single-lowongan.php:290
+msgid "Bagikan lowongan ini:"
+msgstr ""
+
+#: page-pasang-loker.php:576
+msgid "Bandar Lampung / Jakarta / Remote"
+msgstr ""
+
+#: page-tes-karir.php:57
+msgid "Bank Soal & Panduan Karir Lengkap"
+msgstr ""
+
+#: inc/ads.php:62
+msgid "Banner Atas (Leaderboard 728x90 / Responsif)"
+msgstr ""
+
+#: inc/ads.php:66
+msgid "Banner Bawah — Sebelum Footer (Lebar)"
+msgstr ""
+
+#: inc/template-tags.php:129
+msgid "Baru saja"
+msgstr ""
+
+#: inc/meta-boxes.php:131
+msgid "Batas Akhir Pendaftaran (Deadline)"
+msgstr ""
+
+#: inc/post-types.php:196
+msgid "Batas Lamaran"
+msgstr ""
+
+#: archive-lowongan.php:206
+msgid "Batas Lamaran Terdekat"
+msgstr ""
+
+#: single-lowongan.php:414
+msgid "Batas Pendaftaran"
+msgstr ""
+
+#: inc/template-tags.php:549
+#: single-lowongan.php:119
+msgid "Batas akhir penerimaan lamaran segera berakhir"
+msgstr ""
+
+#: single-lowongan.php:180
+msgid "Batas waktu penerimaan berkas telah berakhir pada %s. Rekruter tidak lagi menerima berkas lamaran baru untuk lowongan ini."
+msgstr ""
+
+#: page-pasang-loker.php:324
+msgid "Bebas Spam"
+msgstr ""
+
+#: index.php:50
+msgid "Belum Ada Artikel"
+msgstr ""
+
+#: category.php:67
+msgid "Belum Ada Artikel di Kategori Ini"
+msgstr ""
+
+#: front-page.php:413
+msgid "Belum Ada Lowongan Kerja yang Dipublikasikan"
+msgstr ""
+
+#: sidebar.php:137
+msgid "Belum ada kategori tersedia."
+msgstr ""
+
+#: sidebar.php:177
+msgid "Belum ada lokasi tersedia."
+msgstr ""
+
+#: sidebar.php:259
+msgid "Belum ada lowongan terpopuler saat ini."
+msgstr ""
+
+#: functions.php:151
+msgid "Belum ada lowongan yang disimpan."
+msgstr ""
+
+#: inc/meta-boxes.php:36
+msgid "Benefit & Fasilitas Pekerjaan"
+msgstr ""
+
+#: single-lowongan.php:224
+msgid "Benefit & Fasilitas yang Diberikan"
+msgstr ""
+
+#: functions.php:338
+#: inc/customizer.php:227
+#: inc/seo.php:188
+#: inc/template-tags.php:655
+#: page-tes-karir.php:615
+msgid "Beranda"
+msgstr ""
+
+#: page-pasang-loker.php:640
+msgid "Berapa lama loker saya akan tayang?"
+msgstr ""
+
+#: page-pasang-loker.php:96
+msgid "Bergabung bersama ratusan perusahaan yang sudah mempercayakan rekrutmen mereka di %s"
+msgstr ""
+
+#: inc/customizer.php:267
+msgid "Berisi sub-menu: Full-Time, Part-Time, Magang, Remote."
+msgstr ""
+
+#: index.php:14
+msgid "Berita & Artikel Karir"
+msgstr ""
+
+#: inc/customizer.php:213
+msgid "Besar / kecil emoji ikon sebelum nama website (16px - 44px). Default: 26px."
+msgstr ""
+
+#: inc/customizer.php:195
+msgid "Besar / kecil font nama website jika tidak memakai logo gambar (14px - 32px). Default: 20px."
+msgstr ""
+
+#: inc/meta-boxes.php:133
+msgid "Biarkan kosong jika tidak ada batas waktu tertentu."
+msgstr ""
+
+#: inc/customizer.php:2856
+msgid "Biarkan kosong untuk mengunduh berkas PDF resmi bawaan tema."
+msgstr ""
+
+#: inc/customizer.php:2366
+msgid "Biarkan kosong untuk otomatis mengarahkan ke halaman arsip lowongan (/lowongan/)."
+msgstr ""
+
+#: inc/customizer.php:2962
+msgid "Biarkan kosong untuk otomatis mengarahkan ke halaman arsip lowongan kerja (/lowongan/)."
+msgstr ""
+
+#: inc/customizer.php:410
+msgid "Bilah Pengumuman (Topbar)"
+msgstr ""
+
+#: inc/customizer.php:422
+msgid "Bilah tipis di paling atas halaman untuk pengumuman singkat."
+msgstr ""
+
+#: page-pasang-loker.php:656
+msgid "Bisakah loker diperpanjang setelah habis?"
+msgstr ""
+
+#: page-pasang-loker.php:339
+msgid "Branding Perusahaan"
+msgstr ""
+
+#: inc/post-types.php:302
+msgid "Broadcast WA"
+msgstr ""
+
+#: front-page.php:378
+msgid "Buka Direktori Lengkap"
+msgstr ""
+
+#: header.php:116
+msgid "Buka Lowongan Tersimpan"
+msgstr ""
+
+#: header.php:134
+msgid "Buka Menu"
+msgstr ""
+
+#: page-tes-karir.php:36
+msgid "Buka Modul CPNS/BUMN"
+msgstr ""
+
+#: page-tes-karir.php:48
+msgid "Buka Modul Interview"
+msgstr ""
+
+#: page-tes-karir.php:40
+msgid "Buka Modul Psikotes"
+msgstr ""
+
+#: page-tes-karir.php:44
+msgid "Buka Panduan CV"
+msgstr ""
+
+#: single-lowongan.php:87
+msgid "Buka Saluran"
+msgstr ""
+
+#: single-lowongan.php:85
+msgid "Buka Saluran WhatsApp Anda di tab baru"
+msgstr ""
+
+#: single-lowongan.php:76
+msgid "Buka WhatsApp dan kirim ke Saluran atau Grup"
+msgstr ""
+
+#: inc/customizer.php:2381
+#: inc/customizer.php:2977
+msgid "Buka di Tab Baru (_blank)"
+msgstr ""
+
+#: inc/customizer.php:2380
+#: inc/customizer.php:2976
+msgid "Buka di Tab yang Sama (_self)"
+msgstr ""
+
+#: inc/template-tags.php:1209
+msgid "Buka di tab baru (_blank)"
+msgstr ""
+
+#: inc/customizer.php:1888
+msgid "CTA Bawah — Deskripsi (opsional)"
+msgstr ""
+
+#: inc/customizer.php:1877
+msgid "CTA Bawah — Judul"
+msgstr ""
+
+#: inc/customizer.php:1900
+msgid "CTA Bawah — Teks Tombol WhatsApp"
+msgstr ""
+
+#: inc/customizer.php:2342
+msgid "CTA Pencari Kerja — Deskripsi / Ajakan"
+msgstr ""
+
+#: inc/customizer.php:2331
+msgid "CTA Pencari Kerja — Judul Widget"
+msgstr ""
+
+#: inc/customizer.php:2377
+msgid "CTA Pencari Kerja — Target Buka Tautan"
+msgstr ""
+
+#: inc/customizer.php:2365
+msgid "CTA Pencari Kerja — Tautan / URL Khusus"
+msgstr ""
+
+#: inc/customizer.php:2354
+msgid "CTA Pencari Kerja — Teks Tombol"
+msgstr ""
+
+#: inc/customizer.php:2938
+msgid "CTA Sidebar — Deskripsi / Ajakan"
+msgstr ""
+
+#: inc/customizer.php:2927
+msgid "CTA Sidebar — Judul Kartu"
+msgstr ""
+
+#: inc/customizer.php:2973
+msgid "CTA Sidebar — Target Buka Tautan"
+msgstr ""
+
+#: inc/customizer.php:2961
+msgid "CTA Sidebar — Tautan / URL Khusus"
+msgstr ""
+
+#: inc/customizer.php:2950
+msgid "CTA Sidebar — Teks Tombol"
+msgstr ""
+
+#: front-page.php:436
+msgid "Cara Melamar Kerja di %s"
+msgstr ""
+
+#: inc/customizer.php:1751
+#: page-pasang-loker.php:78
+msgid "Cara Pasang Loker"
+msgstr ""
+
+#: inc/customizer.php:1757
+msgid "Cara Pasang — Judul Bagian"
+msgstr ""
+
+#: inc/customizer.php:1768
+msgid "Cara Pasang — Subjudul"
+msgstr ""
+
+#: 404.php:23
+msgid "Cari"
+msgstr ""
+
+#: front-page.php:438
+#: inc/customizer.php:818
+msgid "Cari & Pilih Lowongan"
+msgstr ""
+
+#: inc/post-types.php:81
+msgid "Cari Kategori"
+msgstr ""
+
+#: inc/post-types.php:105
+msgid "Cari Lokasi"
+msgstr ""
+
+#: front-page.php:18
+#: inc/customizer.php:567
+msgid "Cari Loker"
+msgstr ""
+
+#: inc/post-types.php:32
+msgid "Cari Lowongan"
+msgstr ""
+
+#: footer.php:217
+msgid "Cari Lowongan Kerja"
+msgstr ""
+
+#: page-tes-karir.php:690
+msgid "Cari Lowongan Kerja Terbaru"
+msgstr ""
+
+#: page-saved.php:30
+msgid "Cari Lowongan Lainnya"
+msgstr ""
+
+#: inc/post-types.php:127
+msgid "Cari Tipe"
+msgstr ""
+
+#: inc/customizer.php:557
+msgid "Cari jabatan, skill, atau perusahaan..."
+msgstr ""
+
+#: 404.php:22
+msgid "Cari posisi lowongan lainnya..."
+msgstr ""
+
+#: inc/meta-boxes.php:253
+msgid "Catatan / Petunjuk Khusus Pelamar (Opsional)"
+msgstr ""
+
+#: inc/customizer.php:2336
+#: inc/customizer.php:2932
+#: inc/template-tags.php:1100
+#: inc/template-tags.php:1168
+#: inc/template-tags.php:1186
+#: page-tes-karir.php:94
+#: sidebar.php:55
+msgid "Cek ribuan lowongan kerja perusahaan terbaru di Hakajobs yang aktif dan buka minggu ini."
+msgstr ""
+
+#: inc/customizer.php:1177
+msgid "Centang ini untuk menampilkan kotak abu-abu di semua posisi iklan agar Anda bisa melihat tata letaknya sebelum akun AdSense disetujui."
+msgstr ""
+
+#: inc/customizer.php:695
+msgid "Centang untuk mengaktifkan blok kartu lowongan prioritas / sorotan di beranda."
+msgstr ""
+
+#: inc/customizer.php:1580
+#: page-pasang-loker.php:58
+msgid "Chat Admin"
+msgstr ""
+
+#: inc/customizer.php:1894
+#: page-pasang-loker.php:98
+msgid "Chat WhatsApp Admin"
+msgstr ""
+
+#: archive-lowongan.php:268
+msgid "Coba sesuaikan kata kunci atau bersihkan beberapa filter di sebelah kiri untuk melihat lebih banyak lowongan."
+msgstr ""
+
+#: inc/customizer.php:1557
+#: page-pasang-loker.php:56
+msgid "Cocok untuk UKM dan startup yang baru mulai rekrut"
+msgstr ""
+
+#: inc/customizer.php:1552
+msgid "Contoh: \"/ 30 hari\" atau kosongkan jika tidak diperlukan."
+msgstr ""
+
+#: inc/customizer.php:1599
+msgid "Contoh: \"Paling Populer\", \"Rekomendasi\", dsb."
+msgstr ""
+
+#: inc/customizer.php:1026
+msgid "Contoh: \"Sosial Media Kami:\", \"Ikuti Kami:\", \"Official Social Media:\"."
+msgstr ""
+
+#: inc/customizer.php:707
+msgid "Contoh: Lowongan Prioritas, Lowongan Pilihan, dsb."
+msgstr ""
+
+#: archive-lowongan.php:87
+msgid "Contoh: Programmer, Desain..."
+msgstr ""
+
+#: inc/customizer.php:1188
+msgid "Contoh: ca-pub-1234567890123456. Ini otomatis memuat skrip resmi AdSense di seluruh halaman."
+msgstr ""
+
+#: inc/customizer.php:1070
+msgid "Contoh: https://facebook.com/sosialmedia. Kosongkan jika tidak ingin menampilkan."
+msgstr ""
+
+#: inc/customizer.php:1081
+msgid "Contoh: https://instagram.com/sosialmedia. Kosongkan jika tidak ingin menampilkan."
+msgstr ""
+
+#: inc/customizer.php:1059
+msgid "Contoh: https://linkedin.com/company/sosialmedia. Kosongkan jika tidak ingin menampilkan."
+msgstr ""
+
+#: inc/customizer.php:1048
+msgid "Contoh: https://t.me/sosialmedia. Kosongkan jika tidak ingin menampilkan."
+msgstr ""
+
+#: inc/customizer.php:1037
+msgid "Contoh: https://wa.me/6281234567890. Kosongkan jika tidak ingin menampilkan."
+msgstr ""
+
+#: inc/customizer.php:1923
+msgid "Contoh: https://whatsapp.com/channel/0029Va... atau link invite grup WA. Tautan ini akan otomatis disertakan pada teks broadcast dan tombol publik."
+msgstr ""
+
+#: inc/post-types.php:41
+msgid "Daftar Lowongan"
+msgstr ""
+
+#: inc/seo.php:93
+msgid "Daftar lowongan kerja bidang / lokasi %s terbaru. Lamar langsung tanpa ribet registrasi."
+msgstr ""
+
+#: page-saved.php:18
+msgid "Daftar lowongan yang Anda tandai untuk dilamar nanti. Disimpan di peramban (browser) Anda tanpa akun login."
+msgstr ""
+
+#: inc/ads.php:64
+msgid "Dalam Lowongan — Atas Deskripsi (Responsif)"
+msgstr ""
+
+#: inc/ads.php:65
+msgid "Dalam Lowongan — Bawah Deskripsi (Responsif)"
+msgstr ""
+
+#: inc/customizer.php:1968
+#: single-lowongan.php:260
+msgid "Dapatkan Info Lowongan Kerja Harian di WhatsApp Anda!"
+msgstr ""
+
+#: page-tes-karir.php:64
+msgid "Dapatkan kumpulan ringkasan rumus matematika cepat TIU, kisi-kisi psikotes, panduan wawancara kerja, dan template CV ATS Word siap pakai."
+msgstr ""
+
+#: page-pasang-loker.php:596
+msgid "Deadline Lamaran"
+msgstr ""
+
+#: inc/customizer.php:671
+msgid "Default: #0f172a (Dark Slate Navy khas Pasang Loker)"
+msgstr ""
+
+#: inc/customizer.php:682
+msgid "Default: #0f3460 (Deep Navy khas Pasang Loker)"
+msgstr ""
+
+#: inc/customizer.php:942
+msgid "Default: Kategori Pekerjaan. Bisa diisi custom menu via Tampilan > Menu (Footer Kolom 2) atau Tampilan > Widget."
+msgstr ""
+
+#: inc/customizer.php:966
+msgid "Default: Kota & Wilayah. Bisa diisi custom menu via Tampilan > Menu (Footer Kolom 3) atau Tampilan > Widget."
+msgstr ""
+
+#: inc/customizer.php:990
+msgid "Default: Navigasi & Info. Isi tautan dapat disetel manual via Tampilan > Menu (Footer Kolom 4) atau Tampilan > Widget."
+msgstr ""
+
+#: inc/customizer.php:2471
+msgid "Default: otomatis mengarah ke halaman /privacy-policy/ (atau halaman privasi WP) jika dikosongkan."
+msgstr ""
+
+#: single-lowongan.php:214
+msgid "Deskripsi & Kualifikasi Pekerjaan"
+msgstr ""
+
+#: inc/customizer.php:1986
+msgid "Deskripsi Banner Publik"
+msgstr ""
+
+#: inc/customizer.php:2067
+msgid "Deskripsi Pasang Loker"
+msgstr ""
+
+#: page-pasang-loker.php:601
+msgid "Deskripsi Singkat Pekerjaan"
+msgstr ""
+
+#: inc/customizer.php:930
+msgid "Deskripsi Singkat di Footer"
+msgstr ""
+
+#: inc/customizer.php:2892
+msgid "Deskripsi singkat keahlian/profil tim penulis pada box profil di bawah artikel."
+msgstr ""
+
+#: inc/template-tags.php:1196
+msgid "Deskripsi:"
+msgstr ""
+
+#: inc/meta-boxes.php:18
+msgid "Detail Pekerjaan & Perusahaan"
+msgstr ""
+
+#: inc/meta-boxes.php:153
+msgid "Dibutuhkan Segera (Urgent)"
+msgstr ""
+
+#: functions.php:149
+msgid "Dihapus dari simpanan"
+msgstr ""
+
+#: inc/post-types.php:198
+msgid "Dilihat"
+msgstr ""
+
+#: front-page.php:374
+msgid "Diperbarui secara berkala setiap hari."
+msgstr ""
+
+#: single-lowongan.php:445
+msgid "Dirahasiakan / Kompetitif"
+msgstr ""
+
+#: archive-lowongan.php:46
+msgid "Direktori Lowongan Kerja"
+msgstr ""
+
+#: inc/seo.php:86
+msgid "Direktori Lowongan Kerja Terbaru"
+msgstr ""
+
+#: footer.php:249
+msgid "Disimpan langsung di peramban Anda tanpa perlu mendaftar akun."
+msgstr ""
+
+#: single-lowongan.php:145
+msgid "Diterbitkan %s"
+msgstr ""
+
+#: inc/template-tags.php:632
+msgid "Ditutup"
+msgstr ""
+
+#: inc/post-types.php:40
+msgid "Diunggah untuk lowongan ini"
+msgstr ""
+
+#: page-tes-karir.php:63
+msgid "E-Book Kit Persiapan Kerja 2026"
+msgstr ""
+
+#: inc/customizer.php:2833
+msgid "E-Book — Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:2822
+msgid "E-Book — Judul Kartu"
+msgstr ""
+
+#: inc/customizer.php:2811
+msgid "E-Book — Teks Badge"
+msgstr ""
+
+#: inc/customizer.php:2844
+msgid "E-Book — Teks Tombol Unduh"
+msgstr ""
+
+#: inc/customizer.php:2855
+msgid "E-Book — URL Berkas PDF Khusus"
+msgstr ""
+
+#: inc/post-types.php:85
+msgid "Edit Kategori"
+msgstr ""
+
+#: inc/post-types.php:107
+msgid "Edit Lokasi"
+msgstr ""
+
+#: single-lowongan.php:92
+msgid "Edit Loker"
+msgstr ""
+
+#: inc/post-types.php:28
+msgid "Edit Lowongan"
+msgstr ""
+
+#: inc/post-types.php:168
+msgid "Edit Pendidikan"
+msgstr ""
+
+#: inc/post-types.php:149
+msgid "Edit Pengalaman"
+msgstr ""
+
+#: inc/post-types.php:129
+msgid "Edit Tipe"
+msgstr ""
+
+#: single-lowongan.php:90
+msgid "Edit lowongan ini di WordPress Admin"
+msgstr ""
+
+#: page-pasang-loker.php:58
+msgid "Email Admin"
+msgstr ""
+
+#: inc/customizer.php:1288
+msgid "Email Admin / Perusahaan"
+msgstr ""
+
+#: inc/meta-boxes.php:225
+msgid "Email HRD / bagian rekrutmen perusahaan."
+msgstr ""
+
+#: inc/customizer.php:1289
+msgid "Email alternatif penerima data lowongan (jika kosong, menggunakan email admin WordPress)."
+msgstr ""
+
+#: inc/customizer.php:149
+msgid "Emoji sebelum nama situs (jika tidak pakai logo gambar). Contoh: 💼 🏢 🌟 🚀"
+msgstr ""
+
+#: page-pasang-loker.php:247
+msgid "FAST TRACK REKRUTMEN"
+msgstr ""
+
+#: archive-lowongan.php:72
+msgid "Filter Pencarian"
+msgstr ""
+
+#: archive-lowongan.php:214
+msgid "Filter aktif:"
+msgstr ""
+
+#: inc/post-types.php:43
+msgid "Filter daftar lowongan"
+msgstr ""
+
+#: inc/customizer.php:919
+msgid "Footer & Hak Cipta"
+msgstr ""
+
+#: functions.php:183
+msgid "Footer Kolom 1 (Tentang & Brand)"
+msgstr ""
+
+#: functions.php:68
+msgid "Footer Kolom 2 (Kategori Pekerjaan)"
+msgstr ""
+
+#: functions.php:193
+msgid "Footer Kolom 2 (Kategori)"
+msgstr ""
+
+#: functions.php:69
+#: functions.php:203
+msgid "Footer Kolom 3 (Kota & Wilayah)"
+msgstr ""
+
+#: functions.php:70
+#: functions.php:213
+msgid "Footer Kolom 4 (Navigasi & Info)"
+msgstr ""
+
+#: page-pasang-loker.php:622
+msgid "Form ini akan membuka WhatsApp dengan data yang sudah terisi otomatis."
+msgstr ""
+
+#: inc/customizer.php:1843
+msgid "Form — Judul"
+msgstr ""
+
+#: inc/customizer.php:1854
+msgid "Form — Keterangan / Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:1865
+msgid "Form — Teks Tombol Kirim"
+msgstr ""
+
+#: inc/meta-boxes.php:113
+msgid "Format angka (misal Rp 6.000.000 - Rp 9.000.000) otomatis terbaca oleh Google baseSalary."
+msgstr ""
+
+#: page-pasang-loker.php:644
+msgid "Format apa yang harus saya kirimkan?"
+msgstr ""
+
+#: single-lowongan.php:72
+msgid "Format teks siap kirim lengkap dengan emoji, ringkasan, dan link channel."
+msgstr ""
+
+#: inc/meta-boxes.php:125
+msgid "Frekuensi pembayaran upah."
+msgstr ""
+
+#: functions.php:368
+msgid "Full-Time"
+msgstr ""
+
+#: inc/customizer.php:1992
+#: single-lowongan.php:262
+msgid "Gabung Saluran WhatsApp"
+msgstr ""
+
+#: inc/updater.php:168
+msgid "Gagal rename folder tema dari \"%s\" ke \"%s\". Pastikan direktori wp-content/themes dapat ditulisi."
+msgstr ""
+
+#: inc/post-types.php:195
+msgid "Gaji"
+msgstr ""
+
+#: single-lowongan.php:443
+msgid "Gaji yang Ditawarkan"
+msgstr ""
+
+#: inc/seo.php:66
+msgid "Gaji: %s."
+msgstr ""
+
+#: inc/customizer.php:1144
+msgid "Gambar Preview Medsos / WhatsApp (Default)"
+msgstr ""
+
+#: inc/customizer.php:1145
+msgid "Gambar banner saat link website dibagikan ke WhatsApp/Facebook jika postingan tidak ada foto."
+msgstr ""
+
+#: inc/customizer.php:2307
+msgid "Gantikan Semua Widget Bawaan (Hanya Widget WP)"
+msgstr ""
+
+#: inc/customizer.php:504
+msgid "Gaya Compact Fokus (High-Efficiency Search)"
+msgstr ""
+
+#: inc/customizer.php:1305
+msgid "Gaya Dark Navy Klasik (Statistik Center & Gelombang)"
+msgstr ""
+
+#: inc/customizer.php:497
+msgid "Gaya Desain Hero Beranda"
+msgstr ""
+
+#: inc/customizer.php:1301
+msgid "Gaya Desain Hero Pasang Loker"
+msgstr ""
+
+#: inc/customizer.php:1307
+msgid "Gaya Minimalist Modern (Clean Slate & Fokus Paket)"
+msgstr ""
+
+#: inc/customizer.php:501
+msgid "Gaya Navy Sleek (Dark Navy & Clean Search - Rekomendasi)"
+msgstr ""
+
+#: inc/customizer.php:503
+msgid "Gaya Split 2-Kolom (Asymmetric Modern & Trust Showcase)"
+msgstr ""
+
+#: inc/customizer.php:1306
+msgid "Gaya Split B2B Converter (2-Kolom & Aksi Cepat)"
+msgstr ""
+
+#: inc/customizer.php:502
+msgid "Gaya Terang Minimalis (Clean Light)"
+msgstr ""
+
+#: inc/customizer.php:1153
+msgid "Google AdSense & Penempatan Iklan"
+msgstr ""
+
+#: page-tes-karir.php:62
+msgid "Gratis Modul PDF"
+msgstr ""
+
+#: front-page.php:439
+#: inc/customizer.php:827
+msgid "Gunakan filter lokasi, tipe kerja, atau bidang industri untuk menemukan posisi yang sesuai dengan keahlian Anda."
+msgstr ""
+
+#: inc/customizer.php:719
+msgid "Gunakan kata-kata aksi/CTA yang memikat pelamar untuk segera melamar lowongan prioritas."
+msgstr ""
+
+#: inc/post-types.php:38
+msgid "Gunakan sebagai logo"
+msgstr ""
+
+#: footer.php:235
+msgid "Hak Cipta Dilindungi."
+msgstr ""
+
+#: inc/customizer.php:483
+msgid "Halaman Beranda & Cara Melamar"
+msgstr ""
+
+#: inc/customizer.php:1262
+msgid "Halaman Pasang Loker & Tarif"
+msgstr ""
+
+#: inc/customizer.php:2490
+msgid "Halaman Pusat Tes & Karir"
+msgstr ""
+
+#: 404.php:15
+msgid "Halaman Tidak Ditemukan"
+msgstr ""
+
+#: inc/customizer.php:1762
+#: page-pasang-loker.php:79
+msgid "Hanya 3 langkah, loker Anda langsung tayang"
+msgstr ""
+
+#: footer.php:281
+msgid "Hanya Esensial"
+msgstr ""
+
+#: inc/post-types.php:37
+msgid "Hapus Logo"
+msgstr ""
+
+#: archive-lowongan.php:233
+#: footer.php:257
+msgid "Hapus Semua"
+msgstr ""
+
+#: page-saved.php:33
+msgid "Hapus Semua Simpanan"
+msgstr ""
+
+#: inc/template-tags.php:479
+msgid "Hari Terakhir!"
+msgstr ""
+
+#: inc/template-tags.php:708
+msgid "Hasil Pencarian: \"%s\""
+msgstr ""
+
+#: archive-lowongan.php:42
+msgid "Hasil Pencarian: &ldquo;%s&rdquo;"
+msgstr ""
+
+#: inc/seo.php:99
+msgid "Hasil pencarian lowongan kerja untuk kata kunci \"%s\"."
+msgstr ""
+
+#: inc/customizer.php:108
+msgid "Header & Navigasi Menu"
+msgstr ""
+
+#: inc/customizer.php:122
+msgid "Header Melekat (Sticky Header)"
+msgstr ""
+
+#: inc/customizer.php:123
+msgid "Header tetap terlihat di paling atas saat halaman di-scroll."
+msgstr ""
+
+#: inc/customizer.php:1363
+msgid "Hero Stat 1 — Angka"
+msgstr ""
+
+#: inc/customizer.php:1373
+msgid "Hero Stat 1 — Keterangan"
+msgstr ""
+
+#: inc/customizer.php:1384
+msgid "Hero Stat 2 — Angka"
+msgstr ""
+
+#: inc/customizer.php:1394
+msgid "Hero Stat 2 — Keterangan"
+msgstr ""
+
+#: inc/customizer.php:1405
+msgid "Hero Stat 3 — Angka"
+msgstr ""
+
+#: inc/customizer.php:1415
+msgid "Hero Stat 3 — Keterangan"
+msgstr ""
+
+#: inc/customizer.php:2537
+msgid "Hero — Deskripsi / Sub-judul"
+msgstr ""
+
+#: inc/customizer.php:1351
+msgid "Hero — Deskripsi / Subjudul"
+msgstr ""
+
+#: inc/customizer.php:1340
+msgid "Hero — Judul Baris Kedua (Warna Sorotan)"
+msgstr ""
+
+#: inc/customizer.php:1329
+msgid "Hero — Judul Baris Pertama"
+msgstr ""
+
+#: inc/customizer.php:2526
+msgid "Hero — Judul Highlight Biru"
+msgstr ""
+
+#: inc/customizer.php:2515
+msgid "Hero — Judul Utama (Baris 1)"
+msgstr ""
+
+#: inc/customizer.php:1318
+#: inc/customizer.php:2504
+msgid "Hero — Teks Badge Atas"
+msgstr ""
+
+#: page-pasang-loker.php:67
+#: page-pasang-loker.php:75
+msgid "Hubungi Admin"
+msgstr ""
+
+#: footer.php:220
+msgid "Hubungi Pengelola"
+msgstr ""
+
+#: page-pasang-loker.php:253
+msgid "Hubungi WhatsApp Admin"
+msgstr ""
+
+#: inc/customizer.php:1783
+#: page-pasang-loker.php:81
+msgid "Hubungi admin via WhatsApp atau email dengan info lengkap: nama perusahaan, posisi, lokasi, gaji, dan kontak HRD."
+msgstr ""
+
+#: inc/customizer.php:1187
+msgid "ID Klien Google AdSense (Auto Ads)"
+msgstr ""
+
+#: inc/ads.php:73
+msgid "IKLAN"
+msgstr ""
+
+#: inc/customizer.php:148
+msgid "Ikon Logo (Emoji)"
+msgstr ""
+
+#: inc/customizer.php:361
+msgid "Ikon bookmark dengan penghitung loker yang disimpan pengunjung."
+msgstr ""
+
+#: inc/customizer.php:1980
+#: single-lowongan.php:261
+msgid "Ikuti Saluran WhatsApp resmi kami. Gratis, tanpa spam, dan langsung terupdate setiap hari di ponsel Anda."
+msgstr ""
+
+#: inc/template-tags.php:520
+#: single-lowongan.php:27
+msgid "Indonesia"
+msgstr ""
+
+#: inc/post-types.php:83
+msgid "Induk Kategori"
+msgstr ""
+
+#: inc/post-types.php:84
+msgid "Induk Kategori:"
+msgstr ""
+
+#: inc/post-types.php:23
+msgid "Induk Lowongan:"
+msgstr ""
+
+#: page-tes-karir.php:70
+msgid "Info Pelatihan & Sertifikasi"
+msgstr ""
+
+#: inc/seo.php:58
+msgid "Info lowongan kerja %s"
+msgstr ""
+
+#: front-page.php:161
+msgid "Info posisi baru dengan batas pendaftaran akurat dan respon cepat 1×24 jam."
+msgstr ""
+
+#: page-tes-karir.php:46
+msgid "Interview & Sertifikasi"
+msgstr ""
+
+#: inc/customizer.php:1848
+#: page-pasang-loker.php:89
+msgid "Isi form di bawah ini dan admin akan segera menghubungi Anda dalam waktu 1×24 jam."
+msgstr ""
+
+#: single-lowongan.php:252
+msgid "Jangan pernah mentransfer biaya administrasi, tiket pesawat, atau akomodasi hotel. Proses rekrutmen kerja resmi dari perusahaan yang benar TIDAK PERNAH memungut biaya apapun dari pelamar kerja."
+msgstr ""
+
+#: inc/customizer.php:1345
+#: page-pasang-loker.php:29
+msgid "Jangkau ribuan pencari kerja aktif di wilayah Anda. Proses cepat, tayang dalam 1×24 jam, langsung ke target yang tepat."
+msgstr ""
+
+#: category.php:71
+msgid "Jelajahi Lowongan Kerja"
+msgstr ""
+
+#: inc/customizer.php:2348
+#: inc/customizer.php:2944
+#: inc/template-tags.php:1107
+#: inc/template-tags.php:1169
+#: inc/template-tags.php:1187
+#: page-tes-karir.php:101
+#: sidebar.php:56
+#: single.php:157
+msgid "Jelajahi Lowongan Kerja Terbaru"
+msgstr ""
+
+#: footer.php:258
+msgid "Jelajahi Lowongan Lain"
+msgstr ""
+
+#: front-page.php:405
+msgid "Jelajahi Semua Lowongan Kerja Lainnya"
+msgstr ""
+
+#: inc/customizer.php:2021
+msgid "Jika diaktifkan, halaman statis seperti Tentang Kami atau Kontak akan menggunakan tata letak dua kolom dengan sidebar kanan."
+msgstr ""
+
+#: inc/customizer.php:2990
+msgid "Jika dicentang, kartu ajakan melamar lowongan kerja ini akan otomatis tampil di bagian bawah setiap artikel Pos."
+msgstr ""
+
+#: inc/customizer.php:1483
+msgid "Jika dicentang, teks atau blok yang Anda tulis di menu Laman > Pasang Loker akan tampil di halaman."
+msgstr ""
+
+#: inc/customizer.php:2550
+msgid "Jika dicentang, teks/gambar/blok yang Anda ketik di menu WP Admin > Laman > Edit \"Pusat Tes & Karir\" akan tampil di bagian atas halaman."
+msgstr ""
+
+#: inc/customizer.php:800
+msgid "Judul Bagian \"Cara Melamar\""
+msgstr ""
+
+#: inc/customizer.php:718
+msgid "Judul Bagian Lowongan Sorotan (CTA)"
+msgstr ""
+
+#: inc/customizer.php:1974
+msgid "Judul Banner Publik"
+msgstr ""
+
+#: inc/customizer.php:941
+msgid "Judul Kolom 2 (Kategori)"
+msgstr ""
+
+#: inc/customizer.php:965
+msgid "Judul Kolom 3 (Kota & Wilayah)"
+msgstr ""
+
+#: inc/customizer.php:989
+msgid "Judul Kolom 4 (Navigasi & Info)"
+msgstr ""
+
+#: inc/customizer.php:2056
+msgid "Judul Pasang Loker"
+msgstr ""
+
+#: inc/customizer.php:901
+msgid "Judul Peringatan"
+msgstr ""
+
+#: inc/customizer.php:2425
+msgid "Judul Pop-up"
+msgstr ""
+
+#: inc/customizer.php:528
+msgid "Judul Utama Hero (H1)"
+msgstr ""
+
+#: inc/customizer.php:2113
+msgid "Judul Widget Kategori"
+msgstr ""
+
+#: inc/customizer.php:2178
+msgid "Judul Widget Lokasi"
+msgstr ""
+
+#: inc/customizer.php:2243
+msgid "Judul Widget Lowongan Terpopuler"
+msgstr ""
+
+#: inc/customizer.php:1949
+msgid "Judul pesan baris pertama pada saat teks broadcast digenerate."
+msgstr ""
+
+#: inc/template-tags.php:1192
+msgid "Judul:"
+msgstr ""
+
+#: inc/customizer.php:2124
+msgid "Jumlah Kategori Ditampilkan"
+msgstr ""
+
+#: inc/customizer.php:952
+msgid "Jumlah Kategori Populer (Otomatis)"
+msgstr ""
+
+#: inc/customizer.php:769
+msgid "Jumlah Kolom Grid Desktop"
+msgstr ""
+
+#: inc/customizer.php:2189
+msgid "Jumlah Lokasi Ditampilkan"
+msgstr ""
+
+#: inc/customizer.php:976
+msgid "Jumlah Lokasi Populer (Otomatis)"
+msgstr ""
+
+#: inc/customizer.php:752
+msgid "Jumlah Lowongan Prioritas Ditampilkan"
+msgstr ""
+
+#: inc/customizer.php:2154
+msgid "Jumlah Lowongan Terbanyak (Populer)"
+msgstr ""
+
+#: inc/customizer.php:2219
+msgid "Jumlah Lowongan Terbanyak (Teratas)"
+msgstr ""
+
+#: inc/customizer.php:2272
+msgid "Jumlah Lowongan yang Ditampilkan"
+msgstr ""
+
+#: inc/customizer.php:953
+msgid "Jumlah kategori yang tampil jika belum memilih menu manual di Tampilan > Menu."
+msgstr ""
+
+#: inc/customizer.php:977
+msgid "Jumlah kota yang tampil jika belum memilih menu manual di Tampilan > Menu."
+msgstr ""
+
+#: footer.php:278
+msgid "Kami Menggunakan Cookie"
+msgstr ""
+
+#: page-pasang-loker.php:335
+msgid "Kandidat melamar langsung ke WhatsApp / email HRD Anda. Tidak perlu sistem login rumit."
+msgstr ""
+
+#: inc/customizer.php:2034
+msgid "Kartu ajakan pasang lowongan kerja untuk perusahaan/rekruter dengan gaya dark navy."
+msgstr ""
+
+#: archive-lowongan.php:86
+#: front-page.php:91
+#: front-page.php:199
+msgid "Kata Kunci"
+msgstr ""
+
+#: front-page.php:97
+#: front-page.php:205
+#: inc/post-types.php:89
+#: inc/post-types.php:193
+msgid "Kategori"
+msgstr ""
+
+#: category.php:20
+msgid "Kategori Artikel"
+msgstr ""
+
+#: archive-lowongan.php:92
+#: front-page.php:24
+#: inc/customizer.php:622
+msgid "Kategori Bidang"
+msgstr ""
+
+#: functions.php:343
+#: inc/customizer.php:261
+msgid "Kategori Loker"
+msgstr ""
+
+#: page-tes-karir.php:31
+msgid "Kategori Modul Utama"
+msgstr ""
+
+#: footer.php:15
+#: inc/customizer.php:936
+msgid "Kategori Pekerjaan"
+msgstr ""
+
+#: inc/customizer.php:2107
+#: sidebar.php:33
+msgid "Kategori Populer"
+msgstr ""
+
+#: footer.php:221
+#: footer.php:289
+msgid "Kebijakan Privasi"
+msgstr ""
+
+#: single.php:57
+msgid "Kembali ke %s"
+msgstr ""
+
+#: footer.php:268
+msgid "Kembali ke Atas"
+msgstr ""
+
+#: 404.php:29
+msgid "Kembali ke Beranda"
+msgstr ""
+
+#: single.php:57
+msgid "Kembali ke Berita &amp; Artikel"
+msgstr ""
+
+#: page-tes-karir.php:611
+#: page-tes-karir.php:687
+msgid "Kembali ke Pusat Tes & Karir"
+msgstr ""
+
+#: single.php:57
+msgid "Kembali ke Pusat Tes &amp; Karir"
+msgstr ""
+
+#: inc/customizer.php:541
+msgid "Ketikkan potongan kalimat dalam Judul Utama di atas yang ingin diberi efek gradien warna seperti di halaman pasang loker."
+msgstr ""
+
+#: front-page.php:134
+msgid "Keunggulan Lamar di Hakajobs"
+msgstr ""
+
+#: inc/customizer.php:2939
+msgid "Khusus untuk halaman Pusat Tes & Karir. Jika dibiarkan default, otomatis mengikuti teks yang disetel pada menu Sidebar Kanan."
+msgstr ""
+
+#: inc/customizer.php:1837
+#: page-pasang-loker.php:88
+msgid "Kirim Data Lowongan"
+msgstr ""
+
+#: inc/customizer.php:1773
+#: page-pasang-loker.php:80
+msgid "Kirim Detail Lowongan"
+msgstr ""
+
+#: inc/template-tags.php:390
+msgid "Kirim Email Lamaran"
+msgstr ""
+
+#: front-page.php:442
+#: inc/customizer.php:858
+#: single-lowongan.php:361
+msgid "Kirim Lamaran Langsung"
+msgstr ""
+
+#: single-lowongan.php:78
+msgid "Kirim ke WhatsApp"
+msgstr ""
+
+#: inc/customizer.php:1859
+#: page-pasang-loker.php:90
+msgid "Kirim via WhatsApp"
+msgstr ""
+
+#: page-pasang-loker.php:592
+msgid "Kisaran Gaji"
+msgstr ""
+
+#: inc/meta-boxes.php:111
+msgid "Kisaran Gaji / Penghasilan"
+msgstr ""
+
+#: page-tes-karir.php:39
+msgid "Kisi-kisi tes psikologi kerja perusahaan swasta dan BUMN untuk mengukur ketahanan kerja & intelegensi."
+msgstr ""
+
+#: front-page.php:443
+#: inc/customizer.php:867
+msgid "Klik tombol Lamar untuk terhubung langsung ke WhatsApp HRD, kirim email, atau isi formulir karir resmi perusahaan."
+msgstr ""
+
+#: inc/customizer.php:1198
+msgid "Kode Kustom <head> Iklan / Verifikasi AdSense"
+msgstr ""
+
+#: inc/meta-boxes.php:103
+msgid "Kode Pos Kantor (postalCode)"
+msgstr ""
+
+#: inc/customizer.php:1123
+msgid "Kode Verifikasi Bing Webmaster Tools"
+msgstr ""
+
+#: inc/customizer.php:1112
+msgid "Kode Verifikasi Google Search Console"
+msgstr ""
+
+#: inc/meta-boxes.php:105
+msgid "Kode pos 5 digit kantor. Jika kosong, sistem otomatis mengisinya berdasarkan kota."
+msgstr ""
+
+#: page-pasang-loker.php:249
+msgid "Konsultasikan kebutuhan rekrutmen atau kirim draft info loker langsung ke tim admin kami."
+msgstr ""
+
+#: page-pasang-loker.php:606
+msgid "Kontak HRD (WA/Email)"
+msgstr ""
+
+#: inc/customizer.php:2459
+msgid "Kosongkan jika hanya ingin menampilkan tombol aktifkan saja."
+msgstr ""
+
+#: inc/customizer.php:617
+msgid "Kosongkan jika ingin otomatis menghitung total kategori bidang kerja."
+msgstr ""
+
+#: inc/customizer.php:596
+msgid "Kosongkan jika ingin otomatis menghitung total lowongan aktif yang tayang."
+msgstr ""
+
+#: inc/customizer.php:1001
+msgid "Kosongkan untuk default: © [Tahun] [Nama Situs]. Hak Cipta Dilindungi."
+msgstr ""
+
+#: inc/customizer.php:1889
+msgid "Kosongkan untuk memakai teks standar nama situs."
+msgstr ""
+
+#: inc/customizer.php:2090
+msgid "Kosongkan untuk otomatis mengarah ke halaman /pasang-loker/ bawaan tema."
+msgstr ""
+
+#: inc/customizer.php:300
+msgid "Kosongkan untuk otomatis mengarah ke halaman /tes-karir/ bawaan tema."
+msgstr ""
+
+#: inc/customizer.php:801
+msgid "Kosongkan untuk otomatis mengikuti nama website: \"Cara Melamar Kerja di [Nama Situs]\". Anda juga bisa mengetikkan judul kustom di sini."
+msgstr ""
+
+#: footer.php:16
+#: inc/customizer.php:960
+msgid "Kota & Wilayah"
+msgstr ""
+
+#: archive-lowongan.php:108
+msgid "Kota / Wilayah"
+msgstr ""
+
+#: inc/customizer.php:2754
+msgid "Kuis — Judul Utama"
+msgstr ""
+
+#: inc/customizer.php:2765
+msgid "Kuis — Sub-judul / Petunjuk"
+msgstr ""
+
+#: inc/customizer.php:2743
+msgid "Kuis — Teks Badge"
+msgstr ""
+
+#: category.php:29
+msgid "Kumpulan artikel, tips, dan panduan seputar %s."
+msgstr ""
+
+#: inc/customizer.php:484
+msgid "Kustomisasi teks hero pencarian dan panduan 3 langkah cara melamar kerja di halaman beranda."
+msgstr ""
+
+#: inc/customizer.php:2045
+msgid "Label Badge Rekruter"
+msgstr ""
+
+#: inc/customizer.php:1025
+msgid "Label Teks Media Sosial"
+msgstr ""
+
+#: inc/customizer.php:245
+msgid "Label menu arsip lowongan. Contoh: \"Semua\", \"Semua Lowongan\", atau kosongkan."
+msgstr ""
+
+#: inc/customizer.php:233
+msgid "Label menu beranda bawaan saat belum ada menu aktif. Tips: Untuk menu kustom lengkap dengan Sub-Menu (Dropdown), buka Tampilan > Menu di WP-Admin lalu centang lokasi \"Menu Utama (Header)\"."
+msgstr ""
+
+#: inc/customizer.php:336
+msgid "Label tombol di pojok kanan header. Contoh: \"Pasang Loker\", \"Hubungi Admin\"."
+msgstr ""
+
+#: front-page.php:142
+msgid "Lamar Cepat Tanpa Akun"
+msgstr ""
+
+#: front-page.php:15
+#: inc/customizer.php:534
+msgid "Lamar Langsung ke Rekruter"
+msgstr ""
+
+#: inc/template-tags.php:340
+msgid "Lamar Sekarang"
+msgstr ""
+
+#: front-page.php:317
+#: inc/customizer.php:712
+msgid "Lamar Sekarang! Lowongan Prioritas & Dibutuhkan Segera"
+msgstr ""
+
+#: inc/template-tags.php:396
+msgid "Lamar di Situs Resmi"
+msgstr ""
+
+#: inc/seo.php:68
+msgid "Lamar langsung ke HRD via WhatsApp/Email tanpa registrasi akun."
+msgstr ""
+
+#: inc/template-tags.php:371
+msgid "Lamar via WhatsApp"
+msgstr ""
+
+#: single-lowongan.php:403
+msgid "Lamaran akan dialihkan ke halaman formulir/portal resmi perusahaan."
+msgstr ""
+
+#: single-lowongan.php:401
+msgid "Lamaran akan membuka aplikasi email dengan format subjek siap kirim."
+msgstr ""
+
+#: single-lowongan.php:399
+msgid "Lamaran akan terhubung langsung ke pesan chat WhatsApp rekruter."
+msgstr ""
+
+#: page-pasang-loker.php:334
+msgid "Lamaran via WA"
+msgstr ""
+
+#: page-pasang-loker.php:384
+#: page-pasang-loker.php:423
+#: page-pasang-loker.php:458
+msgid "Lamaran via WA / Email / Web"
+msgstr ""
+
+#: inc/customizer.php:832
+#: inc/customizer.php:1789
+msgid "Langkah 1 — Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:823
+#: inc/customizer.php:1779
+msgid "Langkah 1 — Judul"
+msgstr ""
+
+#: inc/customizer.php:852
+#: inc/customizer.php:1810
+msgid "Langkah 2 — Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:843
+#: inc/customizer.php:1800
+msgid "Langkah 2 — Judul"
+msgstr ""
+
+#: inc/customizer.php:872
+#: inc/customizer.php:1831
+msgid "Langkah 3 — Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:863
+#: inc/customizer.php:1821
+msgid "Langkah 3 — Judul"
+msgstr ""
+
+#: front-page.php:143
+msgid "Langsung terhubung ke WhatsApp HRD atau link karir resmi tanpa registrasi berbelit."
+msgstr ""
+
+#: inc/customizer.php:80
+msgid "Latar bilah atas dan footer."
+msgstr ""
+
+#: page-tes-karir.php:24
+msgid "Latihan Tes Kerja"
+msgstr ""
+
+#: inc/template-tags.php:623
+msgid "Lihat Detail"
+msgstr ""
+
+#: inc/post-types.php:30
+msgid "Lihat Lowongan"
+msgstr ""
+
+#: single-lowongan.php:373
+msgid "Lihat Lowongan Kerja Lainnya"
+msgstr ""
+
+#: page-pasang-loker.php:693
+msgid "Lihat Paket →"
+msgstr ""
+
+#: front-page.php:319
+#: inc/customizer.php:735
+msgid "Lihat Semua"
+msgstr ""
+
+#: single.php:154
+msgid "Lihat Semua Berita &amp; Artikel"
+msgstr ""
+
+#: 404.php:32
+#: inc/post-types.php:31
+msgid "Lihat Semua Lowongan"
+msgstr ""
+
+#: single.php:154
+msgid "Lihat Semua Modul Tes &amp; Karir"
+msgstr ""
+
+#: inc/meta-boxes.php:248
+msgid "Link langsung ke form pendaftaran atau portal karir resmi perusahaan."
+msgstr ""
+
+#: inc/meta-boxes.php:91
+msgid "Link situs resmi perusahaan untuk kredibilitas."
+msgstr ""
+
+#: inc/customizer.php:348
+msgid "Link tujuan tombol CTA. Bisa berupa halaman kontak atau WhatsApp: https://wa.me/628xxx"
+msgstr ""
+
+#: inc/post-types.php:190
+msgid "Logo"
+msgstr ""
+
+#: inc/post-types.php:35
+msgid "Logo Perusahaan / Banner"
+msgstr ""
+
+#: page-pasang-loker.php:382
+msgid "Logo perusahaan (avatar inisial)"
+msgstr ""
+
+#: page-pasang-loker.php:387
+msgid "Logo perusahaan (upload sendiri)"
+msgstr ""
+
+#: page-pasang-loker.php:340
+msgid "Logo perusahaan tampil menonjol di setiap kartu lowongan. Tingkatkan brand awareness Anda."
+msgstr ""
+
+#: front-page.php:221
+#: inc/post-types.php:192
+msgid "Lokasi"
+msgstr ""
+
+#: page-pasang-loker.php:575
+msgid "Lokasi Kerja"
+msgstr ""
+
+#: inc/customizer.php:2172
+#: sidebar.php:40
+msgid "Lokasi Kerja Teratas"
+msgstr ""
+
+#: inc/post-types.php:111
+msgid "Lokasi Kota"
+msgstr ""
+
+#: single-lowongan.php:460
+msgid "Lokasi Penempatan"
+msgstr ""
+
+#: page-pasang-loker.php:330
+msgid "Loker Anda otomatis muncul di Google Jobs berkat schema JobPosting terstruktur."
+msgstr ""
+
+#: inc/customizer.php:1815
+#: page-pasang-loker.php:84
+msgid "Loker Tayang!"
+msgstr ""
+
+#: inc/post-types.php:47
+#: inc/template-tags.php:695
+msgid "Lowongan"
+msgstr ""
+
+#: front-page.php:22
+#: inc/customizer.php:601
+msgid "Lowongan Aktif"
+msgstr ""
+
+#: inc/customizer.php:1825
+#: page-pasang-loker.php:85
+msgid "Lowongan Anda langsung tayang dan dapat ditemukan oleh ribuan pencari kerja aktif, termasuk melalui Google Jobs."
+msgstr ""
+
+#: page-pasang-loker.php:315
+msgid "Lowongan Anda tampil ke pencari kerja yang aktif mencari di daerah & bidang yang relevan."
+msgstr ""
+
+#: inc/post-types.php:27
+msgid "Lowongan Baru"
+msgstr ""
+
+#: inc/post-types.php:19
+#: inc/post-types.php:20
+#: inc/seo.php:196
+#: inc/seo.php:210
+#: inc/template-tags.php:664
+msgid "Lowongan Kerja"
+msgstr ""
+
+#: inc/seo.php:92
+msgid "Lowongan Kerja %s"
+msgstr ""
+
+#: front-page.php:373
+msgid "Lowongan Kerja Terbaru"
+msgstr ""
+
+#: single-lowongan.php:340
+msgid "Lowongan Kerja Terkait Lainnya"
+msgstr ""
+
+#: front-page.php:316
+#: inc/customizer.php:700
+msgid "Lowongan Prioritas"
+msgstr ""
+
+#: inc/customizer.php:1388
+#: page-pasang-loker.php:34
+msgid "Lowongan Tayang"
+msgstr ""
+
+#: inc/template-tags.php:346
+msgid "Lowongan Telah Ditutup"
+msgstr ""
+
+#: inc/customizer.php:2237
+#: sidebar.php:47
+msgid "Lowongan Terpopuler"
+msgstr ""
+
+#: footer.php:248
+#: header.php:116
+msgid "Lowongan Tersimpan"
+msgstr ""
+
+#: page-saved.php:16
+msgid "Lowongan Tersimpan Saya"
+msgstr ""
+
+#: single-lowongan.php:371
+msgid "Maaf, batas waktu penerimaan lamaran untuk posisi ini telah berakhir atau telah ditutup oleh rekruter."
+msgstr ""
+
+#: 404.php:17
+msgid "Maaf, halaman atau lowongan kerja yang Anda cari mungkin sudah ditutup, kedaluwarsa, atau tautannya telah berubah."
+msgstr ""
+
+#: functions.php:370
+msgid "Magang (Internship)"
+msgstr ""
+
+#: inc/ads.php:83
+msgid "Masukkan kode iklan AdSense di: Tampilan > Sesuaikan > 💰 Google AdSense & Penempatan Iklan"
+msgstr ""
+
+#: inc/customizer.php:1113
+msgid "Masukkan nilai content meta tag Google Anda. Contoh: abc123def456..."
+msgstr ""
+
+#: page-tes-karir.php:58
+msgid "Materi edukasi mendalam yang disusun untuk mempermudah persiapan tes Anda."
+msgstr ""
+
+#: page-tes-karir.php:35
+msgid "Materi latihan resmi standar BKN & BUMN meliputi TWK, TIU, TKP, serta Core Values AKHLAK BUMN."
+msgstr ""
+
+#: page-tes-karir.php:74
+#: single.php:29
+msgid "Materi pembelajaran resmi dan kisi-kisi soal yang dikurasi oleh praktisi rekrutmen profesional untuk mempermudah persiapan tes karir pencari kerja di Indonesia."
+msgstr ""
+
+#: inc/customizer.php:1962
+msgid "Membantu meningkatkan follower Saluran WhatsApp Anda secara gratis dari pengunjung setia website."
+msgstr ""
+
+#: page-saved.php:24
+msgid "Memuat lowongan tersimpan..."
+msgstr ""
+
+#: inc/customizer.php:585
+msgid "Menampilkan 3 kotak statistik di bawah kolom pencarian seperti pada halaman pasang loker."
+msgstr ""
+
+#: archive-lowongan.php:53
+msgid "Menampilkan daftar lowongan kerja yang sesuai dengan kata kunci pencarian Anda."
+msgstr ""
+
+#: inc/customizer.php:136
+msgid "Menampilkan deskripsi singkat situs di bawah nama logo teks."
+msgstr ""
+
+#: inc/customizer.php:279
+msgid "Menampilkan dropdown artikel: Soal SKD CPNS & BUMN, Psikotes, Persiapan CV, Panduan Wawancara, Info Sertifikasi."
+msgstr ""
+
+#: inc/customizer.php:2916
+msgid "Menampilkan kartu ajakan melamar lowongan kerja di bilah samping kanan."
+msgstr ""
+
+#: inc/customizer.php:2320
+msgid "Menampilkan kartu ajakan melamar lowongan kerja di sidebar kanan (berlaku untuk Beranda, Arsip, dan Halaman Tes & Karir)."
+msgstr ""
+
+#: inc/template-tags.php:1160
+msgid "Menampilkan kartu ajakan melamar lowongan kerja terbaru (Sudah Siap Melamar Pekerjaan?) dengan tombol aksi."
+msgstr ""
+
+#: inc/customizer.php:2289
+msgid "Menampilkan lencana jumlah pembaca pada setiap lowongan terpopuler."
+msgstr ""
+
+#: inc/customizer.php:1277
+msgid "Menerima pesan otomatis pendaftaran lowongan dari form pasang loker. Format: 08123456789 atau 628123456789."
+msgstr ""
+
+#: functions.php:71
+msgid "Menu Footer Cadangan"
+msgstr ""
+
+#: header.php:95
+msgid "Menu Utama"
+msgstr ""
+
+#: functions.php:67
+msgid "Menu Utama (Header)"
+msgstr ""
+
+#: inc/customizer.php:266
+msgid "Menu: Label Dropdown [Kategori Loker]"
+msgstr ""
+
+#: inc/customizer.php:289
+msgid "Menu: Label Dropdown [Tes & Karir]"
+msgstr ""
+
+#: inc/customizer.php:232
+msgid "Menu: Label [Beranda]"
+msgstr ""
+
+#: inc/customizer.php:244
+msgid "Menu: Label [Semua Lowongan]"
+msgstr ""
+
+#: inc/customizer.php:299
+msgid "Menu: URL Tautan [Tes & Karir]"
+msgstr ""
+
+#: inc/customizer.php:1134
+msgid "Meta Description Beranda"
+msgstr ""
+
+#: inc/meta-boxes.php:27
+msgid "Metode Lamaran Kerja (WhatsApp / Email / Link Website)"
+msgstr ""
+
+#: inc/meta-boxes.php:191
+msgid "Metode Utama Pengiriman Lamaran:"
+msgstr ""
+
+#: page-pasang-loker.php:652
+msgid "Metode pembayaran apa yang diterima?"
+msgstr ""
+
+#: inc/customizer.php:1176
+msgid "Mode Preview Kotak Iklan (Placeholder)"
+msgstr ""
+
+#: inc/customizer.php:2607
+msgid "Modul 1 — Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:2596
+msgid "Modul 1 — Judul"
+msgstr ""
+
+#: inc/customizer.php:2618
+msgid "Modul 1 — Teks Tombol"
+msgstr ""
+
+#: inc/customizer.php:2641
+msgid "Modul 2 — Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:2630
+msgid "Modul 2 — Judul"
+msgstr ""
+
+#: inc/customizer.php:2652
+msgid "Modul 2 — Teks Tombol"
+msgstr ""
+
+#: inc/customizer.php:2675
+msgid "Modul 3 — Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:2664
+msgid "Modul 3 — Judul"
+msgstr ""
+
+#: inc/customizer.php:2686
+msgid "Modul 3 — Teks Tombol"
+msgstr ""
+
+#: inc/customizer.php:2709
+msgid "Modul 4 — Deskripsi"
+msgstr ""
+
+#: inc/customizer.php:2698
+msgid "Modul 4 — Judul"
+msgstr ""
+
+#: inc/customizer.php:2720
+msgid "Modul 4 — Teks Tombol"
+msgstr ""
+
+#: inc/customizer.php:2573
+msgid "Modul — Judul Seksi"
+msgstr ""
+
+#: inc/customizer.php:2584
+msgid "Modul — Sub-judul Seksi"
+msgstr ""
+
+#: inc/customizer.php:1154
+msgid "Monetisasi website Anda dengan Google AdSense atau banner sponsor kustom di berbagai posisi strategis."
+msgstr ""
+
+#: page-pasang-loker.php:383
+#: page-pasang-loker.php:422
+#: page-pasang-loker.php:457
+msgid "Muncul di Google Jobs (SEO)"
+msgstr ""
+
+#: inc/post-types.php:88
+msgid "Nama Kategori Baru"
+msgstr ""
+
+#: inc/post-types.php:110
+msgid "Nama Lokasi Baru"
+msgstr ""
+
+#: page-pasang-loker.php:565
+msgid "Nama Perusahaan"
+msgstr ""
+
+#: inc/meta-boxes.php:83
+msgid "Nama Perusahaan / Organisasi *"
+msgstr ""
+
+#: inc/meta-boxes.php:85
+msgid "Nama pemberi kerja atau rekruter."
+msgstr ""
+
+#: inc/customizer.php:1936
+msgid "Nama tampilan saluran yang dicantumkan pada teks broadcast."
+msgstr ""
+
+#: footer.php:17
+#: inc/customizer.php:984
+msgid "Navigasi & Info"
+msgstr ""
+
+#: inc/post-types.php:42
+msgid "Navigasi daftar lowongan"
+msgstr ""
+
+#: inc/template-tags.php:650
+msgid "Navigasi remah roti"
+msgstr ""
+
+#: inc/customizer.php:1124
+msgid "Nilai kode msvalidate.01 dari Bing."
+msgstr ""
+
+#: inc/customizer.php:1276
+msgid "Nomor WhatsApp Admin"
+msgstr ""
+
+#: inc/meta-boxes.php:204
+msgid "Nomor WhatsApp Rekruter / HRD"
+msgstr ""
+
+#: inc/customizer.php:312
+msgid "Nonaktifkan pilihan ini agar tidak dobel dengan tombol CTA Pasang Loker di pojok kanan header."
+msgstr ""
+
+#: page-pasang-loker.php:425
+msgid "Notifikasi WhatsApp ke Admin"
+msgstr ""
+
+#: inc/customizer.php:1166
+msgid "Nyalakan atau matikan seluruh slot iklan di website dengan satu klik."
+msgstr ""
+
+#: page-tes-karir.php:634
+msgid "Oleh %s"
+msgstr ""
+
+#: inc/customizer.php:1090
+msgid "Optimalisasi agar situs mudah diindeks Google, Bing, serta preview menarik di WhatsApp & Medsos."
+msgstr ""
+
+#: inc/customizer.php:776
+msgid "Otomatis Fleksibel (Auto-fit)"
+msgstr ""
+
+#: inc/customizer.php:1102
+msgid "Otomatis menyisipkan Meta Description, Canonical URL, Open Graph, Twitter Card, dan Robots."
+msgstr ""
+
+#: page-pasang-loker.php:566
+msgid "PT Maju Bersama"
+msgstr ""
+
+#: category.php:59
+#: category.php:60
+#: index.php:43
+#: index.php:44
+msgid "Paginasi Artikel"
+msgstr ""
+
+#: archive-lowongan.php:256
+msgid "Paginasi Lowongan"
+msgstr ""
+
+#: archive-lowongan.php:257
+msgid "Paginasi Lowongan Kerja"
+msgstr ""
+
+#: inc/customizer.php:1574
+msgid "Paket 1 — Daftar Fasilitas (Kustom)"
+msgstr ""
+
+#: inc/customizer.php:1563
+msgid "Paket 1 — Deskripsi Singkat"
+msgstr ""
+
+#: inc/customizer.php:1540
+msgid "Paket 1 — Harga / Tarif"
+msgstr ""
+
+#: inc/customizer.php:1529
+msgid "Paket 1 — Nama Paket"
+msgstr ""
+
+#: inc/customizer.php:1551
+msgid "Paket 1 — Periode Waktu (opsional)"
+msgstr ""
+
+#: inc/customizer.php:1586
+msgid "Paket 1 — Teks Tombol"
+msgstr ""
+
+#: inc/customizer.php:1654
+msgid "Paket 2 — Daftar Fasilitas (Kustom)"
+msgstr ""
+
+#: inc/customizer.php:1643
+msgid "Paket 2 — Deskripsi Singkat"
+msgstr ""
+
+#: inc/customizer.php:1621
+msgid "Paket 2 — Harga / Tarif"
+msgstr ""
+
+#: inc/customizer.php:1598
+msgid "Paket 2 — Label Badge Unggulan"
+msgstr ""
+
+#: inc/customizer.php:1610
+msgid "Paket 2 — Nama Paket"
+msgstr ""
+
+#: inc/customizer.php:1632
+msgid "Paket 2 — Periode Waktu"
+msgstr ""
+
+#: inc/customizer.php:1666
+msgid "Paket 2 — Teks Tombol"
+msgstr ""
+
+#: inc/customizer.php:1722
+msgid "Paket 3 — Daftar Fasilitas (Kustom)"
+msgstr ""
+
+#: inc/customizer.php:1711
+msgid "Paket 3 — Deskripsi Singkat"
+msgstr ""
+
+#: inc/customizer.php:1689
+msgid "Paket 3 — Harga / Tarif"
+msgstr ""
+
+#: inc/customizer.php:1678
+msgid "Paket 3 — Nama Paket"
+msgstr ""
+
+#: inc/customizer.php:1700
+msgid "Paket 3 — Periode Waktu"
+msgstr ""
+
+#: inc/customizer.php:1734
+msgid "Paket 3 — Teks Tombol"
+msgstr ""
+
+#: page-pasang-loker.php:240
+msgid "Paket fleksibel mulai dari Gratis hingga Prioritas Urgent"
+msgstr ""
+
+#: page-pasang-loker.php:610
+msgid "Paket yang Dipilih"
+msgstr ""
+
+#: archive-lowongan.php:205
+msgid "Paling Banyak Dilihat"
+msgstr ""
+
+#: inc/customizer.php:1592
+#: page-pasang-loker.php:61
+msgid "Paling Populer"
+msgstr ""
+
+#: front-page.php:449
+msgid "Panduan Loker"
+msgstr ""
+
+#: page-tes-karir.php:43
+msgid "Panduan penyusunan resume standar Applicant Tracking System (ATS) agar lolos seleksi berkas HRD."
+msgstr ""
+
+#: functions.php:369
+msgid "Part-Time"
+msgstr ""
+
+#: inc/sample-data.php:19
+msgid "Pasang Data Demo"
+msgstr ""
+
+#: inc/sample-data.php:18
+msgid "Pasang Data Demo Loker"
+msgstr ""
+
+#: front-page.php:417
+msgid "Pasang Data Demo Lowongan Sekarang"
+msgstr ""
+
+#: sidebar.php:25
+msgid "Pasang Iklan Loker"
+msgstr ""
+
+#: footer.php:218
+msgid "Pasang Info Lowongan (Admin)"
+msgstr ""
+
+#: functions.php:349
+#: header.php:29
+#: inc/customizer.php:329
+msgid "Pasang Loker"
+msgstr ""
+
+#: functions.php:437
+msgid "Pasang Lowongan Kerja"
+msgstr ""
+
+#: inc/customizer.php:1323
+#: page-pasang-loker.php:27
+msgid "Pasang Lowongan Kerja,"
+msgstr ""
+
+#: page-pasang-loker.php:248
+msgid "Pasang Lowongan Sekarang"
+msgstr ""
+
+#: inc/customizer.php:1660
+#: page-pasang-loker.php:67
+msgid "Pasang Sekarang"
+msgstr ""
+
+#: inc/customizer.php:1728
+#: page-pasang-loker.php:75
+msgid "Pasang Urgent"
+msgstr ""
+
+#: inc/customizer.php:2061
+#: sidebar.php:24
+msgid "Pasang info lowongan kerja Anda di Hakajobs dan dapatkan pelamar berkualitas langsung ke WhatsApp atau Email perusahaan Anda."
+msgstr ""
+
+#: front-page.php:441
+#: inc/customizer.php:847
+msgid "Pastikan berkas resume/CV dan tautan portofolio terbaru Anda sudah siap dikirimkan kepada tim rekruter."
+msgstr ""
+
+#: page-pasang-loker.php:236
+msgid "Pelamar langsung menghubungi WhatsApp / Email HRD Anda"
+msgstr ""
+
+#: front-page.php:318
+#: inc/customizer.php:724
+msgid "Peluang karir terbaik dengan respon rekrutmen tercepat. Kirim lamaranmu sebelum kuota penuh!"
+msgstr ""
+
+#: footer.php:291
+msgid "Pemberitahuan Cookie"
+msgstr ""
+
+#: inc/customizer.php:1367
+#: page-pasang-loker.php:32
+msgid "Pencari Kerja Aktif"
+msgstr ""
+
+#: inc/seo.php:98
+msgid "Pencarian Lowongan: %s"
+msgstr ""
+
+#: front-page.php:122
+#: front-page.php:246
+msgid "Pencarian Populer:"
+msgstr ""
+
+#: inc/template-tags.php:475
+#: inc/template-tags.php:546
+#: inc/template-tags.php:603
+#: single-lowongan.php:117
+#: single-lowongan.php:369
+#: single-lowongan.php:419
+msgid "Pendaftaran Ditutup"
+msgstr ""
+
+#: single-lowongan.php:177
+msgid "Pendaftaran untuk Posisi Ini Telah Resmi Ditutup"
+msgstr ""
+
+#: inc/template-tags.php:631
+msgid "Pendaftaran untuk lowongan ini telah ditutup"
+msgstr ""
+
+#: inc/post-types.php:170
+msgid "Pendidikan"
+msgstr ""
+
+#: single-lowongan.php:455
+msgid "Pendidikan Terakhir"
+msgstr ""
+
+#: single-lowongan.php:195
+msgid "Penerimaan berkas untuk posisi ini akan ditutup dalam %s (Batas: %s). Segera kirimkan lamaran Anda sebelum akses pendaftaran ditutup secara otomatis."
+msgstr ""
+
+#: inc/post-types.php:151
+msgid "Pengalaman"
+msgstr ""
+
+#: archive-lowongan.php:146
+#: single-lowongan.php:450
+msgid "Pengalaman Kerja"
+msgstr ""
+
+#: single.php:135
+msgid "Penulis dan kontributor konten profesional di portal karir Hakajobs."
+msgstr ""
+
+#: inc/customizer.php:2891
+msgid "Penulis — Deskripsi / Bio Penulis"
+msgstr ""
+
+#: inc/customizer.php:2902
+msgid "Penulis — Foto / Avatar Penulis"
+msgstr ""
+
+#: inc/customizer.php:2879
+msgid "Penulis — Nama Penulis / Tim Redaksi"
+msgstr ""
+
+#: inc/customizer.php:37
+msgid "Penyesuaian Tema Hakajobs"
+msgstr ""
+
+#: inc/meta-boxes.php:119
+msgid "Per Bulan"
+msgstr ""
+
+#: inc/meta-boxes.php:121
+msgid "Per Hari"
+msgstr ""
+
+#: inc/meta-boxes.php:122
+msgid "Per Jam"
+msgstr ""
+
+#: inc/meta-boxes.php:123
+msgid "Per Proyek / Freelance"
+msgstr ""
+
+#: inc/meta-boxes.php:120
+msgid "Per Tahun"
+msgstr ""
+
+#: inc/post-types.php:86
+msgid "Perbarui Kategori"
+msgstr ""
+
+#: inc/post-types.php:108
+msgid "Perbarui Lokasi"
+msgstr ""
+
+#: inc/post-types.php:29
+msgid "Perbarui Lowongan"
+msgstr ""
+
+#: inc/post-types.php:130
+msgid "Perbarui Tipe"
+msgstr ""
+
+#: single-lowongan.php:251
+msgid "Perhatian untuk Calon Pelamar:"
+msgstr ""
+
+#: inc/customizer.php:880
+msgid "Peringatan Anti Penipuan"
+msgstr ""
+
+#: footer.php:9
+#: inc/customizer.php:896
+msgid "Peringatan Anti Penipuan Rekrutmen"
+msgstr ""
+
+#: single-lowongan.php:191
+msgid "Peringatan: Batas Waktu Lamaran Segera Berakhir!"
+msgstr ""
+
+#: inc/meta-boxes.php:117
+msgid "Periode Gaji"
+msgstr ""
+
+#: page-tes-karir.php:42
+msgid "Persiapan Berkas & CV ATS"
+msgstr ""
+
+#: page-pasang-loker.php:634
+msgid "Pertanyaan Umum"
+msgstr ""
+
+#: inc/template-tags.php:184
+#: inc/template-tags.php:236
+#: inc/template-tags.php:278
+msgid "Perusahaan"
+msgstr ""
+
+#: inc/customizer.php:444
+msgid "Pesan pengumuman di samping badge (opsional)."
+msgstr ""
+
+#: single-lowongan.php:239
+msgid "Petunjuk Khusus Pelamar"
+msgstr ""
+
+#: inc/post-types.php:36
+msgid "Pilih Logo Perusahaan"
+msgstr ""
+
+#: inc/customizer.php:1489
+#: page-pasang-loker.php:47
+msgid "Pilih Paket"
+msgstr ""
+
+#: page-pasang-loker.php:581
+msgid "Pilih Tipe"
+msgstr ""
+
+#: inc/meta-boxes.php:187
+msgid "Pilih cara bagaimana pelamar mengirim lamaran kepada perusahaan/rekruter. Pelamar TIDAK PERLU login untuk mengirim lamaran!"
+msgstr ""
+
+#: inc/customizer.php:498
+msgid "Pilih gaya visual hero beranda."
+msgstr ""
+
+#: inc/customizer.php:1302
+msgid "Pilih gaya visual hero halaman pasang loker."
+msgstr ""
+
+#: page-tes-karir.php:54
+msgid "Pilih jawaban Anda di bawah untuk melihat kunci jawaban dan pembahasan lengkap secara instan."
+msgstr ""
+
+#: page-tes-karir.php:32
+msgid "Pilih kategori persiapan sesuai kebutuhan tahapan seleksi kerja Anda"
+msgstr ""
+
+#: inc/customizer.php:1511
+#: page-pasang-loker.php:49
+msgid "Pilih paket yang sesuai kebutuhan rekrutmen Anda"
+msgstr ""
+
+#: inc/customizer.php:2255
+msgid "Pilih rentang waktu lowongan yang dihitung kepopulerannya berdasarkan jumlah pembaca/view."
+msgstr ""
+
+#: inc/customizer.php:770
+msgid "Pilih tata letak kolom kartu pada desktop. Pilihan 3 kolom sangat presisi dan rapi untuk 6 lowongan (2 baris × 3 kolom)."
+msgstr ""
+
+#: inc/customizer.php:562
+msgid "Placeholder Kotak Pencarian"
+msgstr ""
+
+#: inc/customizer.php:1312
+#: page-pasang-loker.php:26
+msgid "Platform Loker Terpercaya"
+msgstr ""
+
+#: footer.php:11
+#: inc/customizer.php:925
+msgid "Platform kurasi info lowongan kerja terpercaya, menghubungkan pencari kerja langsung dengan HRD via WhatsApp, Email, & Web resmi tanpa perlu registrasi akun."
+msgstr ""
+
+#: inc/customizer.php:2389
+msgid "Pop-up Cookie & Notifikasi"
+msgstr ""
+
+#: inc/customizer.php:510
+msgid "Portal Loker Terpercaya & Lamar Langsung"
+msgstr ""
+
+#: inc/post-types.php:191
+msgid "Posisi & Perusahaan"
+msgstr ""
+
+#: page-pasang-loker.php:569
+msgid "Posisi / Jabatan"
+msgstr ""
+
+#: inc/customizer.php:2301
+msgid "Posisi Widget WordPress Kustom (Tampilan > Widget)"
+msgstr ""
+
+#: front-page.php:17
+msgid "Posisi, keahlian, atau perusahaan..."
+msgstr ""
+
+#: inc/post-types.php:48
+msgid "Posting lowongan kerja"
+msgstr ""
+
+#: page-pasang-loker.php:424
+#: page-pasang-loker.php:459
+msgid "Preview kartu loker sebelum tayang"
+msgstr ""
+
+#: page-pasang-loker.php:460
+msgid "Prioritas respons admin hari ini"
+msgstr ""
+
+#: page-pasang-loker.php:386
+msgid "Prioritas tampil di atas"
+msgstr ""
+
+#: page-pasang-loker.php:420
+msgid "Prioritas tampil di urutan atas"
+msgstr ""
+
+#: single-lowongan.php:182
+msgid "Proses penerimaan berkas telah ditutup oleh pihak perusahaan/rekruter."
+msgstr ""
+
+#: page-tes-karir.php:38
+msgid "Psikotes & Ujian Swasta"
+msgstr ""
+
+#: inc/customizer.php:2050
+#: sidebar.php:23
+msgid "Punya Lowongan Kerja?"
+msgstr ""
+
+#: page-tes-karir.php:23
+msgid "Pusat Persiapan Karir &"
+msgstr ""
+
+#: page-tes-karir.php:22
+msgid "Pusat Persiapan Karir & Latihan Tes Kerja"
+msgstr ""
+
+#: functions.php:451
+msgid "Pusat Tes & Karir"
+msgstr ""
+
+#: inc/customizer.php:1705
+#: page-pasang-loker.php:73
+msgid "Rekrut cepat! Untuk posisi yang harus diisi dalam waktu singkat"
+msgstr ""
+
+#: inc/template-tags.php:471
+#: single-lowongan.php:123
+msgid "Rekrutmen Aktif"
+msgstr ""
+
+#: functions.php:371
+msgid "Remote / WFH"
+msgstr ""
+
+#: inc/customizer.php:2254
+msgid "Rentang Waktu Kepopuleran"
+msgstr ""
+
+#: archive-lowongan.php:76
+msgid "Reset"
+msgstr ""
+
+#: front-page.php:26
+#: inc/customizer.php:642
+msgid "Respon Rekruter"
+msgstr ""
+
+#: front-page.php:16
+msgid "Ribuan info loker terkurasi setiap hari. Terhubung langsung melalui WhatsApp HRD, Email, dan Karir Resmi tanpa proses pembuatan akun yang berbelit."
+msgstr ""
+
+#: inc/customizer.php:546
+msgid "Ribuan info lowongan kerja dari perusahaan terpercaya. Lamar langsung tanpa daftar akun — gratis selamanya."
+msgstr ""
+
+#: single-lowongan.php:411
+msgid "Ringkasan Lowongan"
+msgstr ""
+
+#: inc/customizer.php:1135
+msgid "Ringkasan deskripsi website yang tampil di hasil pencarian Google (Rekomendasi: 140 - 160 karakter)."
+msgstr ""
+
+#: page-pasang-loker.php:593
+msgid "Rp 3.000.000 – Rp 5.000.000"
+msgstr ""
+
+#: inc/customizer.php:1089
+msgid "SEO & Verifikasi Mesin Pencari"
+msgstr ""
+
+#: page-pasang-loker.php:329
+msgid "SEO Google Jobs"
+msgstr ""
+
+#: single-lowongan.php:313
+msgid "Salin Tautan"
+msgstr ""
+
+#: single-lowongan.php:82
+msgid "Salin Teks"
+msgstr ""
+
+#: single-lowongan.php:80
+msgid "Salin teks format broadcast ke clipboard"
+msgstr ""
+
+#: single-lowongan.php:273
+msgid "Saluran Resmi"
+msgstr ""
+
+#: inc/customizer.php:1929
+msgid "Saluran Resmi Info Loker"
+msgstr ""
+
+#: inc/customizer.php:1908
+msgid "Saluran WhatsApp & Broadcast"
+msgstr ""
+
+#: inc/template-tags.php:1033
+msgid "Saluran WhatsApp Kami"
+msgstr ""
+
+#: archive-lowongan.php:254
+#: category.php:57
+#: index.php:41
+msgid "Sebelumnya"
+msgstr ""
+
+#: inc/template-tags.php:609
+msgid "Segera Berakhir: Sisa %d Hari (%s)"
+msgstr ""
+
+#: single-lowongan.php:427
+msgid "Selama Dibuka"
+msgstr ""
+
+#: archive-lowongan.php:255
+#: category.php:58
+#: index.php:42
+msgid "Selanjutnya"
+msgstr ""
+
+#: footer.php:10
+msgid "Seluruh proses seleksi dan lamaran kerja di situs ini adalah 100% GRATIS. Jangan pernah mentransfer uang dengan alasan apapun (biaya administrasi, seragam, tiket travel, atau akomodasi hotel). Jika menemukan indikasi mencurigakan, segera laporkan ke pihak berwajib."
+msgstr ""
+
+#: inc/customizer.php:906
+msgid "Seluruh proses seleksi dan lamaran kerja di situs ini adalah 100% GRATIS. Jangan pernah mentransfer uang dengan alasan apapun (biaya administrasi, tiket travel, seragam, atau akomodasi hotel)."
+msgstr ""
+
+#: inc/customizer.php:2140
+msgid "Sembunyikan Kategori yang Tidak Memiliki Lowongan (0 loker)"
+msgstr ""
+
+#: inc/customizer.php:2205
+msgid "Sembunyikan Lokasi yang Tidak Memiliki Lowongan (0 loker)"
+msgstr ""
+
+#: single-lowongan.php:37
+msgid "Semua Jurusan"
+msgstr ""
+
+#: archive-lowongan.php:94
+#: footer.php:155
+#: front-page.php:100
+#: front-page.php:208
+#: inc/post-types.php:82
+msgid "Semua Kategori"
+msgstr ""
+
+#: archive-lowongan.php:110
+#: footer.php:191
+#: inc/post-types.php:106
+msgid "Semua Lokasi"
+msgstr ""
+
+#: front-page.php:224
+msgid "Semua Lokasi / Kota"
+msgstr ""
+
+#: functions.php:339
+#: inc/customizer.php:239
+#: inc/post-types.php:24
+msgid "Semua Lowongan"
+msgstr ""
+
+#: inc/template-tags.php:688
+msgid "Semua Lowongan Kerja"
+msgstr ""
+
+#: inc/post-types.php:167
+msgid "Semua Pendidikan"
+msgstr ""
+
+#: archive-lowongan.php:148
+#: inc/post-types.php:148
+#: single-lowongan.php:34
+msgid "Semua Pengalaman"
+msgstr ""
+
+#: archive-lowongan.php:128
+#: inc/post-types.php:128
+msgid "Semua Tipe"
+msgstr ""
+
+#: front-page.php:152
+msgid "Semua info loker dikurasi manual. Waspada penipuan, rekrutmen resmi tidak dipungut biaya."
+msgstr ""
+
+#: inc/customizer.php:2261
+msgid "Sepanjang Waktu (Semua Waktu)"
+msgstr ""
+
+#: inc/customizer.php:2155
+msgid "Sesuai Abjad Nama (A-Z)"
+msgstr ""
+
+#: inc/customizer.php:2220
+msgid "Sesuai Abjad Nama Kota/Provinsi (A-Z)"
+msgstr ""
+
+#: inc/meta-boxes.php:270
+msgid "Setiap baris baru akan ditampilkan sebagai badge benefit yang rapi."
+msgstr ""
+
+#: page-pasang-loker.php:325
+msgid "Setiap lowongan diverifikasi admin. Tidak ada loker palsu atau penipuan yang merugikan brand Anda."
+msgstr ""
+
+#: inc/customizer.php:1871
+#: page-pasang-loker.php:93
+msgid "Siap Menemukan Karyawan Terbaik?"
+msgstr ""
+
+#: front-page.php:440
+#: inc/customizer.php:838
+msgid "Siapkan Dokumen"
+msgstr ""
+
+#: single-lowongan.php:71
+msgid "Siarkan Loker ke Saluran WhatsApp"
+msgstr ""
+
+#: inc/post-types.php:301
+msgid "Siarkan lowongan ini ke Saluran WhatsApp atau Grup"
+msgstr ""
+
+#: inc/ads.php:63
+msgid "Sidebar (Kotak 300x250 / 300x600)"
+msgstr ""
+
+#: sidebar.php:65
+msgid "Sidebar Kanan"
+msgstr ""
+
+#: functions.php:163
+msgid "Sidebar Kanan (Beranda & Halaman Statis)"
+msgstr ""
+
+#: inc/customizer.php:2006
+msgid "Sidebar Kanan (Beranda & Halaman)"
+msgstr ""
+
+#: functions.php:173
+msgid "Sidebar Lowongan"
+msgstr ""
+
+#: inc/customizer.php:2867
+msgid "Sidebar — Judul Kartu Sertifikasi"
+msgstr ""
+
+#: index.php:51
+msgid "Silakan cek kembali di lain waktu."
+msgstr ""
+
+#: functions.php:148
+#: inc/template-tags.php:618
+#: single-lowongan.php:393
+#: single-lowongan.php:484
+msgid "Simpan Lowongan"
+msgstr ""
+
+#: inc/template-tags.php:618
+msgid "Simpan Lowongan ke Browser"
+msgstr ""
+
+#: page-tes-karir.php:52
+msgid "Simulasi Interaktif"
+msgstr ""
+
+#: inc/template-tags.php:483
+msgid "Sisa %d Hari"
+msgstr ""
+
+#: inc/template-tags.php:481
+msgid "Sisa 1 Hari"
+msgstr ""
+
+#: inc/post-types.php:39
+msgid "Sisipkan ke lowongan"
+msgstr ""
+
+#: footer.php:279
+msgid "Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda serta meningkatkan kenyamanan pencarian kerja Anda."
+msgstr ""
+
+#: inc/customizer.php:46
+msgid "Skema Warna & Branding"
+msgstr ""
+
+#: inc/customizer.php:1199
+msgid "Skrip tambahan dari Google AdSense untuk peninjauan situs (Site Review)."
+msgstr ""
+
+#: inc/customizer.php:1209
+msgid "Slot Iklan Atas Konten (Banner 728x90 / Responsif)"
+msgstr ""
+
+#: inc/customizer.php:1231
+msgid "Slot Iklan Dalam Lowongan (Atas Deskripsi)"
+msgstr ""
+
+#: inc/customizer.php:1242
+msgid "Slot Iklan Dalam Lowongan (Bawah Deskripsi)"
+msgstr ""
+
+#: inc/ads.php:82
+msgid "Slot Iklan Google AdSense: %s"
+msgstr ""
+
+#: inc/customizer.php:1253
+msgid "Slot Iklan Sebelum Footer (Banner Lebar)"
+msgstr ""
+
+#: inc/customizer.php:1220
+msgid "Slot Iklan Sidebar (Kotak 300x250 / 300x600)"
+msgstr ""
+
+#: page-tes-karir.php:34
+msgid "Soal SKD CPNS & BUMN"
+msgstr ""
+
+#: inc/template-tags.php:557
+msgid "Sorotan"
+msgstr ""
+
+#: footer.php:72
+#: inc/customizer.php:1019
+msgid "Sosial Media Kami:"
+msgstr ""
+
+#: page-pasang-loker.php:570
+msgid "Staff Administrasi"
+msgstr ""
+
+#: inc/customizer.php:595
+msgid "Stat 1: Angka (Kosong = Otomatis)"
+msgstr ""
+
+#: inc/customizer.php:606
+msgid "Stat 1: Label"
+msgstr ""
+
+#: inc/customizer.php:616
+msgid "Stat 2: Angka (Kosong = Otomatis)"
+msgstr ""
+
+#: inc/customizer.php:627
+msgid "Stat 2: Label"
+msgstr ""
+
+#: inc/customizer.php:637
+msgid "Stat 3: Angka / Nilai"
+msgstr ""
+
+#: inc/customizer.php:647
+msgid "Stat 3: Label"
+msgstr ""
+
+#: inc/post-types.php:197
+msgid "Status"
+msgstr ""
+
+#: inc/meta-boxes.php:140
+msgid "Status: Lowongan Aktif"
+msgstr ""
+
+#: inc/meta-boxes.php:144
+msgid "Status: Sudah Ditutup"
+msgstr ""
+
+#: inc/meta-boxes.php:228
+msgid "Subjek Default Email"
+msgstr ""
+
+#: inc/customizer.php:552
+msgid "Subjudul / Deskripsi Hero"
+msgstr ""
+
+#: inc/customizer.php:812
+msgid "Subjudul Bagian \"Cara Melamar\""
+msgstr ""
+
+#: inc/customizer.php:730
+msgid "Subjudul Bagian Lowongan Sorotan"
+msgstr ""
+
+#: inc/customizer.php:2325
+#: inc/customizer.php:2921
+#: inc/template-tags.php:1093
+#: inc/template-tags.php:1167
+#: inc/template-tags.php:1185
+#: page-tes-karir.php:87
+#: sidebar.php:54
+msgid "Sudah Siap Melamar Pekerjaan?"
+msgstr ""
+
+#: single.php:150
+msgid "Tags:"
+msgstr ""
+
+#: inc/post-types.php:26
+msgid "Tambah Baru"
+msgstr ""
+
+#: inc/post-types.php:87
+msgid "Tambah Kategori Baru"
+msgstr ""
+
+#: inc/post-types.php:109
+msgid "Tambah Lokasi Baru"
+msgstr ""
+
+#: inc/post-types.php:25
+msgid "Tambah Lowongan Baru"
+msgstr ""
+
+#: inc/post-types.php:169
+msgid "Tambah Pendidikan"
+msgstr ""
+
+#: inc/post-types.php:150
+msgid "Tambah Pengalaman"
+msgstr ""
+
+#: inc/post-types.php:131
+msgid "Tambah Tipe Baru"
+msgstr ""
+
+#: inc/customizer.php:1210
+msgid "Tampil di antara hero dan konten utama pada beranda & arsip."
+msgstr ""
+
+#: inc/customizer.php:1254
+msgid "Tampil di atas banner anti penipuan pada seluruh halaman website."
+msgstr ""
+
+#: page-pasang-loker.php:381
+msgid "Tampil di halaman arsip loker"
+msgstr ""
+
+#: inc/customizer.php:1232
+msgid "Tampil di halaman detail lowongan sebelum teks deskripsi pekerjaan (CTR Tinggi)."
+msgstr ""
+
+#: inc/customizer.php:1221
+msgid "Tampil di sidebar beranda, arsip loker, dan detail lowongan kerja."
+msgstr ""
+
+#: inc/customizer.php:1243
+msgid "Tampil setelah kualifikasi dan benefit sebelum bagian peringatan keamanan."
+msgstr ""
+
+#: inc/customizer.php:788
+msgid "Tampilkan Bagian \"Cara Melamar\""
+msgstr ""
+
+#: inc/customizer.php:2562
+msgid "Tampilkan Bagian 4 Modul Utama"
+msgstr ""
+
+#: inc/customizer.php:1438
+msgid "Tampilkan Bagian Cara Pasang Loker (3 Langkah)"
+msgstr ""
+
+#: inc/customizer.php:1427
+msgid "Tampilkan Bagian Keunggulan Platform (6 Kartu)"
+msgstr ""
+
+#: inc/customizer.php:694
+msgid "Tampilkan Bagian Lowongan Prioritas (Spotlight)"
+msgstr ""
+
+#: inc/customizer.php:1460
+msgid "Tampilkan Bagian Pertanyaan Umum (FAQ)"
+msgstr ""
+
+#: inc/customizer.php:1471
+msgid "Tampilkan Banner Ajakan Bawah (CTA WhatsApp)"
+msgstr ""
+
+#: inc/customizer.php:1961
+msgid "Tampilkan Banner Ajakan Saluran WA ke Pengunjung"
+msgstr ""
+
+#: inc/customizer.php:891
+msgid "Tampilkan Banner Anti Penipuan di Atas Footer"
+msgstr ""
+
+#: inc/customizer.php:421
+msgid "Tampilkan Bilah Pengumuman"
+msgstr ""
+
+#: inc/customizer.php:584
+msgid "Tampilkan Bilah Statistik Hero (Stats Bar)"
+msgstr ""
+
+#: inc/customizer.php:1449
+msgid "Tampilkan Form Pengajuan Lowongan"
+msgstr ""
+
+#: inc/customizer.php:2288
+msgid "Tampilkan Jumlah Dilihat (View Counter)"
+msgstr ""
+
+#: inc/customizer.php:2989
+msgid "Tampilkan Kartu CTA di Bawah Artikel Pos (Tips & Karir)"
+msgstr ""
+
+#: inc/customizer.php:2800
+msgid "Tampilkan Kartu Download E-Book di Sidebar"
+msgstr ""
+
+#: inc/customizer.php:1482
+msgid "Tampilkan Konten Tambahan dari Editor Laman WordPress"
+msgstr ""
+
+#: inc/customizer.php:2549
+msgid "Tampilkan Konten dari Editor Laman WordPress"
+msgstr ""
+
+#: inc/customizer.php:2915
+msgid "Tampilkan Kotak CTA Lowongan di Sidebar"
+msgstr ""
+
+#: inc/customizer.php:659
+msgid "Tampilkan Lengkungan Gelombang (Wave) di Bawah Hero"
+msgstr ""
+
+#: inc/customizer.php:311
+msgid "Tampilkan Link [Pasang Loker] di Deretan Menu"
+msgstr ""
+
+#: inc/customizer.php:1013
+msgid "Tampilkan Media Sosial Pemilik Website"
+msgstr ""
+
+#: inc/customizer.php:256
+msgid "Tampilkan Menu Dropdown [Kategori Loker]"
+msgstr ""
+
+#: inc/customizer.php:278
+msgid "Tampilkan Menu Dropdown [Tes & Karir]"
+msgstr ""
+
+#: inc/customizer.php:2306
+msgid "Tampilkan Sebelum Widget Bawaan Tema (Atas)"
+msgstr ""
+
+#: archive-lowongan.php:270
+msgid "Tampilkan Semua Lowongan"
+msgstr ""
+
+#: inc/customizer.php:2305
+msgid "Tampilkan Setelah Widget Bawaan Tema (Bawah)"
+msgstr ""
+
+#: inc/customizer.php:2020
+msgid "Tampilkan Sidebar di Halaman Statis Standar (page.php)"
+msgstr ""
+
+#: inc/customizer.php:2732
+msgid "Tampilkan Simulator Kuis Interaktif"
+msgstr ""
+
+#: inc/customizer.php:135
+msgid "Tampilkan Tagline di Bawah Nama Situs"
+msgstr ""
+
+#: inc/customizer.php:323
+msgid "Tampilkan Tombol CTA [Pasang Loker] di Pojok Kanan Header"
+msgstr ""
+
+#: inc/customizer.php:360
+msgid "Tampilkan Tombol Lowongan Tersimpan di Header"
+msgstr ""
+
+#: inc/customizer.php:2403
+msgid "Tampilkan banner notifikasi cookie saat pengunjung pertama kali membuka website ini."
+msgstr ""
+
+#: inc/customizer.php:789
+msgid "Tampilkan blok panduan 3 langkah melamar kerja di halaman beranda."
+msgstr ""
+
+#: inc/meta-boxes.php:149
+msgid "Tandai Lowongan Sorotan (Featured)"
+msgstr ""
+
+#: inc/post-types.php:199
+msgid "Tanggal"
+msgstr ""
+
+#: front-page.php:437
+#: inc/customizer.php:806
+msgid "Tanpa perlu daftar akun, verifikasi email yang panjang, atau mengingat password."
+msgstr ""
+
+#: inc/customizer.php:1500
+#: page-pasang-loker.php:48
+msgid "Tarif Pasang Loker"
+msgstr ""
+
+#: inc/customizer.php:1745
+msgid "Tarif — Catatan Kaki Bawah Tabel"
+msgstr ""
+
+#: inc/customizer.php:1506
+msgid "Tarif — Judul Utama"
+msgstr ""
+
+#: inc/customizer.php:1517
+msgid "Tarif — Subjudul / Keterangan"
+msgstr ""
+
+#: inc/customizer.php:1495
+msgid "Tarif — Teks Badge"
+msgstr ""
+
+#: inc/customizer.php:2470
+msgid "Tautan Kebijakan Privasi (URL)"
+msgstr ""
+
+#: inc/customizer.php:1922
+msgid "Tautan Saluran WhatsApp (Channel URL)"
+msgstr ""
+
+#: inc/customizer.php:2089
+msgid "Tautan Tombol Pasang Loker (URL)"
+msgstr ""
+
+#: inc/meta-boxes.php:246
+msgid "Tautan Website Karir Perusahaan / Google Form"
+msgstr ""
+
+#: functions.php:150
+msgid "Tautan berhasil disalin!"
+msgstr ""
+
+#: inc/customizer.php:373
+msgid "Tautan cepat pertama di bilah pengumuman (opsional)."
+msgstr ""
+
+#: page-pasang-loker.php:453
+msgid "Tayang 14 hari (rekrut cepat)"
+msgstr ""
+
+#: page-pasang-loker.php:380
+#: page-pasang-loker.php:418
+msgid "Tayang 30 hari"
+msgstr ""
+
+#: page-pasang-loker.php:319
+msgid "Tayang Cepat"
+msgstr ""
+
+#: page-pasang-loker.php:232
+msgid "Tayang Cepat 1×24 Jam setelah konfirmasi admin"
+msgstr ""
+
+#: inc/customizer.php:706
+msgid "Teks Badge / Label Bagian"
+msgstr ""
+
+#: inc/customizer.php:432
+msgid "Teks Badge / Label Kecil"
+msgstr ""
+
+#: inc/customizer.php:516
+msgid "Teks Badge / Label Kecil Hero"
+msgstr ""
+
+#: inc/customizer.php:1000
+msgid "Teks Hak Cipta Custom"
+msgstr ""
+
+#: inc/customizer.php:2436
+msgid "Teks Isi Notifikasi"
+msgstr ""
+
+#: inc/customizer.php:911
+msgid "Teks Isi Peringatan"
+msgstr ""
+
+#: inc/customizer.php:2414
+msgid "Teks Label / Badge Pop-up"
+msgstr ""
+
+#: inc/customizer.php:443
+msgid "Teks Pengumuman Utama"
+msgstr ""
+
+#: inc/customizer.php:540
+msgid "Teks Sorotan Gradien (Highlight)"
+msgstr ""
+
+#: inc/customizer.php:741
+msgid "Teks Tautan \"Lihat Semua\""
+msgstr ""
+
+#: inc/customizer.php:2482
+msgid "Teks Tautan Privasi"
+msgstr ""
+
+#: inc/customizer.php:2447
+msgid "Teks Tombol Aktifkan / Setuju"
+msgstr ""
+
+#: inc/customizer.php:1998
+msgid "Teks Tombol Banner Publik"
+msgstr ""
+
+#: inc/customizer.php:335
+msgid "Teks Tombol CTA Header [Pasang Loker]"
+msgstr ""
+
+#: inc/customizer.php:572
+msgid "Teks Tombol Cari"
+msgstr ""
+
+#: inc/customizer.php:2078
+msgid "Teks Tombol Pasang Loker"
+msgstr ""
+
+#: inc/customizer.php:2458
+msgid "Teks Tombol Tolak / Esensial"
+msgstr ""
+
+#: inc/template-tags.php:1200
+msgid "Teks Tombol:"
+msgstr ""
+
+#: inc/customizer.php:2343
+msgid "Teks ajakan melamar pekerjaan (otomatis diterapkan ke seluruh kartu CTA di sidebar website)."
+msgstr ""
+
+#: functions.php:152
+msgid "Teks disalin beserta sumber artikel!"
+msgstr ""
+
+#: inc/meta-boxes.php:233
+msgid "Template Isi Surat Lamaran Email (Opsional)"
+msgstr ""
+
+#: inc/meta-boxes.php:209
+msgid "Template Teks Pesan WhatsApp (Opsional)"
+msgstr ""
+
+#: inc/customizer.php:1334
+#: page-pasang-loker.php:28
+msgid "Temukan Kandidat Terbaik"
+msgstr ""
+
+#: front-page.php:14
+#: inc/customizer.php:522
+msgid "Temukan Lowongan Kerja Impian & Lamar Langsung ke Rekruter"
+msgstr ""
+
+#: archive-lowongan.php:57
+msgid "Temukan posisi yang sesuai dengan keahlian Anda dari berbagai industri dan perusahaan terpercaya."
+msgstr ""
+
+#: inc/seo.php:87
+msgid "Temukan ribuan lowongan kerja terupdate hari ini. Filter berdasarkan posisi, kota, tipe kerja remote, dan kirim lamaran langsung."
+msgstr ""
+
+#: footer.php:219
+msgid "Tentang Kami"
+msgstr ""
+
+#: page-pasang-loker.php:657
+msgid "Tentu! Hubungi admin sebelum masa tayang berakhir untuk memperpanjang dengan harga yang sama atau memperbarui isi lowongan."
+msgstr ""
+
+#: inc/customizer.php:2302
+msgid "Tentukan di mana widget kustom dari area \"Sidebar Kanan (Beranda & Halaman Statis)\" akan diletakkan."
+msgstr ""
+
+#: page-pasang-loker.php:314
+msgid "Tepat Sasaran"
+msgstr ""
+
+#: archive-lowongan.php:163
+msgid "Terapkan Filter"
+msgstr ""
+
+#: archive-lowongan.php:204
+msgid "Terbaru Dipublikasikan"
+msgstr ""
+
+#: inc/meta-boxes.php:212
+msgid "Tersedia tag dinamis: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>, <code>{link}</code>.<br><strong>Biarkan kosong</strong> untuk menggunakan template pesan HRD profesional otomatis."
+msgstr ""
+
+#: inc/meta-boxes.php:236
+msgid "Tersedia tag: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>, <code>{link}</code>.<br><strong>Biarkan kosong</strong> untuk format surat lamaran kerja resmi standar HRD secara otomatis."
+msgstr ""
+
+#: inc/meta-boxes.php:230
+msgid "Tersedia tag: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>. Biarkan kosong untuk subjek profesional otomatis."
+msgstr ""
+
+#: functions.php:147
+msgid "Tersimpan"
+msgstr ""
+
+#: single-lowongan.php:362
+msgid "Tertarik dengan posisi ini?"
+msgstr ""
+
+#: functions.php:347
+#: inc/customizer.php:284
+#: page-tes-karir.php:617
+msgid "Tes & Karir"
+msgstr ""
+
+#: archive-lowongan.php:267
+msgid "Tidak Ada Lowongan yang Cocok"
+msgstr ""
+
+#: inc/post-types.php:34
+msgid "Tidak ada lowongan di tempat sampah"
+msgstr ""
+
+#: inc/post-types.php:33
+msgid "Tidak ada lowongan ditemukan"
+msgstr ""
+
+#: page-tes-karir.php:73
+#: single.php:28
+msgid "Tim Redaksi Karir & Edukasi"
+msgstr ""
+
+#: page-tes-karir.php:25
+msgid "Tingkatkan peluang lolos seleksi kerja Anda. Pelajari kisi-kisi resmi soal CPNS, BUMN, psikotes kerja perusahaan swasta, hingga panduan resume ATS & teknik wawancara."
+msgstr ""
+
+#: inc/post-types.php:194
+msgid "Tipe"
+msgstr ""
+
+#: archive-lowongan.php:124
+#: inc/post-types.php:132
+#: page-pasang-loker.php:579
+#: single-lowongan.php:433
+msgid "Tipe Pekerjaan"
+msgstr ""
+
+#: inc/starter-articles.php:48
+msgid "Tips & Karir"
+msgstr ""
+
+#: page-tes-karir.php:356
+msgid "Tips Karir"
+msgstr ""
+
+#: index.php:15
+msgid "Tips seputar dunia kerja, wawancara, dan pengembangan karir."
+msgstr ""
+
+#: inc/customizer.php:452
+msgid "Tombol Kembali ke Atas"
+msgstr ""
+
+#: inc/customizer.php:465
+msgid "Tombol melayang di pojok kanan bawah saat pengguna menggulir ke bawah."
+msgstr ""
+
+#: inc/customizer.php:372
+msgid "Topbar — Teks Link Cepat 1"
+msgstr ""
+
+#: inc/customizer.php:393
+msgid "Topbar — Teks Link Cepat 2"
+msgstr ""
+
+#: inc/customizer.php:382
+msgid "Topbar — URL Link Cepat 1"
+msgstr ""
+
+#: inc/customizer.php:402
+msgid "Topbar — URL Link Cepat 2"
+msgstr ""
+
+#: page-pasang-loker.php:653
+msgid "Transfer bank (BCA, BRI, BNI, Mandiri), GoPay, OVO, DANA, dan ShopeePay. Hubungi admin untuk rekening terbaru."
+msgstr ""
+
+#: page-tes-karir.php:47
+msgid "Trik menjawab pertanyaan wawancara HRD & User serta info sertifikasi penunjang karir bergaji tinggi."
+msgstr ""
+
+#: page-pasang-loker.php:602
+msgid "Tugas utama, syarat & kualifikasi yang dibutuhkan..."
+msgstr ""
+
+#: inc/meta-boxes.php:266
+msgid "Tuliskan benefit/fasilitas per baris. Contoh:"
+msgstr ""
+
+#: inc/customizer.php:1575
+msgid "Tuliskan satu fasilitas per baris. Beri awalan \"-\" atau \"x\" untuk fitur yang tidak didapat (tanda silang merah). Kosongkan untuk memakai fitur bawaan."
+msgstr ""
+
+#: inc/customizer.php:1655
+#: inc/customizer.php:1723
+msgid "Tuliskan satu fasilitas per baris. Kosongkan untuk memakai fitur bawaan."
+msgstr ""
+
+#: footer.php:251
+#: footer.php:293
+msgid "Tutup"
+msgstr ""
+
+#: header.php:148
+msgid "Tutup Menu"
+msgstr ""
+
+#: sidebar.php:22
+msgid "UNTUK PERUSAHAAN / REKRUTER"
+msgstr ""
+
+#: inc/template-tags.php:1204
+msgid "URL / Tautan Tombol (Kosongkan untuk otomatis ke arsip lowongan):"
+msgstr ""
+
+#: inc/customizer.php:1069
+msgid "URL Facebook (Fanspage/Group/Profil)"
+msgstr ""
+
+#: inc/customizer.php:1080
+msgid "URL Instagram (Profil Resmi)"
+msgstr ""
+
+#: inc/customizer.php:1058
+msgid "URL LinkedIn (Halaman/Profil)"
+msgstr ""
+
+#: inc/customizer.php:1047
+msgid "URL Telegram (Channel/Group/Akun)"
+msgstr ""
+
+#: inc/customizer.php:347
+msgid "URL Tombol CTA Header"
+msgstr ""
+
+#: inc/customizer.php:1036
+msgid "URL WhatsApp (Admin/Official)"
+msgstr ""
+
+#: inc/customizer.php:2880
+msgid "Ubah nama penulis materi karir (contoh: Tim Redaksi Karir & Edukasi, Tim Redaksi Info Loker Lampung, dll)."
+msgstr ""
+
+#: page-tes-karir.php:53
+msgid "Uji Pemahaman: Simulasi Soal Tes Kerja"
+msgstr ""
+
+#: page-tes-karir.php:65
+msgid "Unduh E-Book Lengkap (PDF)"
+msgstr ""
+
+#: inc/customizer.php:2903
+msgid "Unggah foto avatar penulis. Biarkan kosong untuk menggunakan avatar default."
+msgstr ""
+
+#: inc/customizer.php:1637
+#: page-pasang-loker.php:65
+msgid "Untuk perusahaan yang ingin mendapat lebih banyak pelamar berkualitas"
+msgstr ""
+
+#: front-page.php:160
+msgid "Update Loker Setiap Hari"
+msgstr ""
+
+#: page-pasang-loker.php:421
+#: page-pasang-loker.php:456
+msgid "Upload logo perusahaan sendiri"
+msgstr ""
+
+#: inc/template-tags.php:554
+msgid "Urgent"
+msgstr ""
+
+#: inc/customizer.php:2151
+msgid "Urutan Kategori"
+msgstr ""
+
+#: inc/customizer.php:2216
+msgid "Urutan Lokasi"
+msgstr ""
+
+#: archive-lowongan.php:193
+msgid "Urutkan:"
+msgstr ""
+
+#: inc/customizer.php:1794
+#: page-pasang-loker.php:82
+msgid "Verifikasi & Pembayaran"
+msgstr ""
+
+#: page-pasang-loker.php:320
+msgid "Verifikasi & publikasi dalam 1×24 jam. Hubungi admin sekarang dan loker langsung naik."
+msgstr ""
+
+#: inc/customizer.php:1409
+#: page-pasang-loker.php:36
+msgid "Waktu Tayang"
+msgstr ""
+
+#: inc/customizer.php:681
+msgid "Warna Akhir Gradien Hero (Kanan Bawah)"
+msgstr ""
+
+#: inc/customizer.php:670
+msgid "Warna Awal Gradien Hero (Kiri Atas)"
+msgstr ""
+
+#: inc/customizer.php:79
+msgid "Warna Gelap Bar (Topbar & Footer)"
+msgstr ""
+
+#: inc/customizer.php:69
+msgid "Warna Hover Tombol Utama"
+msgstr ""
+
+#: inc/customizer.php:100
+msgid "Warna Latar Belakang (Body)"
+msgstr ""
+
+#: inc/customizer.php:475
+msgid "Warna Tombol Kembali ke Atas"
+msgstr ""
+
+#: inc/customizer.php:90
+msgid "Warna Tombol Lamar via WhatsApp"
+msgstr ""
+
+#: inc/customizer.php:58
+msgid "Warna Utama (Tombol, Link)"
+msgstr ""
+
+#: inc/customizer.php:59
+msgid "Warna dominan tema — tombol, link, dan elemen sorotan."
+msgstr ""
+
+#: single-lowongan.php:111
+msgid "Website Perusahaan"
+msgstr ""
+
+#: inc/meta-boxes.php:89
+msgid "Website Perusahaan (Opsional)"
+msgstr ""
+
+#: page-pasang-loker.php:550
+msgid "WhatsApp Admin Sekarang"
+msgstr ""
+
+#: functions.php:185
+msgid "Widget kolom 1 footer (opsional, menggantikan info brand bawaan jika diisi)."
+msgstr ""
+
+#: functions.php:195
+msgid "Widget kolom 2 footer (opsional, menggantikan daftar kategori bawaan jika diisi)."
+msgstr ""
+
+#: functions.php:205
+msgid "Widget kolom 3 footer (opsional, menggantikan daftar kota bawaan jika diisi)."
+msgstr ""
+
+#: functions.php:215
+msgid "Widget kolom 4 footer (opsional, menggantikan daftar tautan bawaan jika diisi)."
+msgstr ""
+
+#: functions.php:165
+msgid "Widget yang tampil di bilah kanan beranda dan halaman statis. Anda dapat menambahkan widget WordPress kustom di sini."
+msgstr ""
+
+#: functions.php:175
+msgid "Widget yang tampil di sidebar halaman arsip/pencarian lowongan."
+msgstr ""
+
+#: page-pasang-loker.php:649
+msgid "Ya! Setiap lowongan yang tayang otomatis dilengkapi schema JobPosting yang diakui Google. Loker Anda berpotensi muncul di Google Jobs dan hasil pencarian organik."
+msgstr ""
+
+#: inc/template-tags.php:1158
+msgid "[Hakajobs] CTA Siap Melamar Pekerjaan"
+msgstr ""
+
+#: inc/seo.php:60
+msgid "di %s"
+msgstr ""
+
+#: single.php:88
+msgid "dibaca"
+msgstr ""
+
+#: sidebar.php:247
+msgid "dilihat"
+msgstr ""
+
+#: single-lowongan.php:194
+msgid "hari ini (kesempatan terakhir)"
+msgstr ""
+
+#: single-lowongan.php:150
+msgid "kali dilihat"
+msgstr ""
+
+#: single.php:83
+msgid "menit baca"
+msgstr ""
+
+#: inc/customizer.php:212
+msgid "✨ Ukuran Ikon Logo Emoji (px)"
+msgstr ""
+
+#: footer.php:277
+msgid "🍪 Privasi & Kenyamanan"
+msgstr ""
+
+#: inc/customizer.php:1935
+msgid "🏷️ Nama Saluran / Komunitas WA"
+msgstr ""
+
+#: inc/customizer.php:1739
+#: page-pasang-loker.php:50
+msgid "💡 Catatan: Harga dapat disesuaikan. Hubungi admin untuk paket bundling atau diskon khusus pengguna pertama."
+msgstr ""
+
+#: front-page.php:13
+msgid "💼 Portal Loker Terpercaya & Lamar Langsung"
+msgstr ""
+
+#: inc/customizer.php:175
+msgid "📏 Tinggi Maksimal Logo Gambar (px)"
+msgstr ""
+
+#: inc/customizer.php:161
+msgid "📏 Ukuran Tinggi Logo Gambar (px)"
+msgstr ""
+
+#: inc/customizer.php:1948
+msgid "📝 Header Teks Pesan Broadcast"
+msgstr ""
+
+#: inc/customizer.php:194
+msgid "🔤 Ukuran Font Nama Situs (px)"
+msgstr ""
+

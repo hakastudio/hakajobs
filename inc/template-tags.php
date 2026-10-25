@@ -980,7 +980,12 @@ function hakajobs_schema_job_posting() {
     }
 
     if (!empty($deadline)) {
-        $schema['validThrough'] = date('c', strtotime($deadline . ' 23:59:59'));
+        $schema['validThrough'] = function_exists('wp_date') ? wp_date('c', strtotime($deadline . ' 23:59:59')) : date('c', strtotime($deadline . ' 23:59:59'));
+    } else {
+        // Standar Google Jobs: jika batas waktu tidak diset khusus, tetapkan batas 180 hari dari tanggal terbit
+        $post_time = get_post_time('U', true, $post_id);
+        $fallback_expiry = strtotime('+180 days', $post_time ? $post_time : time());
+        $schema['validThrough'] = function_exists('wp_date') ? wp_date('c', $fallback_expiry) : date('c', $fallback_expiry);
     }
 
     echo "\n<!-- Schema.org JobPosting by Hakajobs -->\n";

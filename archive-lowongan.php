@@ -8,7 +8,7 @@
 get_header();
 
 // Extract query parameters
-$current_keyword  = isset($_GET['s_keyword']) ? sanitize_text_field($_GET['s_keyword']) : '';
+$current_keyword  = isset($_GET['s_keyword']) ? sanitize_text_field($_GET['s_keyword']) : (isset($_GET['s']) ? sanitize_text_field($_GET['s']) : (get_search_query() ? get_search_query() : ''));
 $current_kategori = isset($_GET['kategori']) ? sanitize_text_field($_GET['kategori']) : '';
 $current_lokasi   = isset($_GET['lokasi']) ? sanitize_text_field($_GET['lokasi']) : '';
 $current_tipe     = isset($_GET['tipe']) ? sanitize_text_field($_GET['tipe']) : '';
@@ -38,7 +38,9 @@ $has_active_filters = (!empty($current_keyword) || !empty($current_kategori) || 
         <div class="hk-archive-header">
             <h1 class="hk-archive-title">
                 <?php
-                if (is_tax()) {
+                if (is_search()) {
+                    printf(__('Hasil Pencarian: &ldquo;%s&rdquo;', 'hakajobs'), esc_html(!empty($current_keyword) ? $current_keyword : get_search_query()));
+                } elseif (is_tax()) {
                     single_term_title();
                 } else {
                     _e('Direktori Lowongan Kerja', 'hakajobs');
@@ -47,7 +49,9 @@ $has_active_filters = (!empty($current_keyword) || !empty($current_kategori) || 
             </h1>
             <p class="hk-archive-subtitle">
                 <?php
-                if (is_tax()) {
+                if (is_search()) {
+                    _e('Menampilkan daftar lowongan kerja yang sesuai dengan kata kunci pencarian Anda.', 'hakajobs');
+                } elseif (is_tax()) {
                     the_archive_description();
                 } else {
                     _e('Temukan posisi yang sesuai dengan keahlian Anda dari berbagai industri dan perusahaan terpercaya.', 'hakajobs');

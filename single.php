@@ -29,7 +29,9 @@ while (have_posts()) : the_post();
     $tk_author_bio    = get_theme_mod('hakajobs_tk_author_bio', __('Materi pembelajaran resmi dan kisi-kisi soal yang dikurasi oleh praktisi rekrutmen profesional untuk mempermudah persiapan tes karir pencari kerja di Indonesia.', 'hakajobs'));
     $tk_author_avatar = get_theme_mod('hakajobs_tk_author_avatar', '');
     if (empty($tk_author_avatar)) {
-        $tk_author_avatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
+        $author_id        = get_the_author_meta('ID');
+        $wp_avatar        = get_avatar_url($author_id, array('size' => 160));
+        $tk_author_avatar = $wp_avatar ? $wp_avatar : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
     }
 
     // Estimasi waktu baca & jumlah dibaca
@@ -47,8 +49,12 @@ while (have_posts()) : the_post();
         $views_formatted = round($dummy_views / 1000, 1) . 'k';
     }
 
-    // Career Page URL
-    $career_url = function_exists('hakajobs_get_career_url') ? hakajobs_get_career_url() : home_url('/tes-karir/');
+    // Career & Blog Page URLs
+    $career_url    = function_exists('hakajobs_get_career_url') ? hakajobs_get_career_url() : home_url('/tes-karir/');
+    $posts_page_id = get_option('page_for_posts');
+    $blog_url      = $posts_page_id ? get_permalink($posts_page_id) : ($primary_cat ? get_category_link($primary_cat->term_id) : home_url('/'));
+    $back_url      = $is_career ? $career_url : ($primary_cat ? get_category_link($primary_cat->term_id) : $blog_url);
+    $back_label    = $is_career ? __('Kembali ke Pusat Tes &amp; Karir', 'hakajobs') : ($primary_cat ? sprintf(__('Kembali ke %s', 'hakajobs'), $primary_cat->name) : __('Kembali ke Berita &amp; Artikel', 'hakajobs'));
 ?>
 
 <?php hakajobs_breadcrumbs(); ?>
@@ -58,9 +64,9 @@ while (have_posts()) : the_post();
         <article class="hk-article-card">
             
             <div class="hk-article-top-nav">
-                <a href="<?php echo esc_url($career_url); ?>" class="hk-btn-back-career">
+                <a href="<?php echo esc_url($back_url); ?>" class="hk-btn-back-career">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    <span><?php _e('Kembali ke Pusat Tes &amp; Karir', 'hakajobs'); ?></span>
+                    <span><?php echo esc_html($back_label); ?></span>
                 </a>
                 <?php if ($primary_cat): ?>
                     <a href="<?php echo esc_url(get_category_link($primary_cat->term_id)); ?>" class="hk-article-category-badge">
@@ -123,7 +129,7 @@ while (have_posts()) : the_post();
 
             <!-- Author Box -->
             <div class="hk-article-author-box">
-                <img src="<?php echo esc_url($tk_author_avatar); ?>" alt="<?php echo esc_attr($tk_author_name); ?>" class="hk-author-avatar">
+                <img src="<?php echo esc_url($is_career ? $tk_author_avatar : (get_avatar_url(get_the_author_meta('ID'), array('size' => 160)) ?: $tk_author_avatar)); ?>" alt="<?php echo esc_attr($is_career ? $tk_author_name : get_the_author()); ?>" class="hk-author-avatar">
                 <div class="hk-author-info">
                     <h4><?php echo esc_html($is_career ? $tk_author_name : get_the_author()); ?></h4>
                     <p><?php echo esc_html($is_career ? $tk_author_bio : (get_the_author_meta('description') ?: __('Penulis dan kontributor konten profesional di portal karir Hakajobs.', 'hakajobs'))); ?></p>
@@ -144,8 +150,8 @@ while (have_posts()) : the_post();
                 <?php the_tags('<div class="hk-tags-list"><span>' . __('Tags:', 'hakajobs') . '</span> ', ' ', '</div>'); ?>
 
                 <div class="hk-article-bottom-nav">
-                    <a href="<?php echo esc_url($career_url); ?>" class="hk-btn hk-btn-subtle">
-                        &larr; <?php _e('Lihat Semua Modul Tes &amp; Karir', 'hakajobs'); ?>
+                    <a href="<?php echo esc_url($back_url); ?>" class="hk-btn hk-btn-subtle">
+                        &larr; <?php echo esc_html($is_career ? __('Lihat Semua Modul Tes &amp; Karir', 'hakajobs') : __('Lihat Semua Berita &amp; Artikel', 'hakajobs')); ?>
                     </a>
                     <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>" class="hk-btn hk-btn-primary">
                         <?php _e('Jelajahi Lowongan Kerja Terbaru', 'hakajobs'); ?> &rarr;
