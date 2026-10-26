@@ -1004,8 +1004,42 @@
                     wrap.appendChild(box);
                 }
             });
+        // Auto-enhance interactive soal action row buttons on page load
+        function initSoalActionButtonsEnhancer() {
+            var rows = document.querySelectorAll('.hk-soal-action-row');
+            if (!rows.length) return;
+
+            rows.forEach(function(row) {
+                // 1. Toggle Button (Kunci & Pembahasan)
+                var toggleBtn = row.querySelector('.hk-soal-toggle-btn');
+                if (toggleBtn) {
+                    toggleBtn.classList.add('hk-btn');
+                    if (!toggleBtn.querySelector('svg')) {
+                        var text = toggleBtn.textContent.trim() || 'Kunci & Pembahasan';
+                        toggleBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 12 12 12 8"></polyline></svg><span>' + text + '</span>';
+                    }
+                }
+
+                // 2. Check Button (Periksa Jawaban)
+                var checkBtn = row.querySelector('[id^="btn-check-"]');
+                if (checkBtn) {
+                    checkBtn.classList.add('hk-btn', 'hk-btn-primary', 'hk-btn-sm');
+                }
+
+                // 3. Reset Button (Ulangi Soal)
+                var resetBtn = row.querySelector('[onclick*="resetArticleAnswer"]') || row.querySelector('.hk-btn-subtle');
+                if (resetBtn) {
+                    resetBtn.classList.add('hk-btn', 'hk-btn-subtle', 'hk-btn-sm');
+                    resetBtn.style.setProperty('margin-left', 'auto', 'important');
+                    if (!resetBtn.querySelector('svg')) {
+                        var textReset = resetBtn.textContent.replace('🔄', '').trim() || 'Ulangi Soal';
+                        resetBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg><span>' + textReset + '</span>';
+                    }
+                }
+            });
         }
         initCvTemplateEnhancer();
+        initSoalActionButtonsEnhancer();
     }
 
     if (document.readyState === 'loading') {

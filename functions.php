@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.41');
+define('HAKAJOBS_VERSION', '1.0.42');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -27,6 +27,7 @@ require_once HAKAJOBS_DIR . '/inc/customizer.php';
 require_once HAKAJOBS_DIR . '/inc/updater.php';
 require_once HAKAJOBS_DIR . '/inc/performance.php';
 require_once HAKAJOBS_DIR . '/inc/push-notification.php';
+require_once HAKAJOBS_DIR . '/inc/pwa.php';
 
 /**
  * Theme Setup
@@ -507,4 +508,65 @@ function hakajobs_navigation_markup_template($template, $class) {
     </nav>';
 }
 add_filter('navigation_markup_template', 'hakajobs_navigation_markup_template', 10, 2);
+
+/**
+ * Standarisasi dan percantik markup tombol aksi latihan soal interaktif di konten artikel
+ * Memastikan tombol pada artikel yang sudah terbit di basis data tetap rapi dengan ikon SVG dan perataan presisi.
+ */
+function hakajobs_filter_soal_buttons_markup($content) {
+    if (empty($content) || stristr($content, 'hk-soal-') === false) {
+        return $content;
+    }
+
+    // 1. Standardisasi tombol Kunci & Pembahasan jika belum memiliki SVG
+    $content = preg_replace_callback(
+        '/<button([^>]*class=["\'][^"\']*hk-soal-toggle-btn[^"\']*["\'][^>]*)>(.*?)<\/button>/is',
+        function ($m) {
+            $attrs = $m[1];
+            $inner = $m[2];
+            if (strpos($inner, '<svg') !== false) {
+                return $m[0];
+            }
+            $clean_text = trim(strip_tags($inner));
+            if (empty($clean_text)) {
+                $clean_text = 'Kunci &amp; Pembahasan';
+            }
+            if (strpos($attrs, 'hk-btn') === false) {
+                $attrs = preg_replace('/class=["\'](.*?)["\']/', 'class="$1 hk-btn"', $attrs);
+            }
+            $svg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 12 12 12 8"></polyline></svg>';
+            return '<button ' . trim($attrs) . '>' . $svg . '<span>' . $clean_text . '</span></button>';
+        },
+        $content
+    );
+
+    // 2. Standardisasi tombol Ulangi Soal
+    $content = preg_replace_callback(
+        '/<button([^>]*resetArticleAnswer[^>]*)>(.*?)<\/button>/is',
+        function ($m) {
+            $attrs = $m[1];
+            $inner = $m[2];
+            if (strpos($inner, '<svg') !== false) {
+                return $m[0];
+            }
+            $clean_text = trim(str_replace('🔄', '', strip_tags($inner)));
+            if (empty($clean_text)) {
+                $clean_text = 'Ulangi Soal';
+            }
+            if (strpos($attrs, 'hk-btn') === false) {
+                $attrs = preg_replace('/class=["\'](.*?)["\']/', 'class="$1 hk-btn hk-btn-subtle hk-btn-sm"', $attrs);
+            }
+            if (strpos($attrs, 'margin-left') === false) {
+                $attrs = rtrim($attrs) . ' style="margin-left:auto;"';
+            }
+            $svg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>';
+            return '<button ' . trim($attrs) . '>' . $svg . '<span>' . $clean_text . '</span></button>';
+        },
+        $content
+    );
+
+    return $content;
+}
+add_filter('the_content', 'hakajobs_filter_soal_buttons_markup', 15);
+
 

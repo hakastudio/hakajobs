@@ -1347,18 +1347,20 @@
    Interactive Soal Action Row & Buttons (Rapi & Sejajar)
    ========================================================================== */
 .hk-soal-action-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 18px;
-    padding-top: 14px;
-    border-top: 1px solid var(--hk-border);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+    margin-top: 20px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid var(--hk-border, #e2e8f0) !important;
 }
 
 .hk-soal-action-row button,
 .hk-soal-action-row .hk-btn,
-.hk-soal-action-row .hk-soal-toggle-btn {
+.hk-soal-action-row .hk-soal-toggle-btn,
+.hk-soal-toggle-btn {
     height: 38px !important;
     min-height: 38px !important;
     max-height: 38px !important;
@@ -1368,7 +1370,7 @@
     justify-content: center !important;
     vertical-align: middle !important;
     text-align: center !important;
-    gap: 7px !important;
+    gap: 8px !important;
     font-size: 13px !important;
     font-weight: 700 !important;
     font-family: inherit !important;
@@ -1381,19 +1383,45 @@
     margin: 0 !important;
 }
 
+.hk-soal-action-row button svg,
+.hk-soal-action-row .hk-btn svg,
+.hk-soal-action-row .hk-soal-toggle-btn svg,
+.hk-soal-toggle-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+}
+
+.hk-soal-action-row button span,
+.hk-soal-action-row .hk-btn span,
+.hk-soal-action-row .hk-soal-toggle-btn span,
+.hk-soal-toggle-btn span {
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 /* Primary Button (Periksa Jawaban) */
 .hk-soal-action-row .hk-btn-primary,
 .hk-soal-action-row [id^="btn-check-"] {
-    background: var(--hk-primary) !important;
+    background: var(--hk-primary, #0284c7) !important;
     color: #ffffff !important;
-    border: 1.5px solid var(--hk-primary) !important;
+    border: 1.5px solid var(--hk-primary, #0284c7) !important;
     box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2) !important;
 }
 
 .hk-soal-action-row .hk-btn-primary:hover:not(:disabled),
 .hk-soal-action-row [id^="btn-check-"]:hover:not(:disabled) {
-    background: var(--hk-primary-hover) !important;
-    border-color: var(--hk-primary-hover) !important;
+    background: var(--hk-primary-hover, #0369a1) !important;
+    border-color: var(--hk-primary-hover, #0369a1) !important;
     transform: translateY(-1px) !important;
     box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3) !important;
 }
@@ -1411,46 +1439,33 @@
 }
 
 /* Toggle Kunci & Pembahasan */
-.hk-soal-action-row .hk-soal-toggle-btn {
+.hk-soal-action-row .hk-soal-toggle-btn,
+.hk-soal-toggle-btn {
     background: #ffffff !important;
     border: 1.5px solid #cbd5e1 !important;
-    color: var(--hk-primary) !important;
+    color: var(--hk-primary, #0284c7) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
 }
 
-.hk-soal-action-row .hk-soal-toggle-btn:hover {
+.hk-soal-action-row .hk-soal-toggle-btn:hover,
+.hk-soal-toggle-btn:hover {
     background: #f0f9ff !important;
-    border-color: var(--hk-primary) !important;
-    color: var(--hk-primary-hover) !important;
+    border-color: var(--hk-primary, #0284c7) !important;
+    color: var(--hk-primary-hover, #0369a1) !important;
     transform: translateY(-1px) !important;
 }
 
-.hk-soal-action-row .hk-soal-toggle-btn svg {
-    width: 14px !important;
-    height: 14px !important;
-    min-width: 14px !important;
-    min-height: 14px !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    flex-shrink: 0 !important;
-    margin: 0 !important;
-}
-
-.hk-soal-action-row .hk-soal-toggle-btn span {
-    display: inline-flex !important;
-    align-items: center !important;
-    vertical-align: middle !important;
-    line-height: 1.2 !important;
-    margin: 0 !important;
-}
-
 /* Reset / Subtle Button */
-.hk-soal-action-row .hk-btn-subtle {
+.hk-soal-action-row .hk-btn-subtle,
+.hk-soal-action-row [onclick*="resetArticleAnswer"] {
+    margin-left: auto !important;
     background: #f8fafc !important;
-    border: 1.5px solid var(--hk-border) !important;
-    color: var(--hk-text-muted) !important;
+    border: 1.5px solid var(--hk-border, #e2e8f0) !important;
+    color: var(--hk-text-muted, #64748b) !important;
 }
 
-.hk-soal-action-row .hk-btn-subtle:hover {
+.hk-soal-action-row .hk-btn-subtle:hover,
+.hk-soal-action-row [onclick*="resetArticleAnswer"]:hover {
     background: #fee2e2 !important;
     border-color: #fca5a5 !important;
     color: #b91c1c !important;
@@ -1459,20 +1474,24 @@
 
 @media (max-width: 640px) {
     .hk-soal-action-row {
-        gap: 8px;
+        gap: 8px !important;
     }
     .hk-soal-action-row button,
     .hk-soal-action-row .hk-btn,
-    .hk-soal-action-row .hk-soal-toggle-btn {
+    .hk-soal-action-row .hk-soal-toggle-btn,
+    .hk-soal-toggle-btn {
         height: 38px !important;
         min-height: 38px !important;
         max-height: 38px !important;
-        line-height: normal !important;
         padding: 0 12px !important;
         font-size: 12.5px !important;
+        flex: 1 1 auto !important;
     }
-    .hk-soal-action-row .hk-btn-subtle {
+    .hk-soal-action-row .hk-btn-subtle,
+    .hk-soal-action-row [onclick*="resetArticleAnswer"] {
         margin-left: 0 !important;
+        width: 100% !important;
+        margin-top: 4px !important;
     }
 }
 

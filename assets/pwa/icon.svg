@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="pwa-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#0369a1" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <filter id="pwa-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#pwa-grad)" />
+  <g filter="url(#pwa-shadow)">
+    <!-- Briefcase handle -->
+    <path d="M192 160 C192 128, 224 112, 256 112 C288 112, 320 128, 320 160 L320 180 L192 180 Z" fill="none" stroke="#ffffff" stroke-width="28" stroke-linejoin="round" />
+    <!-- Briefcase body -->
+    <rect x="96" y="180" width="320" height="230" rx="32" fill="#ffffff" />
+    <!-- Center divider band -->
+    <rect x="96" y="270" width="320" height="24" fill="#0284c7" opacity="0.3" />
+    <!-- Center Lock / Badge -->
+    <rect x="232" y="260" width="48" height="44" rx="8" fill="#f59e0b" />
+    <!-- Keyhole / check dot -->
+    <circle cx="256" cy="278" r="6" fill="#ffffff" />
+    <rect x="254" y="282" width="4" height="12" fill="#ffffff" />
+  </g>
+</svg>
