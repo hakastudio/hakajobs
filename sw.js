@@ -1,8 +1,8 @@
 /**
  * Hakajobs Theme Service Worker (Root Fallback)
- * Version: 1.0.42
+ * Version: 1.0.43
  */
-const CACHE_NAME = 'hakajobs-pwa-static-v1.0.42';
+const CACHE_NAME = 'hakajobs-pwa-static-v1.0.43';
 
 const PRECACHE_ASSETS = [
     './assets/css/main.min.css',

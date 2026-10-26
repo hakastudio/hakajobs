@@ -260,7 +260,7 @@ function hakajobs_pwa_handle_endpoints() {
         header('Service-Worker-Allowed: /');
         header('Cache-Control: no-cache, no-store, must-revalidate');
 
-        $sw_version = defined('HAKAJOBS_VERSION') ? HAKAJOBS_VERSION : '1.0.42';
+        $sw_version = defined('HAKAJOBS_VERSION') ? HAKAJOBS_VERSION : '1.0.43';
         $offline_url = home_url('/?hakajobs_offline=1');
         $saved_url   = home_url('/saved-jobs/');
         $site_name   = esc_js(get_bloginfo('name'));
