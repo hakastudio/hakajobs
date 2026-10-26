@@ -722,6 +722,7 @@
             var checkBtn = document.getElementById('btn-check-' + num);
             if (checkBtn) {
                 checkBtn.disabled = false;
+                checkBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Periksa Jawaban</span>';
             }
         };
 
@@ -775,14 +776,15 @@
             var checkBtn = document.getElementById('btn-check-' + num);
             if (checkBtn) {
                 checkBtn.disabled = true;
-                checkBtn.textContent = 'Evaluasi Selesai';
+                checkBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Evaluasi Selesai</span>';
             }
 
             window.updateArticleScoreTracker();
         };
 
-        window.toggleSoalExplanation = function(num) {
-            var exp = document.getElementById('exp-' + num);
+        window.toggleSoalExplanation = function(numOrId) {
+            var expId = String(numOrId).indexOf('exp-') === 0 ? numOrId : ('exp-' + numOrId);
+            var exp = document.getElementById(expId);
             if (!exp) return;
             if (exp.classList.contains('is-hidden') || window.getComputedStyle(exp).display === 'none') {
                 exp.classList.remove('is-hidden');
@@ -825,7 +827,7 @@
             var checkBtn = document.getElementById('btn-check-' + num);
             if (checkBtn) {
                 checkBtn.disabled = true;
-                checkBtn.textContent = 'Periksa Jawaban';
+                checkBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Periksa Jawaban</span>';
             }
 
             window.updateArticleScoreTracker();
@@ -891,7 +893,7 @@
                 return;
             }
 
-            var checkBtn = e.target.closest('[id^="btn-check-"]');
+            var checkBtn = e.target.closest('[id^="btn-check-"], .hk-soal-action-row .hk-btn-primary');
             if (checkBtn) {
                 var soalBox = checkBtn.closest('.hk-interactive-soal') || checkBtn.closest('[id^="soal-box-"]');
                 if (soalBox) {
@@ -903,7 +905,7 @@
                 return;
             }
 
-            var toggleBtn = e.target.closest('.hk-soal-toggle-btn');
+            var toggleBtn = e.target.closest('.hk-soal-toggle-btn, [id^="btn-toggle-"]');
             if (toggleBtn) {
                 var soalBox = toggleBtn.closest('.hk-interactive-soal') || toggleBtn.closest('[id^="soal-box-"]');
                 if (soalBox) {
@@ -915,7 +917,7 @@
                 return;
             }
 
-            var resetSingleBtn = e.target.closest('.hk-soal-action-row .hk-btn-subtle');
+            var resetSingleBtn = e.target.closest('.hk-soal-action-row .hk-btn-subtle, .hk-soal-action-row [onclick*="resetArticleAnswer"]');
             if (resetSingleBtn) {
                 var soalBox = resetSingleBtn.closest('.hk-interactive-soal') || resetSingleBtn.closest('[id^="soal-box-"]');
                 if (soalBox) {
@@ -1004,13 +1006,25 @@
                     wrap.appendChild(box);
                 }
             });
+        }
+
         // Auto-enhance interactive soal action row buttons on page load
         function initSoalActionButtonsEnhancer() {
             var rows = document.querySelectorAll('.hk-soal-action-row');
             if (!rows.length) return;
 
             rows.forEach(function(row) {
-                // 1. Toggle Button (Kunci & Pembahasan)
+                // 1. Check Button (Periksa Jawaban)
+                var checkBtn = row.querySelector('[id^="btn-check-"]');
+                if (checkBtn) {
+                    checkBtn.classList.add('hk-btn', 'hk-btn-primary', 'hk-btn-sm');
+                    if (!checkBtn.querySelector('svg')) {
+                        var textCheck = checkBtn.textContent.trim() || 'Periksa Jawaban';
+                        checkBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>' + textCheck + '</span>';
+                    }
+                }
+
+                // 2. Toggle Button (Kunci & Pembahasan)
                 var toggleBtn = row.querySelector('.hk-soal-toggle-btn');
                 if (toggleBtn) {
                     toggleBtn.classList.add('hk-btn');
@@ -1020,17 +1034,12 @@
                     }
                 }
 
-                // 2. Check Button (Periksa Jawaban)
-                var checkBtn = row.querySelector('[id^="btn-check-"]');
-                if (checkBtn) {
-                    checkBtn.classList.add('hk-btn', 'hk-btn-primary', 'hk-btn-sm');
-                }
-
                 // 3. Reset Button (Ulangi Soal)
                 var resetBtn = row.querySelector('[onclick*="resetArticleAnswer"]') || row.querySelector('.hk-btn-subtle');
                 if (resetBtn) {
                     resetBtn.classList.add('hk-btn', 'hk-btn-subtle', 'hk-btn-sm');
-                    resetBtn.style.setProperty('margin-left', 'auto', 'important');
+                    resetBtn.style.removeProperty('margin-left');
+                    resetBtn.style.marginLeft = '0';
                     if (!resetBtn.querySelector('svg')) {
                         var textReset = resetBtn.textContent.replace('🔄', '').trim() || 'Ulangi Soal';
                         resetBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg><span>' + textReset + '</span>';
