@@ -15,8 +15,9 @@
  *  ├─ Section 10: Halaman Pasang Loker & Tarif
  *  ├─ Section 11: Saluran WhatsApp & Broadcast Loker
  *  ├─ Section 12: Sidebar Kanan (Beranda & Halaman Statis)
- *  ├─ Section 13: Pop-up Cookie & Notifikasi Pengunjung
- *  └─ Section 14: Halaman Pusat Tes & Karir
+ *  ├─ Section 13: Pop-up Cookie Pengunjung
+ *  ├─ Section 14: Halaman Pusat Tes & Karir
+ *  └─ Section 15: Pop-up Notifikasi Berita / Loker (Gaya Antaranews)
  *
  * @package Hakajobs
  */

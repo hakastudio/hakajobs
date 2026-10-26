@@ -1170,24 +1170,54 @@
 }
 
 .hk-soal-toggle-btn {
-    background: #ffffff;
-    border: 1px solid var(--hk-border);
-    color: var(--hk-primary);
-    font-size: 12.5px;
-    font-weight: 700;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.15s ease;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    line-height: normal !important;
+    padding: 0 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    gap: 7px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    font-family: inherit !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: var(--hk-primary, #0284c7) !important;
+    transition: all 0.15s ease !important;
+    text-decoration: none !important;
 }
 
 .hk-soal-toggle-btn:hover {
-    background: var(--hk-primary);
-    color: #ffffff;
-    border-color: var(--hk-primary);
+    background: #f0f9ff !important;
+    border-color: var(--hk-primary, #0284c7) !important;
+    color: var(--hk-primary-hover, #0369a1) !important;
+    transform: translateY(-1px) !important;
+}
+
+.hk-soal-toggle-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+}
+
+.hk-soal-toggle-btn span {
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
 }
 
 .hk-soal-explanation {
@@ -1330,20 +1360,25 @@
 .hk-soal-action-row .hk-btn,
 .hk-soal-action-row .hk-soal-toggle-btn {
     height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
     padding: 0 16px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
+    vertical-align: middle !important;
+    text-align: center !important;
     gap: 7px !important;
     font-size: 13px !important;
     font-weight: 700 !important;
     font-family: inherit !important;
     border-radius: 8px !important;
-    line-height: 1 !important;
+    line-height: normal !important;
     cursor: pointer !important;
     box-sizing: border-box !important;
     transition: all 0.15s ease !important;
     text-decoration: none !important;
+    margin: 0 !important;
 }
 
 /* Primary Button (Periksa Jawaban) */
@@ -1389,6 +1424,25 @@
     transform: translateY(-1px) !important;
 }
 
+.hk-soal-action-row .hk-soal-toggle-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+}
+
+.hk-soal-action-row .hk-soal-toggle-btn span {
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+}
+
 /* Reset / Subtle Button */
 .hk-soal-action-row .hk-btn-subtle {
     background: #f8fafc !important;
@@ -1410,7 +1464,10 @@
     .hk-soal-action-row button,
     .hk-soal-action-row .hk-btn,
     .hk-soal-action-row .hk-soal-toggle-btn {
-        height: 36px !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        line-height: normal !important;
         padding: 0 12px !important;
         font-size: 12.5px !important;
     }
