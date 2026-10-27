@@ -166,19 +166,6 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         ),
     ));
 
-    // 8. Tampilkan Tombol Lonceng Melayang (Floating Bell)
-    $wp_customize->add_setting('hakajobs_push_show_bell', array(
-        'default'           => '1',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control('hakajobs_push_show_bell', array(
-        'type'        => 'checkbox',
-        'label'       => __('Tampilkan Tombol Lonceng Notifikasi Mengambang (Floating Bell)', 'hakajobs'),
-        'description' => __('Menampilkan tombol lonceng elegan di sudut layar yang memudahkan pengunjung berlangganan kapan saja.', 'hakajobs'),
-        'section'     => 'hakajobs_push_notice_section',
-    ));
-
     // 9. Otomatis Kirim saat Lowongan Baru Diterbitkan
     $wp_customize->add_setting('hakajobs_push_notify_lowongan', array(
         'default'           => '1',
@@ -823,7 +810,6 @@ function hakajobs_render_push_notification() {
     $prompt_msg    = get_theme_mod('hakajobs_push_prompt_text', __('Dapatkan info lowongan kerja dan update karir terbaru langsung di perangkat Anda.', 'hakajobs'));
     $prompt_accept = __('Aktifkan', 'hakajobs');
     $prompt_cancel = __('Nanti Saja', 'hakajobs');
-    $show_bell     = get_theme_mod('hakajobs_push_show_bell', '1');
     ?>
     <!-- OneSignal Web SDK v16: Pop-up & Web Push Asli OneSignal.com -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
@@ -925,78 +911,6 @@ function hakajobs_render_push_notification() {
             });
         };
     </script>
-
-    <?php if ($show_bell === '1'): ?>
-    <!-- Floating Notification Bell -->
-    <div id="hk-push-bell-container" class="hk-push-bell-wrap">
-        <button type="button" 
-                onclick="window.hakajobsTriggerPushPrompt()" 
-                id="hk-push-bell-btn" 
-                class="hk-push-bell-btn" 
-                title="<?php esc_attr_e('Aktifkan Notifikasi Loker Baru', 'hakajobs'); ?>" 
-                aria-label="<?php esc_attr_e('Aktifkan Notifikasi Loker Baru', 'hakajobs'); ?>">
-            <span class="hk-push-bell-icon">🔔</span>
-            <span class="hk-push-bell-label"><?php _e('Notifikasi Loker', 'hakajobs'); ?></span>
-        </button>
-    </div>
-    <style>
-    .hk-push-bell-wrap {
-        position: fixed;
-        bottom: 84px;
-        left: 24px;
-        z-index: 9990;
-    }
-    .hk-push-bell-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        background: #0284c7;
-        color: #ffffff;
-        border: none;
-        border-radius: 999px;
-        padding: 9px 16px;
-        font-size: 13px;
-        font-weight: 700;
-        font-family: inherit;
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.38);
-        cursor: pointer;
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s, background 0.2s;
-    }
-    .hk-push-bell-btn:hover {
-        background: #0369a1;
-        transform: translateY(-2px) scale(1.02);
-        box-shadow: 0 6px 18px rgba(2, 132, 199, 0.48);
-    }
-    .hk-push-bell-btn:active {
-        transform: translateY(0) scale(0.98);
-    }
-    .hk-push-bell-btn .hk-push-bell-icon {
-        font-size: 15px;
-        display: inline-block;
-        animation: hkBellRing 3.5s ease infinite;
-        transform-origin: 50% 0%;
-    }
-    @keyframes hkBellRing {
-        0%, 100% { transform: rotate(0); }
-        3%, 9% { transform: rotate(14deg); }
-        6%, 12% { transform: rotate(-14deg); }
-        15% { transform: rotate(0); }
-    }
-    @media (max-width: 640px) {
-        .hk-push-bell-wrap {
-            bottom: 74px;
-            left: 14px;
-        }
-        .hk-push-bell-btn {
-            padding: 8px 12px;
-            font-size: 12px;
-        }
-        .hk-push-bell-btn .hk-push-bell-label {
-            display: inline;
-        }
-    }
-    </style>
-    <?php endif; ?>
     <?php
 }
 add_action('wp_footer', 'hakajobs_render_push_notification', 99);
