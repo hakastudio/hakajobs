@@ -14,6 +14,36 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Smart sanitizer for OneSignal App ID:
+ * Extracts clean UUID even if user pastes entire <script> tag or surrounded by quotes
+ */
+function hakajobs_sanitize_onesignal_app_id($input) {
+    if (empty($input)) {
+        return '';
+    }
+    $clean = trim((string) $input);
+    if (preg_match('/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i', $clean, $matches)) {
+        return strtolower($matches[0]);
+    }
+    return sanitize_text_field($clean);
+}
+
+/**
+ * Smart sanitizer for OneSignal Safari Web ID:
+ * Extracts web.onesignal.auto.xxxx even if user pastes entire <script> tag
+ */
+function hakajobs_sanitize_onesignal_safari_id($input) {
+    if (empty($input)) {
+        return '';
+    }
+    $clean = trim((string) $input);
+    if (preg_match('/web\.onesignal\.auto\.[0-9a-z.-]+/i', $clean, $matches)) {
+        return strtolower($matches[0]);
+    }
+    return sanitize_text_field($clean);
+}
+
+/**
  * 1. Register Theme Customizer Section & Controls for Push Notification
  *
  * @param WP_Customize_Manager $wp_customize Customizer instance.
@@ -72,13 +102,13 @@ function hakajobs_push_notification_customize_register($wp_customize) {
     // 3. OneSignal App ID
     $wp_customize->add_setting('hakajobs_onesignal_app_id', array(
         'default'           => '',
-        'sanitize_callback' => 'sanitize_text_field',
+        'sanitize_callback' => 'hakajobs_sanitize_onesignal_app_id',
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control('hakajobs_onesignal_app_id', array(
         'type'        => 'text',
         'label'       => __('OneSignal App ID', 'hakajobs'),
-        'description' => __('Dapatkan gratis di https://onesignal.com (Free tier s/d 10.000 subscriber). Contoh: 12345678-abcd-1234-abcd-1234567890ab', 'hakajobs'),
+        'description' => __('Dapatkan di https://onesignal.com. Cukup masukkan ID saja (contoh: fa8d0207-13ae-4f12-9058-d910ade5f80a). Jangan tempel tag <script>.', 'hakajobs'),
         'section'     => 'hakajobs_push_notice_section',
     ));
 
@@ -98,13 +128,13 @@ function hakajobs_push_notification_customize_register($wp_customize) {
     // 5. OneSignal Safari Web ID (Opsional)
     $wp_customize->add_setting('hakajobs_onesignal_safari_web_id', array(
         'default'           => '',
-        'sanitize_callback' => 'sanitize_text_field',
+        'sanitize_callback' => 'hakajobs_sanitize_onesignal_safari_id',
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control('hakajobs_onesignal_safari_web_id', array(
         'type'        => 'text',
         'label'       => __('OneSignal Safari Web ID (Opsional)', 'hakajobs'),
-        'description' => __('Diperlukan khusus pengguna Safari Desktop versi lama (contoh: web.onesignal.auto.xxxxxx). iOS 16.4+ sudah mendukung web push otomatis.', 'hakajobs'),
+        'description' => __('Contoh: web.onesignal.auto.xxxxxx (Cukup kodenya saja, tanpa tag script).', 'hakajobs'),
         'section'     => 'hakajobs_push_notice_section',
     ));
 
@@ -813,25 +843,65 @@ function hakajobs_render_push_meta_box($post) {
  * 6. Admin Notice: Prompt to fill OneSignal Keys if enabled but missing
  */
 function hakajobs_push_admin_notice() {
+    // Check if dismissed permanently by this user
+    if (get_user_meta(get_current_user_id(), 'hakajobs_dismiss_push_notice', true)) {
+        return;
+    }
+
     $push_enabled = get_theme_mod('hakajobs_push_enable', '1');
     $app_id       = trim(get_theme_mod('hakajobs_onesignal_app_id', ''));
 
     if ($push_enabled === '1' && empty($app_id) && current_user_can('manage_options')) {
         $customizer_url = admin_url('customize.php?autofocus[section]=hakajobs_push_notice_section');
+        $dismiss_url    = wp_nonce_url(add_query_arg('hakajobs_dismiss_push_notice', '1'), 'hakajobs_dismiss_push_notice_action');
         ?>
-        <div class="notice notice-warning is-dismissible" style="border-left-color: #0284c7;">
+        <div class="notice notice-warning is-dismissible hakajobs-push-admin-notice" style="border-left-color: #0284c7;">
             <p>
                 <strong>🔔 Fitur Notifikasi HakaJobs Aktif:</strong>
                 Agar pemberitahuan artikel & lowongan baru dapat terkirim otomatis ke layar handphone pengunjung, silakan masukkan <strong>OneSignal App ID & REST API Key</strong> Anda.
                 <a href="<?php echo esc_url($customizer_url); ?>" class="button button-small button-primary" style="margin-left: 8px;">
                     <?php _e('Buka Pengaturan Notifikasi', 'hakajobs'); ?>
                 </a>
+                <a href="<?php echo esc_url($dismiss_url); ?>" class="button button-small" style="margin-left: 6px; color: #64748b;">
+                    <?php _e('Jangan Tampilkan Lagi', 'hakajobs'); ?>
+                </a>
             </p>
         </div>
+        <script>
+        jQuery(document).on('click', '.hakajobs-push-admin-notice .notice-dismiss', function() {
+            jQuery.post(ajaxurl, {
+                action: 'hakajobs_dismiss_push_notice_ajax',
+                nonce: '<?php echo wp_create_nonce('hakajobs_dismiss_push_ajax_nonce'); ?>'
+            });
+        });
+        </script>
         <?php
     }
 }
 add_action('admin_notices', 'hakajobs_push_admin_notice');
+
+/**
+ * Handle persistent dismissal of push admin notice
+ */
+function hakajobs_handle_dismiss_push_notice() {
+    if (isset($_GET['hakajobs_dismiss_push_notice']) && current_user_can('manage_options')) {
+        check_admin_referer('hakajobs_dismiss_push_notice_action');
+        update_user_meta(get_current_user_id(), 'hakajobs_dismiss_push_notice', 1);
+        wp_safe_redirect(remove_query_arg(array('hakajobs_dismiss_push_notice', '_wpnonce')));
+        exit;
+    }
+}
+add_action('admin_init', 'hakajobs_handle_dismiss_push_notice');
+
+function hakajobs_ajax_dismiss_push_notice() {
+    check_ajax_referer('hakajobs_dismiss_push_ajax_nonce', 'nonce');
+    if (current_user_can('manage_options')) {
+        update_user_meta(get_current_user_id(), 'hakajobs_dismiss_push_notice', 1);
+        wp_send_json_success();
+    }
+    wp_send_json_error();
+}
+add_action('wp_ajax_hakajobs_dismiss_push_notice_ajax', 'hakajobs_ajax_dismiss_push_notice');
 
 /**
  * 7. AJAX Test Push Notification Endpoint for Admin
