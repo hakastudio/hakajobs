@@ -311,11 +311,10 @@ function hakajobs_send_push_notification($args = array()) {
         $icon = HAKAJOBS_URI . '/screenshot.png';
     }
 
-    // Segment resmi standar OneSignal: 'Subscribed Users' (menghindari error segment tidak ditemukan)
+    // Target seluruh segmen pelanggan OneSignal: mendukung format modern ('Total Subscriptions') maupun format standar ('Subscribed Users', 'Active Subscriptions')
     $payload = array(
         'app_id'            => $app_id,
-        'included_segments' => array('Subscribed Users'),
-        'target_channel'    => 'push',
+        'included_segments' => array('Total Subscriptions', 'Subscribed Users', 'Active Subscriptions', 'Active Users'),
         'headings'          => array('en' => $title, 'id' => $title),
         'contents'          => array('en' => $message, 'id' => $message),
         'url'               => $url,
