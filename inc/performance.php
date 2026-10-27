@@ -13,20 +13,43 @@ if (!defined('ABSPATH')) {
 
 /**
  * 1. Preconnect & DNS-Prefetch Resource Hints for Google Fonts & External Assets
+ * Deduplicates entries so they are never printed twice even if core or plugins add them.
  */
 function hakajobs_speed_resource_hints($urls, $relation_type) {
+    if (!is_array($urls)) {
+        $urls = array();
+    }
+
+    $has_url = function($haystack, $domain) {
+        foreach ($haystack as $item) {
+            $val = is_array($item) ? (isset($item['href']) ? $item['href'] : '') : (string) $item;
+            if (strpos($val, $domain) !== false) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     if ('preconnect' === $relation_type) {
-        $urls[] = array(
-            'href'        => 'https://fonts.googleapis.com',
-            'crossorigin' => 'anonymous',
-        );
-        $urls[] = array(
-            'href'        => 'https://fonts.gstatic.com',
-            'crossorigin' => 'anonymous',
-        );
+        if (!$has_url($urls, 'fonts.googleapis.com')) {
+            $urls[] = array(
+                'href'        => 'https://fonts.googleapis.com',
+                'crossorigin' => 'anonymous',
+            );
+        }
+        if (!$has_url($urls, 'fonts.gstatic.com')) {
+            $urls[] = array(
+                'href'        => 'https://fonts.gstatic.com',
+                'crossorigin' => 'anonymous',
+            );
+        }
     } elseif ('dns-prefetch' === $relation_type) {
-        $urls[] = 'https://fonts.googleapis.com';
-        $urls[] = 'https://fonts.gstatic.com';
+        if (!$has_url($urls, 'fonts.googleapis.com')) {
+            $urls[] = '//fonts.googleapis.com';
+        }
+        if (!$has_url($urls, 'fonts.gstatic.com')) {
+            $urls[] = '//fonts.gstatic.com';
+        }
     }
     return $urls;
 }

@@ -45,6 +45,19 @@ function hakajobs_sanitize_onesignal_safari_id($input) {
 }
 
 /**
+ * Smart sanitizer for OneSignal REST API Key:
+ * Strips whitespace, surrounding quotes, or accidental tags
+ */
+function hakajobs_sanitize_onesignal_api_key($input) {
+    if (empty($input)) {
+        return '';
+    }
+    $clean = trim((string) $input);
+    $clean = trim($clean, " \t\n\r\0\x0B\"'");
+    return sanitize_text_field($clean);
+}
+
+/**
  * 1. Register Theme Customizer Section & Controls for OneSignal Web Push
  *
  * @param WP_Customize_Manager $wp_customize Customizer instance.
@@ -86,13 +99,13 @@ function hakajobs_push_notification_customize_register($wp_customize) {
     // 3. OneSignal REST API Key
     $wp_customize->add_setting('hakajobs_onesignal_api_key', array(
         'default'           => '',
-        'sanitize_callback' => 'sanitize_text_field',
+        'sanitize_callback' => 'hakajobs_sanitize_onesignal_api_key',
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control('hakajobs_onesignal_api_key', array(
         'type'        => 'text',
         'label'       => __('OneSignal REST API Key', 'hakajobs'),
-        'description' => __('Kunci API dari OneSignal Dashboard > Settings > Keys & IDs. Diperlukan agar WordPress dapat mengirim notifikasi otomatis saat loker/artikel baru terbit.', 'hakajobs'),
+        'description' => __('Kunci API dari OneSignal Dashboard > Settings > Keys & IDs (contoh: os_v2_app_... atau kunci REST API v1). Diperlukan agar WordPress dapat mengirim notifikasi otomatis.', 'hakajobs'),
         'section'     => 'hakajobs_push_notice_section',
     ));
 
@@ -109,7 +122,64 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         'section'     => 'hakajobs_push_notice_section',
     ));
 
-    // 5. Otomatis Kirim saat Lowongan Baru Diterbitkan
+    // 5. Pop-up Izin Notifikasi Otomatis (Auto-Prompt)
+    $wp_customize->add_setting('hakajobs_push_auto_prompt', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_push_auto_prompt', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Pop-up Izin Notifikasi Otomatis (Slidedown Prompt)', 'hakajobs'),
+        'description' => __('Otomatis menampilkan prompt ajakan berlangganan notifikasi ke pengunjung saat membuka website.', 'hakajobs'),
+        'section'     => 'hakajobs_push_notice_section',
+    ));
+
+    // 6. Teks Ajakan Notifikasi
+    $wp_customize->add_setting('hakajobs_push_prompt_text', array(
+        'default'           => __('Dapatkan info lowongan kerja dan update karir terbaru langsung di perangkat Anda.', 'hakajobs'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_push_prompt_text', array(
+        'type'        => 'text',
+        'label'       => __('Teks Ajakan Notifikasi (Prompt)', 'hakajobs'),
+        'description' => __('Pesan ajakan yang tampil di jendela pop-up izin OneSignal.', 'hakajobs'),
+        'section'     => 'hakajobs_push_notice_section',
+    ));
+
+    // 7. Waktu Tunggu Kemunculan Pop-up (Detik)
+    $wp_customize->add_setting('hakajobs_push_prompt_delay', array(
+        'default'           => '3',
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_push_prompt_delay', array(
+        'type'        => 'number',
+        'label'       => __('Waktu Tunda Pop-up (Detik)', 'hakajobs'),
+        'description' => __('Berapa detik setelah halaman dimuat sebelum pop-up izin muncul (rekomendasi: 2 - 5 detik).', 'hakajobs'),
+        'section'     => 'hakajobs_push_notice_section',
+        'input_attrs' => array(
+            'min'  => 1,
+            'max'  => 30,
+            'step' => 1,
+        ),
+    ));
+
+    // 8. Tampilkan Tombol Lonceng Melayang (Floating Bell)
+    $wp_customize->add_setting('hakajobs_push_show_bell', array(
+        'default'           => '1',
+        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_push_show_bell', array(
+        'type'        => 'checkbox',
+        'label'       => __('Tampilkan Tombol Lonceng Notifikasi Mengambang (Floating Bell)', 'hakajobs'),
+        'description' => __('Menampilkan tombol lonceng elegan di sudut layar yang memudahkan pengunjung berlangganan kapan saja.', 'hakajobs'),
+        'section'     => 'hakajobs_push_notice_section',
+    ));
+
+    // 9. Otomatis Kirim saat Lowongan Baru Diterbitkan
     $wp_customize->add_setting('hakajobs_push_notify_lowongan', array(
         'default'           => '1',
         'sanitize_callback' => 'hakajobs_sanitize_checkbox',
@@ -122,7 +192,7 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         'section'     => 'hakajobs_push_notice_section',
     ));
 
-    // 6. Otomatis Kirim saat Artikel / Berita Baru Diterbitkan
+    // 10. Otomatis Kirim saat Artikel / Berita Baru Diterbitkan
     $wp_customize->add_setting('hakajobs_push_notify_articles', array(
         'default'           => '1',
         'sanitize_callback' => 'hakajobs_sanitize_checkbox',
@@ -135,7 +205,7 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         'section'     => 'hakajobs_push_notice_section',
     ));
 
-    // 7. Kirim Saat Loker / Artikel Diperbarui (Update)
+    // 11. Kirim Saat Loker / Artikel Diperbarui (Update)
     $wp_customize->add_setting('hakajobs_push_notify_on_update', array(
         'default'           => '0',
         'sanitize_callback' => 'hakajobs_sanitize_checkbox',
@@ -148,7 +218,7 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         'section'     => 'hakajobs_push_notice_section',
     ));
 
-    // 8. Format Judul Notifikasi Lowongan
+    // 12. Format Judul Notifikasi Lowongan
     $wp_customize->add_setting('hakajobs_push_title_lowongan', array(
         'default'           => __('[Loker Baru] {title}', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
@@ -161,7 +231,7 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         'section'     => 'hakajobs_push_notice_section',
     ));
 
-    // 9. Format Judul Notifikasi Artikel
+    // 13. Format Judul Notifikasi Artikel
     $wp_customize->add_setting('hakajobs_push_title_post', array(
         'default'           => __('{title}', 'hakajobs'),
         'sanitize_callback' => 'sanitize_text_field',
@@ -174,7 +244,7 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         'section'     => 'hakajobs_push_notice_section',
     ));
 
-    // 10. Sertakan Gambar Unggulan (Featured Image) di Handphone
+    // 14. Sertakan Gambar Unggulan (Featured Image) di Handphone
     $wp_customize->add_setting('hakajobs_push_rich_image', array(
         'default'           => '1',
         'sanitize_callback' => 'hakajobs_sanitize_checkbox',
@@ -214,6 +284,10 @@ function hakajobs_send_push_notification($args = array()) {
     $app_id  = trim(get_theme_mod('hakajobs_onesignal_app_id', ''));
     $api_key = trim(get_theme_mod('hakajobs_onesignal_api_key', ''));
 
+    // Strip surrounding quotes or formatting remnants
+    $app_id  = trim($app_id, " \t\n\r\0\x0B\"'");
+    $api_key = trim($api_key, " \t\n\r\0\x0B\"'");
+
     if (empty($app_id) || empty($api_key)) {
         return array(
             'success' => false,
@@ -231,9 +305,11 @@ function hakajobs_send_push_notification($args = array()) {
         $icon = HAKAJOBS_URI . '/screenshot.png';
     }
 
+    // Segment resmi standar OneSignal: 'Subscribed Users' (menghindari error segment tidak ditemukan)
     $payload = array(
         'app_id'            => $app_id,
-        'included_segments' => array('Subscribed Users', 'Total Subscriptions'),
+        'included_segments' => array('Subscribed Users'),
+        'target_channel'    => 'push',
         'headings'          => array('en' => $title, 'id' => $title),
         'contents'          => array('en' => $message, 'id' => $message),
         'url'               => $url,
@@ -246,18 +322,43 @@ function hakajobs_send_push_notification($args = array()) {
         $payload['chrome_web_image'] = $image;
     }
 
-    $response = wp_remote_post('https://onesignal.com/api/v1/notifications', array(
+    // Bersihkan prefix jika pengguna menyalin "Key ..." atau "Basic ..."
+    $clean_key = preg_replace('/^(Basic|Key)\s+/i', '', $api_key);
+    // Kunci modern OneSignal (awalan os_v2_app_) memerlukan "Key ...", kunci lama juga didukung
+    $auth_header = (strpos($clean_key, 'os_v2_') === 0 || strpos($api_key, 'Key ') === 0) ? 'Key ' . $clean_key : 'Basic ' . $clean_key;
+
+    // Endpoint modern OneSignal REST API
+    $api_url = 'https://api.onesignal.com/notifications';
+
+    $response = wp_remote_post($api_url, array(
         'method'      => 'POST',
-        'timeout'     => 12,
+        'timeout'     => 15,
         'redirection' => 5,
         'httpversion' => '1.1',
         'blocking'    => true,
         'headers'     => array(
             'Content-Type'  => 'application/json; charset=utf-8',
-            'Authorization' => 'Basic ' . $api_key,
+            'Authorization' => $auth_header,
         ),
         'body'        => wp_json_encode($payload),
     ));
+
+    // Fallback: Jika api.onesignal.com mengalami gangguan koneksi, coba fallback ke onesignal.com legacy route
+    if (is_wp_error($response)) {
+        $fallback_auth = 'Key ' . $clean_key;
+        $response = wp_remote_post('https://onesignal.com/api/v1/notifications', array(
+            'method'      => 'POST',
+            'timeout'     => 15,
+            'redirection' => 5,
+            'httpversion' => '1.1',
+            'blocking'    => true,
+            'headers'     => array(
+                'Content-Type'  => 'application/json; charset=utf-8',
+                'Authorization' => $fallback_auth,
+            ),
+            'body'        => wp_json_encode($payload),
+        ));
+    }
 
     if (is_wp_error($response)) {
         $err = $response->get_error_message();
@@ -501,6 +602,7 @@ function hakajobs_render_push_meta_box($post) {
     wp_nonce_field('hakajobs_push_meta_nonce_action', 'hakajobs_push_meta_nonce');
 
     $app_id       = trim(get_theme_mod('hakajobs_onesignal_app_id', ''));
+    $api_key      = trim(get_theme_mod('hakajobs_onesignal_api_key', ''));
     $last_sent    = get_post_meta($post->ID, '_hakajobs_push_last_sent', true);
     $recipients   = get_post_meta($post->ID, '_hakajobs_push_recipients', true);
     $last_error   = get_post_meta($post->ID, '_hakajobs_push_last_error', true);
@@ -510,7 +612,7 @@ function hakajobs_render_push_meta_box($post) {
     $default_checked = $is_published ? false : true;
     ?>
     <div class="hk-push-mb-wrap" style="font-size: 13px; color: #334155;">
-        <?php if (empty($app_id)): ?>
+        <?php if (empty($app_id) || empty($api_key)): ?>
             <div style="background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; line-height: 1.4;">
                 ⚠️ <strong>OneSignal Belum Terhubung</strong><br>
                 Masukkan App ID & REST API Key di <strong>Tampilan > Sesuaikan > 🔔 Notifikasi Web Push OneSignal</strong> agar pemberitahuan otomatis masuk ke smartphone pengunjung.
@@ -518,7 +620,7 @@ function hakajobs_render_push_meta_box($post) {
         <?php else: ?>
             <div style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 8px 10px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; display: flex; align-items: center; gap: 6px;">
                 <span>🟢</span>
-                <span><strong>OneSignal Siap:</strong> Notifikasi aktif ke smartphone.</span>
+                <span><strong>OneSignal Siap:</strong> Terhubung ke aplikasi OneSignal.</span>
             </div>
         <?php endif; ?>
 
@@ -543,7 +645,7 @@ function hakajobs_render_push_meta_box($post) {
             </div>
         <?php elseif (!empty($last_error)): ?>
             <div style="background: #fff1f2; border: 1px solid #fecdd3; padding: 8px 10px; border-radius: 6px; margin-top: 10px; font-size: 11.5px; color: #e11d48;">
-                <strong>Gagal Mengirim:</strong><br>
+                <strong>Gagal Mengirim Sebelumnya:</strong><br>
                 <?php echo esc_html($last_error); ?>
             </div>
         <?php endif; ?>
@@ -558,6 +660,45 @@ function hakajobs_render_push_meta_box($post) {
                 <textarea name="hakajobs_push_custom_message" rows="2" placeholder="<?php _e('Kosongkan untuk ringkasan otomatis', 'hakajobs'); ?>" style="width:100%; font-size:12px;"></textarea>
             </div>
         </details>
+
+        <!-- Test Push Notification Button -->
+        <div style="margin-top: 14px; padding-top: 10px; border-top: 1px dashed #e2e8f0;">
+            <button type="button" id="hk-test-push-btn" class="button button-secondary button-small" style="display:inline-flex; align-items:center; gap:5px; font-weight: 600;">
+                <span>🔔</span> <?php _e('Tes Kirim Notifikasi Sekarang', 'hakajobs'); ?>
+            </button>
+            <div id="hk-test-push-feedback" style="margin-top: 8px; font-size: 11.5px; line-height: 1.4; display: none;"></div>
+        </div>
+        <script>
+        (function($){
+            $('#hk-test-push-btn').on('click', function(e){
+                e.preventDefault();
+                var $btn = $(this);
+                var $fb  = $('#hk-test-push-feedback');
+                $btn.prop('disabled', true).text('Mengirim...');
+                $fb.hide().removeClass('notice notice-error notice-success');
+
+                $.post(ajaxurl, {
+                    action: 'hakajobs_test_push',
+                    nonce: '<?php echo wp_create_nonce('hakajobs_test_push_nonce'); ?>'
+                }, function(res){
+                    $btn.prop('disabled', false).html('<span>🔔</span> <?php echo esc_js(__('Tes Kirim Notifikasi Sekarang', 'hakajobs')); ?>');
+                    $fb.show();
+                    if(res && res.success){
+                        $fb.attr('style', 'margin-top:8px; padding:6px 8px; border-radius:4px; background:#f0fdf4; border:1px solid #bbf7d0; color:#166534;')
+                           .html('✅ ' + (res.data && res.data.message ? res.data.message : 'Berhasil dikirim!'));
+                    } else {
+                        var errMsg = res && res.data && res.data.message ? res.data.message : 'Gagal mengirim notifikasi.';
+                        $fb.attr('style', 'margin-top:8px; padding:6px 8px; border-radius:4px; background:#fff1f2; border:1px solid #fecdd3; color:#e11d48;')
+                           .html('❌ ' + errMsg);
+                    }
+                }).fail(function(){
+                    $btn.prop('disabled', false).html('<span>🔔</span> <?php echo esc_js(__('Tes Kirim Notifikasi Sekarang', 'hakajobs')); ?>');
+                    $fb.show().attr('style', 'margin-top:8px; padding:6px 8px; border-radius:4px; background:#fff1f2; border:1px solid #fecdd3; color:#e11d48;')
+                       .html('❌ Terjadi kesalahan jaringan saat menghubungi server.');
+                });
+            });
+        })(jQuery);
+        </script>
     </div>
     <?php
 }
@@ -639,13 +780,13 @@ function hakajobs_ajax_test_push() {
     $site_name = get_bloginfo('name');
     $result = hakajobs_send_push_notification(array(
         'title'   => sprintf(__('🔔 [Uji Coba] Notifikasi %s Berhasil!', 'hakajobs'), $site_name),
-        'message' => __('Selamat! Fitur notifikasi handphone Anda telah aktif dan terhubung. Update artikel & lowongan kerja baru akan otomatis terkirim.', 'hakajobs'),
+        'message' => __('Selamat! Fitur notifikasi handphone Anda telah aktif dan terhubung. Update lowongan kerja & artikel baru akan otomatis terkirim.', 'hakajobs'),
         'url'     => home_url('/'),
     ));
 
     if (!empty($result['success'])) {
         wp_send_json_success(array(
-            'message'    => sprintf(__('Notifikasi uji coba berhasil dikirim! Diterima oleh %d perangkat.', 'hakajobs'), $result['recipients']),
+            'message'    => sprintf(__('Notifikasi uji coba berhasil terkirim ke OneSignal! Diterima oleh %d subscriber aktif.', 'hakajobs'), $result['recipients']),
             'recipients' => $result['recipients'],
         ));
     } else {
@@ -659,28 +800,44 @@ add_action('wp_ajax_hakajobs_test_push', 'hakajobs_ajax_test_push');
 /**
  * 8. Render Pure OneSignal Web SDK v16 on Frontend (wp_footer)
  *
- * Menggunakan popup izin bawaan resmi OneSignal.com (Native Browser / Slide Prompt).
- * Tidak menggunakan popup kartu buatan tema agar tidak terjadi konflik atau double prompt.
+ * Menggunakan popup izin bawaan resmi OneSignal.com (Native Slidedown & Permission Prompt).
+ * Mendukung auto-prompt, konfigurasi delay, dan floating bell button interaktif.
  */
 function hakajobs_render_push_notification() {
     $enabled = get_theme_mod('hakajobs_push_enable', '1');
     $app_id  = trim(get_theme_mod('hakajobs_onesignal_app_id', ''));
+
+    // Bersihkan app_id dari tanda kutip atau spasi liar
+    $app_id  = trim($app_id, " \t\n\r\0\x0B\"'");
 
     if ($enabled !== '1' || empty($app_id)) {
         return;
     }
 
     $safari_web_id = trim(get_theme_mod('hakajobs_onesignal_safari_web_id', ''));
+    $auto_prompt   = get_theme_mod('hakajobs_push_auto_prompt', '1');
+    $prompt_delay  = (int) get_theme_mod('hakajobs_push_prompt_delay', 3);
+    if ($prompt_delay < 1) {
+        $prompt_delay = 1;
+    }
+    $prompt_msg    = get_theme_mod('hakajobs_push_prompt_text', __('Dapatkan info lowongan kerja dan update karir terbaru langsung di perangkat Anda.', 'hakajobs'));
+    $prompt_accept = __('Aktifkan', 'hakajobs');
+    $prompt_cancel = __('Nanti Saja', 'hakajobs');
+    $show_bell     = get_theme_mod('hakajobs_push_show_bell', '1');
     ?>
     <!-- OneSignal Web SDK v16: Pop-up & Web Push Asli OneSignal.com -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
-        // Bersihkan residu legacy Service Worker / PWA lama jika tersimpan di browser pengunjung
+        // Bersihkan residu legacy Service Worker / PWA non-OneSignal jika pernah tersimpan di browser
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(function(regs) {
                 regs.forEach(function(reg) {
-                    if (reg.active && reg.active.scriptURL && (reg.active.scriptURL.indexOf('hakajobs_sw') !== -1 || reg.active.scriptURL.indexOf('sw.js') !== -1)) {
-                        reg.unregister();
+                    if (reg.active && reg.active.scriptURL) {
+                        var swUrl = reg.active.scriptURL.toLowerCase();
+                        // PENTING: JANGAN unregister OneSignal! Hanya unregister legacy sw lama jika bukan onesignal
+                        if (swUrl.indexOf('onesignal') === -1 && (swUrl.indexOf('hakajobs_sw') !== -1 || swUrl.indexOf('/sw.js') !== -1)) {
+                            reg.unregister();
+                        }
                     }
                 });
             }).catch(function() {});
@@ -704,10 +861,142 @@ function hakajobs_render_push_notification() {
                 <?php endif; ?>
                 serviceWorkerParam: { scope: '/' },
                 serviceWorkerPath: 'OneSignalSDKWorker.js',
-                allowLocalhostAsSecureOrigin: true
+                allowLocalhostAsSecureOrigin: true<?php if ($auto_prompt === '1'): ?>,
+                promptOptions: {
+                    slidedown: {
+                        prompts: [
+                            {
+                                type: "push",
+                                autoPrompt: true,
+                                text: {
+                                    actionMessage: <?php echo wp_json_encode($prompt_msg); ?>,
+                                    acceptButton: <?php echo wp_json_encode($prompt_accept); ?>,
+                                    cancelButton: <?php echo wp_json_encode($prompt_cancel); ?>
+                                },
+                                delay: {
+                                    pageViews: 1,
+                                    timeDelay: <?php echo intval($prompt_delay); ?>
+                                }
+                            }
+                        ]
+                    }
+                }
+                <?php endif; ?>
             });
+
+            <?php if ($auto_prompt === '1'): ?>
+            // Fallback trigger: Jika browser belum pernah diminta izin (status masih 'default'),
+            // panggil Slidedown prompt secara eksplisit agar pasti tampil ke pengunjung
+            setTimeout(async function() {
+                try {
+                    if (window.Notification && Notification.permission === 'default') {
+                        if (OneSignal.Slidedown && typeof OneSignal.Slidedown.promptPush === 'function') {
+                            await OneSignal.Slidedown.promptPush();
+                        }
+                    }
+                } catch (e) {
+                    // Silently ignore if already prompted
+                }
+            }, <?php echo intval($prompt_delay + 1) * 1000; ?>);
+            <?php endif; ?>
         });
+
+        // Trigger manual lewat tombol lonceng atau elemen dengan onclick="window.hakajobsTriggerPushPrompt()"
+        window.hakajobsTriggerPushPrompt = function() {
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            OneSignalDeferred.push(async function(OneSignal) {
+                try {
+                    if (window.Notification && Notification.permission === 'granted') {
+                        if (typeof showToast === 'function') {
+                            showToast('🔔 ' + <?php echo wp_json_encode(__('Anda sudah berlangganan notifikasi lowongan kerja!', 'hakajobs')); ?>);
+                        } else {
+                            alert(<?php echo wp_json_encode(__('Anda sudah berlangganan notifikasi lowongan kerja!', 'hakajobs')); ?>);
+                        }
+                        return;
+                    }
+                    if (OneSignal.Slidedown && typeof OneSignal.Slidedown.promptPush === 'function') {
+                        await OneSignal.Slidedown.promptPush({ force: true });
+                    } else if (OneSignal.Notifications && typeof OneSignal.Notifications.requestPermission === 'function') {
+                        await OneSignal.Notifications.requestPermission();
+                    }
+                } catch (err) {
+                    console.log('OneSignal trigger error:', err);
+                }
+            });
+        };
     </script>
+
+    <?php if ($show_bell === '1'): ?>
+    <!-- Floating Notification Bell -->
+    <div id="hk-push-bell-container" class="hk-push-bell-wrap">
+        <button type="button" 
+                onclick="window.hakajobsTriggerPushPrompt()" 
+                id="hk-push-bell-btn" 
+                class="hk-push-bell-btn" 
+                title="<?php esc_attr_e('Aktifkan Notifikasi Loker Baru', 'hakajobs'); ?>" 
+                aria-label="<?php esc_attr_e('Aktifkan Notifikasi Loker Baru', 'hakajobs'); ?>">
+            <span class="hk-push-bell-icon">🔔</span>
+            <span class="hk-push-bell-label"><?php _e('Notifikasi Loker', 'hakajobs'); ?></span>
+        </button>
+    </div>
+    <style>
+    .hk-push-bell-wrap {
+        position: fixed;
+        bottom: 84px;
+        left: 24px;
+        z-index: 9990;
+    }
+    .hk-push-bell-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: #0284c7;
+        color: #ffffff;
+        border: none;
+        border-radius: 999px;
+        padding: 9px 16px;
+        font-size: 13px;
+        font-weight: 700;
+        font-family: inherit;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.38);
+        cursor: pointer;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s, background 0.2s;
+    }
+    .hk-push-bell-btn:hover {
+        background: #0369a1;
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 6px 18px rgba(2, 132, 199, 0.48);
+    }
+    .hk-push-bell-btn:active {
+        transform: translateY(0) scale(0.98);
+    }
+    .hk-push-bell-btn .hk-push-bell-icon {
+        font-size: 15px;
+        display: inline-block;
+        animation: hkBellRing 3.5s ease infinite;
+        transform-origin: 50% 0%;
+    }
+    @keyframes hkBellRing {
+        0%, 100% { transform: rotate(0); }
+        3%, 9% { transform: rotate(14deg); }
+        6%, 12% { transform: rotate(-14deg); }
+        15% { transform: rotate(0); }
+    }
+    @media (max-width: 640px) {
+        .hk-push-bell-wrap {
+            bottom: 74px;
+            left: 14px;
+        }
+        .hk-push-bell-btn {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+        .hk-push-bell-btn .hk-push-bell-label {
+            display: inline;
+        }
+    }
+    </style>
+    <?php endif; ?>
     <?php
 }
 add_action('wp_footer', 'hakajobs_render_push_notification', 99);
