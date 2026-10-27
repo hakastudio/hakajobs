@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.44');
+define('HAKAJOBS_VERSION', '1.0.45');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -27,7 +27,6 @@ require_once HAKAJOBS_DIR . '/inc/customizer.php';
 require_once HAKAJOBS_DIR . '/inc/updater.php';
 require_once HAKAJOBS_DIR . '/inc/performance.php';
 require_once HAKAJOBS_DIR . '/inc/push-notification.php';
-require_once HAKAJOBS_DIR . '/inc/pwa.php';
 
 /**
  * Theme Setup
