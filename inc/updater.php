@@ -149,6 +149,11 @@ add_filter('upgrader_source_selection', function ($source, $remote_source, $upgr
     $template    = get_template();
     $source_name = basename(untrailingslashit($source));
 
+    // Jika style.css sudah ada di folder sumber, langsung gunakan tanpa modifikasi
+    if ($wp_filesystem->exists(trailingslashit($source) . 'style.css')) {
+        return $source;
+    }
+
     // Jika folder sumber sudah bernama persis sama dengan template (case-insensitive), langsung gunakan
     if (strcasecmp($source_name, $template) === 0) {
         return $source;
