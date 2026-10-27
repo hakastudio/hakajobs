@@ -62,10 +62,82 @@ function hakajobs_init_theme_updater() {
         $update_checker->getVcsApi()->enableReleaseAssets('/\.zip($|[?&#])/i');
     }
 
+    // Hapus filter bawaan PUC yang kaku agar tidak memicu 'Unable to rename the update to match the existing directory'
+    remove_filter('upgrader_source_selection', array($update_checker, 'fixDirectoryName'), 10);
+
     // Simpan di variabel global agar dapat diakses oleh action dan filter lain
     $hakajobs_update_checker = $update_checker;
 }
 add_action('after_setup_theme', 'hakajobs_init_theme_updater');
+
+/**
+ * Filter cerdas untuk memastikan proses instalasi & update tema tidak pernah gagal
+ * akibat masalah izin rename folder atau perbedaan kapitalisasi nama tema.
+ */
+add_filter('upgrader_source_selection', function ($source, $remote_source, $upgrader = null, $hook_extra = null) {
+    global $wp_filesystem;
+    if (!$wp_filesystem || is_wp_error($source)) {
+        return $source;
+    }
+
+    // Periksa apakah ini proses pembaruan untuk tema Hakajobs
+    $is_hakajobs = false;
+    $theme_slug  = get_stylesheet();
+
+    if (is_array($hook_extra) && isset($hook_extra['theme']) && stripos($hook_extra['theme'], 'hakajobs') !== false) {
+        $is_hakajobs = true;
+    } elseif ($upgrader && isset($upgrader->skin) && isset($upgrader->skin->theme_info)) {
+        $skin_theme = $upgrader->skin->theme_info->get_stylesheet();
+        if (stripos($skin_theme, 'hakajobs') !== false) {
+            $is_hakajobs = true;
+        }
+    } elseif (stripos(basename(untrailingslashit($source)), 'hakajobs') !== false) {
+        $is_hakajobs = true;
+    }
+
+    if (!$is_hakajobs) {
+        return $source;
+    }
+
+    $source_dir  = untrailingslashit($source);
+    $source_name = basename($source_dir);
+
+    // 1. Jika folder hasil ekstrak sudah memiliki berkas style.css yang valid:
+    if ($wp_filesystem->exists(trailingslashit($source) . 'style.css')) {
+        // Jika nama folder cocok secara case-insensitive (misal hakajobs vs HakaJobs),
+        // langsung gunakan tanpa modifikasi untuk mencegah bug penghapusan folder pada Windows/macOS.
+        if (strcasecmp($source_name, $theme_slug) === 0) {
+            return $source;
+        }
+    }
+
+    // 2. Jika nama folder berbeda (misal hakajobs-1.0.51 dari auto-zip GitHub), coba rename ke nama tema aktif
+    $target_dir = trailingslashit($remote_source) . $theme_slug;
+    if ($source_dir !== $target_dir) {
+        // Tangani filesystem Windows/case-insensitive dengan 2 langkah rename
+        if (strcasecmp($source_dir, $target_dir) === 0) {
+            $temp_dir = $source_dir . '_tmp_' . (function_exists('wp_generate_password') ? wp_generate_password(6, false) : uniqid());
+            if ($wp_filesystem->move($source_dir, $temp_dir, true)) {
+                if ($wp_filesystem->move($temp_dir, $target_dir, true)) {
+                    return trailingslashit($target_dir);
+                }
+            }
+            return $source;
+        }
+
+        // Jika target_dir sudah ada dari sisa ekstraksi sebelumnya, bersihkan
+        if ($wp_filesystem->exists($target_dir)) {
+            $wp_filesystem->delete($target_dir, true);
+        }
+
+        if ($wp_filesystem->move($source_dir, $target_dir, true)) {
+            return trailingslashit($target_dir);
+        }
+    }
+
+    // Fallback teraman: kembalikan $source asli agar update tidak pernah dibatalkan
+    return $source;
+}, 5, 4);
 
 /**
  * Paksa reset cache & periksa update langsung dari GitHub saat tombol 'Periksa Lagi' ditekan
