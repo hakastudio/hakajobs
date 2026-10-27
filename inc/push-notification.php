@@ -247,8 +247,27 @@ function hakajobs_push_notification_customize_register($wp_customize) {
 add_action('customize_register', 'hakajobs_push_notification_customize_register', 20);
 
 /**
- * 2. Serve Dynamic OneSignal Service Worker Endpoint
+ * 2. Serve Dynamic OneSignal Service Worker Endpoint & Sync Root File
  */
+function hakajobs_push_sync_root_worker() {
+    if (!defined('ABSPATH')) {
+        return;
+    }
+    $root_file  = trailingslashit(ABSPATH) . 'OneSignalSDKWorker.js';
+    $theme_file = get_template_directory() . '/OneSignalSDKWorker.js';
+
+    // Salin otomatis ke root website (ABSPATH) agar Nginx / LiteSpeed / Apache menyajikannya tanpa kendala rewrite 404
+    if (file_exists($theme_file)) {
+        if (!file_exists($root_file) || (file_exists($root_file) && filesize($root_file) < 50)) {
+            if (is_writable(ABSPATH) || (file_exists($root_file) && is_writable($root_file))) {
+                @copy($theme_file, $root_file);
+            }
+        }
+    }
+}
+add_action('admin_init', 'hakajobs_push_sync_root_worker');
+add_action('after_switch_theme', 'hakajobs_push_sync_root_worker');
+
 function hakajobs_push_sw_endpoint() {
     if (isset($_GET['hakajobs_onesignal_sw']) || (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'OneSignalSDKWorker.js') !== false)) {
         header('Content-Type: application/javascript; charset=utf-8');
@@ -386,6 +405,11 @@ function hakajobs_send_push_notification($args = array()) {
         }
     }
 
+    // Terjemahkan & jelaskan error teknis OneSignal agar mudah dipahami admin
+    if (stripos($error_msg, 'All included players are not subscribed') !== false) {
+        $error_msg = __('Belum ada perangkat/handphone yang berlangganan notifikasi di OneSignal (0 subscriber aktif). Buka website di browser HP Anda via HTTPS dan klik "Izinkan" / "Aktifkan" notifikasi terlebih dahulu agar HP Anda terdaftar.', 'hakajobs');
+    }
+
     update_option('hakajobs_last_push_log', array(
         'time'    => current_time('mysql'),
         'status'  => 'error',
@@ -443,29 +467,31 @@ function hakajobs_handle_push_on_publish($new_status, $old_status, $post) {
     $is_new_publish = ($old_status !== 'publish');
     $is_update      = ($old_status === 'publish');
 
-    // Cek override per-post dari Meta Box (jika admin secara manual mengubah centang)
-    $manual_override = isset($_POST['hakajobs_send_push_notification']) ? sanitize_text_field($_POST['hakajobs_send_push_notification']) : '';
+    // Cek apakah form dikirim dari halaman editor post WordPress yang memiliki meta box kami
+    $mb_present = isset($_POST['hakajobs_push_meta_nonce']) && wp_verify_nonce($_POST['hakajobs_push_meta_nonce'], 'hakajobs_push_meta_nonce_action');
 
-    if ($manual_override === '0') {
-        // Admin sengaja membatalkan pengiriman untuk post ini
-        return;
-    }
-
-    if ($is_new_publish) {
-        // Cek setting tema untuk terbitan baru
-        if ($post_type === 'lowongan') {
-            $notify_enabled = get_theme_mod('hakajobs_push_notify_lowongan', '1');
-        } else {
-            $notify_enabled = get_theme_mod('hakajobs_push_notify_articles', '1');
+    if ($mb_present) {
+        // Form dikirim manual oleh admin di editor WordPress:
+        // Cek secara presisi apakah checkbox "Kirim Notifikasi Push" dicentang
+        if (empty($_POST['hakajobs_send_push_notification'])) {
+            return; // Admin sengaja mengosongkan / uncheck centang
         }
-        if ($notify_enabled !== '1' && $manual_override !== '1') {
-            return;
-        }
-    } elseif ($is_update) {
-        // Cek setting tema untuk update artikel/loker lama
-        $update_enabled = get_theme_mod('hakajobs_push_notify_on_update', '0');
-        if ($update_enabled !== '1' && $manual_override !== '1') {
-            return;
+    } else {
+        // Diterbitkan secara otomatis (REST API, cron, atau XML-RPC)
+        if ($is_new_publish) {
+            if ($post_type === 'lowongan') {
+                $notify_enabled = get_theme_mod('hakajobs_push_notify_lowongan', '1');
+            } else {
+                $notify_enabled = get_theme_mod('hakajobs_push_notify_articles', '1');
+            }
+            if ($notify_enabled !== '1') {
+                return;
+            }
+        } elseif ($is_update) {
+            $update_enabled = get_theme_mod('hakajobs_push_notify_on_update', '0');
+            if ($update_enabled !== '1') {
+                return;
+            }
         }
     }
 
@@ -595,8 +621,9 @@ function hakajobs_render_push_meta_box($post) {
     $last_error   = get_post_meta($post->ID, '_hakajobs_push_last_error', true);
     $is_published = ($post->post_status === 'publish');
 
-    // Default centang: Aktif untuk draf/loker baru, tidak aktif jika hanya edit teks artikel lama
-    $default_checked = $is_published ? false : true;
+    // Default centang: Aktif untuk draf/loker baru, atau jika opsi kirim saat update aktif di Pengaturan Notifikasi
+    $update_setting  = (get_theme_mod('hakajobs_push_notify_on_update', '0') === '1');
+    $default_checked = $is_published ? $update_setting : true;
     ?>
     <div class="hk-push-mb-wrap" style="font-size: 13px; color: #334155;">
         <?php if (empty($app_id) || empty($api_key)): ?>
@@ -631,9 +658,21 @@ function hakajobs_render_push_meta_box($post) {
                 <?php endif; ?>
             </div>
         <?php elseif (!empty($last_error)): ?>
-            <div style="background: #fff1f2; border: 1px solid #fecdd3; padding: 8px 10px; border-radius: 6px; margin-top: 10px; font-size: 11.5px; color: #e11d48;">
-                <strong>Gagal Mengirim Sebelumnya:</strong><br>
-                <?php echo esc_html($last_error); ?>
+            <div style="background: #fff1f2; border: 1px solid #fecdd3; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 11.5px; color: #9f1239; line-height: 1.45;">
+                <strong style="display:flex; align-items:center; gap:4px; margin-bottom:4px;">
+                    <span>⚠️</span> <?php _e('Gagal Mengirim Sebelumnya:', 'hakajobs'); ?>
+                </strong>
+                <div><?php echo esc_html($last_error); ?></div>
+                <?php if (stripos($last_error, 'subscriber') !== false || stripos($last_error, 'not subscribed') !== false): ?>
+                    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed #fecdd3; font-size: 11px; color: #475569;">
+                        <strong>💡 Cara Mendaftarkan HP Anda:</strong>
+                        <ol style="margin: 4px 0 0 16px; padding: 0;">
+                            <li>Buka situs ini di browser HP Anda via <strong>HTTPS</strong>.</li>
+                            <li>Klik tombol <strong>"Aktifkan" / "Izinkan" (Allow)</strong> pada pop-up izin notifikasi.</li>
+                            <li>Setelah HP Anda terdaftar, klik tombol <em>Tes Kirim Notifikasi Sekarang</em> di bawah atau update artikel.</li>
+                        </ol>
+                    </div>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
 
@@ -845,8 +884,6 @@ function hakajobs_render_push_notification() {
                 <?php if (!empty($safari_web_id)): ?>
                 safari_web_id: "<?php echo esc_js($safari_web_id); ?>",
                 <?php endif; ?>
-                serviceWorkerParam: { scope: '/' },
-                serviceWorkerPath: 'OneSignalSDKWorker.js',
                 allowLocalhostAsSecureOrigin: true<?php if ($auto_prompt === '1'): ?>,
                 promptOptions: {
                     slidedown: {
@@ -871,37 +908,41 @@ function hakajobs_render_push_notification() {
             });
 
             <?php if ($auto_prompt === '1'): ?>
-            // Fallback trigger: Jika browser belum pernah diminta izin (status masih 'default'),
-            // panggil Slidedown prompt secara eksplisit agar pasti tampil ke pengunjung
+            // Fallback trigger: Jika browser belum pernah diminta izin, panggil Slidedown prompt OneSignal
             setTimeout(async function() {
                 try {
-                    if (window.Notification && Notification.permission === 'default') {
+                    var isOptedIn = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.optedIn;
+                    var perm = (window.Notification && Notification.permission) ? Notification.permission : 'default';
+                    if (!isOptedIn && perm !== 'denied') {
                         if (OneSignal.Slidedown && typeof OneSignal.Slidedown.promptPush === 'function') {
                             await OneSignal.Slidedown.promptPush();
                         }
                     }
                 } catch (e) {
-                    // Silently ignore if already prompted
+                    // Abaikan jika sudah diprompt
                 }
             }, <?php echo intval($prompt_delay + 1) * 1000; ?>);
             <?php endif; ?>
         });
 
-        // Trigger manual lewat tombol lonceng atau elemen dengan onclick="window.hakajobsTriggerPushPrompt()"
+        // Trigger manual lewat tombol / tautan dengan onclick="window.hakajobsTriggerPushPrompt()"
         window.hakajobsTriggerPushPrompt = function() {
             window.OneSignalDeferred = window.OneSignalDeferred || [];
             OneSignalDeferred.push(async function(OneSignal) {
                 try {
-                    if (window.Notification && Notification.permission === 'granted') {
+                    var isOptedIn = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.optedIn;
+                    if (isOptedIn || (window.Notification && Notification.permission === 'granted')) {
                         if (typeof showToast === 'function') {
-                            showToast('🔔 ' + <?php echo wp_json_encode(__('Anda sudah berlangganan notifikasi lowongan kerja!', 'hakajobs')); ?>);
+                            showToast('🔔 ' + <?php echo wp_json_encode(__('Anda sudah berlangganan notifikasi!', 'hakajobs')); ?>);
                         } else {
-                            alert(<?php echo wp_json_encode(__('Anda sudah berlangganan notifikasi lowongan kerja!', 'hakajobs')); ?>);
+                            alert(<?php echo wp_json_encode(__('Anda sudah berlangganan notifikasi!', 'hakajobs')); ?>);
                         }
                         return;
                     }
                     if (OneSignal.Slidedown && typeof OneSignal.Slidedown.promptPush === 'function') {
                         await OneSignal.Slidedown.promptPush({ force: true });
+                    } else if (OneSignal.User && OneSignal.User.PushSubscription && typeof OneSignal.User.PushSubscription.optIn === 'function') {
+                        await OneSignal.User.PushSubscription.optIn();
                     } else if (OneSignal.Notifications && typeof OneSignal.Notifications.requestPermission === 'function') {
                         await OneSignal.Notifications.requestPermission();
                     }

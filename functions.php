@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.52');
+define('HAKAJOBS_VERSION', '1.0.53');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
