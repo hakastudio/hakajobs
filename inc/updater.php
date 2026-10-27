@@ -10,13 +10,18 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Pastikan berkas library PUC ada
+// Pastikan berkas library PUC ada dan dapat dibaca
 $hakajobs_puc_file = HAKAJOBS_DIR . '/inc/plugin-update-checker/plugin-update-checker.php';
-if (!file_exists($hakajobs_puc_file)) {
+if (!file_exists($hakajobs_puc_file) || !is_readable($hakajobs_puc_file)) {
     return;
 }
 
-require_once $hakajobs_puc_file;
+try {
+    require_once $hakajobs_puc_file;
+} catch (\Throwable $e) {
+    error_log('[Hakajobs Updater Error] ' . $e->getMessage());
+    return;
+}
 
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
@@ -141,32 +146,33 @@ add_filter('upgrader_source_selection', function ($source, $remote_source, $upgr
         return $source;
     }
 
-    $template = get_template();
-    $target   = trailingslashit($remote_source) . $template . '/';
+    $template    = get_template();
+    $source_name = basename(untrailingslashit($source));
 
-    // Jika source sudah bernama persis sesuai slug tema, tidak perlu apa-apa
-    if (untrailingslashit($source) === untrailingslashit($target)) {
+    // Jika folder sumber sudah bernama persis sama dengan template (case-insensitive), langsung gunakan
+    if (strcasecmp($source_name, $template) === 0) {
         return $source;
     }
 
-    // Cek apakah ini adalah update untuk tema Hakajobs
-    $source_base = strtolower(basename(untrailingslashit($source)));
-    if (strpos($source_base, strtolower($template)) === false) {
+    $target = trailingslashit($remote_source) . $template . '/';
+
+    // Cek apakah ini adalah paket pembaruan untuk tema Hakajobs
+    if (stripos($source_name, 'hakajobs') === false && stripos($source_name, strtolower($template)) === false) {
         return $source;
     }
 
-    // Hapus target lama jika masih ada sisa dari proses sebelumnya
-    if ($wp_filesystem->exists($target)) {
+    // Hapus target lama jika ada dan pastikan bukan folder sumber yang sama
+    if ($wp_filesystem->exists($target) && strcasecmp(untrailingslashit($source), untrailingslashit($target)) !== 0) {
         $wp_filesystem->delete($target, true);
     }
 
-    // Rename folder "hakajobs-1.0.x" atau "hakajobs-main" → "hakajobs"
+    // Rename folder ke slug tema yang tepat
     if (!$wp_filesystem->move($source, $target, true)) {
         return new WP_Error(
             'hakajobs_rename_failed',
             sprintf(
                 __('Gagal rename folder tema dari "%s" ke "%s". Pastikan direktori wp-content/themes dapat ditulisi.', 'hakajobs'),
-                basename(untrailingslashit($source)),
+                $source_name,
                 $template
             )
         );
