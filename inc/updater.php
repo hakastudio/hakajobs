@@ -45,7 +45,7 @@ function hakajobs_init_theme_updater() {
     $update_checker = PucFactory::buildUpdateChecker(
         $repo_url,
         HAKAJOBS_DIR . '/style.css',
-        get_template()
+        'hakajobs'
     );
 
     // Cabang utama (default: main)
@@ -134,57 +134,6 @@ add_action('admin_notices', function () {
         echo '<div class="notice notice-info"><p><strong>Tema Hakajobs v' . esc_html(HAKAJOBS_VERSION) . ':</strong> <a href="' . esc_url($check_url) . '" class="button button-secondary" style="margin-left: 8px;">🔄 Cek Pembaruan Thema Sekarang</a></p></div>';
     }
 });
-
-/**
- * Rename folder hasil ekstrak ZIP GitHub agar sesuai slug tema.
- * GitHub auto-zip menghasilkan folder seperti "hakajobs-1.0.20/" atau "hakajobs-main/",
- * sedangkan WordPress membutuhkan folder bernama persis "hakajobs/" agar style.css terbaca.
- */
-add_filter('upgrader_source_selection', function ($source, $remote_source, $upgrader) {
-    global $wp_filesystem;
-    if (!$wp_filesystem || is_wp_error($source)) {
-        return $source;
-    }
-
-    $template    = get_template();
-    $source_name = basename(untrailingslashit($source));
-
-    // Jika style.css sudah ada di folder sumber, langsung gunakan tanpa modifikasi
-    if ($wp_filesystem->exists(trailingslashit($source) . 'style.css')) {
-        return $source;
-    }
-
-    // Jika folder sumber sudah bernama persis sama dengan template (case-insensitive), langsung gunakan
-    if (strcasecmp($source_name, $template) === 0) {
-        return $source;
-    }
-
-    $target = trailingslashit($remote_source) . $template . '/';
-
-    // Cek apakah ini adalah paket pembaruan untuk tema Hakajobs
-    if (stripos($source_name, 'hakajobs') === false && stripos($source_name, strtolower($template)) === false) {
-        return $source;
-    }
-
-    // Hapus target lama jika ada dan pastikan bukan folder sumber yang sama
-    if ($wp_filesystem->exists($target) && strcasecmp(untrailingslashit($source), untrailingslashit($target)) !== 0) {
-        $wp_filesystem->delete($target, true);
-    }
-
-    // Rename folder ke slug tema yang tepat
-    if (!$wp_filesystem->move($source, $target, true)) {
-        return new WP_Error(
-            'hakajobs_rename_failed',
-            sprintf(
-                __('Gagal rename folder tema dari "%s" ke "%s". Pastikan direktori wp-content/themes dapat ditulisi.', 'hakajobs'),
-                $source_name,
-                $template
-            )
-        );
-    }
-
-    return $target;
-}, 5, 3);
 
 /**
  * Mengaktifkan otomatisasi background auto-update untuk tema hakajobs

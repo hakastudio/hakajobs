@@ -17,7 +17,7 @@
  *  ├─ Section 12: Sidebar Kanan (Beranda & Halaman Statis)
  *  ├─ Section 13: Pop-up Cookie Pengunjung
  *  ├─ Section 14: Halaman Pusat Tes & Karir
- *  └─ Section 15: Pop-up Notifikasi Berita / Loker (Gaya Antaranews)
+ *  └─ Section 15: Notifikasi Web Push OneSignal
  *
  * @package Hakajobs
  */

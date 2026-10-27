@@ -55,7 +55,7 @@ Hakajobs/
     ├── post-types.php         # Custom Post Type 'lowongan' & Taksonomi (Kategori, Lokasi, Tipe, Pengalaman)
     ├── meta-boxes.php         # Custom Meta Box (Nama Perusahaan, Gaji, WhatsApp, Email, Batas Waktu)
     ├── customizer.php         # Panel pengaturan visual WordPress Customizer
-    ├── push-notification.php  # Modul Web Push OneSignal & Pop-up Izin Notifikasi (Gaya Antaranews)
+    ├── push-notification.php  # Modul Web Push OneSignal resmi v16 (Pop-up Asli OneSignal.com)
     ├── template-tags.php      # Helper fungsi (Avatar inisial perusahaan, badge, format gaji)
     ├── sample-data.php        # Fitur 1-Klik Pasang Data Demo Lowongan
     ├── seo.php                # Fast-indexing engine & Google Schema JobPosting JSON-LD
@@ -130,11 +130,11 @@ Tersedia menu **Lowongan Kerja > Pasang Data Demo** di dashboard WordPress untuk
 
 ### 10. Web Push Notifikasi Handphone (OneSignal Web SDK v16)
 Kirim pemberitahuan instan langsung ke layar kunci (*lockscreen*) dan bilah notifikasi smartphone pengunjung (Android & iOS 16.4+) setiap kali loker atau artikel baru diterbitkan:
-- **Pop-up Izin Gaya Antaranews:** Kartu ajakan berlangganan di pojok layar yang elegan, ramah seluler, dan tidak menutupi konten utama.
+- **Pop-up Izin Resmi OneSignal:** Pop-up native OneSignal.com (browser prompt / slidedown) yang terstandarisasi, bersih, responsif, dan langsung dikonfigurasi dari dashboard OneSignal.
 - **Pengiriman Otomatis via REST API:** WordPress otomatis menghubungi server OneSignal saat status loker/artikel beralih menjadi *Publish*.
 - **Kendali Penuh di Editor Postingan:** Meta box panel khusus pada halaman tulis lowongan/artikel untuk mengatur apakah notifikasi ingin dikirim, kirim ulang saat revisi (*update*), atau kustomisasi judul & ringkasan pesan khusus.
 - **Dukungan Rich Image:** Otomatis melampirkan poster/gambar unggulan (*Featured Image*) loker ukuran besar di layar HP penerima.
-- **Bekerja Tanpa Aplikasi Mobile / PWA:** Berjalan native melalui browser standar (Chrome, Samsung Internet, Edge, Safari iOS).
+- **Berjalan Native di Browser:** Tidak membutuhkan aplikasi pihak ketiga atau instalasi PWA, berjalan langsung pada Chrome, Samsung Internet, Edge, dan Safari iOS.
 
 ---
 
@@ -196,9 +196,8 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
     - Kustomisasi gaya hero pasang loker (*Navy Klasik, Split Converter, Minimalist*).
     - Penyesuaian harga dan rincian benefit paket Featured & Urgent.
     - Nomor WhatsApp admin dan email penerima pesanan pemasangan iklan.
-11. **🔔 Notifikasi Web Push & Pop-up (HP):**
-    - Saklar aktifkan/nonaktifkan pop-up ajakan & engine notifikasi.
-    - Pilihan aksi tombol utama (Web Push OneSignal, Web Push + Saluran WA/Telegram, atau Hanya Buka Saluran).
+11. **🔔 Notifikasi Web Push OneSignal:**
+    - Saklar aktifkan/nonaktifkan Web Push OneSignal.
     - **OneSignal App ID:** ID unik aplikasi OneSignal (contoh: `fa8d0207-13ae-4f12-9058-d910ade5f80a`).
     - **OneSignal REST API Key:** Kunci API otorisasi server OneSignal (tipe *Admin Key*).
     - **OneSignal Safari Web ID (Opsional):** ID dukungan browser Safari (contoh: `web.onesignal.auto.xxxxxx`).
@@ -206,9 +205,7 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
     - Pilihan kirim notifikasi otomatis saat konten diedit / diperbarui (*update*).
     - Format judul notifikasi dinamis (mendukung tag `{title}`, `{company}`, `{site_name}`).
     - Opsi tampilkan poster gambar unggulan (*Featured Image*) berukuran besar di layar HP.
-    - Kustomisasi posisi kartu pop-up (Atas Kiri gaya Antaranews, Atas Tengah, Atas Kanan, Bawah Kiri, Bawah Kanan).
-    - Pilihan halaman tampil (Semua Halaman, Beranda Saja, atau Halaman Loker & Artikel).
-    - Kustomisasi teks ajakan, pilihan ikon (lonceng SVG bawaan atau unggah ikon kustom 1:1), warna latar & teks tombol, jeda waktu muncul (detik), dan durasi jeda jika pengunjung menolak/menyetujui.
+    - **Pop-up Izin Bawaan OneSignal:** Notifikasi izin browser langsung ditangani oleh skrip resmi OneSignal tanpa popup kartu manual tema, menghindari prompt ganda dan menjamin kepatuhan browser modern.
 
 ---
 
@@ -303,8 +300,8 @@ Tema Hakajobs sudah dilengkapi integrasi Web Push OneSignal langsung tanpa memer
    - **Auto Resubscribe (HTTPS Only):** Aktifkan (*ON*).
    - **Default Icon URL:** Masukkan link logo situs rasio 1:1 (min. `192x192 px`).
 3. Klik **Save**.
-4. **Pencegahan Double Pop-up:** Pada bagian **Permission Prompt Setup**, pastikan opsi **Auto-Prompt** dimatikan (*Uncheck*) atau hapus prompt default tersebut, karena tema Hakajobs sudah menyediakan pop-up ajakan notifikasi sendiri yang lebih rapi (gaya Antaranews dalam Bahasa Indonesia).
-5. OneSignal akan menampilkan kode script HTML. **PENTING: Jangan salin tag `<script>` ke WordPress**, karena tema Hakajobs sudah memasang script dan worker tersebut secara otomatis di latar belakang.
+4. **Pop-up Izin Resmi OneSignal:** Pada bagian **Permission Prompt Setup**, Anda dapat menyesuaikan tampilan prompt bawaan OneSignal (misal: Slidedown prompt, Native Browser Prompt, atau Bell Icon) langsung dari dashboard OneSignal. Pop-up ini akan tampil secara native dan terintegrasi di website.
+5. OneSignal akan menampilkan kode script HTML. **PENTING: Jangan salin tag `<script>` ke WordPress**, karena tema Hakajobs sudah mengintegrasikan OneSignal Web SDK v16 secara otomatis.
 
 ### 3. Ambil Kunci & ID dari OneSignal
 1. Buka menu **Settings** di bilah atas OneSignal, lalu pilih **Keys & IDs** (atau **API Keys**).
@@ -318,7 +315,7 @@ Tema Hakajobs sudah dilengkapi integrasi Web Push OneSignal langsung tanpa memer
 
 ### 4. Masukkan Kunci ke Dashboard WordPress
 1. Buka dashboard WordPress Anda.
-2. Masuk ke **Tampilan** > **Sesuaikan** > **🔔 Notifikasi Web Push & Pop-up (HP)**.
+2. Masuk ke **Tampilan** > **Sesuaikan** > **🔔 Notifikasi Web Push OneSignal**.
 3. Masukkan kode bersih ke kolom masing-masing:
    - **OneSignal App ID:** `fa8d0207-13ae-4f12-9058-d910ade5f80a` *(HANYA kodenya saja, tanpa tanda kutip atau tag script)*.
    - **OneSignal REST API Key:** Masukkan kunci Admin Key (`os_v2_app_...`).
@@ -326,7 +323,7 @@ Tema Hakajobs sudah dilengkapi integrasi Web Push OneSignal langsung tanpa memer
 4. Gulir ke bagian paling atas sebelah kiri, lalu klik tombol biru **"Terbitkan"** (*Publish*).
 
 ### 5. Cara Kerja Notifikasi
-- **Izin Berlangganan Pengunjung:** Saat pengunjung membuka website di HP atau komputer, kartu pop-up elegan gaya Antaranews akan muncul mengajak berlangganan info loker.
+- **Izin Berlangganan Pengunjung:** Pop-up izin resmi OneSignal.com akan tampil secara bersih sesuai aturan browser modern.
 - **Pengiriman Otomatis:** Setiap kali Anda mempublikasikan loker kerja atau artikel baru, notifikasi otomatis terkirim ke HP pengunjung lengkap dengan judul, ringkasan, dan banner gambar.
 - **Pengaturan Per-Postingan:** Pada halaman edit loker/artikel, tersedia panel meta box di sebelah kanan untuk menyalakan/mematikan notifikasi untuk postingan tertentu atau mengubah teks notifikasi khusus.
 
