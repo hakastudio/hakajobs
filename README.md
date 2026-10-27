@@ -303,7 +303,8 @@ Tema Hakajobs sudah dilengkapi integrasi Web Push OneSignal langsung tanpa memer
    - **Auto Resubscribe (HTTPS Only):** Aktifkan (*ON*).
    - **Default Icon URL:** Masukkan link logo situs rasio 1:1 (min. `192x192 px`).
 3. Klik **Save**.
-4. OneSignal akan menampilkan kode script HTML. **PENTING: Jangan salin tag `<script>` ke WordPress**, karena tema Hakajobs sudah memasang script dan worker tersebut secara otomatis di latar belakang.
+4. **Pencegahan Double Pop-up:** Pada bagian **Permission Prompt Setup**, pastikan opsi **Auto-Prompt** dimatikan (*Uncheck*) atau hapus prompt default tersebut, karena tema Hakajobs sudah menyediakan pop-up ajakan notifikasi sendiri yang lebih rapi (gaya Antaranews dalam Bahasa Indonesia).
+5. OneSignal akan menampilkan kode script HTML. **PENTING: Jangan salin tag `<script>` ke WordPress**, karena tema Hakajobs sudah memasang script dan worker tersebut secara otomatis di latar belakang.
 
 ### 3. Ambil Kunci & ID dari OneSignal
 1. Buka menu **Settings** di bilah atas OneSignal, lalu pilih **Keys & IDs** (atau **API Keys**).

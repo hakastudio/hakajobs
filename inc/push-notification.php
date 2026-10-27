@@ -76,6 +76,23 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         'section'     => 'hakajobs_push_notice_section',
     ));
 
+    // 1b. Pilihan Tampilan Pop-up (OneSignal vs Tema HakaJobs)
+    $wp_customize->add_setting('hakajobs_push_prompt_style', array(
+        'default'           => 'onesignal',
+        'sanitize_callback' => 'hakajobs_sanitize_select',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_push_prompt_style', array(
+        'type'        => 'select',
+        'label'       => __('Pilihan Pop-up Izin Notifikasi', 'hakajobs'),
+        'description' => __('Pilih pop-up yang ingin ditampilkan ke pengunjung agar tidak muncul dobel.', 'hakajobs'),
+        'section'     => 'hakajobs_push_notice_section',
+        'choices'     => array(
+            'onesignal'  => __('Pop-up Asli OneSignal.com (Slide Prompt Bawaan OneSignal)', 'hakajobs'),
+            'theme_card' => __('Pop-up Tema HakaJobs (Kartu Lonceng Merah Gaya Antaranews)', 'hakajobs'),
+        ),
+    ));
+
     // 2. Mode / Aksi Tombol Utama (Oke)
     $wp_customize->add_setting('hakajobs_push_action_type', array(
         'default'           => 'onesignal',
@@ -965,6 +982,33 @@ function hakajobs_render_push_notification() {
     $action_type      = get_theme_mod('hakajobs_push_action_type', 'onesignal');
     $onesignal_app_id = trim(get_theme_mod('hakajobs_onesignal_app_id', ''));
     $safari_web_id    = trim(get_theme_mod('hakajobs_onesignal_safari_web_id', ''));
+    $prompt_style     = get_theme_mod('hakajobs_push_prompt_style', 'onesignal');
+
+    // JIKA USER MEMILIH POP-UP RESMI ONESIGNAL.COM:
+    // Muat SDK OneSignal murni tanpa memunculkan kartu pop-up tema HakaJobs.
+    if ($prompt_style === 'onesignal') {
+        if (!empty($onesignal_app_id) && ($action_type === 'onesignal' || $action_type === 'push_and_link')) {
+            ?>
+            <!-- OneSignal Web SDK v16 for Mobile & Desktop Web Push (Native OneSignal Prompt) -->
+            <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+            <script>
+                window.OneSignalDeferred = window.OneSignalDeferred || [];
+                OneSignalDeferred.push(async function(OneSignal) {
+                    await OneSignal.init({
+                        appId: "<?php echo esc_js($onesignal_app_id); ?>",
+                        <?php if (!empty($safari_web_id)): ?>
+                        safari_web_id: "<?php echo esc_js($safari_web_id); ?>",
+                        <?php endif; ?>
+                        serviceWorkerParam: { scope: '/' },
+                        serviceWorkerPath: 'OneSignalSDKWorker.js',
+                        allowLocalhostAsSecureOrigin: true
+                    });
+                });
+            </script>
+            <?php
+        }
+        return;
+    }
 
     $btn_ok_text      = get_theme_mod('hakajobs_push_btn_ok_text', __('Oke', 'hakajobs'));
     $btn_ok_url       = get_theme_mod('hakajobs_push_btn_ok_url', '');
@@ -1259,6 +1303,16 @@ function hakajobs_render_push_notification() {
                     <?php endif; ?>
                     notifyButton: {
                         enable: false // Use custom Antaranews prompt card
+                    },
+                    promptOptions: {
+                        slidedown: {
+                            prompts: [
+                                {
+                                    type: "push",
+                                    autoPrompt: false
+                                }
+                            ]
+                        }
                     },
                     serviceWorkerParam: { scope: '/' },
                     serviceWorkerPath: 'OneSignalSDKWorker.js',
