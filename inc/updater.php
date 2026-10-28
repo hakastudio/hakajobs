@@ -236,6 +236,42 @@ add_filter('upgrader_source_selection', function ($source, $remote_source, $upgr
 }, 5, 4);
 
 /**
+ * Filter: upgrader_package_options
+ *
+ * Mencegah kegagalan update WordPress 6.3+ dengan pesan error:
+ * "Tidak dapat memindahkan versi lama ke direktori upgrade-temp-backup".
+ *
+ * Di WordPress 6.3+, fitur otomatisasi rollback mencoba memindahkan direktori tema aktif
+ * ke wp-content/upgrade-temp-backup/themes/hakajobs. Di beberapa hosting (seperti LiteSpeed/cPanel),
+ * operasi ini gagal karena permission folder atau file lock PHP saat tema sedang aktif.
+ *
+ * Dengan membersihkan direktori temporary yang macet dan menonaktifkan temp_backup untuk tema Hakajobs,
+ * WordPress akan memperbarui file tema secara langsung tanpa terhenti oleh WP_Error.
+ */
+add_filter('upgrader_package_options', function ($options) {
+    if (
+        isset($options['hook_extra']['type']) && $options['hook_extra']['type'] === 'theme'
+        && isset($options['hook_extra']['theme'])
+        && (strcasecmp($options['hook_extra']['theme'], get_template()) === 0 || stripos($options['hook_extra']['theme'], 'hakajobs') !== false)
+    ) {
+        // Bersihkan sisa backup sementara jika ada di disk
+        $temp_backup_theme = WP_CONTENT_DIR . '/upgrade-temp-backup/themes/' . get_template();
+        if (is_dir($temp_backup_theme)) {
+            global $wp_filesystem;
+            if ($wp_filesystem) {
+                @$wp_filesystem->delete($temp_backup_theme, true);
+            }
+        }
+
+        // Bypass temp_backup agar terhindar dari temp_backup_move_failed
+        if (isset($options['hook_extra']['temp_backup'])) {
+            unset($options['hook_extra']['temp_backup']);
+        }
+    }
+    return $options;
+}, 10, 1);
+
+/**
  * Filter 2: upgrader_package_destination
  *
  * Menjamin 100% WordPress SELALU memasang pembaruan ke direktori tema aktif (misal /wp-content/themes/hakajobs/)
