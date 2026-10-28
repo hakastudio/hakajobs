@@ -169,19 +169,6 @@ function hakajobs_push_notification_customize_register($wp_customize) {
         ),
     ));
 
-    // 8. Tampilkan Tombol Lonceng Melayang (Floating Bell Widget)
-    $wp_customize->add_setting('hakajobs_push_show_bell', array(
-        'default'           => '1',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control('hakajobs_push_show_bell', array(
-        'type'        => 'checkbox',
-        'label'       => __('Tampilkan Tombol Lonceng Notifikasi Melayang di Layar', 'hakajobs'),
-        'description' => __('Menampilkan tombol lonceng "Info Loker" di sudut kanan bawah layar sehingga pengguna HP dapat berlangganan kapan saja dengan 1 kali klik.', 'hakajobs'),
-        'section'     => 'hakajobs_push_notice_section',
-    ));
-
     // 9. Otomatis Kirim saat Lowongan Baru Diterbitkan
     $wp_customize->add_setting('hakajobs_push_notify_lowongan', array(
         'default'           => '1',
@@ -1058,10 +1045,10 @@ function hakajobs_ajax_test_push() {
 add_action('wp_ajax_hakajobs_test_push', 'hakajobs_ajax_test_push');
 
 /**
- * 10. Render Pure OneSignal Web SDK v16 & Floating Bell Widget on Frontend (wp_footer)
+ * 10. Render Pure OneSignal Web SDK v16 on Frontend (wp_footer)
  *
  * Menggunakan popup izin bawaan resmi OneSignal.com (Native Slidedown & Permission Prompt).
- * Mendukung auto-prompt, konfigurasi delay, dan floating bell button interaktif.
+ * Mendukung auto-prompt dan konfigurasi delay.
  */
 function hakajobs_render_push_notification() {
     $enabled = get_theme_mod('hakajobs_push_enable', '1');
@@ -1076,7 +1063,6 @@ function hakajobs_render_push_notification() {
 
     $safari_web_id = trim(get_theme_mod('hakajobs_onesignal_safari_web_id', ''));
     $auto_prompt   = get_theme_mod('hakajobs_push_auto_prompt', '1');
-    $show_bell     = get_theme_mod('hakajobs_push_show_bell', '1');
     $prompt_delay  = (int) get_theme_mod('hakajobs_push_prompt_delay', 3);
     if ($prompt_delay < 1) {
         $prompt_delay = 1;
@@ -1142,29 +1128,6 @@ function hakajobs_render_push_notification() {
                 <?php endif; ?>
             });
 
-            // Update Floating Bell Widget State
-            function hkUpdateBellState() {
-                var widget = document.getElementById('hk-push-bell-widget');
-                var label  = document.getElementById('hk-bell-label');
-                if (!widget) return;
-                var isOptedIn = OneSignal.User && OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.optedIn;
-                var perm = (window.Notification && Notification.permission) ? Notification.permission : 'default';
-                if (isOptedIn || perm === 'granted') {
-                    widget.classList.add('is-subscribed');
-                    if (label) label.textContent = '<?php echo esc_js(__('Notifikasi Aktif', 'hakajobs')); ?>';
-                } else {
-                    widget.classList.remove('is-subscribed');
-                    if (label) label.textContent = '<?php echo esc_js(__('Info Loker', 'hakajobs')); ?>';
-                }
-            }
-
-            try {
-                if (OneSignal.User && OneSignal.User.PushSubscription) {
-                    OneSignal.User.PushSubscription.addEventListener("change", hkUpdateBellState);
-                }
-            } catch(e){}
-            hkUpdateBellState();
-
             <?php if ($auto_prompt === '1'): ?>
             // Fallback trigger: Jika browser belum pernah diminta izin, panggil Slidedown prompt OneSignal
             setTimeout(async function() {
@@ -1210,90 +1173,6 @@ function hakajobs_render_push_notification() {
             });
         };
     </script>
-
-    <?php if ($show_bell === '1'): ?>
-    <!-- Floating Notification Bell for Instant Mobile & Desktop Subscription -->
-    <div id="hk-push-bell-widget" class="hk-push-bell-widget" role="button" tabindex="0" title="<?php esc_attr_e('Langganan Notifikasi Info Loker', 'hakajobs'); ?>" onclick="window.hakajobsTriggerPushPrompt()">
-        <div class="hk-bell-icon-inner">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-            <span class="hk-bell-badge" id="hk-bell-badge"></span>
-        </div>
-        <span class="hk-bell-label" id="hk-bell-label"><?php _e('Info Loker', 'hakajobs'); ?></span>
-    </div>
-    <style>
-    .hk-push-bell-widget {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        z-index: 9998;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        background: #0284c7;
-        color: #ffffff;
-        padding: 9px 15px 9px 12px;
-        border-radius: 9999px;
-        box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.45), 0 4px 10px rgba(0, 0, 0, 0.08);
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        font-family: inherit;
-        border: none;
-        outline: none;
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background 0.2s ease;
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-    .hk-push-bell-widget:hover, .hk-push-bell-widget:focus-visible {
-        background: #0369a1;
-        transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 12px 28px -4px rgba(2, 132, 199, 0.55);
-        color: #ffffff;
-    }
-    .hk-push-bell-widget .hk-bell-icon-inner {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .hk-push-bell-widget .hk-bell-badge {
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        width: 7px;
-        height: 7px;
-        background: #ef4444;
-        border-radius: 50%;
-        border: 1.5px solid #ffffff;
-        animation: hkBellPulse 2s infinite;
-    }
-    .hk-push-bell-widget.is-subscribed {
-        background: #0f172a;
-    }
-    .hk-push-bell-widget.is-subscribed:hover {
-        background: #1e293b;
-    }
-    .hk-push-bell-widget.is-subscribed .hk-bell-badge {
-        display: none !important;
-    }
-    @keyframes hkBellPulse {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-    }
-    @media (max-width: 640px) {
-        .hk-push-bell-widget {
-            bottom: 82px;
-            right: 16px;
-            padding: 8px 12px;
-            font-size: 12px;
-        }
-    }
-    </style>
-    <?php endif; ?>
     <?php
 }
 add_action('wp_footer', 'hakajobs_render_push_notification', 99);
