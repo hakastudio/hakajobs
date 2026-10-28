@@ -221,7 +221,7 @@ while (have_posts()) : the_post();
                         if (!empty($benefit_lines)):
                     ?>
                         <div class="hk-job-benefits-box">
-                            <h2 class="hk-box-heading">✨ <?php _e('Benefit & Fasilitas yang Diberikan', 'hakajobs'); ?></h2>
+                            <h2 class="hk-box-heading"><?php _e('Benefit & Fasilitas yang Diberikan', 'hakajobs'); ?></h2>
                             <ul class="hk-benefits-grid">
                                 <?php foreach ($benefit_lines as $b): ?>
                                     <li class="hk-benefit-item">

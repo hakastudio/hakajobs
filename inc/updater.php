@@ -65,8 +65,12 @@ function hakajobs_init_theme_updater() {
     }
 
     // Hapus filter bawaan PUC yang kaku agar tidak memicu 'Unable to rename the update to match the existing directory'
-    // Seluruh proses struktur direktori dan normalisasi nama folder ditangani secara cerdas oleh filter di bawah.
+    // Seluruh proses normalisasi folder dan instalasi tema ditangani oleh filter arsitektur ganda di bawah.
     remove_filter('upgrader_source_selection', array($update_checker, 'fixDirectoryName'), 10);
+
+    // Pastikan PUC mengizinkan flag autoupdate di WordPress 5.5+
+    add_filter('puc_autoupdate_field_allowed-' . $theme_slug, '__return_true');
+    add_filter('puc_autoupdate_field_allowed-hakajobs', '__return_true');
 
     // Simpan di variabel global agar dapat diakses oleh action dan filter lain
     $hakajobs_update_checker = $update_checker;
@@ -74,11 +78,73 @@ function hakajobs_init_theme_updater() {
 add_action('after_setup_theme', 'hakajobs_init_theme_updater');
 
 /**
- * Filter cerdas untuk memastikan proses instalasi & update tema selalu sukses:
- * 1. Menjaga slug folder tema tetap persis sesuai direktori tema aktif (get_template()).
- * 2. Menghindari eror "Tema ini tidak memiliki style.css stylesheet" dengan selalu menyertakan trailing slash.
- * 3. Mencegah eror "Unable to rename the update to match the existing directory" baik di server Linux maupun Windows/macOS.
- * 4. Mendukung ZIP release aset (hakajobs.zip) maupun auto-zip GitHub (hakastudio-hakajobs-xxxx / hakajobs-x.x.x).
+ * Pemeriksaan akurat apakah paket update yang sedang diproses adalah tema Hakajobs.
+ *
+ * @param array|null        $hook_extra
+ * @param \WP_Upgrader|null $upgrader
+ * @param string            $source
+ * @param string            $remote_source
+ * @return bool
+ */
+function hakajobs_is_updating_theme($hook_extra = null, $upgrader = null, $source = '', $remote_source = '') {
+    global $wp_filesystem;
+    $template = get_template();
+
+    // 1. Cek hook_extra['theme'] atau hook_extra['themes']
+    if (is_array($hook_extra)) {
+        if (!empty($hook_extra['theme']) && (strcasecmp($hook_extra['theme'], $template) === 0 || stripos($hook_extra['theme'], 'hakajobs') !== false)) {
+            return true;
+        }
+        if (!empty($hook_extra['themes']) && is_array($hook_extra['themes'])) {
+            foreach ($hook_extra['themes'] as $t) {
+                if (strcasecmp($t, $template) === 0 || stripos($t, 'hakajobs') !== false) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    // 2. Cek upgrader skin
+    if ($upgrader && isset($upgrader->skin)) {
+        if (isset($upgrader->skin->theme_info) && method_exists($upgrader->skin->theme_info, 'get_stylesheet')) {
+            $skin_theme = $upgrader->skin->theme_info->get_stylesheet();
+            if (strcasecmp($skin_theme, $template) === 0 || stripos($skin_theme, 'hakajobs') !== false) {
+                return true;
+            }
+        }
+        if (isset($upgrader->skin->theme)) {
+            if (strcasecmp($upgrader->skin->theme, $template) === 0 || stripos($upgrader->skin->theme, 'hakajobs') !== false) {
+                return true;
+            }
+        }
+    }
+
+    // 3. Cek nama folder sumber
+    $source_name = basename(untrailingslashit($source));
+    if (stripos($source_name, 'hakajobs') !== false || strcasecmp($source_name, $template) === 0) {
+        return true;
+    }
+
+    // 4. Verifikasi isi style.css dalam source
+    if (!empty($source) && $wp_filesystem && $wp_filesystem->exists(trailingslashit($source) . 'style.css')) {
+        $content = $wp_filesystem->get_contents(trailingslashit($source) . 'style.css');
+        if ($content && (stripos($content, 'Theme Name: Hakajobs') !== false || stripos($content, 'Text Domain: hakajobs') !== false || stripos($content, 'hakajobs') !== false)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Filter 1: upgrader_source_selection
+ *
+ * Menemukan dan menormalisasi folder tema hasil ekstrak ZIP dari GitHub:
+ * 1. Menemukan lokasi berkas style.css di dalam paket (baik di root, subfolder hakajobs, maupun auto-zip GitHub).
+ * 2. Selalu menjamin trailing slash pada $source agar WordPress core tidak pernah gagal membaca style.css.
+ * 3. Jika nama folder berbeda dari slug tema, lakukan penamaan ulang yang aman (aman Windows/macOS/Linux).
+ * 4. Tidak pernah melempar fatal WP_Error jika penamaan ulang dicegah sistem, karena filter kedua (upgrader_package_destination)
+ *    menjamin tema tetap terpasang tepat ke folder target.
  */
 add_filter('upgrader_source_selection', function ($source, $remote_source, $upgrader = null, $hook_extra = null) {
     global $wp_filesystem;
@@ -86,72 +152,178 @@ add_filter('upgrader_source_selection', function ($source, $remote_source, $upgr
         return $source;
     }
 
-    $template    = get_template();
-    $source_dir  = untrailingslashit($source);
-    $source_name = basename($source_dir);
-
-    // Periksa apakah ini proses instalasi/pembaruan untuk tema Hakajobs
-    $is_hakajobs = false;
-    if (is_array($hook_extra) && isset($hook_extra['theme']) && stripos($hook_extra['theme'], 'hakajobs') !== false) {
-        $is_hakajobs = true;
-    } elseif ($upgrader && isset($upgrader->skin) && isset($upgrader->skin->theme_info)) {
-        $skin_theme = $upgrader->skin->theme_info->get_stylesheet();
-        if (stripos($skin_theme, 'hakajobs') !== false) {
-            $is_hakajobs = true;
-        }
-    } elseif ($upgrader && isset($upgrader->skin) && isset($upgrader->skin->theme)) {
-        if (stripos($upgrader->skin->theme, 'hakajobs') !== false) {
-            $is_hakajobs = true;
-        }
-    } elseif (stripos($source_name, 'hakajobs') !== false) {
-        $is_hakajobs = true;
-    } elseif ($wp_filesystem->exists(trailingslashit($source) . 'style.css')) {
-        $style_content = $wp_filesystem->get_contents(trailingslashit($source) . 'style.css');
-        if ($style_content && stripos($style_content, 'hakajobs') !== false) {
-            $is_hakajobs = true;
-        }
-    }
-
-    if (!$is_hakajobs) {
+    if (!hakajobs_is_updating_theme($hook_extra, $upgrader, $source, $remote_source)) {
         return $source;
     }
 
-    $target_dir = untrailingslashit($remote_source) . '/' . $template;
+    $template = get_template();
+    $style_dir = null;
 
-    // 1. Jika folder source sudah persis sama dengan target_dir
-    if ($source_dir === $target_dir) {
-        return trailingslashit($target_dir);
+    // 1. Cek apakah style.css langsung ada di $source
+    if ($wp_filesystem->exists(trailingslashit($source) . 'style.css')) {
+        $style_dir = trailingslashit($source);
     }
-
-    // 2. Jika hanya berbeda kapitalisasi (misal hakajobs vs HakaJobs)
-    if (strcasecmp($source_dir, $target_dir) === 0) {
-        // Coba rename 2-langkah via folder sementara untuk filesystem case-insensitive (Windows/macOS)
-        $temp_dir = $source_dir . '_tmp_' . (function_exists('wp_generate_password') ? wp_generate_password(6, false, false) : uniqid());
-        if ($wp_filesystem->move($source_dir, $temp_dir, true)) {
-            if ($wp_filesystem->move($temp_dir, $target_dir, true)) {
-                return trailingslashit($target_dir);
+    // 2. Cek apakah style.css ada di subfolder $source/$template/
+    elseif ($wp_filesystem->exists(trailingslashit($source) . $template . '/style.css')) {
+        $style_dir = trailingslashit($source) . $template . '/';
+    }
+    // 3. Cek apakah style.css ada di $remote_source/$template/
+    elseif ($wp_filesystem->exists(trailingslashit($remote_source) . $template . '/style.css')) {
+        $style_dir = trailingslashit($remote_source) . $template . '/';
+    }
+    // 4. Cari di subfolder dalam $source
+    else {
+        $dirlist = $wp_filesystem->dirlist($source);
+        if (is_array($dirlist)) {
+            foreach ($dirlist as $item) {
+                $sub = trailingslashit($source) . $item['name'];
+                if ($wp_filesystem->is_dir($sub) && $wp_filesystem->exists($sub . '/style.css')) {
+                    $style_dir = trailingslashit($sub);
+                    break;
+                }
             }
-            // Rollback jika rename ke target_dir gagal
-            $wp_filesystem->move($temp_dir, $source_dir, true);
         }
-        return trailingslashit($source_dir);
     }
 
-    // 3. Jika folder source bernama berbeda (misal hakajobs-1.0.52 atau hakastudio-hakajobs-xxxx dari auto-zip GitHub)
-    if ($wp_filesystem->exists($target_dir)) {
-        $wp_filesystem->delete($target_dir, true);
+    // 5. Cari di subfolder dalam $remote_source jika belum ketemu
+    if (!$style_dir) {
+        $remote_dirlist = $wp_filesystem->dirlist($remote_source);
+        if (is_array($remote_dirlist)) {
+            foreach ($remote_dirlist as $item) {
+                $sub = trailingslashit($remote_source) . $item['name'];
+                if ($wp_filesystem->is_dir($sub) && $wp_filesystem->exists($sub . '/style.css')) {
+                    $style_dir = trailingslashit($sub);
+                    break;
+                }
+            }
+        }
     }
 
-    if ($wp_filesystem->move($source_dir, $target_dir, true)) {
-        return trailingslashit($target_dir);
+    // 6. Jika style.css ada langsung di root $remote_source (flat ZIP tanpa subfolder)
+    if (!$style_dir && $wp_filesystem->exists(trailingslashit($remote_source) . 'style.css')) {
+        $style_dir = trailingslashit($remote_source);
     }
 
-    // Fallback aman: kembalikan source asli dengan trailing slash agar tidak pernah menggagalkan update
-    return trailingslashit($source);
+    if (!$style_dir) {
+        return trailingslashit($source);
+    }
+
+    // Coba normalisasi nama folder di direktori sementara ke slug tema aktif jika memungkinkan
+    $target_dir  = untrailingslashit($remote_source) . '/' . $template;
+    $current_dir = untrailingslashit($style_dir);
+
+    if ($current_dir !== $target_dir && $current_dir !== untrailingslashit($remote_source)) {
+        if (strcasecmp($current_dir, $target_dir) === 0) {
+            // Perbedaan kapitalisasi nama (misal hakajobs vs HakaJobs)
+            // Gunakan 2-langkah rename untuk mencegah bug penghapusan folder pada Windows/macOS
+            $temp_rename = $current_dir . '_case_tmp_' . uniqid();
+            if ($wp_filesystem->move($current_dir, $temp_rename, false)) {
+                if ($wp_filesystem->move($temp_rename, $target_dir, false)) {
+                    $style_dir = trailingslashit($target_dir);
+                } else {
+                    $wp_filesystem->move($temp_rename, $current_dir, false);
+                }
+            }
+        } elseif (!$wp_filesystem->exists($target_dir)) {
+            // Folder bernama berbeda (misal auto-zip GitHub: hakastudio-hakajobs-xxxx atau hakajobs-1.0.54)
+            if ($wp_filesystem->move($current_dir, $target_dir, true)) {
+                $style_dir = trailingslashit($target_dir);
+            }
+        }
+    }
+
+    return trailingslashit($style_dir);
 }, 5, 4);
 
 /**
- * Paksa reset cache & periksa update langsung dari GitHub saat tombol 'Periksa Lagi' ditekan
+ * Filter 2: upgrader_package_destination
+ *
+ * Menjamin 100% WordPress SELALU memasang pembaruan ke direktori tema aktif (misal /wp-content/themes/hakajobs/)
+ * terlepas dari apapun nama folder asal ZIP GitHub.
+ * Ini mencegah tema terpasang ke folder terpisah (misal hakastudio-hakajobs-xxxx) yang menyebabkan
+ * tema aktif tidak pernah terbarui.
+ */
+add_filter('upgrader_package_destination', function ($destination, $source, $upgrader = null, $hook_extra = null) {
+    if (!hakajobs_is_updating_theme($hook_extra, $upgrader, $source)) {
+        return $destination;
+    }
+
+    $template = get_template();
+    $themes_root = dirname(untrailingslashit($destination));
+    if (!empty($themes_root)) {
+        return trailingslashit($themes_root) . $template;
+    }
+
+    return $destination;
+}, 10, 4);
+
+/**
+ * Filter 3: auto_update_theme
+ *
+ * Mengaktifkan background auto-update otomatis via WP-Cron untuk tema Hakajobs.
+ * Mendukung objek maupun array pada argumen $item.
+ */
+add_filter('auto_update_theme', function ($update, $item) {
+    $template = get_template();
+    $item_theme = '';
+
+    if (is_object($item) && isset($item->theme)) {
+        $item_theme = $item->theme;
+    } elseif (is_array($item) && isset($item['theme'])) {
+        $item_theme = $item['theme'];
+    } elseif (is_string($item)) {
+        $item_theme = $item;
+    }
+
+    if (!empty($item_theme)) {
+        if (
+            strcasecmp($item_theme, $template) === 0 
+            || strcasecmp($item_theme, 'hakajobs') === 0 
+            || stripos($item_theme, 'hakajobs') !== false
+        ) {
+            return true;
+        }
+    }
+
+    return $update;
+}, 10, 2);
+
+/**
+ * Aksi pasca pembaruan: Segera bersihkan cache tema & transient update setelah update selesai
+ */
+add_action('upgrader_process_complete', function ($upgrader, $hook_extra) {
+    if (
+        is_array($hook_extra) 
+        && isset($hook_extra['action'], $hook_extra['type']) 
+        && $hook_extra['action'] === 'update' 
+        && $hook_extra['type'] === 'theme'
+    ) {
+        $themes = isset($hook_extra['themes']) 
+            ? (array)$hook_extra['themes'] 
+            : (isset($hook_extra['theme']) ? array($hook_extra['theme']) : array());
+        $template = get_template();
+        $is_hakajobs = false;
+        foreach ($themes as $t) {
+            if (strcasecmp($t, $template) === 0 || strcasecmp($t, 'hakajobs') === 0 || stripos($t, 'hakajobs') !== false) {
+                $is_hakajobs = true;
+                break;
+            }
+        }
+        if ($is_hakajobs) {
+            global $hakajobs_update_checker;
+            if (!empty($hakajobs_update_checker)) {
+                $hakajobs_update_checker->resetUpdateState();
+            }
+            if (function_exists('wp_clean_themes_cache')) {
+                wp_clean_themes_cache();
+            }
+            delete_site_transient('update_themes');
+        }
+    }
+}, 10, 2);
+
+/**
+ * Paksa reset cache & periksa update langsung dari GitHub saat tombol 'Periksa Lagi' ditekan di Dasbor
  */
 add_action('load-update-core.php', function () {
     if (isset($_GET['force-check'])) {
@@ -220,15 +392,3 @@ add_action('admin_notices', function () {
         echo '<div class="notice notice-info"><p><strong>Tema Hakajobs v' . esc_html(HAKAJOBS_VERSION) . ':</strong> <a href="' . esc_url($check_url) . '" class="button button-secondary" style="margin-left: 8px;">🔄 Cek Pembaruan Thema Sekarang</a></p></div>';
     }
 });
-
-/**
- * Mengaktifkan otomatisasi background auto-update untuk tema hakajobs
- */
-add_filter('auto_update_theme', function ($update, $item) {
-    $theme_slug = get_template();
-    if (isset($item->theme) && (strcasecmp($item->theme, $theme_slug) === 0 || strcasecmp($item->theme, 'hakajobs') === 0)) {
-        return true;
-    }
-    return $update;
-}, 10, 2);
-
