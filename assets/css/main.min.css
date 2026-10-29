@@ -54,6 +54,11 @@
     padding: 0;
 }
 
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 body {
     font-family: var(--hk-font-sans);
     background-color: var(--hk-bg-body);
@@ -2074,6 +2079,91 @@ button, input, select, textarea {
     line-height: 1.75;
     color: #334155;
     font-size: 15px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+}
+
+.hk-typography a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.hk-typography table,
+.hk-article-content table,
+.wp-block-table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse;
+    margin: 18px 0;
+}
+
+.hk-typography table th,
+.hk-typography table td,
+.hk-article-content table th,
+.hk-article-content table td {
+    padding: 8px 12px;
+    border: 1px solid var(--hk-border);
+    word-break: normal;
+    white-space: normal;
+}
+
+.hk-typography pre,
+.hk-article-content pre,
+.wp-block-code {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    background: #f8fafc;
+    border: 1px solid var(--hk-border);
+    border-radius: var(--hk-radius-sm);
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 13px;
+}
+
+.hk-typography code,
+.hk-article-content code {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.9em;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.hk-typography iframe,
+.hk-typography embed,
+.hk-typography object,
+.hk-typography video,
+.hk-article-content iframe,
+.hk-article-content embed,
+.hk-article-content object,
+.hk-article-content video,
+.wp-block-embed__wrapper iframe {
+    max-width: 100% !important;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hk-typography img,
+.hk-article-content img,
+.wp-block-image img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.wp-block-image,
+figure {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* Headings in Job Article (H1, H2, H3, H4, H5, H6) - Uniform Size */
@@ -3977,21 +4067,444 @@ button, input, select, textarea {
         text-align: center;
     }
 
-    /* Single Job Page on Mobile */
+    /* Single Job & Article Mobile Optimization (Anti-Over & Anti-Melebar) */
+    .hk-single-job-page,
+    .hk-single-standard-page {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: clip;
+    }
+
+    .hk-single-header-section {
+        padding: 16px 0;
+    }
+
+    .hk-single-header-card {
+        padding: 18px 14px;
+        border-radius: var(--hk-radius-md, 12px);
+    }
+
     .hk-single-header-top {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        gap: 14px;
     }
+
+    .hk-single-header-details {
+        width: 100%;
+        min-width: 0;
+    }
+
     .hk-single-company-line {
         justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
     }
+
+    .hk-single-job-title {
+        font-size: 20px;
+        line-height: 1.35;
+        margin-bottom: 12px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
     .hk-single-meta-strip {
         justify-content: center;
+        gap: 6px;
     }
+
+    .hk-meta-pill {
+        font-size: 11.5px;
+        padding: 4px 8px;
+        max-width: 100%;
+        word-break: break-word;
+    }
+
     .hk-single-type-badges {
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
     }
+
+    .hk-single-body-section {
+        padding: 18px 0;
+    }
+
+    .hk-single-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .hk-single-content {
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 14px;
+        border-radius: var(--hk-radius-md, 12px);
+        box-sizing: border-box;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .hk-single-sidebar {
+        position: static;
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .hk-sticky-apply-card {
+        padding: 18px 14px;
+        border-radius: var(--hk-radius-md, 12px);
+    }
+
+    .hk-single-excerpt {
+        padding: 12px 14px;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .hk-job-alert-closed,
+    .hk-job-alert-expiring,
+    .hk-job-alert-warning {
+        padding: 14px 12px;
+        gap: 10px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    .hk-benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .hk-benefit-item {
+        font-size: 12.5px;
+        padding: 8px 12px;
+        word-break: break-word;
+    }
+
+    .hk-job-notes-box {
+        padding: 14px;
+        margin-top: 18px;
+    }
+
+    .hk-overview-list {
+        margin-top: 18px;
+        padding-top: 16px;
+    }
+
+    .hk-overview-item {
+        font-size: 13px;
+        padding: 7px 0;
+        gap: 8px;
+    }
+
+    .hk-overview-label {
+        flex-shrink: 0;
+    }
+
+    .hk-overview-value {
+        word-break: break-word;
+        min-width: 0;
+        font-size: 13px;
+    }
+
+    .hk-job-share-bar {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 14px 12px;
+        gap: 10px;
+        border-radius: 10px;
+    }
+
+    .hk-job-share-bar .hk-share-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        width: 100%;
+    }
+
+    .hk-job-share-bar .hk-share-btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 12px;
+        padding: 7px 8px;
+    }
+
+    /* Single Artikel on Mobile */
+    .hk-single-standard-page {
+        padding: 14px 0 40px;
+    }
+
+    .hk-article-card {
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 14px;
+        margin: 12px auto 28px;
+        border-radius: var(--hk-radius-md, 12px);
+        box-sizing: border-box;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .hk-article-top-nav {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+    }
+
+    .hk-btn-back-career {
+        font-size: 12px;
+        padding: 6px 12px;
+        max-width: 100%;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .hk-article-header {
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+    }
+
+    .hk-article-title {
+        font-size: 20px !important;
+        line-height: 1.35;
+        margin-bottom: 10px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .hk-article-meta {
+        gap: 6px;
+        font-size: 11.5px;
+        align-items: center;
+    }
+
+    .hk-article-meta > span:not(.hk-meta-item) {
+        display: none;
+    }
+
+    .hk-meta-item {
+        background: #f1f5f9;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 11.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .hk-article-thumb {
+        margin: 16px 0 20px;
+        border-radius: 8px;
+    }
+
+    .hk-article-content {
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        font-size: 14.5px;
+        line-height: 1.7;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .hk-article-content p {
+        margin-bottom: 14px;
+    }
+
+    .hk-article-content h2 {
+        font-size: 18px;
+        margin: 24px 0 10px;
+        padding-bottom: 6px;
+        word-break: break-word;
+    }
+
+    .hk-article-content h3 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+        word-break: break-word;
+    }
+
+    .hk-article-content ul,
+    .hk-article-content ol {
+        margin: 0 0 16px 18px;
+        padding: 0;
+    }
+
+    .hk-article-content li {
+        margin-bottom: 6px;
+        line-height: 1.6;
+    }
+
+    .hk-callout-box {
+        padding: 12px 14px;
+        font-size: 13px;
+        margin: 18px 0;
+        border-radius: 6px;
+    }
+
+    .hk-soal-box,
+    .hk-interactive-soal {
+        padding: 16px 12px;
+        margin: 18px 0;
+        border-radius: 10px;
+    }
+
+    .hk-soal-opt-btn {
+        padding: 10px 12px;
+        font-size: 13px;
+        gap: 8px;
+        border-radius: 8px;
+    }
+
+    .hk-soal-opt-badge {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
+
+    .hk-soal-explanation {
+        padding: 14px 12px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+
+    .hk-article-share-bar {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 10px;
+        padding: 14px 0;
+        margin: 24px 0;
+    }
+
+    .hk-article-share-bar .hk-share-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        width: 100%;
+    }
+
+    .hk-article-share-bar .hk-share-btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 12px;
+        padding: 7px 8px;
+    }
+
+    .hk-article-author-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 16px 14px;
+        gap: 12px;
+        margin-top: 24px;
+        border-radius: 10px;
+    }
+
+    .hk-author-avatar {
+        width: 54px;
+        height: 54px;
+        margin: 0 auto;
+    }
+
+    .hk-author-info h4 {
+        font-size: 15px;
+    }
+
+    .hk-author-info p {
+        font-size: 12.5px;
+    }
+
+    .hk-single-cta-loker {
+        margin: 20px 0;
+    }
+
+    .hk-tk-cta-loker-card {
+        padding: 18px 14px;
+        border-radius: 10px;
+    }
+
+    .hk-tk-cta-loker-title {
+        font-size: 15px;
+    }
+
+    .hk-tk-cta-loker-desc {
+        font-size: 12.5px;
+        margin-bottom: 12px;
+    }
+
+    .hk-tags-list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin: 16px 0;
+        font-size: 12px;
+    }
+
+    .hk-tags-list a {
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        color: #475569;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 11.5px;
+        text-decoration: none;
+    }
+
+    .hk-article-bottom-nav {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
+    .hk-article-bottom-nav .hk-btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .hk-admin-broadcast-banner {
+        padding: 14px 12px;
+        border-radius: 10px;
+    }
+
+    .hk-admin-broadcast-actions {
+        grid-template-columns: 1fr;
+        width: 100%;
+        gap: 6px;
+    }
+
+    .hk-admin-btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 12px;
+        padding: 7px 10px;
+    }
+
+    .hk-public-wa-channel-box {
+        padding: 16px 14px;
+        gap: 12px;
+    }
+
+    .hk-btn-wa-channel {
+        font-size: 13px;
+        padding: 9px 14px;
+    }
+
     .hk-box-heading,
     .hk-notes-heading,
     .hk-typography h1,
@@ -4040,6 +4553,16 @@ button, input, select, textarea {
     .hk-container {
         padding-left: 14px;
         padding-right: 14px;
+    }
+    .hk-single-header-card,
+    .hk-single-content,
+    .hk-sticky-apply-card,
+    .hk-article-card {
+        padding: 16px 12px !important;
+    }
+    .hk-single-job-title,
+    .hk-article-title {
+        font-size: 18px !important;
     }
     .hk-hero-title {
         font-size: 21px;
