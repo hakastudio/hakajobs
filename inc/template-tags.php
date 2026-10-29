@@ -337,7 +337,7 @@ function hakajobs_get_apply_info($post_id = null) {
         'is_closed'   => $is_closed,
         'link'        => '#',
         'target'      => '_self',
-        'label'       => __('Lamar Sekarang', 'hakajobs'),
+        'label'       => __('Apply Here', 'hakajobs'),
         'icon'        => 'send',
         'channel'     => 'Website',
     );
@@ -368,7 +368,7 @@ function hakajobs_get_apply_info($post_id = null) {
         $encoded_msg = rawurlencode($default_msg);
         $info['link'] = 'https://api.whatsapp.com/send?phone=' . esc_attr($formatted_phone) . '&text=' . $encoded_msg;
         $info['target'] = '_blank';
-        $info['label'] = __('Lamar via WhatsApp', 'hakajobs');
+        $info['label'] = __('Apply Here', 'hakajobs');
         $info['icon'] = 'whatsapp';
         $info['channel'] = 'WhatsApp';
     } elseif ($apply_type === 'email' && !empty($apply_email)) {
@@ -387,13 +387,13 @@ function hakajobs_get_apply_info($post_id = null) {
         }
 
         $info['link'] = 'mailto:' . esc_attr($apply_email) . '?subject=' . rawurlencode($subject) . '&body=' . rawurlencode($body);
-        $info['label'] = __('Kirim Email Lamaran', 'hakajobs');
+        $info['label'] = __('Apply Here', 'hakajobs');
         $info['icon'] = 'mail';
         $info['channel'] = 'Email';
     } elseif (!empty($apply_url)) {
         $info['link'] = esc_url($apply_url);
         $info['target'] = '_blank';
-        $info['label'] = __('Lamar di Situs Resmi', 'hakajobs');
+        $info['label'] = __('Apply Here', 'hakajobs');
         $info['icon'] = 'external-link';
         $info['channel'] = 'Portal Perusahaan';
     }
