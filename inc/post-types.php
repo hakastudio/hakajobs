@@ -178,6 +178,30 @@ function hakajobs_register_taxonomies() {
         'rewrite'           => array('slug' => 'pendidikan'),
         'show_in_rest'      => true,
     ));
+
+    // 6. Perusahaan (Company Taxonomy)
+    $comp_labels = array(
+        'name'              => _x('Perusahaan', 'taxonomy general name', 'hakajobs'),
+        'singular_name'     => _x('Perusahaan', 'taxonomy singular name', 'hakajobs'),
+        'search_items'      => __('Cari Perusahaan', 'hakajobs'),
+        'all_items'         => __('Semua Perusahaan', 'hakajobs'),
+        'parent_item'       => __('Induk Perusahaan', 'hakajobs'),
+        'parent_item_colon' => __('Induk Perusahaan:', 'hakajobs'),
+        'edit_item'         => __('Edit Perusahaan', 'hakajobs'),
+        'update_item'       => __('Perbarui Perusahaan', 'hakajobs'),
+        'add_new_item'      => __('Tambah Perusahaan Baru', 'hakajobs'),
+        'new_item_name'     => __('Nama Perusahaan Baru', 'hakajobs'),
+        'menu_name'         => __('Perusahaan', 'hakajobs'),
+    );
+    register_taxonomy('perusahaan', array('lowongan'), array(
+        'hierarchical'      => false,
+        'labels'            => $comp_labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'perusahaan', 'with_front' => false),
+        'show_in_rest'      => true,
+    ));
 }
 add_action('init', 'hakajobs_register_taxonomies', 0);
 

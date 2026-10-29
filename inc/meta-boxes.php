@@ -317,6 +317,11 @@ function hakajobs_save_job_meta($post_id) {
     foreach ($fields as $key => $value) {
         update_post_meta($post_id, $key, $value);
     }
+
+    // Auto-sync company name to 'perusahaan' taxonomy
+    if (!empty($fields['_hakajobs_company_name'])) {
+        wp_set_object_terms($post_id, $fields['_hakajobs_company_name'], 'perusahaan', false);
+    }
 }
 add_action('save_post_lowongan', 'hakajobs_save_job_meta');
 

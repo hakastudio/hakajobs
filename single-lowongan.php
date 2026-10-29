@@ -104,7 +104,13 @@ while (have_posts()) : the_post();
 
                     <div class="hk-single-header-details">
                         <div class="hk-single-company-line">
-                            <span class="hk-company-name"><?php echo esc_html($company_name ? $company_name : get_bloginfo('name')); ?></span>
+                            <?php 
+                            $company_archive_url = function_exists('hakajobs_get_company_archive_url') ? hakajobs_get_company_archive_url($post_id, $company_name) : '';
+                            if (!empty($company_archive_url)): ?>
+                                <a href="<?php echo esc_url($company_archive_url); ?>" class="hk-company-name hk-company-link" title="<?php echo esc_attr(sprintf(__('Lihat semua lowongan dari %s', 'hakajobs'), $company_name)); ?>"><?php echo esc_html($company_name ? $company_name : get_bloginfo('name')); ?></a>
+                            <?php else: ?>
+                                <span class="hk-company-name"><?php echo esc_html($company_name ? $company_name : get_bloginfo('name')); ?></span>
+                            <?php endif; ?>
                             <?php if (!empty($company_website)): ?>
                                 <a href="<?php echo esc_url($company_website); ?>" target="_blank" rel="noopener noreferrer nofollow" class="hk-company-web-link">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>

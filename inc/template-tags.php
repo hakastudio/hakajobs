@@ -539,7 +539,13 @@ function hakajobs_render_job_card($post_id = null) {
 
             <div class="hk-job-card-main">
                 <div class="hk-job-card-header">
-                    <span class="hk-card-company"><?php echo esc_html($company_name ? $company_name : get_bloginfo('name')); ?></span>
+                    <?php 
+                    $company_archive_url = function_exists('hakajobs_get_company_archive_url') ? hakajobs_get_company_archive_url($post_id, $company_name) : '';
+                    if (!empty($company_archive_url)): ?>
+                        <a href="<?php echo esc_url($company_archive_url); ?>" class="hk-card-company hk-card-company-link" title="<?php echo esc_attr(sprintf(__('Lihat semua lowongan dari %s', 'hakajobs'), $company_name)); ?>"><?php echo esc_html($company_name); ?></a>
+                    <?php else: ?>
+                        <span class="hk-card-company"><?php echo esc_html($company_name ? $company_name : get_bloginfo('name')); ?></span>
+                    <?php endif; ?>
                     
                     <div class="hk-card-status-badges">
                         <?php if ($exp['is_closed']): ?>
@@ -1229,4 +1235,186 @@ function hakajobs_register_custom_widgets() {
     register_widget('Hakajobs_Jobseeker_CTA_Widget');
 }
 add_action('widgets_init', 'hakajobs_register_custom_widgets');
+
+/**
+ * =========================================================================
+ * Company Directory & Archive Helpers (Taxonomy 'perusahaan')
+ * =========================================================================
+ */
+
+/**
+ * Dapatkan URL arsip halaman perusahaan untuk lowongan kerja.
+ * Jika term belum terhubung, otomatis hubungkan (auto-sync instan).
+ *
+ * @param int|null $post_id      Post ID lowongan.
+ * @param string   $company_name Nama perusahaan (opsional).
+ * @return string  URL halaman arsip perusahaan atau empty string.
+ */
+function hakajobs_get_company_archive_url($post_id = null, $company_name = '') {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    if (empty($company_name) && $post_id) {
+        $company_name = get_post_meta($post_id, '_hakajobs_company_name', true);
+    }
+    $company_name = trim((string)$company_name);
+    if (empty($company_name)) {
+        return '';
+    }
+
+    // 1. Cek apakah post sudah terhubung ke term perusahaan
+    if ($post_id) {
+        $terms = get_the_terms($post_id, 'perusahaan');
+        if (!empty($terms) && !is_wp_error($terms)) {
+            $link = get_term_link($terms[0], 'perusahaan');
+            if (!is_wp_error($link)) {
+                return $link;
+            }
+        }
+    }
+
+    // 2. Cek apakah term perusahaan sudah ada berdasarkan nama
+    $term = get_term_by('name', $company_name, 'perusahaan');
+    if ($term && !is_wp_error($term)) {
+        if ($post_id) {
+            wp_set_object_terms($post_id, (int)$term->term_id, 'perusahaan', false);
+        }
+        $link = get_term_link($term, 'perusahaan');
+        return !is_wp_error($link) ? $link : '';
+    }
+
+    // 3. Jika belum ada, buatkan term baru secara dinamis
+    $inserted = wp_insert_term($company_name, 'perusahaan');
+    if (!is_wp_error($inserted) && isset($inserted['term_id'])) {
+        $term_id = (int)$inserted['term_id'];
+        if ($post_id) {
+            wp_set_object_terms($post_id, $term_id, 'perusahaan', false);
+        }
+        $link = get_term_link($term_id, 'perusahaan');
+        return !is_wp_error($link) ? $link : '';
+    }
+
+    return '';
+}
+
+/**
+ * Mengambil ringkasan profil dan statistik lowongan suatu perusahaan.
+ *
+ * @param int $term_id Term ID taksonomi 'perusahaan'.
+ * @return array|false Data profil perusahaan.
+ */
+function hakajobs_get_company_profile_data($term_id) {
+    $term = get_term($term_id, 'perusahaan');
+    if (!$term || is_wp_error($term)) {
+        return false;
+    }
+
+    $jobs = get_posts(array(
+        'post_type'      => 'lowongan',
+        'posts_per_page' => -1,
+        'post_status'    => 'publish',
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'perusahaan',
+                'field'    => 'term_id',
+                'terms'    => $term_id,
+            ),
+        ),
+        'fields'         => 'ids',
+    ));
+
+    $total_count  = count($jobs);
+    $active_count = 0;
+    $closed_count = 0;
+    $website      = '';
+    $location     = '';
+    $logo_post_id = 0;
+
+    foreach ($jobs as $jid) {
+        $exp = function_exists('hakajobs_get_job_expiry_data') ? hakajobs_get_job_expiry_data($jid) : array('is_closed' => false);
+        if (!empty($exp['is_closed'])) {
+            $closed_count++;
+        } else {
+            $active_count++;
+        }
+
+        if (empty($website)) {
+            $w = get_post_meta($jid, '_hakajobs_company_website', true);
+            if (!empty($w)) {
+                $website = $w;
+            }
+        }
+        if (empty($location)) {
+            $loc = get_post_meta($jid, '_hakajobs_company_location', true);
+            if (!empty($loc)) {
+                $location = $loc;
+            } else {
+                $loc_terms = get_the_terms($jid, 'lokasi_lowongan');
+                if (!empty($loc_terms) && !is_wp_error($loc_terms)) {
+                    $location = $loc_terms[0]->name;
+                }
+            }
+        }
+        if (!$logo_post_id && has_post_thumbnail($jid)) {
+            $logo_post_id = $jid;
+        }
+    }
+
+    if (!$logo_post_id && !empty($jobs)) {
+        $logo_post_id = $jobs[0];
+    }
+
+    return array(
+        'term'         => $term,
+        'name'         => $term->name,
+        'total'        => $total_count,
+        'active'       => $active_count,
+        'closed'       => $closed_count,
+        'website'      => $website,
+        'location'     => $location,
+        'logo_post_id' => $logo_post_id,
+    );
+}
+
+/**
+ * Auto-sinkronisasi lowongan lama yang memiliki _hakajobs_company_name ke taksonomi 'perusahaan'.
+ * Dijalankan bertahap di admin tanpa memberatkan server.
+ */
+function hakajobs_auto_sync_company_taxonomy() {
+    if (get_transient('hakajobs_synced_companies_v1')) {
+        return;
+    }
+
+    $jobs = get_posts(array(
+        'post_type'      => 'lowongan',
+        'posts_per_page' => 100,
+        'post_status'    => array('publish', 'draft', 'pending'),
+        'meta_query'     => array(
+            array(
+                'key'     => '_hakajobs_company_name',
+                'value'   => '',
+                'compare' => '!=',
+            ),
+        ),
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'perusahaan',
+                'operator' => 'NOT EXISTS',
+            ),
+        ),
+        'fields'         => 'ids',
+    ));
+
+    if (!empty($jobs)) {
+        foreach ($jobs as $jid) {
+            $comp = get_post_meta($jid, '_hakajobs_company_name', true);
+            if (!empty($comp)) {
+                wp_set_object_terms($jid, $comp, 'perusahaan', false);
+            }
+        }
+    } else {
+        set_transient('hakajobs_synced_companies_v1', 1, DAY_IN_SECONDS * 7);
+    }
+}
+add_action('admin_init', 'hakajobs_auto_sync_company_taxonomy');
 

@@ -462,107 +462,77 @@
         }
     });
 
-    // Smart Anti Copy-Paste & Source Link Attribution
+    // =========================================================================
+    // Strict Anti Copy-Paste & CTRL+C Blocker (Perlindungan Konten Hak Cipta)
+    // =========================================================================
+    function isFormInputElement(el) {
+        if (!el) return false;
+        var tag = el.tagName ? el.tagName.toUpperCase() : '';
+        return (tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable || (el.closest && el.closest('input, textarea, [contenteditable="true"]')));
+    }
+
+    // 1. Blokir Event Salin / Copy (Klik kanan Copy, Edit > Copy, shortcut)
     document.addEventListener('copy', function (e) {
-        var selection = window.getSelection();
-        if (!selection || selection.rangeCount === 0) return;
-
-        var selectedText = selection.toString();
-        if (!selectedText || !selectedText.trim()) return;
-
-        // Skip if user is copying from form inputs/textareas or contenteditable elements
         var activeEl = document.activeElement;
-        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
+        if (isFormInputElement(activeEl)) {
+            return; // Tetap izinkan copy di dalam kolom input/formulir/pencarian
+        }
+
+        var selection = window.getSelection();
+        if (selection && selection.anchorNode && isFormInputElement(selection.anchorNode.parentElement)) {
             return;
         }
 
-        // Also check if selection node is inside an input or textarea
-        var anchor = selection.anchorNode;
-        var parentEl = anchor ? (anchor.nodeType === 1 ? anchor : anchor.parentElement) : null;
-        if (parentEl && parentEl.closest('input, textarea, [contenteditable="true"]')) {
-            return;
-        }
-
-        // 1. Get Site Name (Sesuaikan Nama Website)
-        var siteName = '';
-        if (window.HakajobsData && HakajobsData.siteName) {
-            siteName = HakajobsData.siteName;
-        } else {
-            var siteTitleEl = document.querySelector('.hk-site-title, .site-title');
-            if (siteTitleEl && siteTitleEl.textContent.trim()) {
-                siteName = siteTitleEl.textContent.trim();
-            } else if (document.title) {
-                siteName = document.title.split(' - ')[0].split(' | ')[0].trim();
-            } else {
-                siteName = 'Hakajobs';
-            }
-        }
-
-        // 2. Get Article / Job Title & Link (judul Artikel yang dicopy & link artikel)
-        var articleTitle = '';
-        var articleUrl = '';
-
-        // If copying inside a specific job card (.hk-job-card)
-        var jobCard = parentEl ? parentEl.closest('.hk-job-card') : null;
-        if (jobCard) {
-            var cardTitle = jobCard.querySelector('.hk-job-title a, .hk-job-title, h3 a, h3');
-            if (cardTitle && cardTitle.textContent.trim()) {
-                articleTitle = cardTitle.textContent.trim();
-            }
-            var cardLink = jobCard.querySelector('a.hk-job-title, .hk-job-title a, a.hk-btn-primary, h3 a');
-            if (cardLink && cardLink.href) {
-                articleUrl = cardLink.href.split('#')[0];
-            }
-        }
-
-        // If not found from a card, get from single page heading or document
-        if (!articleTitle) {
-            var heading = document.querySelector('.hk-single-job-title, .hk-entry-title, .entry-title, .hk-page-title, h1');
-            if (heading && heading.textContent.trim()) {
-                articleTitle = heading.textContent.trim();
-            } else if (document.title) {
-                articleTitle = document.title.split(' - ')[0].split(' | ')[0].trim();
-            } else {
-                articleTitle = siteName;
-            }
-        }
-
-        if (!articleUrl) {
-            articleUrl = window.location.href.split('#')[0];
-        }
-
-        articleTitle = articleTitle.replace(/\s+/g, ' ').trim();
-
-        // 3. User format:
-        // Baca lowongan di " [Nama Website] ", " [judul Artikel yang dicopy] " selengkapnya " [link artikel yang dicopy] " .
-        var attributionText = '\n\nBaca lowongan di "' + siteName + '", "' + articleTitle + '" selengkapnya "' + articleUrl + '" .';
-        var fullText = selectedText + attributionText;
-
+        e.preventDefault();
         if (e.clipboardData) {
-            e.clipboardData.setData('text/plain', fullText);
-
-            try {
-                var htmlContainer = document.createElement('div');
-                for (var i = 0; i < selection.rangeCount; ++i) {
-                    htmlContainer.appendChild(selection.getRangeAt(i).cloneContents());
-                }
-                var htmlAttribution = '<br><br><p>Baca lowongan di &ldquo;<strong>' + escapeHtml(siteName) + '</strong>&rdquo;, &ldquo;<em>' + escapeHtml(articleTitle) + '</em>&rdquo; selengkapnya &ldquo;<a href="' + escapeHtml(articleUrl) + '">' + escapeHtml(articleUrl) + '</a>&rdquo; .</p>';
-                e.clipboardData.setData('text/html', htmlContainer.innerHTML + htmlAttribution);
-            } catch (err) {
-                // Fallback to plain text already set
-            }
-
-            e.preventDefault();
-        } else if (window.clipboardData) {
-            window.clipboardData.setData('Text', fullText);
-            e.preventDefault();
+            e.clipboardData.clearData();
         }
 
-        // Show toast notification
         if (typeof showToast === 'function') {
-            showToast('📋 Teks disalin beserta sumber: ' + siteName);
+            showToast('⚠️ Konten dilindungi hak cipta. Teks tidak dapat disalin (Copy dinonaktifkan).');
         }
     });
+
+    // 2. Blokir Event Potong / Cut
+    document.addEventListener('cut', function (e) {
+        var activeEl = document.activeElement;
+        if (isFormInputElement(activeEl)) {
+            return;
+        }
+        e.preventDefault();
+        if (e.clipboardData) {
+            e.clipboardData.clearData();
+        }
+    });
+
+    // 3. Blokir Pintasan Keyboard (CTRL+C, CTRL+X, CMD+C, CMD+X)
+    document.addEventListener('keydown', function (e) {
+        var activeEl = document.activeElement;
+        if (isFormInputElement(activeEl)) {
+            return; // Izinkan shortcut dalam input
+        }
+
+        var isCtrlOrCmd = (e.ctrlKey || e.metaKey);
+        var key = e.key ? e.key.toLowerCase() : '';
+        var code = e.keyCode || e.which;
+
+        // Blokir CTRL+C / CMD+C
+        if (isCtrlOrCmd && (key === 'c' || code === 67)) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof showToast === 'function') {
+                showToast('⚠️ Konten dilindungi hak cipta. Pintasan CTRL+C dinonaktifkan.');
+            }
+            return false;
+        }
+
+        // Blokir CTRL+X / CMD+X
+        if (isCtrlOrCmd && (key === 'x' || code === 88)) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    }, true);
 
     // Clean up any residual dark mode localStorage key and attribute
     try {

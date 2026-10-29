@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.59');
+define('HAKAJOBS_VERSION', '1.0.60');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -567,5 +567,23 @@ function hakajobs_filter_soal_buttons_markup($content) {
     return $content;
 }
 add_filter('the_content', 'hakajobs_filter_soal_buttons_markup', 15);
+
+/**
+ * Otomatis flush rewrite rules saat tema diperbarui ke versi baru
+ * agar struktur URL taksonomi perusahaan (/perusahaan/) langsung aktif tanpa perlu simpan ulang permalink.
+ */
+function hakajobs_flush_rewrite_on_upgrade() {
+    $flushed_ver = get_option('hakajobs_rewrite_flushed_version', '');
+    if ($flushed_ver !== HAKAJOBS_VERSION) {
+        flush_rewrite_rules(false);
+        update_option('hakajobs_rewrite_flushed_version', HAKAJOBS_VERSION);
+    }
+}
+add_action('init', 'hakajobs_flush_rewrite_on_upgrade', 99);
+
+add_action('after_switch_theme', function () {
+    flush_rewrite_rules(false);
+});
+
 
 
