@@ -1423,6 +1423,7 @@ button, input, select, textarea {
     border: 1px solid transparent;
     text-decoration: none;
     transition: all 0.15s ease;
+    white-space: nowrap;
 }
 
 .hk-btn-detail {
@@ -2345,6 +2346,66 @@ figure {
     font-weight: 700;
     color: var(--hk-dark);
     margin-bottom: 16px;
+}
+
+.hk-related-jobs-wrap .hk-job-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 14px;
+}
+
+.hk-related-jobs-wrap .hk-job-card:hover {
+    background: #ffffff;
+    border-color: #cbd5e1;
+}
+
+.hk-related-jobs-wrap .hk-job-card-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 12px;
+    margin-top: 12px;
+    gap: 10px;
+}
+
+.hk-related-jobs-wrap .hk-card-footer-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    width: 100%;
+    font-size: 11.5px;
+}
+
+.hk-related-jobs-wrap .hk-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.hk-related-jobs-wrap .hk-card-actions .hk-btn-bookmark {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+}
+
+.hk-related-jobs-wrap .hk-card-actions .hk-btn-detail,
+.hk-related-jobs-wrap .hk-card-actions .hk-btn-quick-apply,
+.hk-related-jobs-wrap .hk-card-actions .hk-btn-closed-pill {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 36px;
+    padding: 0 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-align: center;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 /* Sticky Apply Card on Single Page */
@@ -4048,12 +4109,48 @@ figure {
         padding: 2px 7px;
     }
     .hk-job-card-footer {
-        padding-top: 10px;
-        margin-top: 10px;
-        gap: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 12px;
+        margin-top: 12px;
+        gap: 10px;
     }
     .hk-card-footer-info {
-        font-size: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        width: 100%;
+        font-size: 11.5px;
+    }
+    .hk-card-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+    }
+    .hk-card-actions .hk-btn-bookmark {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+    }
+    .hk-card-actions .hk-btn-detail,
+    .hk-card-actions .hk-btn-quick-apply,
+    .hk-card-actions .hk-btn-closed-pill {
+        flex: 1 1 0;
+        min-width: 0;
+        height: 36px;
+        padding: 0 10px;
+        font-size: 12.5px;
+        font-weight: 700;
+        white-space: nowrap;
+        text-align: center;
+        justify-content: center;
+        display: inline-flex;
+        align-items: center;
+        box-sizing: border-box;
     }
 
     /* Footer on Mobile */
