@@ -217,7 +217,6 @@ while (have_posts()) : the_post();
 
                     <!-- Main Job Description -->
                     <div class="hk-job-description-box hk-typography">
-                        <h2 class="hk-box-heading"><?php _e('Deskripsi & Kualifikasi Pekerjaan', 'hakajobs'); ?></h2>
                         <?php the_content(); ?>
                     </div>
 
