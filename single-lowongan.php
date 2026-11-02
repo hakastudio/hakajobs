@@ -69,7 +69,7 @@ while (have_posts()) : the_post();
                         </span>
                         <div class="hk-admin-broadcast-texts">
                             <strong><?php _e('Siarkan Loker ke Saluran WhatsApp', 'hakajobs'); ?></strong>
-                            <span><?php _e('Format teks siap kirim lengkap dengan emoji, ringkasan, dan link channel.', 'hakajobs'); ?></span>
+                            <span><?php _e('Format teks siap kirim dengan ringkasan info loker dan link channel.', 'hakajobs'); ?></span>
                         </div>
                     </div>
                     <div class="hk-admin-broadcast-actions">

@@ -1940,13 +1940,13 @@ function hakajobs_customize_register($wp_customize) {
 
     // Judul Header Broadcast
     $wp_customize->add_setting('hakajobs_wa_broadcast_heading', array(
-        'default'           => '📢 LOWONGAN KERJA TERBARU',
+        'default'           => 'INFO LOWONGAN KERJA TERBARU',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control('hakajobs_wa_broadcast_heading', array(
         'type'        => 'text',
-        'label'       => __('📝 Header Teks Pesan Broadcast', 'hakajobs'),
+        'label'       => __('Header Teks Pesan Broadcast', 'hakajobs'),
         'description' => __('Judul pesan baris pertama pada saat teks broadcast digenerate.', 'hakajobs'),
         'section'     => 'hakajobs_wa_channel_section',
     ));

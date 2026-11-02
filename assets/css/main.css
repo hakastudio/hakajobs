@@ -944,6 +944,7 @@ button, input, select, textarea {
     font-size: 13px;
     position: relative;
     z-index: 3;
+    margin-bottom: 28px;
 }
 
 .hk-quick-label {
@@ -2086,17 +2087,38 @@ button, input, select, textarea {
 
 /* Typography styles for content */
 .hk-typography {
-    line-height: 1.75;
-    color: #334155;
-    font-size: 15px;
+    line-height: 1.8;
+    color: #1e293b;
+    font-size: 16px;
     overflow-wrap: break-word;
     word-break: break-word;
     min-width: 0;
+    letter-spacing: -0.01em;
 }
 
-.hk-typography a {
+.hk-typography strong,
+.hk-typography b {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.hk-typography a:not(.hk-btn):not(.hk-chip) {
+    color: var(--hk-primary, #0284c7);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(2, 132, 199, 0.45);
     word-break: break-word;
     overflow-wrap: break-word;
+    transition: all 0.15s ease;
+}
+
+.hk-typography a:not(.hk-btn):not(.hk-chip):hover {
+    color: var(--hk-primary-hover, #0369a1);
+    text-decoration-color: var(--hk-primary-hover, #0369a1);
+    background-color: rgba(2, 132, 199, 0.08);
+    border-radius: 3px;
 }
 
 .hk-typography table,
@@ -2176,21 +2198,21 @@ figure {
     margin-right: 0;
 }
 
-/* Headings in Job Article (H1, H2, H3, H4, H5, H6) - Uniform Size */
+/* Headings in Job Description Box (H1, H2, H3, H4, H5, H6) - Uniform Size */
 .hk-box-heading,
-.hk-typography h1,
-.hk-typography h2,
-.hk-typography h3,
-.hk-typography h4,
-.hk-typography h5,
-.hk-typography h6,
-.hk-typography .wp-block-heading,
-.hk-single-content .hk-typography h1,
-.hk-single-content .hk-typography h2,
-.hk-single-content .hk-typography h3,
-.hk-single-content .hk-typography h4,
-.hk-single-content .hk-typography h5,
-.hk-single-content .hk-typography h6 {
+.hk-job-description-box h1,
+.hk-job-description-box h2,
+.hk-job-description-box h3,
+.hk-job-description-box h4,
+.hk-job-description-box h5,
+.hk-job-description-box h6,
+.hk-job-description-box .wp-block-heading,
+.hk-single-content .hk-job-description-box h1,
+.hk-single-content .hk-job-description-box h2,
+.hk-single-content .hk-job-description-box h3,
+.hk-single-content .hk-job-description-box h4,
+.hk-single-content .hk-job-description-box h5,
+.hk-single-content .hk-job-description-box h6 {
     font-size: 18px !important;
     font-weight: 700 !important;
     line-height: 1.45;
@@ -4047,6 +4069,7 @@ figure {
     }
     .hk-quick-filters {
         gap: 6px;
+        margin-bottom: 20px;
     }
     .hk-chip {
         padding: 4px 10px;
@@ -4423,38 +4446,50 @@ figure {
         min-width: 0;
         width: 100%;
         max-width: 100%;
-        font-size: 14.5px;
-        line-height: 1.7;
+        font-size: 15px;
+        line-height: 1.75;
+        color: #1e293b;
         word-break: break-word;
         overflow-wrap: break-word;
     }
 
     .hk-article-content p {
-        margin-bottom: 14px;
+        margin-bottom: 16px;
+    }
+
+    .hk-article-content h1 {
+        font-size: 22px;
+        margin: 28px 0 12px;
     }
 
     .hk-article-content h2 {
-        font-size: 18px;
-        margin: 24px 0 10px;
+        font-size: 19px;
+        margin: 26px 0 10px;
         padding-bottom: 6px;
         word-break: break-word;
     }
 
     .hk-article-content h3 {
-        font-size: 16px;
-        margin: 20px 0 8px;
+        font-size: 17px;
+        margin: 22px 0 8px;
         word-break: break-word;
+    }
+
+    .hk-article-content h4 {
+        font-size: 15.5px;
+        margin: 18px 0 8px;
     }
 
     .hk-article-content ul,
     .hk-article-content ol {
-        margin: 0 0 16px 18px;
+        margin: 0 0 18px 20px;
         padding: 0;
     }
 
     .hk-article-content li {
         margin-bottom: 6px;
-        line-height: 1.6;
+        line-height: 1.65;
+        color: #1e293b;
     }
 
     .hk-callout-box {
@@ -4617,13 +4652,13 @@ figure {
 
     .hk-box-heading,
     .hk-notes-heading,
-    .hk-typography h1,
-    .hk-typography h2,
-    .hk-typography h3,
-    .hk-typography h4,
-    .hk-typography h5,
-    .hk-typography h6,
-    .hk-typography .wp-block-heading {
+    .hk-job-description-box h1,
+    .hk-job-description-box h2,
+    .hk-job-description-box h3,
+    .hk-job-description-box h4,
+    .hk-job-description-box h5,
+    .hk-job-description-box h6,
+    .hk-job-description-box .wp-block-heading {
         font-size: 16px !important;
         margin: 20px 0 10px;
     }
@@ -5384,35 +5419,78 @@ figure {
 }
 
 .hk-article-content {
-    font-size: 15.5px;
-    line-height: 1.8;
-    color: var(--hk-text-main);
+    font-size: 16px;
+    line-height: 1.85;
+    color: #1e293b;
+    letter-spacing: -0.01em;
 }
 
 .hk-article-content p {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+}
+
+.hk-article-content strong,
+.hk-article-content b {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.hk-article-content a:not(.hk-btn):not(.hk-article-category-badge) {
+    color: var(--hk-primary, #0284c7);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(2, 132, 199, 0.45);
+    transition: all 0.15s ease;
+}
+
+.hk-article-content a:not(.hk-btn):not(.hk-article-category-badge):hover {
+    color: var(--hk-primary-hover, #0369a1);
+    text-decoration-color: var(--hk-primary-hover, #0369a1);
+    background-color: rgba(2, 132, 199, 0.08);
+    border-radius: 3px;
+}
+
+.hk-article-content h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--hk-dark, #0f172a);
+    margin: 38px 0 16px;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
 }
 
 .hk-article-content h2 {
     font-size: 22px;
     font-weight: 800;
-    color: var(--hk-dark);
+    color: var(--hk-dark, #0f172a);
     margin: 36px 0 16px;
     padding-bottom: 8px;
     border-bottom: 2px solid #e2e8f0;
     letter-spacing: -0.02em;
+    line-height: 1.4;
 }
 
 .hk-article-content h3 {
-    font-size: 18px;
+    font-size: 18.5px;
     font-weight: 700;
-    color: var(--hk-dark);
+    color: var(--hk-dark, #0f172a);
     margin: 28px 0 12px;
+    line-height: 1.45;
+}
+
+.hk-article-content h4 {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: var(--hk-dark, #0f172a);
+    margin: 24px 0 10px;
+    line-height: 1.5;
 }
 
 .hk-article-content ul,
 .hk-article-content ol {
-    margin: 0 0 20px 24px;
+    margin: 0 0 22px 24px;
     padding: 0;
 }
 
@@ -5426,7 +5504,20 @@ figure {
 
 .hk-article-content li {
     margin-bottom: 8px;
-    line-height: 1.7;
+    line-height: 1.75;
+    color: #1e293b;
+}
+
+.hk-article-content blockquote {
+    border-left: 4px solid var(--hk-primary, #0284c7);
+    background: #f8fafc;
+    padding: 16px 20px;
+    margin: 24px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #334155;
+    font-size: 15.5px;
+    line-height: 1.75;
 }
 
 /* Callout Info Box */

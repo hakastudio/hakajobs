@@ -1017,7 +1017,6 @@ function hakajobs_get_wa_broadcast_text($post_id = null) {
     }
 
     $salary      = get_post_meta($post_id, '_hakajobs_salary', true);
-    $deadline    = get_post_meta($post_id, '_hakajobs_deadline', true);
     $location    = get_post_meta($post_id, '_hakajobs_company_location', true);
 
     $terms_loc   = get_the_terms($post_id, 'lokasi_lowongan');
@@ -1025,56 +1024,53 @@ function hakajobs_get_wa_broadcast_text($post_id = null) {
         $location = $terms_loc[0]->name;
     }
     if (empty($location)) {
-        $location = 'Indonesia';
+        $location = '-';
     }
 
     $terms_type  = get_the_terms($post_id, 'tipe_pekerjaan');
-    $type_name   = (!empty($terms_type) && !is_wp_error($terms_type)) ? $terms_type[0]->name : '';
+    $type_name   = (!empty($terms_type) && !is_wp_error($terms_type)) ? $terms_type[0]->name : '-';
 
     $terms_edu   = get_the_terms($post_id, 'pendidikan_terakhir');
-    $edu_name    = (!empty($terms_edu) && !is_wp_error($terms_edu)) ? $terms_edu[0]->name : '';
+    $edu_name    = (!empty($terms_edu) && !is_wp_error($terms_edu)) ? $terms_edu[0]->name : '-';
+
+    $terms_exp   = get_the_terms($post_id, 'pengalaman_kerja');
+    $exp_name    = (!empty($terms_exp) && !is_wp_error($terms_exp)) ? $terms_exp[0]->name : '-';
 
     $permalink   = get_permalink($post_id);
     $channel_url = get_theme_mod('hakajobs_wa_channel_url', '');
-    $channel_name= get_theme_mod('hakajobs_wa_channel_name', __('Saluran WhatsApp Kami', 'hakajobs'));
-    $heading     = get_theme_mod('hakajobs_wa_broadcast_heading', '📢 LOWONGAN KERJA TERBARU');
 
-    $msg = '*' . trim($heading) . "*\n";
-    $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
-    $msg .= "🏢 *Perusahaan* : " . $company . "\n";
-    $msg .= "💼 *Posisi*     : " . $title . "\n";
-    $msg .= "📍 *Lokasi*     : " . $location . "\n";
-
-    if (!empty($type_name)) {
-        $msg .= "🕒 *Tipe Kerja* : " . $type_name . "\n";
-    }
-
-    if (!empty($edu_name)) {
-        $msg .= "🎓 *Pendidikan* : " . $edu_name . "\n";
-    }
-
-    if (!empty($salary)) {
-        $msg .= "💰 *Kisaran Gaji*: " . $salary . "\n";
-    }
-
-    if (!empty($deadline)) {
-        $deadline_ts = strtotime($deadline);
-        if ($deadline_ts) {
-            $msg .= "⏳ *Batas Akhir*: " . date_i18n('d F Y', $deadline_ts) . "\n";
+    $custom_heading = get_theme_mod('hakajobs_wa_broadcast_heading', '');
+    $heading        = 'INFO LOWONGAN KERJA TERBARU';
+    if (!empty($custom_heading) && $custom_heading !== '📢 LOWONGAN KERJA TERBARU') {
+        $clean_heading = trim(preg_replace('/[\x{1F600}-\x{1F64F}\x{1F300}-\x{1F5FF}\x{1F680}-\x{1F6FF}\x{1F1E0}-\x{1F1FF}\x{2600}-\x{26FF}\x{2700}-\x{27BF}\x{1F900}-\x{1F9FF}\x{1FA70}-\x{1FAFF}]/u', '', $custom_heading));
+        if (!empty($clean_heading)) {
+            $heading = $clean_heading;
         }
     }
 
-    $msg .= "\n📝 *Detail Lengkap & Cara Melamar:*\n";
-    $msg .= "👉 " . $permalink . "\n\n";
-    $msg .= "⚠️ *Catatan:* Proses rekrutmen ini TIDAK dipungut biaya apapun (GRATIS). Waspada terhadap segala bentuk penipuan.\n";
+    $posisi_text  = !empty($title) ? trim(wp_strip_all_tags($title)) : '-';
+    $company_text = !empty($company) ? trim(wp_strip_all_tags($company)) : '-';
+    $type_text    = !empty($type_name) ? trim(wp_strip_all_tags($type_name)) : '-';
+    $loc_text     = !empty($location) ? trim(wp_strip_all_tags($location)) : '-';
+    $edu_text     = !empty($edu_name) ? trim(wp_strip_all_tags($edu_name)) : '-';
+    $exp_text     = !empty($exp_name) ? trim(wp_strip_all_tags($exp_name)) : '-';
+    $salary_text  = !empty($salary) ? trim(wp_strip_all_tags($salary)) : '-';
 
+    $msg  = trim($heading) . "\n";
+    $msg .= "- Posisi: " . $posisi_text . "\n";
+    $msg .= "- Perusahaan: " . $company_text . "\n";
+    $msg .= "- Tipe Pekerjaan: " . $type_text . "\n";
+    $msg .= "- Lokasi: " . $loc_text . "\n";
+    $msg .= "- Pendidikan: " . $edu_text . "\n";
+    $msg .= "- Pengalaman: " . $exp_text . "\n";
+    $msg .= "- Kisaran Gaji: " . $salary_text . "\n";
+    $msg .= "Detail Kualifikasi & Cara Melamar:\n" . esc_url($permalink) . "\n";
+    $msg .= "Gabung Saluran WhatsApp:\n";
     if (!empty($channel_url)) {
-        $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
-        $msg .= "📲 *Gabung " . $channel_name . " untuk update loker harian:*\n";
-        $msg .= "👉 " . esc_url($channel_url) . "\n";
+        $msg .= esc_url($channel_url);
     }
 
-    return $msg;
+    return trim($msg);
 }
 
 /**

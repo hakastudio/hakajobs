@@ -119,8 +119,6 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
 
                         <!-- Popular Quick Filters -->
                         <div class="hk-quick-filters">
-                            <span class="hk-quick-label"><?php _e('Pencarian Populer:', 'hakajobs'); ?></span>
-                            <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=remote" class="hk-chip">🌐 Remote / WFH</a>
                             <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?pengalaman=fresh-graduate" class="hk-chip">🎓 Fresh Graduate</a>
                             <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=magang" class="hk-chip">💼 Magang (Intern)</a>
                             <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=full-time" class="hk-chip">⏰ Full-Time</a>
@@ -243,32 +241,10 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
 
                     <!-- Popular Quick Filters -->
                     <div class="hk-quick-filters">
-                        <span class="hk-quick-label"><?php _e('Pencarian Populer:', 'hakajobs'); ?></span>
-                        <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=remote" class="hk-chip">🌐 Remote / WFH</a>
                         <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?pengalaman=fresh-graduate" class="hk-chip">🎓 Fresh Graduate</a>
                         <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=magang" class="hk-chip">💼 Magang (Intern)</a>
                         <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=full-time" class="hk-chip">⏰ Full-Time</a>
                     </div>
-
-                    <?php if ($show_stats === '1' && $hero_style !== 'compact'): ?>
-                    <!-- Hero Live Stats Strip (Aksen Pasang Loker) -->
-                    <div class="hk-hero-stats">
-                        <div class="hk-stat-item">
-                            <span class="hk-stat-num"><?php echo esc_html($stat1_num); ?></span>
-                            <span class="hk-stat-label"><?php echo esc_html($stat1_label); ?></span>
-                        </div>
-                        <div class="hk-stat-sep"></div>
-                        <div class="hk-stat-item">
-                            <span class="hk-stat-num"><?php echo esc_html($stat2_num); ?></span>
-                            <span class="hk-stat-label"><?php echo esc_html($stat2_label); ?></span>
-                        </div>
-                        <div class="hk-stat-sep"></div>
-                        <div class="hk-stat-item">
-                            <span class="hk-stat-num"><?php echo esc_html($stat3_num); ?></span>
-                            <span class="hk-stat-label"><?php echo esc_html($stat3_label); ?></span>
-                        </div>
-                    </div>
-                    <?php endif; ?>
 
                 </div>
             <?php endif; ?>
