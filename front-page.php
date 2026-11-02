@@ -117,12 +117,6 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
                             </form>
                         </div>
 
-                        <!-- Popular Quick Filters -->
-                        <div class="hk-quick-filters">
-                            <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?pengalaman=fresh-graduate" class="hk-chip">🎓 Fresh Graduate</a>
-                            <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=magang" class="hk-chip">💼 Magang (Intern)</a>
-                            <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=full-time" class="hk-chip">⏰ Full-Time</a>
-                        </div>
                     </div>
 
                     <div class="hk-hero-split-right">
@@ -239,12 +233,7 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
                         </form>
                     </div>
 
-                    <!-- Popular Quick Filters -->
-                    <div class="hk-quick-filters">
-                        <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?pengalaman=fresh-graduate" class="hk-chip">🎓 Fresh Graduate</a>
-                        <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=magang" class="hk-chip">💼 Magang (Intern)</a>
-                        <a href="<?php echo esc_url(get_post_type_archive_link('lowongan')); ?>?tipe=full-time" class="hk-chip">⏰ Full-Time</a>
-                    </div>
+
 
                 </div>
             <?php endif; ?>

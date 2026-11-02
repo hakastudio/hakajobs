@@ -2121,6 +2121,11 @@ button, input, select, textarea {
     border-radius: 3px;
 }
 
+.hk-typography a:not(.hk-btn):not(.hk-chip) strong,
+.hk-typography a:not(.hk-btn):not(.hk-chip) b {
+    color: inherit;
+}
+
 .hk-typography table,
 .hk-article-content table,
 .wp-block-table {
@@ -2198,17 +2203,15 @@ figure {
     margin-right: 0;
 }
 
-/* Headings in Job Description Box (H1, H2, H3, H4, H5, H6) - Uniform Size */
+/* Headings in Job Description Box - H2 slightly larger */
 .hk-box-heading,
 .hk-job-description-box h1,
-.hk-job-description-box h2,
 .hk-job-description-box h3,
 .hk-job-description-box h4,
 .hk-job-description-box h5,
 .hk-job-description-box h6,
 .hk-job-description-box .wp-block-heading,
 .hk-single-content .hk-job-description-box h1,
-.hk-single-content .hk-job-description-box h2,
 .hk-single-content .hk-job-description-box h3,
 .hk-single-content .hk-job-description-box h4,
 .hk-single-content .hk-job-description-box h5,
@@ -2218,6 +2221,16 @@ figure {
     line-height: 1.45;
     color: var(--hk-dark);
     margin: 24px 0 12px;
+    letter-spacing: -0.01em;
+}
+
+.hk-job-description-box h2,
+.hk-single-content .hk-job-description-box h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    line-height: 1.45;
+    color: var(--hk-dark);
+    margin: 28px 0 12px;
     letter-spacing: -0.01em;
 }
 
@@ -4653,7 +4666,6 @@ figure {
     .hk-box-heading,
     .hk-notes-heading,
     .hk-job-description-box h1,
-    .hk-job-description-box h2,
     .hk-job-description-box h3,
     .hk-job-description-box h4,
     .hk-job-description-box h5,
@@ -4661,6 +4673,10 @@ figure {
     .hk-job-description-box .wp-block-heading {
         font-size: 16px !important;
         margin: 20px 0 10px;
+    }
+    .hk-job-description-box h2 {
+        font-size: 18px !important;
+        margin: 22px 0 10px;
     }
     .hk-mobile-sticky-bar {
         display: flex;
