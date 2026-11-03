@@ -232,7 +232,6 @@
                 <button type="button" onclick="setThemeColor('#ea580c', '#c2410c')" title="Oranye Amber" style="width:18px;height:18px;border-radius:50%;background:#ea580c;border:2px solid #fff;cursor:pointer;"></button>
             </div>
             <button type="button" onclick="resetHakajobsCookieConsent()" style="background:#1e293b; border:1px solid #334155; color:#38bdf8; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" title="Reset dan Munculkan Kembali Pop-up Cookie">🍪 Uji Pop-up Cookie</button>
-            <button type="button" onclick="showToast('🔔 Web Push OneSignal: Pop-up izin ditangani langsung secara native oleh OneSignal.com!')" style="background:#0284c7; border:1px solid #0369a1; color:#ffffff; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" title="Web Push OneSignal">🔔 Web Push OneSignal</button>
         </div>
     </div>
 
@@ -2487,7 +2486,6 @@
         </div>
     </aside>
 
-    <!-- Web Push OneSignal Native v16 -->
 
     <!-- Theme JS -->
     <script src="assets/js/main.js?v=2.3"></script>
@@ -2722,7 +2720,6 @@
             showToast('Pop-up cookie di-reset. Menampilkan kembali...');
         };
 
-        /* OneSignal Native prompt handled via SDK */
 
         if (window.location.search.indexOf('screenshot') !== -1) {
             document.body.classList.add('is-screenshot');

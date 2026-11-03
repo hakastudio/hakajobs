@@ -36,7 +36,6 @@ Hakajobs/
 ├── page-tes-karir.php         # Template Pusat Tes & Karir (Soal SKD/BUMN, Psikotes, Panduan CV, Kuis CAT, E-Book)
 ├── page-saved.php             # Template khusus halaman "Lowongan Tersimpan"
 ├── 404.php                    # Halaman 404 ramah pengguna
-├── OneSignalSDKWorker.js      # Service Worker OneSignal untuk Web Push Notification
 ├── screenshot.png             # Gambar pratinjau tema di dashboard WordPress
 ├── assets/
 │   ├── css/
@@ -55,7 +54,6 @@ Hakajobs/
     ├── post-types.php         # Custom Post Type 'lowongan' & Taksonomi (Kategori, Lokasi, Tipe, Pengalaman)
     ├── meta-boxes.php         # Custom Meta Box (Nama Perusahaan, Gaji, WhatsApp, Email, Batas Waktu)
     ├── customizer.php         # Panel pengaturan visual WordPress Customizer
-    ├── push-notification.php  # Modul Web Push OneSignal resmi v16 (Pop-up Asli OneSignal.com)
     ├── template-tags.php      # Helper fungsi (Avatar inisial perusahaan, badge, format gaji)
     ├── sample-data.php        # Fitur 1-Klik Pasang Data Demo Lowongan
     ├── seo.php                # Fast-indexing engine & Google Schema JobPosting JSON-LD
@@ -128,14 +126,6 @@ Mencegah pencari kerja tertipu oleh calo atau oknum berbayar dengan banner eduka
 ### 9. 1-Klik Pasang Data Demo (Sample Data Seeder)
 Tersedia menu **Lowongan Kerja > Pasang Data Demo** di dashboard WordPress untuk mengisi situs baru dengan contoh lowongan kerja, kategori, dan kota realistis dalam satu klik.
 
-### 10. Web Push Notifikasi Handphone (OneSignal Web SDK v16)
-Kirim pemberitahuan instan langsung ke layar kunci (*lockscreen*) dan bilah notifikasi smartphone pengunjung (Android & iOS 16.4+) setiap kali loker atau artikel baru diterbitkan:
-- **Pop-up Izin Resmi OneSignal:** Pop-up native OneSignal.com (browser prompt / slidedown) yang terstandarisasi, bersih, responsif, dan langsung dikonfigurasi dari dashboard OneSignal.
-- **Pengiriman Otomatis via REST API:** WordPress otomatis menghubungi server OneSignal saat status loker/artikel beralih menjadi *Publish*.
-- **Kendali Penuh di Editor Postingan:** Meta box panel khusus pada halaman tulis lowongan/artikel untuk mengatur apakah notifikasi ingin dikirim, kirim ulang saat revisi (*update*), atau kustomisasi judul & ringkasan pesan khusus.
-- **Dukungan Rich Image:** Otomatis melampirkan poster/gambar unggulan (*Featured Image*) loker ukuran besar di layar HP penerima.
-- **Berjalan Native di Browser:** Tidak membutuhkan aplikasi pihak ketiga atau instalasi PWA, berjalan langsung pada Chrome, Samsung Internet, Edge, dan Safari iOS.
-
 ---
 
 ## 🎨 Panel Pengaturan WordPress (WordPress Customizer)
@@ -196,17 +186,6 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
     - Kustomisasi gaya hero pasang loker (*Navy Klasik, Split Converter, Minimalist*).
     - Penyesuaian harga dan rincian benefit paket Featured & Urgent.
     - Nomor WhatsApp admin dan email penerima pesanan pemasangan iklan.
-11. **🔔 Notifikasi Web Push OneSignal:**
-    - Saklar aktifkan/nonaktifkan Web Push OneSignal.
-    - **OneSignal App ID:** ID unik aplikasi OneSignal (contoh: `fa8d0207-13ae-4f12-9058-d910ade5f80a`).
-    - **OneSignal REST API Key:** Kunci API otorisasi server OneSignal (tipe *Admin Key*).
-    - **OneSignal Safari Web ID (Opsional):** ID dukungan browser Safari (contoh: `web.onesignal.auto.xxxxxx`).
-    - Saklar kirim otomatis: saat Lowongan Kerja baru terbit & saat Artikel baru terbit.
-    - Pilihan kirim notifikasi otomatis saat konten diedit / diperbarui (*update*).
-    - Format judul notifikasi dinamis (mendukung tag `{title}`, `{company}`, `{site_name}`).
-    - Opsi tampilkan poster gambar unggulan (*Featured Image*) berukuran besar di layar HP.
-    - **Pop-up Izin Bawaan OneSignal:** Notifikasi izin browser langsung ditangani oleh skrip resmi OneSignal tanpa popup kartu manual tema, menghindari prompt ganda dan menjamin kepatuhan browser modern.
-
 ---
 
 ## 🛠️ Petunjuk Instalasi & Setup Cepat
@@ -282,50 +261,6 @@ Karena tema ini dirancang tanpa registrasi login umum, fitur **"Pasang Loker"** 
    - ⚡ **Ringan & Aman:** Basis data situs tidak terbebani oleh akun pengguna yang tidak aktif.
 
 ---
-
-## 🔔 Panduan Integrasi Web Push OneSignal
-
-Tema Hakajobs sudah dilengkapi integrasi Web Push OneSignal langsung tanpa memerlukan instalasi plugin tambahan pihak ketiga. Notifikasi akan otomatis muncul di handphone pengunjung (Android & iOS 16.4+) setiap kali loker atau artikel baru diterbitkan.
-
-### 1. Buat Akun & Aplikasi di OneSignal
-1. Kunjungi [OneSignal.com](https://onesignal.com) dan daftar akun gratis *(Free tier s/d 10.000 subscriber)*.
-2. Klik **New App/Website**.
-3. Masukkan nama aplikasi Anda (contoh: `Loker Lampung`), pilih platform **Web Push**, lalu klik **Next: Configure Platform**.
-
-### 2. Konfigurasi Web Push
-1. Pada pilihan integrasi, pilih **Custom Code** (atau **Typical Site**).
-2. Isi informasi website Anda:
-   - **Site Name:** Nama website Anda (contoh: `Info Loker Lampung`).
-   - **Site URL:** Alamat lengkap website Anda ber-HTTPS (contoh: `https://infolokerlampung.com`).
-   - **Auto Resubscribe (HTTPS Only):** Aktifkan (*ON*).
-   - **Default Icon URL:** Masukkan link logo situs rasio 1:1 (min. `192x192 px`).
-3. Klik **Save**.
-4. **Pop-up Izin Resmi OneSignal:** Pada bagian **Permission Prompt Setup**, Anda dapat menyesuaikan tampilan prompt bawaan OneSignal (misal: Slidedown prompt, Native Browser Prompt, atau Bell Icon) langsung dari dashboard OneSignal. Pop-up ini akan tampil secara native dan terintegrasi di website.
-5. OneSignal akan menampilkan kode script HTML. **PENTING: Jangan salin tag `<script>` ke WordPress**, karena tema Hakajobs sudah mengintegrasikan OneSignal Web SDK v16 secara otomatis.
-
-### 3. Ambil Kunci & ID dari OneSignal
-1. Buka menu **Settings** di bilah atas OneSignal, lalu pilih **Keys & IDs** (atau **API Keys**).
-2. Salin nilai berikut:
-   - **OneSignal App ID:** Kode UUID 36 karakter (contoh: `fa8d0207-13ae-4f12-9058-d910ade5f80a`).
-   - **OneSignal Safari Web ID (Opsional):** Kode Safari jika ada (contoh: `web.onesignal.auto.xxxxxx`).
-3. Pada bagian **REST API Keys**, klik tombol **+ Add Key** (atau **+ Tambahkan Kunci**):
-   - Pilih tipe: **Admin Key** (Kunci Admin).
-   - Beri nama: `WordPress Server Key`.
-   - Klik **Create** / **Simpan**, lalu salin kunci panjang yang muncul (diawali `os_v2_app_...`).
-
-### 4. Masukkan Kunci ke Dashboard WordPress
-1. Buka dashboard WordPress Anda.
-2. Masuk ke **Tampilan** > **Sesuaikan** > **🔔 Notifikasi Web Push OneSignal**.
-3. Masukkan kode bersih ke kolom masing-masing:
-   - **OneSignal App ID:** `fa8d0207-13ae-4f12-9058-d910ade5f80a` *(HANYA kodenya saja, tanpa tanda kutip atau tag script)*.
-   - **OneSignal REST API Key:** Masukkan kunci Admin Key (`os_v2_app_...`).
-   - **OneSignal Safari Web ID (Opsional):** Masukkan ID Safari Anda jika ada.
-4. Gulir ke bagian paling atas sebelah kiri, lalu klik tombol biru **"Terbitkan"** (*Publish*).
-
-### 5. Cara Kerja Notifikasi
-- **Izin Berlangganan Pengunjung:** Pop-up izin resmi OneSignal.com akan tampil secara bersih sesuai aturan browser modern.
-- **Pengiriman Otomatis:** Setiap kali Anda mempublikasikan loker kerja atau artikel baru, notifikasi otomatis terkirim ke HP pengunjung lengkap dengan judul, ringkasan, dan banner gambar.
-- **Pengaturan Per-Postingan:** Pada halaman edit loker/artikel, tersedia panel meta box di sebelah kanan untuk menyalakan/mematikan notifikasi untuk postingan tertentu atau mengubah teks notifikasi khusus.
 
 ---
 

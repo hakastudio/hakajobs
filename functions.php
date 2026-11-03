@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.67');
+define('HAKAJOBS_VERSION', '1.0.68');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -26,7 +26,6 @@ require_once HAKAJOBS_DIR . '/inc/ads.php';
 require_once HAKAJOBS_DIR . '/inc/customizer.php';
 require_once HAKAJOBS_DIR . '/inc/updater.php';
 require_once HAKAJOBS_DIR . '/inc/performance.php';
-require_once HAKAJOBS_DIR . '/inc/push-notification.php';
 
 /**
  * Theme Setup
@@ -548,7 +547,7 @@ function hakajobs_filter_soal_buttons_markup($content) {
             if (strpos($inner, '<svg') !== false) {
                 return $m[0];
             }
-            $clean_text = trim(str_replace('ðŸ”„', '', strip_tags($inner)));
+            $clean_text = trim(str_replace('Ã°Å¸â€â€ž', '', strip_tags($inner)));
             if (empty($clean_text)) {
                 $clean_text = 'Ulangi Soal';
             }

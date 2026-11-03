@@ -88,6 +88,15 @@ add_action('after_setup_theme', 'hakajobs_init_theme_updater');
  */
 function hakajobs_is_updating_theme($hook_extra = null, $upgrader = null, $source = '', $remote_source = '') {
     global $wp_filesystem;
+
+    // Segera abaikan jika yang sedang di-update/di-install adalah plugin atau core
+    if (is_array($hook_extra) && isset($hook_extra["type"]) && $hook_extra["type"] !== "theme") {
+        return false;
+    }
+    if ($upgrader instanceof \Plugin_Upgrader) {
+        return false;
+    }
+
     $template = get_template();
 
     // 1. Cek hook_extra['theme'] atau hook_extra['themes']
