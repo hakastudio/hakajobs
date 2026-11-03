@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Theme Customizer Settings for Hakajobs
  *
