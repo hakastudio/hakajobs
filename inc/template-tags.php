@@ -402,13 +402,90 @@ function hakajobs_get_apply_info($post_id = null) {
 }
 
 /**
+ * Auto-detect and sync view count from Google Site Kit cached GA4 reports
+ *
+ * @param int $post_id Post ID.
+ * @return int Google Site Kit pageviews or 0 if not found.
+ */
+function hakajobs_get_sitekit_views($post_id = null) {
+    global $wpdb;
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    if (!$post_id) {
+        return 0;
+    }
+
+    $permalink = get_permalink($post_id);
+    if (!$permalink) {
+        return 0;
+    }
+    $path = wp_parse_url($permalink, PHP_URL_PATH);
+    if (empty($path)) {
+        return 0;
+    }
+    $trimmed_path = trim($path, '/');
+
+    static $sitekit_cache = null;
+    if ($sitekit_cache === null) {
+        $sitekit_cache = array();
+        // Query transient yang disimpan oleh Google Site Kit di tabel wp_options
+        $results = $wpdb->get_col(
+            "SELECT option_value FROM {$wpdb->options} 
+             WHERE (option_name LIKE '_transient_googlesitekit_%' OR option_name LIKE 'googlesitekit_%')
+               AND option_value LIKE '%screenPageViews%'
+             LIMIT 25"
+        );
+        if ($results) {
+            foreach ($results as $raw_val) {
+                $unserialized = maybe_unserialize($raw_val);
+                $json_str = is_string($unserialized) ? $unserialized : wp_json_encode($unserialized);
+                if (!$json_str) {
+                    $json_str = $raw_val;
+                }
+
+                if (preg_match_all('/"dimensionValues"\s*:\s*\[\s*\{\s*"value"\s*:\s*"([^"]+)"/i', $json_str, $dim_matches, PREG_OFFSET_CAPTURE)) {
+                    foreach ($dim_matches[1] as $match_data) {
+                        $p = trim(stripslashes($match_data[0]), '/');
+                        $offset = $match_data[1];
+                        $sub = substr($json_str, $offset, 350);
+                        if (preg_match('/"metricValues"\s*:\s*\[\s*\{\s*"value"\s*:\s*"([0-9]+)"/i', $sub, $metric_match)) {
+                            $cnt = intval($metric_match[1]);
+                            if ($cnt > 0) {
+                                if (!isset($sitekit_cache[$p]) || $cnt > $sitekit_cache[$p]) {
+                                    $sitekit_cache[$p] = $cnt;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return isset($sitekit_cache[$trimmed_path]) ? $sitekit_cache[$trimmed_path] : 0;
+}
+
+/**
  * Post View Counter Helper
  */
 function hakajobs_get_views($post_id = null) {
     if (!$post_id) {
         $post_id = get_the_ID();
     }
-    $views = (int)get_post_meta($post_id, '_hakajobs_views_count', true);
+    if (!$post_id) {
+        return 0;
+    }
+
+    $views = (int) get_post_meta($post_id, '_hakajobs_views_count', true);
+
+    // Auto-Sync Otomatis: Jika Google Site Kit memiliki data view yang lebih tinggi, otomatis samakan!
+    $sitekit_views = hakajobs_get_sitekit_views($post_id);
+    if ($sitekit_views > $views) {
+        $views = $sitekit_views;
+        update_post_meta($post_id, '_hakajobs_views_count', $views);
+    }
+
     return $views;
 }
 

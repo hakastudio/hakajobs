@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.70');
+define('HAKAJOBS_VERSION', '1.0.71');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -439,8 +439,8 @@ function hakajobs_ajax_track_view() {
         ));
     }
 
-    // Tambah jumlah view di database
-    $views = (int) get_post_meta($post_id, '_hakajobs_views_count', true);
+    // Tambah jumlah view di database (otomatis auto-sync jika Google Site Kit lebih tinggi)
+    $views = hakajobs_get_views($post_id);
     $views++;
     update_post_meta($post_id, '_hakajobs_views_count', $views);
 
