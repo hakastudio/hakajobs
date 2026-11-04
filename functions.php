@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.69');
+define('HAKAJOBS_VERSION', '1.0.70');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -143,6 +143,8 @@ function hakajobs_enqueue_assets() {
         'homeUrl'     => home_url('/'),
         'archiveUrl'  => get_post_type_archive_link('lowongan'),
         'savedJobsUrl'=> home_url('/tersimpan/'),
+        'postId'      => is_singular(array('lowongan', 'post')) ? get_the_ID() : 0,
+        'viewNonce'   => wp_create_nonce('hakajobs_view_nonce'),
         'strings'     => array(
             'saved'         => __('Tersimpan', 'hakajobs'),
             'save'          => __('Simpan Lowongan', 'hakajobs'),
@@ -418,14 +420,39 @@ function hakajobs_sync_job_types() {
 add_action('init', 'hakajobs_sync_job_types', 20);
 
 /**
- * Increment view count on single lowongan
+ * AJAX Real-Time Post View Counter (Bypasses LiteSpeed & Page Cache)
  */
-function hakajobs_track_single_views() {
-    if (is_singular('lowongan')) {
-        hakajobs_set_views(get_the_ID());
+function hakajobs_ajax_track_view() {
+    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    if (!$post_id || get_post_status($post_id) !== 'publish') {
+        wp_send_json_error(array('message' => 'Invalid post ID'));
     }
+
+    // Filter bot / search engine crawler agar tidak memicu view palsu
+    $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+    if (!empty($user_agent) && preg_match('/bot|crawl|spider|slurp|facebookexternalhit|whatsapp/i', $user_agent)) {
+        $views = hakajobs_get_views($post_id);
+        $formatted = ($views >= 1000) ? round($views / 1000, 1) . 'k' : number_format_i18n($views);
+        wp_send_json_success(array(
+            'views'           => $views,
+            'formatted_views' => $formatted,
+        ));
+    }
+
+    // Tambah jumlah view di database
+    $views = (int) get_post_meta($post_id, '_hakajobs_views_count', true);
+    $views++;
+    update_post_meta($post_id, '_hakajobs_views_count', $views);
+
+    $formatted = ($views >= 1000) ? round($views / 1000, 1) . 'k' : number_format_i18n($views);
+
+    wp_send_json_success(array(
+        'views'           => $views,
+        'formatted_views' => $formatted,
+    ));
 }
-add_action('wp_head', 'hakajobs_track_single_views');
+add_action('wp_ajax_hakajobs_track_view', 'hakajobs_ajax_track_view');
+add_action('wp_ajax_nopriv_hakajobs_track_view', 'hakajobs_ajax_track_view');
 
 /**
  * Otomatis pastikan halaman default (Pasang Loker & Pusat Tes Karir) terbuat dan terbit di WordPress

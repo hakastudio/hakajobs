@@ -1019,6 +1019,46 @@
         }
         initCvTemplateEnhancer();
         initSoalActionButtonsEnhancer();
+
+        // Real-Time View Tracker (Bypasses LiteSpeed & Page Cache via AJAX)
+        function initRealtimeViewTracker() {
+            if (!window.HakajobsData || !window.HakajobsData.postId) {
+                return;
+            }
+            var pId = parseInt(window.HakajobsData.postId, 10);
+            if (!pId || pId <= 0) {
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('action', 'hakajobs_track_view');
+            formData.append('post_id', pId);
+            if (window.HakajobsData.viewNonce) {
+                formData.append('nonce', window.HakajobsData.viewNonce);
+            }
+
+            fetch(window.HakajobsData.ajaxUrl, {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(function(res) {
+                if (!res.ok) {
+                    throw new Error('Network response not ok');
+                }
+                return res.json();
+            })
+            .then(function(res) {
+                if (res && res.success && res.data && res.data.formatted_views) {
+                    var viewEls = document.querySelectorAll('.hk-view-number');
+                    viewEls.forEach(function(el) {
+                        el.textContent = res.data.formatted_views;
+                    });
+                }
+            })
+            .catch(function() {});
+        }
+        initRealtimeViewTracker();
     }
 
     if (document.readyState === 'loading') {

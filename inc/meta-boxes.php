@@ -132,6 +132,15 @@ function hakajobs_render_job_details_box($post) {
             <input type="date" id="hakajobs_deadline" name="hakajobs_deadline" value="<?php echo esc_attr($deadline); ?>" />
             <small><?php _e('Biarkan kosong jika tidak ada batas waktu tertentu.', 'hakajobs'); ?></small>
         </div>
+
+        <div class="hk-field">
+            <label for="hakajobs_views_count" style="display:flex; justify-content:space-between; align-items:center;">
+                <span><?php _e('Jumlah Dilihat / Pembaca (Views)', 'hakajobs'); ?></span>
+                <span style="font-weight:normal; font-size:11px; color:#0284c7;">⚡ Real-time AJAX</span>
+            </label>
+            <input type="number" id="hakajobs_views_count" name="hakajobs_views_count" value="<?php echo esc_attr(hakajobs_get_views($post->ID)); ?>" min="0" />
+            <small><?php _e('Jumlah tayangan pembaca. Terus bertambah otomatis via AJAX (kebal LiteSpeed Cache). Anda dapat mengedit angka ini agar cocok dengan Google Site Kit.', 'hakajobs'); ?></small>
+        </div>
     </div>
 
     <div class="hk-checkboxes">
@@ -314,6 +323,10 @@ function hakajobs_save_job_meta($post_id) {
         '_hakajobs_benefits'         => isset($_POST['hakajobs_benefits']) ? sanitize_textarea_field($_POST['hakajobs_benefits']) : '',
     );
 
+    if (isset($_POST['hakajobs_views_count'])) {
+        $fields['_hakajobs_views_count'] = max(0, intval($_POST['hakajobs_views_count']));
+    }
+
     foreach ($fields as $key => $value) {
         update_post_meta($post_id, $key, $value);
     }
@@ -348,3 +361,48 @@ function hakajobs_rankmath_slug_auto_truncate($slug, $post_ID, $post_status, $po
     return $slug;
 }
 add_filter('wp_unique_post_slug', 'hakajobs_rankmath_slug_auto_truncate', 10, 4);
+
+/**
+ * Register Meta Box for Post / Article Views
+ */
+function hakajobs_add_article_views_meta_box() {
+    add_meta_box(
+        'hakajobs_article_views_box',
+        __('📊 Jumlah Pembaca (Views)', 'hakajobs'),
+        'hakajobs_render_article_views_box',
+        'post',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'hakajobs_add_article_views_meta_box');
+
+function hakajobs_render_article_views_box($post) {
+    wp_nonce_field('hakajobs_article_views_nonce_action', 'hakajobs_article_views_nonce');
+    $views = hakajobs_get_views($post->ID);
+    ?>
+    <p style="margin: 0 0 8px; font-size: 12px; color: #475569; line-height: 1.4;">
+        <?php _e('Jumlah pembaca artikel saat ini. Bertambah otomatis via AJAX (kebal cache server) atau bisa diubah manual agar cocok dengan Google Site Kit.', 'hakajobs'); ?>
+    </p>
+    <div style="display:flex; align-items:center; gap:8px;">
+        <input type="number" name="hakajobs_article_views_count" value="<?php echo esc_attr($views); ?>" min="0" style="width: 100%; font-size: 13px;" />
+        <span style="font-size: 12px; color: #64748b; white-space: nowrap;"><?php _e('kali', 'hakajobs'); ?></span>
+    </div>
+    <?php
+}
+
+function hakajobs_save_article_views_meta($post_id) {
+    if (!isset($_POST['hakajobs_article_views_nonce']) || !wp_verify_nonce($_POST['hakajobs_article_views_nonce'], 'hakajobs_article_views_nonce_action')) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    if (isset($_POST['hakajobs_article_views_count'])) {
+        update_post_meta($post_id, '_hakajobs_views_count', max(0, intval($_POST['hakajobs_article_views_count'])));
+    }
+}
+add_action('save_post_post', 'hakajobs_save_article_views_meta');
