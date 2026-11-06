@@ -30,15 +30,6 @@ function hakajobs_add_job_meta_boxes() {
         'normal',
         'high'
     );
-
-    add_meta_box(
-        'hakajobs_job_benefits',
-        __('Benefit & Fasilitas Pekerjaan', 'hakajobs'),
-        'hakajobs_render_job_benefits_box',
-        'lowongan',
-        'side',
-        'default'
-    );
 }
 add_action('add_meta_boxes', 'hakajobs_add_job_meta_boxes');
 
@@ -266,22 +257,6 @@ function hakajobs_render_job_apply_box($post) {
 }
 
 /**
- * Render Job Benefits Meta Box
- */
-function hakajobs_render_job_benefits_box($post) {
-    $benefits = get_post_meta($post->ID, '_hakajobs_benefits', true);
-    ?>
-    <p style="font-size:12px; color:#64748b; margin-top:0;">
-        <?php _e('Tuliskan benefit/fasilitas per baris. Contoh:', 'hakajobs'); ?>
-    </p>
-    <textarea name="hakajobs_benefits" rows="6" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:12px; font-family:sans-serif;" placeholder="BPJS Ketenagakerjaan&#10;BPJS Kesehatan&#10;Tunjangan Transport & Makan&#10;Bonus Kinerja Tahunan&#10;Laptop Kerja Disediakan&#10;Jam Kerja Fleksibel / Hybrid"><?php echo esc_textarea($benefits); ?></textarea>
-    <small style="color:#64748b; font-size:11px; display:block; margin-top:4px;">
-        <?php _e('Setiap baris baru akan ditampilkan sebagai badge benefit yang rapi.', 'hakajobs'); ?>
-    </small>
-    <?php
-}
-
-/**
  * Save Meta Box Data
  */
 function hakajobs_save_job_meta($post_id) {
@@ -320,7 +295,6 @@ function hakajobs_save_job_meta($post_id) {
         '_hakajobs_apply_email_body' => isset($_POST['hakajobs_apply_email_body']) ? sanitize_textarea_field($_POST['hakajobs_apply_email_body']) : '',
         '_hakajobs_apply_url'        => isset($_POST['hakajobs_apply_url']) ? esc_url_raw($_POST['hakajobs_apply_url']) : '',
         '_hakajobs_apply_notes'      => isset($_POST['hakajobs_apply_notes']) ? sanitize_textarea_field($_POST['hakajobs_apply_notes']) : '',
-        '_hakajobs_benefits'         => isset($_POST['hakajobs_benefits']) ? sanitize_textarea_field($_POST['hakajobs_benefits']) : '',
     );
 
     if (isset($_POST['hakajobs_views_count'])) {

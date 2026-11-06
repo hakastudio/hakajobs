@@ -16,7 +16,6 @@ while (have_posts()) : the_post();
     $salary_period    = get_post_meta($post_id, '_hakajobs_salary_period', true);
     $deadline         = get_post_meta($post_id, '_hakajobs_deadline', true);
     $status           = get_post_meta($post_id, '_hakajobs_status', true);
-    $benefits         = get_post_meta($post_id, '_hakajobs_benefits', true);
     $apply_notes      = get_post_meta($post_id, '_hakajobs_apply_notes', true);
     $views            = hakajobs_get_views($post_id);
 
@@ -219,24 +218,6 @@ while (have_posts()) : the_post();
                     <div class="hk-job-description-box hk-typography">
                         <?php the_content(); ?>
                     </div>
-
-                    <!-- Benefits & Facilities -->
-                    <?php if (!empty($benefits)): 
-                        $benefit_lines = array_filter(array_map('trim', explode("\n", $benefits)));
-                        if (!empty($benefit_lines)):
-                    ?>
-                        <div class="hk-job-benefits-box">
-                            <h2 class="hk-box-heading"><?php _e('Benefit & Fasilitas yang Diberikan', 'hakajobs'); ?></h2>
-                            <ul class="hk-benefits-grid">
-                                <?php foreach ($benefit_lines as $b): ?>
-                                    <li class="hk-benefit-item">
-                                        <svg class="hk-benefit-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><?php echo esc_html($b); ?></span>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endif; endif; ?>
 
                     <!-- Special Application Notes -->
                     <?php if (!empty($apply_notes)): ?>

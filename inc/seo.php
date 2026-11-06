@@ -202,19 +202,37 @@ function hakajobs_schema_breadcrumbs() {
             'name'     => get_the_title(),
             'item'     => get_permalink(),
         );
-    } elseif (is_tax()) {
+    } elseif (is_singular('post')) {
+        $categories  = get_the_category();
+        $primary_cat = !empty($categories) ? $categories[0] : null;
+        if ($primary_cat) {
+            $breadcrumbs[] = array(
+                '@type'    => 'ListItem',
+                'position' => 2,
+                'name'     => esc_html($primary_cat->name),
+                'item'     => get_category_link($primary_cat->term_id),
+            );
+            $breadcrumbs[] = array(
+                '@type'    => 'ListItem',
+                'position' => 3,
+                'name'     => get_the_title(),
+                'item'     => get_permalink(),
+            );
+        } else {
+            $breadcrumbs[] = array(
+                '@type'    => 'ListItem',
+                'position' => 2,
+                'name'     => get_the_title(),
+                'item'     => get_permalink(),
+            );
+        }
+    } elseif (is_tax() || is_category()) {
         $term = get_queried_object();
         $breadcrumbs[] = array(
             '@type'    => 'ListItem',
             'position' => 2,
-            'name'     => __('Lowongan Kerja', 'hakajobs'),
-            'item'     => get_post_type_archive_link('lowongan'),
-        );
-        $breadcrumbs[] = array(
-            '@type'    => 'ListItem',
-            'position' => 3,
-            'name'     => $term->name,
-            'item'     => get_term_link($term),
+            'name'     => !empty($term->name) ? esc_html($term->name) : __('Arsip', 'hakajobs'),
+            'item'     => (is_category() && isset($term->term_id)) ? get_category_link($term->term_id) : (is_tax() ? get_term_link($term) : home_url('/')),
         );
     } else {
         return;
@@ -253,4 +271,130 @@ add_filter('rank_math/snippet/rich_snippet', function ($snippet) {
     }
     return $snippet;
 }, 99);
+
+/**
+ * Output NewsArticle / Article JSON-LD Schema for Single Blog & Career Articles
+ */
+function hakajobs_schema_article() {
+    if (!is_singular('post')) {
+        return;
+    }
+
+    // Skip if Rank Math already active to avoid duplicate article schema
+    if (class_exists('RankMath')) {
+        return;
+    }
+
+    $post_id    = get_the_ID();
+    $site_name  = get_bloginfo('name');
+    $author     = get_the_author();
+    $categories = get_the_category($post_id);
+    $cat_name   = !empty($categories) ? $categories[0]->name : __('Artikel Karir', 'hakajobs');
+    $image_url  = has_post_thumbnail($post_id) ? get_the_post_thumbnail_url($post_id, 'large') : get_site_icon_url(512);
+
+    $schema = array(
+        '@context'         => 'https://schema.org',
+        '@type'            => 'NewsArticle',
+        'mainEntityOfPage' => array(
+            '@type' => 'WebPage',
+            '@id'   => get_permalink($post_id),
+        ),
+        'headline'         => get_the_title($post_id),
+        'description'      => has_excerpt($post_id) ? get_the_excerpt($post_id) : wp_trim_words(get_post_field('post_content', $post_id), 30, '...'),
+        'image'            => $image_url ? array($image_url) : array(),
+        'datePublished'    => get_the_date('c', $post_id),
+        'dateModified'     => get_the_modified_date('c', $post_id),
+        'author'           => array(
+            '@type' => 'Person',
+            'name'  => $author ? $author : $site_name,
+        ),
+        'publisher'        => array(
+            '@type' => 'Organization',
+            'name'  => $site_name,
+            'logo'  => array(
+                '@type' => 'ImageObject',
+                'url'   => get_site_icon_url(192) ? get_site_icon_url(192) : (HAKAJOBS_URI . '/screenshot.png'),
+            ),
+        ),
+        'articleSection'   => $cat_name,
+    );
+
+    echo "\n<!-- Schema.org NewsArticle by Hakajobs -->\n";
+    echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . '</script>' . "\n";
+}
+add_action('wp_head', 'hakajobs_schema_article', 4);
+
+/**
+ * Send X-Robots-Tag HTTP Header for Fast Crawling & High-Visibility Image Previews
+ */
+function hakajobs_fast_indexing_headers() {
+    if (!is_admin() && (is_singular(array('lowongan', 'post')) || is_front_page() || is_archive() || is_tax())) {
+        header('X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1', false);
+    }
+}
+add_action('send_headers', 'hakajobs_fast_indexing_headers');
+
+/**
+ * Ensure Sitemap URL is explicitly declared in robots.txt for Search Engines
+ */
+function hakajobs_sitemap_robots_txt($output, $public) {
+    if ('0' === (string)$public) {
+        return $output;
+    }
+
+    $sitemap_url = home_url('/sitemap_index.xml');
+    if (strpos($output, 'sitemap_index.xml') === false && strpos($output, 'wp-sitemap.xml') === false) {
+        $output .= "\nSitemap: " . esc_url($sitemap_url) . "\n";
+    }
+    return $output;
+}
+add_filter('robots_txt', 'hakajobs_sitemap_robots_txt', 99, 2);
+
+/**
+ * Fast-Indexing Automator: Ping Search Engines & Trigger Feeds when Job or Post is Published
+ *
+ * @param string  $new_status
+ * @param string  $old_status
+ * @param WP_Post $post
+ */
+function hakajobs_instant_indexing_on_publish($new_status, $old_status, $post) {
+    if (!is_object($post) || !isset($post->ID)) {
+        return;
+    }
+    // Only trigger when transitioning to publish
+    if ($new_status !== 'publish' || $old_status === 'publish') {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (wp_is_post_revision($post->ID) || wp_is_post_autosave($post->ID)) {
+        return;
+    }
+    if (!in_array($post->post_type, array('lowongan', 'post'), true)) {
+        return;
+    }
+
+    // 1. Broadcast to WordPress Update Services (Ping-o-Matic, etc.)
+    if (function_exists('generic_ping')) {
+        generic_ping($post->ID);
+    }
+
+    // 2. Ping Sitemaps asynchronously
+    $sitemap_url = home_url('/sitemap_index.xml');
+    $ping_urls = array(
+        'https://www.google.com/ping?sitemap=' . urlencode($sitemap_url),
+        'https://www.bing.com/ping?sitemap='   . urlencode($sitemap_url),
+    );
+
+    foreach ($ping_urls as $url) {
+        wp_remote_get($url, array(
+            'blocking'    => false,
+            'timeout'     => 5,
+            'redirection' => 2,
+            'user-agent'  => 'Hakajobs-FastIndexer/1.0',
+        ));
+    }
+}
+add_action('transition_post_status', 'hakajobs_instant_indexing_on_publish', 20, 3);
 
