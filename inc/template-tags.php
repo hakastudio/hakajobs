@@ -1026,12 +1026,6 @@ function hakajobs_schema_job_posting() {
         'datePosted'      => get_the_date('c', $post_id),
         'employmentType'  => $employment_type,
         'directApply'     => true,
-        'url'             => get_permalink($post_id),
-        'identifier'      => array(
-            '@type' => 'PropertyValue',
-            'name'  => $company_name ? $company_name : get_bloginfo('name'),
-            'value' => (string) $post_id,
-        ),
         'hiringOrganization' => array(
             '@type'  => 'Organization',
             'name'   => $company_name ? $company_name : get_bloginfo('name'),
@@ -1056,38 +1050,6 @@ function hakajobs_schema_job_posting() {
             '@type' => 'Country',
             'name'  => 'Indonesia',
         );
-    }
-
-    // Experience requirements (Google OccupationalExperienceRequirements)
-    $terms_exp = get_the_terms($post_id, 'pengalaman_kerja');
-    if (!empty($terms_exp) && !is_wp_error($terms_exp)) {
-        $exp_slug = $terms_exp[0]->slug;
-        $months = 0;
-        if (strpos($exp_slug, 'fresh') !== false || strpos($exp_slug, 'tanpa') !== false) {
-            $months = 0;
-        } elseif (preg_match('/([0-9]+)/', $exp_slug, $m_exp)) {
-            $months = intval($m_exp[1]) * 12;
-        }
-        $schema['experienceRequirements'] = array(
-            '@type'              => 'OccupationalExperienceRequirements',
-            'monthsOfExperience' => $months,
-        );
-    }
-
-    // Education requirements (Google EducationalOccupationalCredential)
-    $terms_edu = get_the_terms($post_id, 'pendidikan_terakhir');
-    if (!empty($terms_edu) && !is_wp_error($terms_edu)) {
-        $schema['educationRequirements'] = array(
-            '@type'              => 'EducationalOccupationalCredential',
-            'credentialCategory' => esc_html($terms_edu[0]->name),
-        );
-    }
-
-    // Category / Industry
-    $terms_cat = get_the_terms($post_id, 'kategori_lowongan');
-    if (!empty($terms_cat) && !is_wp_error($terms_cat)) {
-        $schema['industry']             = esc_html($terms_cat[0]->name);
-        $schema['occupationalCategory'] = esc_html($terms_cat[0]->name);
     }
 
     // Attach baseSalary structured data if numeric amount is available
