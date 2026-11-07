@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.74');
+define('HAKAJOBS_VERSION', '1.0.75');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -297,17 +297,35 @@ function hakajobs_filter_job_query($query) {
             $query->set('s', sanitize_text_field($_GET['s']));
         }
 
+        // Filter: Hanya tampilkan lowongan kerja yang masih aktif (belum ditutup & belum lewat deadline)
+        $meta_query = $query->get('meta_query');
+        if (!is_array($meta_query)) {
+            $meta_query = array('relation' => 'AND');
+        }
+        if (function_exists('hakajobs_get_active_jobs_meta_query')) {
+            $meta_query[] = hakajobs_get_active_jobs_meta_query();
+        }
+
         // Sorting
         $sort = !empty($_GET['sort']) ? sanitize_text_field($_GET['sort']) : 'terbaru';
         if ($sort === 'populer') {
-            $query->set('meta_key', '_hakajobs_views_count');
-            $query->set('orderby', 'meta_value_num');
-            $query->set('order', 'DESC');
+            $meta_query['views_clause'] = array(
+                'key'     => '_hakajobs_views_count',
+                'compare' => 'EXISTS',
+                'type'    => 'NUMERIC',
+            );
+            $query->set('meta_query', $meta_query);
+            $query->set('orderby', array('views_clause' => 'DESC', 'date' => 'DESC'));
         } elseif ($sort === 'deadline') {
-            $query->set('meta_key', '_hakajobs_deadline');
-            $query->set('orderby', 'meta_value');
-            $query->set('order', 'ASC');
+            $meta_query['deadline_clause'] = array(
+                'key'     => '_hakajobs_deadline',
+                'compare' => 'EXISTS',
+                'type'    => 'DATE',
+            );
+            $query->set('meta_query', $meta_query);
+            $query->set('orderby', array('deadline_clause' => 'ASC', 'date' => 'DESC'));
         } else {
+            $query->set('meta_query', $meta_query);
             $query->set('orderby', 'date');
             $query->set('order', 'DESC');
         }

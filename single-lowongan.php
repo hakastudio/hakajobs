@@ -301,14 +301,20 @@ while (have_posts()) : the_post();
                         </div>
                     </div>
 
-                    <!-- Related Jobs ("Lowongan Serupa") -->
+                    <!-- Related Jobs ("Lowongan Serupa - Khusus Lowongan yang Masih Aktif") -->
                     <?php
+                    $active_meta_query = function_exists('hakajobs_get_active_jobs_meta_query') ? hakajobs_get_active_jobs_meta_query() : array();
+                    
                     $related_args = array(
                         'post_type'      => 'lowongan',
-                        'posts_per_page' => 3,
+                        'post_status'    => 'publish',
+                        'posts_per_page' => 6,
                         'post__not_in'   => array($post_id),
                         'orderby'        => 'rand',
                     );
+                    if (!empty($active_meta_query)) {
+                        $related_args['meta_query'] = $active_meta_query;
+                    }
                     if ($category_obj) {
                         $related_args['tax_query'] = array(
                             array(
@@ -320,17 +326,66 @@ while (have_posts()) : the_post();
                     }
                     $related_query = new WP_Query($related_args);
 
-                    if ($related_query->have_posts()):
+                    $active_related_ids = array();
+                    if ($related_query->have_posts()) {
+                        while ($related_query->have_posts()) {
+                            $related_query->the_post();
+                            $rel_id = get_the_ID();
+                            if (function_exists('hakajobs_is_job_active')) {
+                                if (!hakajobs_is_job_active($rel_id)) {
+                                    continue;
+                                }
+                            }
+                            $active_related_ids[] = $rel_id;
+                            if (count($active_related_ids) >= 3) {
+                                break;
+                            }
+                        }
+                        wp_reset_postdata();
+                    }
+
+                    // Fallback: Jika pada kategori yang sama lowongan aktif kurang dari 3, lengkapi dari kategori lain
+                    if (count($active_related_ids) < 3) {
+                        $needed = 3 - count($active_related_ids);
+                        $exclude_ids = array_merge(array($post_id), $active_related_ids);
+                        $fallback_args = array(
+                            'post_type'      => 'lowongan',
+                            'post_status'    => 'publish',
+                            'posts_per_page' => $needed + 4,
+                            'post__not_in'   => $exclude_ids,
+                            'orderby'        => 'rand',
+                        );
+                        if (!empty($active_meta_query)) {
+                            $fallback_args['meta_query'] = $active_meta_query;
+                        }
+                        $fallback_query = new WP_Query($fallback_args);
+                        if ($fallback_query->have_posts()) {
+                            while ($fallback_query->have_posts()) {
+                                $fallback_query->the_post();
+                                $fb_id = get_the_ID();
+                                if (function_exists('hakajobs_is_job_active')) {
+                                    if (!hakajobs_is_job_active($fb_id)) {
+                                        continue;
+                                    }
+                                }
+                                $active_related_ids[] = $fb_id;
+                                if (count($active_related_ids) >= 3) {
+                                    break;
+                                }
+                            }
+                            wp_reset_postdata();
+                        }
+                    }
+
+                    if (!empty($active_related_ids)):
                     ?>
                     <div class="hk-related-jobs-wrap">
                         <h3 class="hk-related-title"><?php _e('Lowongan Kerja Terkait Lainnya', 'hakajobs'); ?></h3>
                         <div class="hk-jobs-list">
                             <?php
-                            while ($related_query->have_posts()) {
-                                $related_query->the_post();
-                                hakajobs_render_job_card(get_the_ID());
+                            foreach ($active_related_ids as $rel_id) {
+                                hakajobs_render_job_card($rel_id);
                             }
-                            wp_reset_postdata();
                             ?>
                         </div>
                     </div>

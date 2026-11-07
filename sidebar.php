@@ -192,12 +192,15 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
                 $pop_args = array(
                     'post_type'      => 'lowongan',
                     'post_status'    => 'publish',
-                    'posts_per_page' => $popular_count,
+                    'posts_per_page' => $popular_count * 2, // Ambil ekstra untuk menyaring yang aktif
                     'meta_key'       => '_hakajobs_views_count',
                     'orderby'        => 'meta_value_num',
                     'order'          => 'DESC',
                     'no_found_rows'  => true,
                 );
+                if (function_exists('hakajobs_get_active_jobs_meta_query')) {
+                    $pop_args['meta_query'] = hakajobs_get_active_jobs_meta_query();
+                }
 
                 if ($popular_days !== 'all' && intval($popular_days) > 0) {
                     $pop_args['date_query'] = array(
@@ -223,7 +226,10 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
                         $pop_rank = 1;
                         while ($popular_query->have_posts()): 
                             $popular_query->the_post();
-                            $job_id   = get_the_ID();
+                            $job_id = get_the_ID();
+                            if (function_exists('hakajobs_is_job_active') && !hakajobs_is_job_active($job_id)) {
+                                continue;
+                            }
                             $company  = get_post_meta($job_id, '_hakajobs_company_name', true);
                             $location = get_post_meta($job_id, '_hakajobs_job_location', true);
                             $views    = hakajobs_get_views($job_id);
@@ -250,6 +256,9 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
                             </a>
                         <?php 
                             $pop_rank++;
+                            if ($pop_rank > $popular_count) {
+                                break;
+                            }
                         endwhile; 
                         wp_reset_postdata();
                         ?>

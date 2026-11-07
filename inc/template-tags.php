@@ -575,6 +575,63 @@ function hakajobs_get_job_expiry_data($post_id = null) {
 }
 
 /**
+ * Check if a job is currently active (not closed manually and deadline has not passed)
+ *
+ * @param int|null $post_id
+ * @return bool
+ */
+function hakajobs_is_job_active($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    $exp = hakajobs_get_job_expiry_data($post_id);
+    return empty($exp['is_closed']);
+}
+
+/**
+ * Build WP_Query meta_query array to fetch only active jobs
+ * (status != 'tutup' AND (deadline is empty OR deadline >= today))
+ *
+ * @return array
+ */
+function hakajobs_get_active_jobs_meta_query() {
+    $today = function_exists('current_time') ? current_time('Y-m-d') : date('Y-m-d');
+    return array(
+        'relation' => 'AND',
+        array(
+            'relation' => 'OR',
+            array(
+                'key'     => '_hakajobs_status',
+                'value'   => 'tutup',
+                'compare' => '!=',
+            ),
+            array(
+                'key'     => '_hakajobs_status',
+                'compare' => 'NOT EXISTS',
+            ),
+        ),
+        array(
+            'relation' => 'OR',
+            array(
+                'key'     => '_hakajobs_deadline',
+                'value'   => '',
+                'compare' => '=',
+            ),
+            array(
+                'key'     => '_hakajobs_deadline',
+                'compare' => 'NOT EXISTS',
+            ),
+            array(
+                'key'     => '_hakajobs_deadline',
+                'value'   => $today,
+                'compare' => '>=',
+                'type'    => 'DATE',
+            ),
+        ),
+    );
+}
+
+/**
  * Reusable Job Card HTML
  */
 function hakajobs_render_job_card($post_id = null) {

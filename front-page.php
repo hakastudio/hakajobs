@@ -259,22 +259,33 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
     $featured_cols = get_theme_mod('hakajobs_featured_columns', '3');
 
     if ($show_featured) :
+        $active_meta_query = function_exists('hakajobs_get_active_jobs_meta_query') ? hakajobs_get_active_jobs_meta_query() : array();
+        $featured_meta = array(
+            'relation' => 'OR',
+            array(
+                'key'     => '_hakajobs_is_urgent',
+                'value'   => '1',
+                'compare' => '=',
+            ),
+            array(
+                'key'     => '_hakajobs_is_featured',
+                'value'   => '1',
+                'compare' => '=',
+            ),
+        );
+        if (!empty($active_meta_query)) {
+            $featured_meta = array(
+                'relation' => 'AND',
+                $featured_meta,
+                $active_meta_query,
+            );
+        }
+
         $featured_query = new WP_Query(array(
             'post_type'      => 'lowongan',
+            'post_status'    => 'publish',
             'posts_per_page' => $featured_count,
-            'meta_query'     => array(
-                'relation' => 'OR',
-                array(
-                    'key'     => '_hakajobs_is_urgent',
-                    'value'   => '1',
-                    'compare' => '=',
-                ),
-                array(
-                    'key'     => '_hakajobs_is_featured',
-                    'value'   => '1',
-                    'compare' => '=',
-                ),
-            ),
+            'meta_query'     => $featured_meta,
         ));
 
         if ($featured_query->have_posts()):
@@ -346,12 +357,17 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
                     </div>
 
                     <?php
-                    $latest_query = new WP_Query(array(
+                    $latest_args = array(
                         'post_type'      => 'lowongan',
+                        'post_status'    => 'publish',
                         'posts_per_page' => 8,
                         'orderby'        => 'date',
                         'order'          => 'DESC',
-                    ));
+                    );
+                    if (function_exists('hakajobs_get_active_jobs_meta_query')) {
+                        $latest_args['meta_query'] = hakajobs_get_active_jobs_meta_query();
+                    }
+                    $latest_query = new WP_Query($latest_args);
 
                     if ($latest_query->have_posts()):
                     ?>
@@ -359,6 +375,9 @@ if (!empty($hero_highlight) && strpos($hero_title, $hero_highlight) !== false) {
                             <?php
                             while ($latest_query->have_posts()) {
                                 $latest_query->the_post();
+                                if (function_exists('hakajobs_is_job_active') && !hakajobs_is_job_active(get_the_ID())) {
+                                    continue;
+                                }
                                 hakajobs_render_job_card(get_the_ID());
                             }
                             wp_reset_postdata();
