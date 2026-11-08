@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.75');
+define('HAKAJOBS_VERSION', '1.0.76');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -145,6 +145,7 @@ function hakajobs_enqueue_assets() {
         'savedJobsUrl'=> home_url('/tersimpan/'),
         'postId'      => is_singular(array('lowongan', 'post')) ? get_the_ID() : 0,
         'viewNonce'   => wp_create_nonce('hakajobs_view_nonce'),
+        'isAdmin'     => (is_user_logged_in() && (current_user_can('edit_posts') || current_user_can('manage_options'))),
         'strings'     => array(
             'saved'         => __('Tersimpan', 'hakajobs'),
             'save'          => __('Simpan Lowongan', 'hakajobs'),

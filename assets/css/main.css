@@ -6358,5 +6358,26 @@ figure {
     }
 }
 
+/* Strict Anti Copy-Paste & Selection Protection (Pengunjung Biasa) */
+body.hk-protected-content {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+body.hk-protected-content input,
+body.hk-protected-content textarea,
+body.hk-protected-content select,
+body.hk-protected-content [contenteditable="true"] {
+    -webkit-user-select: auto !important;
+    -moz-user-select: auto !important;
+    -ms-user-select: auto !important;
+    user-select: auto !important;
+    -webkit-touch-callout: default !important;
+}
+
+
 
 

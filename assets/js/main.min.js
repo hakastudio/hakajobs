@@ -463,76 +463,163 @@
     });
 
     // =========================================================================
-    // Strict Anti Copy-Paste & CTRL+C Blocker (Perlindungan Konten Hak Cipta)
+    // Strict Anti Copy-Paste & Right-Click Blocker (Perlindungan Konten Hak Cipta)
+    // Mode Admin: 100% Normal tanpa pembatasan apa pun
     // =========================================================================
+    var isUserAdmin = (window.HakajobsData && window.HakajobsData.isAdmin) ||
+                      document.body.classList.contains('logged-in') ||
+                      document.body.classList.contains('admin-bar');
+
     function isFormInputElement(el) {
         if (!el) return false;
         var tag = el.tagName ? el.tagName.toUpperCase() : '';
-        return (tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable || (el.closest && el.closest('input, textarea, [contenteditable="true"]')));
+        return (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable || (el.closest && el.closest('input, textarea, select, [contenteditable="true"]')));
     }
 
-    // 1. Blokir Event Salin / Copy (Klik kanan Copy, Edit > Copy, shortcut)
-    document.addEventListener('copy', function (e) {
-        var activeEl = document.activeElement;
-        if (isFormInputElement(activeEl)) {
-            return; // Tetap izinkan copy di dalam kolom input/formulir/pencarian
-        }
+    if (!isUserAdmin) {
+        // Terapkan proteksi seleksi teks melalui class CSS di body
+        document.body.classList.add('hk-protected-content');
 
-        var selection = window.getSelection();
-        if (selection && selection.anchorNode && isFormInputElement(selection.anchorNode.parentElement)) {
-            return;
-        }
-
-        e.preventDefault();
-        if (e.clipboardData) {
-            e.clipboardData.clearData();
-        }
-
-        if (typeof showToast === 'function') {
-            showToast('⚠️ Konten dilindungi hak cipta. Teks tidak dapat disalin (Copy dinonaktifkan).');
-        }
-    });
-
-    // 2. Blokir Event Potong / Cut
-    document.addEventListener('cut', function (e) {
-        var activeEl = document.activeElement;
-        if (isFormInputElement(activeEl)) {
-            return;
-        }
-        e.preventDefault();
-        if (e.clipboardData) {
-            e.clipboardData.clearData();
-        }
-    });
-
-    // 3. Blokir Pintasan Keyboard (CTRL+C, CTRL+X, CMD+C, CMD+X)
-    document.addEventListener('keydown', function (e) {
-        var activeEl = document.activeElement;
-        if (isFormInputElement(activeEl)) {
-            return; // Izinkan shortcut dalam input
-        }
-
-        var isCtrlOrCmd = (e.ctrlKey || e.metaKey);
-        var key = e.key ? e.key.toLowerCase() : '';
-        var code = e.keyCode || e.which;
-
-        // Blokir CTRL+C / CMD+C
-        if (isCtrlOrCmd && (key === 'c' || code === 67)) {
+        // 1. Blokir Klik Kanan (Context Menu) di seluruh dokumen
+        document.addEventListener('contextmenu', function (e) {
+            if (isFormInputElement(e.target)) {
+                return; // Tetap izinkan di dalam kolom formulir/pencarian
+            }
             e.preventDefault();
             e.stopPropagation();
             if (typeof showToast === 'function') {
-                showToast('⚠️ Konten dilindungi hak cipta. Pintasan CTRL+C dinonaktifkan.');
+                showToast('⚠️ Klik kanan dinonaktifkan untuk melindungi hak cipta konten.');
             }
             return false;
-        }
+        }, true);
 
-        // Blokir CTRL+X / CMD+X
-        if (isCtrlOrCmd && (key === 'x' || code === 88)) {
+        // 2. Blokir Seleksi Teks (Selection Start)
+        document.addEventListener('selectstart', function (e) {
+            if (isFormInputElement(e.target)) {
+                return; // Izinkan seleksi teks di kolom formulir/pencarian
+            }
             e.preventDefault();
-            e.stopPropagation();
             return false;
-        }
-    }, true);
+        }, true);
+
+        // 3. Blokir Drag & Drop Teks / Gambar
+        document.addEventListener('dragstart', function (e) {
+            if (isFormInputElement(e.target)) {
+                return;
+            }
+            e.preventDefault();
+            return false;
+        }, true);
+
+        // 4. Blokir Event Salin / Copy (Klik kanan Copy, Edit > Copy, shortcut)
+        document.addEventListener('copy', function (e) {
+            var activeEl = document.activeElement;
+            if (isFormInputElement(activeEl) || isFormInputElement(e.target)) {
+                return; // Tetap izinkan copy di dalam kolom input/formulir/pencarian
+            }
+
+            var selection = window.getSelection();
+            if (selection && selection.anchorNode && isFormInputElement(selection.anchorNode.parentElement)) {
+                return;
+            }
+
+            e.preventDefault();
+            if (e.clipboardData) {
+                e.clipboardData.clearData();
+            }
+
+            if (typeof showToast === 'function') {
+                showToast('⚠️ Konten dilindungi hak cipta. Teks tidak dapat disalin.');
+            }
+            return false;
+        }, true);
+
+        // 5. Blokir Event Potong / Cut
+        document.addEventListener('cut', function (e) {
+            var activeEl = document.activeElement;
+            if (isFormInputElement(activeEl) || isFormInputElement(e.target)) {
+                return;
+            }
+            e.preventDefault();
+            if (e.clipboardData) {
+                e.clipboardData.clearData();
+            }
+            return false;
+        }, true);
+
+        // 6. Blokir Pintasan Keyboard (CTRL+C, CTRL+X, CTRL+U, CTRL+S, CTRL+A, CTRL+P, F12, DevTools)
+        document.addEventListener('keydown', function (e) {
+            if (isFormInputElement(document.activeElement) || isFormInputElement(e.target)) {
+                return; // Izinkan shortcut dalam input
+            }
+
+            var isCtrlOrCmd = (e.ctrlKey || e.metaKey);
+            var key = e.key ? e.key.toLowerCase() : '';
+            var code = e.keyCode || e.which;
+
+            // Blokir F12 DevTools
+            if (key === 'f12' || code === 123) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+
+            // Blokir CTRL+Shift+I / J / C (Inspect Element DevTools)
+            if (isCtrlOrCmd && e.shiftKey && (key === 'i' || key === 'j' || key === 'c' || code === 73 || code === 74 || code === 67)) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+
+            // Blokir CTRL+C / CMD+C
+            if (isCtrlOrCmd && (key === 'c' || code === 67)) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (typeof showToast === 'function') {
+                    showToast('⚠️ Konten dilindungi hak cipta. Pintasan CTRL+C dinonaktifkan.');
+                }
+                return false;
+            }
+
+            // Blokir CTRL+X / CMD+X
+            if (isCtrlOrCmd && (key === 'x' || code === 88)) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+
+            // Blokir CTRL+U / CMD+U (View Page Source)
+            if (isCtrlOrCmd && (key === 'u' || code === 85)) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (typeof showToast === 'function') {
+                    showToast('⚠️ Lihat sumber halaman (View Source) dinonaktifkan.');
+                }
+                return false;
+            }
+
+            // Blokir CTRL+S / CMD+S (Save Page)
+            if (isCtrlOrCmd && (key === 's' || code === 83)) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+
+            // Blokir CTRL+A / CMD+A (Select All di luar formulir)
+            if (isCtrlOrCmd && (key === 'a' || code === 65)) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+
+            // Blokir CTRL+P / CMD+P (Print Page)
+            if (isCtrlOrCmd && (key === 'p' || code === 80)) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, true);
+    }
 
     // Clean up any residual dark mode localStorage key and attribute
     try {
