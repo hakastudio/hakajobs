@@ -1942,25 +1942,25 @@ button, input, select, textarea {
    Single Job Page
    ========================================================================== */
 .hk-single-job-page {
-    padding-bottom: 60px;
+    padding-bottom: 40px;
 }
 
 .hk-single-header-section {
     background: var(--hk-bg-surface);
     border-bottom: 1px solid var(--hk-border);
-    padding: 36px 0;
+    padding: 20px 0 16px;
 }
 
 .hk-single-header-card {
     background: var(--hk-bg-body);
     border: 1px solid var(--hk-border);
     border-radius: var(--hk-radius-lg);
-    padding: 28px;
+    padding: 22px 24px;
 }
 
 .hk-single-header-top {
     display: flex;
-    gap: 24px;
+    gap: 20px;
     align-items: flex-start;
 }
 
@@ -1988,8 +1988,8 @@ button, input, select, textarea {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 8px;
+    gap: 10px;
+    margin-bottom: 6px;
 }
 
 .hk-company-name {
@@ -2007,20 +2007,20 @@ button, input, select, textarea {
 }
 
 .hk-single-job-title {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
     color: var(--hk-dark);
     line-height: 1.25;
     letter-spacing: -0.02em;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .hk-single-meta-strip {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 10px;
+    margin-bottom: 12px;
     font-size: 13px;
 }
 
@@ -2049,13 +2049,13 @@ button, input, select, textarea {
 
 /* Single Body Layout */
 .hk-single-body-section {
-    padding: 36px 0;
+    padding: 16px 0 36px;
 }
 
 .hk-single-layout {
     display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: 36px;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
     align-items: flex-start;
 }
 
@@ -2063,16 +2063,16 @@ button, input, select, textarea {
     background: var(--hk-bg-surface);
     border: 1px solid var(--hk-border);
     border-radius: var(--hk-radius-md);
-    padding: 32px;
+    padding: 24px 28px;
     box-shadow: var(--hk-shadow-sm);
 }
 
 .hk-single-excerpt {
     background: #f8fafc;
     border-left: 4px solid var(--hk-primary);
-    padding: 16px 20px;
+    padding: 14px 18px;
     border-radius: 0 var(--hk-radius-sm) var(--hk-radius-sm) 0;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     font-size: 15px;
     color: var(--hk-text-main);
 }
@@ -2294,11 +2294,11 @@ figure {
 
 /* Notes & Warnings */
 .hk-job-notes-box {
-    margin-top: 24px;
+    margin-top: 18px;
     background: #f0fdf4;
     border: 1px solid #bbf7d0;
     border-radius: var(--hk-radius-md);
-    padding: 18px;
+    padding: 16px;
 }
 .hk-notes-heading {
     color: #166534;
@@ -2314,11 +2314,11 @@ figure {
 }
 
 .hk-job-alert-warning {
-    margin-top: 28px;
+    margin-top: 18px;
     background: #fef2f2;
     border: 1px solid #fecaca;
     border-radius: var(--hk-radius-md);
-    padding: 18px;
+    padding: 16px;
     display: flex;
     gap: 14px;
     align-items: flex-start;
@@ -2342,8 +2342,8 @@ figure {
 
 /* Share Bar */
 .hk-job-share-bar {
-    margin-top: 32px;
-    padding-top: 20px;
+    margin-top: 24px;
+    padding-top: 16px;
     border-top: 1px solid var(--hk-border);
     display: flex;
     align-items: center;
@@ -2381,8 +2381,8 @@ figure {
 
 /* Related Jobs */
 .hk-related-jobs-wrap {
-    margin-top: 40px;
-    padding-top: 28px;
+    margin-top: 26px;
+    padding-top: 20px;
     border-top: 1px solid var(--hk-border);
 }
 .hk-related-title {
@@ -2458,19 +2458,19 @@ figure {
     top: 76px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 }
 
 .hk-sticky-apply-card {
     background: var(--hk-bg-surface);
     border: 1px solid var(--hk-border);
     border-radius: var(--hk-radius-md);
-    padding: 24px;
+    padding: 20px 22px;
     box-shadow: var(--hk-shadow-md);
 }
 
 .hk-apply-card-top {
-    margin-bottom: 18px;
+    margin-bottom: 14px;
 }
 .hk-apply-subtext {
     font-size: 11px;
@@ -2522,8 +2522,8 @@ figure {
 
 /* Overview list */
 .hk-overview-list {
-    margin-top: 24px;
-    padding-top: 20px;
+    margin-top: 18px;
+    padding-top: 16px;
     border-top: 1px solid var(--hk-border);
 }
 .hk-overview-heading {
@@ -4222,7 +4222,7 @@ figure {
     }
 
     .hk-single-header-section {
-        padding: 16px 0;
+        padding: 14px 0 10px;
     }
 
     .hk-single-header-card {
@@ -4275,7 +4275,7 @@ figure {
     }
 
     .hk-single-body-section {
-        padding: 18px 0;
+        padding: 12px 0 24px;
     }
 
     .hk-single-layout {
@@ -4866,8 +4866,8 @@ figure {
     background: #0f172a;
     border: 1px solid #1e293b;
     border-radius: var(--hk-radius-lg, 12px);
-    padding: 14px 20px;
-    margin-bottom: 20px;
+    padding: 11px 18px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;

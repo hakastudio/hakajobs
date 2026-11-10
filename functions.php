@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.78');
+define('HAKAJOBS_VERSION', '1.0.79');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -73,17 +73,83 @@ function hakajobs_setup() {
 }
 add_action('after_setup_theme', 'hakajobs_setup');
 
+
+/**
+ * Helper: Ambil daftar pilihan font yang didukung tema
+ */
+function hakajobs_get_font_choices() {
+    return array(
+        'plus_jakarta_sans' => __('Plus Jakarta Sans (Bawaan - Modern & Bersih)', 'hakajobs'),
+        'inter'             => __('Inter (Modern UI Standard, Tajam & Sangat Jelas Dibaca)', 'hakajobs'),
+        'poppins'           => __('Poppins (Geometris Bulat, Ramah, Tegas & Populer)', 'hakajobs'),
+        'dm_sans'           => __('DM Sans (Minimalis, Rapi & Elegan)', 'hakajobs'),
+        'outfit'            => __('Outfit (Gaya Startup Tech, Kontras Bagus untuk Judul)', 'hakajobs'),
+        'roboto'            => __('Roboto (Netral, Klasik Google & Sangat Ringan)', 'hakajobs'),
+        'system'            => __('System UI (Super Cepat, Tanpa Beban Font Eksternal)', 'hakajobs'),
+    );
+}
+
+/**
+ * Helper: Ambil URL Google Fonts sesuai font yang dipilih
+ */
+function hakajobs_get_font_url($font_key) {
+    switch ($font_key) {
+        case 'inter':
+            return 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap';
+        case 'poppins':
+            return 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap';
+        case 'dm_sans':
+            return 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&display=swap';
+        case 'outfit':
+            return 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap';
+        case 'roboto':
+            return 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap';
+        case 'system':
+            return '';
+        case 'plus_jakarta_sans':
+        default:
+            return 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap';
+    }
+}
+
+/**
+ * Helper: Ambil CSS font-family stack sesuai font yang dipilih
+ */
+function hakajobs_get_font_stack($font_key) {
+    switch ($font_key) {
+        case 'inter':
+            return "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+        case 'poppins':
+            return "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+        case 'dm_sans':
+            return "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+        case 'outfit':
+            return "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+        case 'roboto':
+            return "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif";
+        case 'system':
+            return "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+        case 'plus_jakarta_sans':
+        default:
+            return "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+    }
+}
+
 /**
  * Enqueue Scripts and Styles
  */
 function hakajobs_enqueue_assets() {
-    // Google Fonts (Plus Jakarta Sans)
-    wp_enqueue_style(
-        'hakajobs-fonts',
-        'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
-        array(),
-        null
-    );
+    // Google Fonts Dinamis dari Pengaturan Customizer
+    $chosen_font = get_theme_mod('hakajobs_font_family', 'plus_jakarta_sans');
+    $font_url    = hakajobs_get_font_url($chosen_font);
+    if (!empty($font_url)) {
+        wp_enqueue_style(
+            'hakajobs-fonts',
+            $font_url,
+            array(),
+            null
+        );
+    }
 
     // Suffix for minified assets in production
     $min = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';

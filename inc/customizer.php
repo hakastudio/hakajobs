@@ -102,6 +102,54 @@ function hakajobs_customize_register($wp_customize) {
     )));
 
     // =========================================================================
+    // SECTION 1.5 - TIPOGRAFI & JENIS FONT
+    // =========================================================================
+    $wp_customize->add_section('hakajobs_typography_section', array(
+        'title'       => __('🔤 Tipografi & Jenis Font', 'hakajobs'),
+        'description' => __('Atur jenis font (huruf) utama untuk seluruh website. Anda dapat berganti font kapan saja langsung dari menu ini.', 'hakajobs'),
+        'panel'       => 'hakajobs_theme_options',
+        'priority'    => 15,
+    ));
+
+    $wp_customize->add_setting('hakajobs_font_family', array(
+        'default'           => 'plus_jakarta_sans',
+        'sanitize_callback' => 'sanitize_key',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_font_family', array(
+        'label'       => __('Pilih Jenis Font Website', 'hakajobs'),
+        'description' => __('Pilih gaya huruf yang paling cocok untuk tampilan portal lowongan kerja Anda.', 'hakajobs'),
+        'section'     => 'hakajobs_typography_section',
+        'type'        => 'select',
+        'choices'     => function_exists('hakajobs_get_font_choices') ? hakajobs_get_font_choices() : array(
+            'plus_jakarta_sans' => __('Plus Jakarta Sans (Bawaan - Modern & Bersih)', 'hakajobs'),
+            'inter'             => __('Inter (Modern UI Standard, Tajam & Sangat Jelas Dibaca)', 'hakajobs'),
+            'poppins'           => __('Poppins (Geometris Bulat, Ramah, Tegas & Populer)', 'hakajobs'),
+            'dm_sans'           => __('DM Sans (Minimalis, Rapi & Elegan)', 'hakajobs'),
+            'outfit'            => __('Outfit (Gaya Startup Tech, Kontras Bagus untuk Judul)', 'hakajobs'),
+            'roboto'            => __('Roboto (Netral, Klasik Google & Sangat Ringan)', 'hakajobs'),
+            'system'            => __('System UI (Super Cepat, Tanpa Beban Font Eksternal)', 'hakajobs'),
+        ),
+    ));
+
+    $wp_customize->add_setting('hakajobs_base_font_size', array(
+        'default'           => '15',
+        'sanitize_callback' => 'absint',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control('hakajobs_base_font_size', array(
+        'label'       => __('Ukuran Font Dasar Teks (px)', 'hakajobs'),
+        'description' => __('Standar ukuran teks body (14px - 17px). Rekomendasi: 15px.', 'hakajobs'),
+        'section'     => 'hakajobs_typography_section',
+        'type'        => 'number',
+        'input_attrs' => array(
+            'min'  => 13,
+            'max'  => 18,
+            'step' => 1,
+        ),
+    ));
+
+    // =========================================================================
     // SECTION 2  -  HEADER & NAVIGASI MENU
     // =========================================================================
     $wp_customize->add_section('hakajobs_header_section', array(
@@ -3022,6 +3070,9 @@ function hakajobs_sanitize_select($input, $setting) {
  * Output Dynamic CSS from Customizer values
  */
 function hakajobs_customizer_css() {
+    $chosen_font    = get_theme_mod('hakajobs_font_family', 'plus_jakarta_sans');
+    $font_stack     = function_exists('hakajobs_get_font_stack') ? hakajobs_get_font_stack($chosen_font) : "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+    $base_font_size = get_theme_mod('hakajobs_base_font_size', '15');
     $primary        = get_theme_mod('hakajobs_primary_color', '#0284c7');
     $primary_hover  = get_theme_mod('hakajobs_primary_hover_color', '#0369a1');
     $dark           = get_theme_mod('hakajobs_dark_color', '#0f172a');
@@ -3037,12 +3088,21 @@ function hakajobs_customizer_css() {
     ?>
     <style id="hakajobs-customizer-inline-css">
         :root {
+            --hk-font-sans: <?php echo $font_stack; ?>;
             --hk-primary: <?php echo esc_attr($primary); ?>;
             --hk-primary-hover: <?php echo esc_attr($primary_hover); ?>;
             --hk-dark: <?php echo esc_attr($dark); ?>;
             --hk-wa-green: <?php echo esc_attr($wa_color); ?>;
             --hk-bg-body: <?php echo esc_attr($body_bg); ?>;
             --hk-btt-color: <?php echo esc_attr($btt_color); ?>;
+        }
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font-family: var(--hk-font-sans) !important;
+            font-size: <?php echo intval($base_font_size); ?>px;
         }
         .hk-topbar,
         .hk-site-footer {
