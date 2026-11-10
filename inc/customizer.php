@@ -2,21 +2,21 @@
 /**
  * Theme Customizer Settings for Hakajobs
  *
- * Panel: ðŸŽ¨ Penyesuaian Tema Hakajobs
- *  â”œâ”€ Section 1 : Skema Warna & Branding
- *  â”œâ”€ Section 2 : Header & Navigasi Menu
- *  â”œâ”€ Section 3 : Bilah Pengumuman (Topbar)
- *  â”œâ”€ Section 4 : Tombol Kembali ke Atas
- *  â”œâ”€ Section 5 : Halaman Beranda (Hero)
- *  â”œâ”€ Section 6 : Peringatan Anti Penipuan
- *  â”œâ”€ Section 7 : Footer & Hak Cipta
- *  â”œâ”€ Section 8 : SEO & Meta Tags
- *  â”œâ”€ Section 9 : Monetisasi & Slot Banner Iklan
- *  â”œâ”€ Section 10: Halaman Pasang Loker & Tarif
- *  â”œâ”€ Section 11: Saluran WhatsApp & Broadcast Loker
- *  â”œâ”€ Section 12: Sidebar Kanan (Beranda & Halaman Statis)
- *  â”œâ”€ Section 13: Pop-up Cookie Pengunjung
- *  └─ Section 14: Halaman Pusat Tes & Karir
+ * Panel: Penyesuaian Tema Hakajobs
+ *  |-- Section 1 : Skema Warna & Branding
+ *  |-- Section 2 : Header & Navigasi Menu
+ *  |-- Section 3 : Bilah Pengumuman (Topbar)
+ *  |-- Section 4 : Tombol Kembali ke Atas
+ *  |-- Section 5 : Halaman Beranda (Hero)
+ *  |-- Section 6 : Peringatan Anti Penipuan
+ *  |-- Section 7 : Footer & Hak Cipta
+ *  |-- Section 8 : SEO & Meta Tags
+ *  |-- Section 9 : Monetisasi & Slot Banner Iklan
+ *  |-- Section 10: Halaman Pasang Loker & Tarif
+ *  |-- Section 11: Saluran WhatsApp & Broadcast Loker
+ *  |-- Section 12: Sidebar Kanan (Beranda & Halaman Statis)
+ *  |-- Section 13: Pop-up Cookie Pengunjung
+ *  `-- Section 14: Halaman Pusat Tes & Karir
  *
  * @package Hakajobs
  */
@@ -105,7 +105,7 @@ function hakajobs_customize_register($wp_customize) {
     // SECTION 1.5 - TIPOGRAFI & JENIS FONT
     // =========================================================================
     $wp_customize->add_section('hakajobs_typography_section', array(
-        'title'       => __('🔤 Tipografi & Jenis Font', 'hakajobs'),
+        'title'       => __('Tipografi & Jenis Font', 'hakajobs'),
         'description' => __('Atur jenis font (huruf) utama untuk seluruh website. Anda dapat berganti font kapan saja langsung dari menu ini.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 15,
@@ -154,7 +154,7 @@ function hakajobs_customize_register($wp_customize) {
     // =========================================================================
     $wp_customize->add_section('hakajobs_header_section', array(
         'title'       => __('Header & Navigasi Menu', 'hakajobs'),
-        'description' => __('Atur logo, sticky header, tombol CTA, dan tautan cepat di bilah atas. Untuk mengedit item menu, buka: Tampilan â†’ Menu.', 'hakajobs'),
+        'description' => __('Atur logo, sticky header, tombol CTA, dan tautan cepat di bilah atas. Untuk mengedit item menu, buka: Tampilan -> Menu.', 'hakajobs'),
         'panel'       => 'hakajobs_theme_options',
         'priority'    => 20,
     ));
@@ -187,14 +187,14 @@ function hakajobs_customize_register($wp_customize) {
 
     // Ikon Logo (Emoji)
     $wp_customize->add_setting('hakajobs_logo_icon', array(
-        'default'           => 'ðŸ’¼',
+        'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
     $wp_customize->add_control('hakajobs_logo_icon', array(
         'type'        => 'text',
         'label'       => __('Ikon Logo (Emoji)', 'hakajobs'),
-        'description' => __('Emoji sebelum nama situs (jika tidak pakai logo gambar). Contoh: ðŸ’¼ ðŸ¢ ðŸŒŸ ðŸš€', 'hakajobs'),
+        'description' => __('Teks atau simbol sebelum nama situs (opsional, jika tidak pakai logo gambar).', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
@@ -206,7 +206,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_logo_max_height', array(
         'type'        => 'range',
-        'label'       => __('ðŸ“ Ukuran Tinggi Logo Gambar (px)', 'hakajobs'),
+        'label'       => __('Ukuran Tinggi Logo Gambar (px)', 'hakajobs'),
         'description' => __('Atur besar / kecil ukuran tinggi logo gambar agar pas dan tidak kebesaran di header. Rekomendasi: 32px - 52px (Default: 42px).', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
         'input_attrs' => array(
@@ -220,7 +220,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_logo_max_height_site_identity', array(
         'settings'    => 'hakajobs_logo_max_height',
         'type'        => 'range',
-        'label'       => __('ðŸ“ Tinggi Maksimal Logo Gambar (px)', 'hakajobs'),
+        'label'       => __('Tinggi Maksimal Logo Gambar (px)', 'hakajobs'),
         'description' => __('Atur besar / kecil ukuran logo agar tidak kebesaran di header.', 'hakajobs'),
         'section'     => 'title_tagline',
         'priority'    => 9,
@@ -239,7 +239,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_logo_text_size', array(
         'type'        => 'range',
-        'label'       => __('ðŸ”¤ Ukuran Font Nama Situs (px)', 'hakajobs'),
+        'label'       => __('Ukuran Font Nama Situs (px)', 'hakajobs'),
         'description' => __('Besar / kecil font nama website jika tidak memakai logo gambar (14px - 32px). Default: 20px.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
         'input_attrs' => array(
@@ -257,7 +257,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_logo_icon_size', array(
         'type'        => 'range',
-        'label'       => __('âœ¨ Ukuran Ikon Logo Emoji (px)', 'hakajobs'),
+        'label'       => __('Ukuran Ikon Logo (px)', 'hakajobs'),
         'description' => __('Besar / kecil emoji ikon sebelum nama website (16px - 44px). Default: 26px.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
         'input_attrs' => array(
@@ -1131,7 +1131,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     // =========================================================================
-    // SECTION 8  -  ðŸ” SEO & VERIFIKASI MESIN PENCARI
+    // SECTION 8  -  SEO & VERIFIKASI MESIN PENCARI
     // =========================================================================
     $wp_customize->add_section('hakajobs_seo_section', array(
         'title'       => __('SEO & Verifikasi Mesin Pencari', 'hakajobs'),
@@ -1195,7 +1195,7 @@ function hakajobs_customize_register($wp_customize) {
     )));
 
     // =========================================================================
-    // SECTION 9  -  💰 GOOGLE ADSENSE & PENEMPATAN IKLAN
+    // SECTION 9  -  GOOGLE ADSENSE & PENEMPATAN IKLAN
     // =========================================================================
     $wp_customize->add_section('hakajobs_ads_section', array(
         'title'       => __('Google AdSense & Penempatan Iklan', 'hakajobs'),
@@ -1784,7 +1784,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_setting('hakajobs_pl_pricing_note', array(
-        'default'           => __('ðŸ’¡ Catatan: Harga dapat disesuaikan. Hubungi admin untuk paket bundling atau diskon khusus pengguna pertama.', 'hakajobs'),
+        'default'           => __('Catatan: Harga dapat disesuaikan. Hubungi admin untuk paket bundling atau diskon khusus pengguna pertama.', 'hakajobs'),
         'sanitize_callback' => 'sanitize_textarea_field',
         'transport'         => 'refresh',
     ));
@@ -1980,7 +1980,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
     $wp_customize->add_control('hakajobs_wa_channel_name', array(
         'type'        => 'text',
-        'label'       => __('ðŸ·ï¸ Nama Saluran / Komunitas WA', 'hakajobs'),
+        'label'       => __('Nama Saluran / Komunitas WA', 'hakajobs'),
         'description' => __('Nama tampilan saluran yang dicantumkan pada teks broadcast.', 'hakajobs'),
         'section'     => 'hakajobs_wa_channel_section',
     ));
@@ -2117,7 +2117,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_setting('hakajobs_sidebar_post_job_btn_text', array(
-        'default'           => 'Pasang Iklan Loker â†’',
+        'default'           => 'Pasang Iklan Loker &rarr;',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
@@ -2453,7 +2453,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_setting('hakajobs_cookie_badge', array(
-        'default'           => 'ðŸª Privasi & Kenyamanan',
+        'default'           => 'Privasi & Kenyamanan',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
