@@ -6013,37 +6013,37 @@ figure {
     border-top: 1px solid var(--hk-border);
 }
 
-/* ==========================================================================
-   CV Template Card & Dedicated Copy Button
-   ========================================================================== */
+/* CV Template Card & Dedicated Copy Button */
 .hk-template-wrapper {
-    margin: 28px 0;
-    border-radius: var(--hk-radius-lg, 12px);
-    overflow: hidden;
-    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
-    border: 1px solid #334155;
-    background: #0f172a;
+    margin: 28px 0 !important;
+    border-radius: var(--hk-radius-lg, 12px) !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15) !important;
+    border: 1px solid #334155 !important;
+    background: #0f172a !important;
+    background-color: #0f172a !important;
 }
 
 .hk-template-header {
-    background: #1e293b;
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    border-bottom: 1px solid #334155;
-    flex-wrap: wrap;
+    background: #1e293b !important;
+    background-color: #1e293b !important;
+    padding: 12px 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    border-bottom: 1px solid #334155 !important;
+    flex-wrap: wrap !important;
 }
 
 .hk-template-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #f1f5f9;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #f1f5f9 !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
 }
 
 .hk-btn-copy-template {
@@ -6079,20 +6079,57 @@ figure {
     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35) !important;
 }
 
+/* Template Box Display: Explicit Dark Slate (#0f172a) with Crisp Light Slate (#f8fafc) Text */
+pre.hk-template-display-box,
+div.hk-template-display-box,
+.hk-article-content pre.hk-template-display-box,
+.hk-article-content div.hk-template-display-box,
+.hk-article-content .hk-template-wrapper pre,
+.hk-article-content .hk-template-wrapper div.hk-template-display-box,
+.hk-article-content .hk-template-wrapper .hk-template-display-box,
+.hk-typography pre.hk-template-display-box,
+.hk-typography div.hk-template-display-box,
+.hk-typography .hk-template-wrapper pre,
+.hk-typography .hk-template-wrapper div.hk-template-display-box,
+.hk-typography .hk-template-wrapper .hk-template-display-box,
+.hk-template-wrapper pre.hk-template-display-box,
+.hk-template-wrapper div.hk-template-display-box,
+.hk-template-wrapper pre,
+.hk-template-wrapper .hk-template-display-box,
 .hk-template-display-box {
-    background: #0f172a;
-    color: #f8fafc;
-    padding: 22px;
-    margin: 0;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 13px;
-    line-height: 1.65;
-    overflow-x: auto;
-    border: none;
-    white-space: pre-wrap;
-    word-break: break-word;
-    user-select: all;
+    background: #0f172a !important;
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    -webkit-text-fill-color: #f8fafc !important;
+    padding: 24px !important;
+    margin: 0 !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+    font-size: 13.5px !important;
+    line-height: 1.75 !important;
+    overflow-x: auto !important;
+    border: none !important;
+    border-radius: 0 0 12px 12px !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    box-sizing: border-box !important;
 }
+
+.hk-template-wrapper pre *,
+.hk-template-wrapper div *,
+.hk-template-display-box * {
+    color: #f8fafc !important;
+    -webkit-text-fill-color: #f8fafc !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
 
 /* ==========================================================================
    Company Archive & Profile Styles (Taksonomi Perusahaan)
@@ -6370,12 +6407,14 @@ body.hk-protected-content {
 body.hk-protected-content input,
 body.hk-protected-content textarea,
 body.hk-protected-content select,
-body.hk-protected-content [contenteditable="true"] {
+body.hk-protected-content [contenteditable="true"],
+body.hk-protected-content .hk-template-display-box,
+body.hk-protected-content .hk-template-wrapper,
+body.hk-protected-content .hk-template-wrapper * {
     -webkit-user-select: auto !important;
     -moz-user-select: auto !important;
     -ms-user-select: auto !important;
     user-select: auto !important;
-    -webkit-touch-callout: default !important;
 }
 
 

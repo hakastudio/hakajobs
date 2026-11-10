@@ -473,12 +473,17 @@
     function isFormInputElement(el) {
         if (!el) return false;
         var tag = el.tagName ? el.tagName.toUpperCase() : '';
-        return (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable || (el.closest && el.closest('input, textarea, select, [contenteditable="true"]')));
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable || (el.closest && el.closest('input, textarea, select, [contenteditable="true"]'))) return true;
+            if (el.closest && (el.closest('.hk-template-wrapper') || el.closest('.hk-template-display-box') || el.closest('.hk-btn-copy-template'))) return true;
+            return false;
     }
 
     if (!isUserAdmin) {
         // Terapkan proteksi seleksi teks melalui class CSS di body
         document.body.classList.add('hk-protected-content');
+
+        // Flag internal: izinkan copy programatis dari tombol Salin Template
+        var _hkTemplateCopying = false;
 
         // 1. Blokir Klik Kanan (Context Menu) di seluruh dokumen
         document.addEventListener('contextmenu', function (e) {
@@ -513,6 +518,9 @@
 
         // 4. Blokir Event Salin / Copy (Klik kanan Copy, Edit > Copy, shortcut)
         document.addEventListener('copy', function (e) {
+            if (_hkTemplateCopying) {
+                return;
+            }
             var activeEl = document.activeElement;
             if (isFormInputElement(activeEl) || isFormInputElement(e.target)) {
                 return; // Tetap izinkan copy di dalam kolom input/formulir/pencarian
@@ -1036,9 +1044,13 @@
             ta.focus();
             ta.select();
             try {
+                _hkTemplateCopying = true;
                 document.execCommand('copy');
+                _hkTemplateCopying = false;
                 if (callback) callback();
-            } catch (err) {}
+            } catch (err) {
+                _hkTemplateCopying = false;
+            }
             document.body.removeChild(ta);
         }
 
