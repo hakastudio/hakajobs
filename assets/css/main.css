@@ -2015,6 +2015,97 @@ button, input, select, textarea {
     margin-bottom: 12px;
 }
 
+.hk-single-pubmeta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--hk-text-muted, #64748b);
+    margin-bottom: 4px;
+}
+
+.hk-pubmeta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.hk-pubmeta-sep {
+    color: var(--hk-border, #cbd5e1);
+    font-size: 11px;
+}
+
+/* ==========================================================================
+   Job Specifications Grid (Image 2 style)
+   ========================================================================== */
+.hk-job-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--hk-border, #e2e8f0);
+    border-bottom: 1px solid var(--hk-border, #e2e8f0);
+    margin-top: 20px;
+    width: 100%;
+    background: transparent;
+}
+
+.hk-spec-cell {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    border-right: 1px solid var(--hk-border, #e2e8f0);
+    border-bottom: 1px solid var(--hk-border, #e2e8f0);
+    min-width: 0;
+}
+
+/* Align left & right padding with card container */
+.hk-spec-cell:nth-child(3n+1) {
+    padding-left: 2px;
+}
+
+.hk-spec-cell:nth-child(3n) {
+    border-right: none;
+    padding-right: 2px;
+}
+
+.hk-spec-cell:nth-child(n+4) {
+    border-bottom: none;
+}
+
+.hk-spec-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+.hk-spec-val {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.hk-spec-val.hk-spec-salary {
+    color: #16a34a; /* Distinct emerald green matching image 2 */
+    font-weight: 800;
+}
+
+.hk-spec-val.hk-spec-urgent {
+    color: #c2410c;
+}
+
+.hk-spec-val.hk-spec-closed {
+    color: #991b1b;
+}
+
 .hk-single-meta-strip {
     display: flex;
     flex-wrap: wrap;
@@ -2342,42 +2433,92 @@ figure {
 
 /* Share Bar */
 .hk-job-share-bar {
-    margin-top: 24px;
-    padding-top: 16px;
-    border-top: 1px solid var(--hk-border);
+    clear: both;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
+    padding: 14px 18px;
+    background: #ffffff;
+    border: 1px solid var(--hk-border, #e2e8f0);
+    border-radius: var(--hk-radius-md, 10px);
+    margin: 24px 0;
 }
+
 .hk-share-label {
     font-size: 13px;
-    font-weight: 700;
-    color: var(--hk-text-muted);
+    font-weight: 600;
+    color: var(--hk-text-muted, #64748b);
 }
+
 .hk-share-buttons {
     display: flex;
+    align-items: center;
     gap: 8px;
     flex-wrap: wrap;
 }
+
 .hk-share-btn {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: var(--hk-radius-sm);
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--hk-radius-sm, 6px);
+    text-decoration: none;
+    border: 1px solid transparent;
     cursor: pointer;
-    border: 1px solid var(--hk-border);
-    background: var(--hk-bg-body);
-    color: var(--hk-text-main);
     transition: all 0.15s ease;
 }
-.hk-share-wa:hover { background: #dcfce7; border-color: #86efac; color: #15803d; }
-.hk-share-tg:hover { background: #e0f2fe; border-color: #7dd3fc; color: #0369a1; }
-.hk-share-li:hover { background: #eff6ff; border-color: #93c5fd; color: #1d4ed8; }
-.hk-share-copy:hover { background: #f1f5f9; border-color: #cbd5e1; }
+
+.hk-share-wa {
+    background: #25D366;
+    color: #ffffff !important;
+}
+
+.hk-share-wa:hover {
+    background: #1ebe5d;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.hk-share-tg {
+    background: #229ED9;
+    color: #ffffff !important;
+}
+
+.hk-share-tg:hover {
+    background: #1b8ec5;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.hk-share-li {
+    background: #0A66C2;
+    color: #ffffff !important;
+}
+
+.hk-share-li:hover {
+    background: #085299;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.hk-share-copy {
+    background: #f1f5f9;
+    color: #334155;
+    border-color: #cbd5e1;
+}
+
+.hk-share-copy:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
 
 /* Related Jobs */
 .hk-related-jobs-wrap {
@@ -4256,6 +4397,55 @@ figure {
         overflow-wrap: break-word;
     }
 
+    .hk-single-pubmeta {
+        justify-content: center;
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .hk-job-specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 16px;
+    }
+
+    .hk-spec-cell {
+        padding: 12px 14px;
+        border-right: 1px solid var(--hk-border, #e2e8f0) !important;
+        border-bottom: 1px solid var(--hk-border, #e2e8f0) !important;
+        text-align: left;
+    }
+
+    .hk-spec-cell:nth-child(odd) {
+        padding-left: 2px;
+        padding-right: 12px;
+    }
+
+    .hk-spec-cell:nth-child(even) {
+        border-right: none !important;
+        padding-left: 12px;
+        padding-right: 2px;
+    }
+
+    .hk-spec-cell:nth-child(3),
+    .hk-spec-cell:nth-child(4) {
+        border-bottom: 1px solid var(--hk-border, #e2e8f0) !important;
+    }
+
+    .hk-spec-cell:nth-child(5),
+    .hk-spec-cell:nth-child(6) {
+        border-bottom: none !important;
+    }
+
+    .hk-spec-label {
+        font-size: 10.5px;
+        margin-bottom: 4px;
+    }
+
+    .hk-spec-val {
+        font-size: 13.5px;
+        line-height: 1.35;
+    }
+
     .hk-single-meta-strip {
         justify-content: center;
         gap: 6px;
@@ -4382,6 +4572,27 @@ figure {
         justify-content: center;
         font-size: 12px;
         padding: 7px 8px;
+    }
+
+    .hk-related-jobs-wrap {
+        clear: both;
+        position: relative;
+        width: 100%;
+        margin-top: 24px;
+        padding-top: 18px;
+    }
+
+    .hk-related-title {
+        font-size: 16px;
+        margin-bottom: 14px;
+        text-align: left;
+    }
+
+    .hk-related-jobs-wrap .hk-jobs-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
     }
 
     /* Single Artikel on Mobile */
@@ -5104,92 +5315,6 @@ figure {
     }
 }
 
-/* ==========================================================================
-   Social Share Buttons Bar
-   ========================================================================== */
-.hk-job-share-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 14px 18px;
-    background: #ffffff;
-    border: 1px solid var(--hk-border, #e2e8f0);
-    border-radius: var(--hk-radius-md, 10px);
-    margin: 24px 0;
-}
-
-.hk-share-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--hk-text-muted, #64748b);
-}
-
-.hk-share-buttons {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.hk-share-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: var(--hk-radius-sm, 6px);
-    text-decoration: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.hk-share-wa {
-    background: #25D366;
-    color: #ffffff !important;
-}
-
-.hk-share-wa:hover {
-    background: #1ebe5d;
-    color: #ffffff !important;
-    transform: translateY(-1px);
-}
-
-.hk-share-tg {
-    background: #229ED9;
-    color: #ffffff !important;
-}
-
-.hk-share-tg:hover {
-    background: #1b8ec5;
-    color: #ffffff !important;
-    transform: translateY(-1px);
-}
-
-.hk-share-li {
-    background: #0A66C2;
-    color: #ffffff !important;
-}
-
-.hk-share-li:hover {
-    background: #085299;
-    color: #ffffff !important;
-    transform: translateY(-1px);
-}
-
-.hk-share-copy {
-    background: #f1f5f9;
-    color: #334155;
-    border-color: #cbd5e1;
-}
-
-.hk-share-copy:hover {
-    background: #e2e8f0;
-    color: #0f172a;
-}
 
 /* ==========================================================================
    Deadline Urgency & Expired Status Styles

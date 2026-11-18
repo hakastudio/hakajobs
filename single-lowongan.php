@@ -35,6 +35,9 @@ while (have_posts()) : the_post();
     $terms_edu        = get_the_terms($post_id, 'pendidikan_terakhir');
     $edu_label        = (!empty($terms_edu) && !is_wp_error($terms_edu)) ? $terms_edu[0]->name : __('Semua Jurusan', 'hakajobs');
 
+    $terms_type       = get_the_terms($post_id, 'tipe_pekerjaan');
+    $type_label       = (!empty($terms_type) && !is_wp_error($terms_type)) ? $terms_type[0]->name : __('Full-Time', 'hakajobs');
+
     // Deadline & Expiry calculation
     $exp        = function_exists('hakajobs_get_job_expiry_data') 
                     ? hakajobs_get_job_expiry_data($post_id) 
@@ -132,33 +135,55 @@ while (have_posts()) : the_post();
 
                         <h1 class="hk-single-job-title"><?php the_title(); ?></h1>
 
-                        <div class="hk-single-meta-strip">
-                            <span class="hk-meta-pill">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <?php echo esc_html($location_label); ?>
-                            </span>
-
-                            <?php if (!empty($salary)): ?>
-                                <span class="hk-meta-pill hk-pill-salary">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
-                                    <?php echo esc_html($salary); ?>
-                                </span>
-                            <?php endif; ?>
-
-                            <span class="hk-meta-pill">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <div class="hk-single-pubmeta">
+                            <span class="hk-pubmeta-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                 <?php echo sprintf(__('Diterbitkan %s', 'hakajobs'), hakajobs_time_ago(get_the_time('U'))); ?>
                             </span>
-
-                            <span class="hk-meta-pill">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <span class="hk-view-number"><?php echo number_format_i18n($views); ?></span> <?php _e('kali dilihat', 'hakajobs'); ?>
+                            <span class="hk-pubmeta-sep">•</span>
+                            <span class="hk-pubmeta-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <span><?php echo number_format_i18n($views); ?></span> <?php _e('kali dilihat', 'hakajobs'); ?>
                             </span>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="hk-single-type-badges">
-                            <?php echo hakajobs_get_job_type_badges($post_id); ?>
-                        </div>
+                <!-- Job Specifications Grid (Image 2 style) -->
+                <div class="hk-job-specs-grid">
+                    <div class="hk-spec-cell">
+                        <span class="hk-spec-label"><?php _e('LOKASI', 'hakajobs'); ?></span>
+                        <span class="hk-spec-val"><?php echo esc_html($location_label); ?></span>
+                    </div>
+                    <div class="hk-spec-cell">
+                        <span class="hk-spec-label"><?php _e('TIPE PEKERJAAN', 'hakajobs'); ?></span>
+                        <span class="hk-spec-val"><?php echo esc_html($type_label); ?></span>
+                    </div>
+                    <div class="hk-spec-cell">
+                        <span class="hk-spec-label"><?php _e('KISARAN GAJI', 'hakajobs'); ?></span>
+                        <span class="hk-spec-val hk-spec-salary"><?php echo !empty($salary) ? esc_html($salary) : __('Dirahasiakan / Kompetitif', 'hakajobs'); ?></span>
+                    </div>
+                    <div class="hk-spec-cell">
+                        <span class="hk-spec-label"><?php _e('PENDIDIKAN MIN.', 'hakajobs'); ?></span>
+                        <span class="hk-spec-val"><?php echo esc_html($edu_label); ?></span>
+                    </div>
+                    <div class="hk-spec-cell">
+                        <span class="hk-spec-label"><?php _e('PENGALAMAN', 'hakajobs'); ?></span>
+                        <span class="hk-spec-val"><?php echo esc_html($exp_label); ?></span>
+                    </div>
+                    <div class="hk-spec-cell">
+                        <span class="hk-spec-label"><?php _e('BATAS PENDAFTARAN', 'hakajobs'); ?></span>
+                        <span class="hk-spec-val <?php echo $exp['is_urgent'] ? 'hk-spec-urgent' : ($exp['is_closed'] ? 'hk-spec-closed' : ''); ?>">
+                            <?php 
+                            if ($exp['is_closed']) {
+                                echo !empty($deadline) ? esc_html(date_i18n('j F Y', strtotime($deadline))) : __('Ditutup', 'hakajobs');
+                            } elseif (!empty($deadline)) {
+                                echo esc_html(date_i18n('j F Y', strtotime($deadline)));
+                            } else {
+                                _e('Selama Dibuka', 'hakajobs');
+                            }
+                            ?>
+                        </span>
                     </div>
                 </div>
 
