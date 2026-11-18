@@ -1445,12 +1445,16 @@ button, input, select, textarea {
     color: var(--hk-dark);
 }
 
-.hk-btn-quick-apply {
+.hk-btn-quick-apply,
+.hk-btn-view-job {
     background: var(--hk-primary);
     color: #fff !important;
+    font-weight: 700;
 }
-.hk-btn-quick-apply:hover {
+.hk-btn-quick-apply:hover,
+.hk-btn-view-job:hover {
     background: var(--hk-primary-hover);
+    color: #fff !important;
 }
 
 .hk-btn-wa {
@@ -2578,6 +2582,7 @@ figure {
 
 .hk-related-jobs-wrap .hk-card-actions .hk-btn-detail,
 .hk-related-jobs-wrap .hk-card-actions .hk-btn-quick-apply,
+.hk-related-jobs-wrap .hk-card-actions .hk-btn-view-job,
 .hk-related-jobs-wrap .hk-card-actions .hk-btn-closed-pill {
     flex: 1 1 0;
     min-width: 0;
@@ -4328,6 +4333,7 @@ figure {
     }
     .hk-card-actions .hk-btn-detail,
     .hk-card-actions .hk-btn-quick-apply,
+    .hk-card-actions .hk-btn-view-job,
     .hk-card-actions .hk-btn-closed-pill {
         flex: 1 1 0;
         min-width: 0;

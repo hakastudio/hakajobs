@@ -759,18 +759,14 @@ function hakajobs_render_job_card($post_id = null) {
                     <svg class="hk-bookmark-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
                 </button>
 
-                <a href="<?php the_permalink($post_id); ?>" class="hk-btn hk-btn-detail">
-                    <?php _e('Lihat Detail', 'hakajobs'); ?>
-                </a>
-
                 <?php if (!$exp['is_closed']): ?>
-                    <a href="<?php echo esc_url($apply_info['link']); ?>" target="<?php echo esc_attr($apply_info['target']); ?>" class="hk-btn hk-btn-quick-apply <?php echo ($apply_info['channel'] === 'WhatsApp') ? 'hk-btn-wa' : ''; ?>" rel="nofollow">
-                        <?php echo esc_html($apply_info['label']); ?>
+                    <a href="<?php the_permalink($post_id); ?>" class="hk-btn hk-btn-view-job hk-btn-primary">
+                        <?php _e('Lihat Loker', 'hakajobs'); ?>
                     </a>
                 <?php else: ?>
-                    <span class="hk-btn-closed-pill" title="<?php esc_attr_e('Pendaftaran untuk lowongan ini telah ditutup', 'hakajobs'); ?>">
+                    <a href="<?php the_permalink($post_id); ?>" class="hk-btn hk-btn-closed-pill" title="<?php esc_attr_e('Pendaftaran untuk lowongan ini telah ditutup', 'hakajobs'); ?>">
                         <?php _e('Ditutup', 'hakajobs'); ?>
-                    </span>
+                    </a>
                 <?php endif; ?>
             </div>
         </div>
