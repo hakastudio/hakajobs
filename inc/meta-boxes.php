@@ -179,9 +179,17 @@ function hakajobs_render_job_apply_box($post) {
     if (trim($apply_wa_message) === trim($legacy_old_default) || trim($apply_wa_message) === 'Halo Tim HRD, saya melihat lowongan pekerjaan di website "Hakajobs" dan tertarik untuk melamar posisi ini. Mohon informasi berkas yang perlu saya kirimkan. Terima kasih.') {
         $apply_wa_message = '';
     }
+    if (!empty($apply_wa_message)) {
+        $apply_wa_message = preg_replace('/•\s*Referensi Info Loker:[^\n]*\n?/ui', '', $apply_wa_message);
+        $apply_wa_message = preg_replace('/Referensi Info Loker:[^\n]*\n?/ui', '', $apply_wa_message);
+    }
+    if (!empty($apply_email_body)) {
+        $apply_email_body = str_replace(array('({link})', '({url})', '({permalink})', '{link}', '{url}', '{permalink}'), '', $apply_email_body);
+        $apply_email_body = preg_replace('/\s*melalui situs \{website\}/ui', '', $apply_email_body);
+    }
 
-    $wa_placeholder = "Halo Tim Rekrutmen {company},\n\nSaya melihat informasi lowongan pekerjaan di website {website} dan bermaksud untuk melamar posisi berikut:\n\n📋 *Detail Lamaran:*\n• Posisi: *{posisi}*\n• Perusahaan: {company}\n• Referensi Info Loker: {link}\n\n👤 *Ringkasan Data Singkat:*\n• Nama Lengkap: [Nama Anda]\n• Domisili: [Kota/Daerah Domisili]\n• Pendidikan / Pengalaman Terakhir: [Pendidikan / Pengalaman Singkat]\n\nSaya telah menyiapkan berkas lamaran (CV dan dokumen pendukung). Apakah berkas dapat saya kirimkan melalui chat WhatsApp ini atau via email resmi rekrutmen?\n\nTerima kasih atas waktu dan kesempatan yang diberikan.";
-    $email_body_placeholder = "Kepada Yth.\nTim Rekrutmen / HRD {company}\ndi Tempat\n\nDengan hormat,\n\nSehubungan dengan informasi lowongan pekerjaan untuk posisi {posisi} yang saya peroleh melalui situs {website} ({link}), bersama email ini saya bermaksud untuk mengajukan diri guna mengisi posisi tersebut.\n\nBerikut adalah ringkasan singkat profil saya:\n• Nama Lengkap: [Nama Lengkap Anda]\n• Nomor WhatsApp / HP: [Nomor HP/WA Aktif]\n• Kota Domisili: [Kota Domisili]\n• Pendidikan Terakhir: [Pendidikan Terakhir / Jurusan]\n• Keahlian / Pengalaman Relevan: [Sebutkan 1-2 keahlian utama]\n\nSebagai bahan pertimbangan Bapak/Ibu, bersama email ini turut saya lampirkan berkas kelengkapan:\n1. Curriculum Vitae (CV) Terbaru\n2. Portofolio Pekerjaan\n3. Dokumen Pendukung Lainnya\n\nBesar harapan saya untuk memperoleh kesempatan wawancara...\n\n(Biarkan kosong untuk menggunakan template surat lamaran profesional otomatis lengkap)";
+    $wa_placeholder = "Halo Tim Rekrutmen {company},\n\nSaya bermaksud untuk melamar pekerjaan pada posisi berikut:\n\n📋 *Detail Lamaran:*\n• Posisi: *{posisi}*\n• Perusahaan: {company}\n\n👤 *Ringkasan Data Singkat:*\n• Nama Lengkap: [Nama Anda]\n• Domisili: [Kota/Daerah Domisili]\n• Pendidikan / Pengalaman Terakhir: [Pendidikan / Pengalaman Singkat]\n\nSaya telah menyiapkan berkas lamaran (CV dan dokumen pendukung). Apakah berkas dapat saya kirimkan melalui chat WhatsApp ini atau via email resmi rekrutmen?\n\nTerima kasih atas waktu dan kesempatan yang diberikan.";
+    $email_body_placeholder = "Kepada Yth.\nTim Rekrutmen / HRD {company}\ndi Tempat\n\nDengan hormat,\n\nSehubungan dengan informasi lowongan pekerjaan untuk posisi {posisi} di {company}, bersama email ini saya bermaksud untuk mengajukan diri guna mengisi posisi tersebut.\n\nBerikut adalah ringkasan singkat profil saya:\n• Nama Lengkap: [Nama Lengkap Anda]\n• Nomor WhatsApp / HP: [Nomor HP/WA Aktif]\n• Kota Domisili: [Kota Domisili]\n• Pendidikan Terakhir: [Pendidikan Terakhir / Jurusan]\n• Keahlian / Pengalaman Relevan: [Sebutkan 1-2 keahlian utama]\n\nSebagai bahan pertimbangan Bapak/Ibu, bersama email ini turut saya lampirkan berkas kelengkapan:\n1. Curriculum Vitae (CV) Terbaru\n2. Portofolio Pekerjaan\n3. Dokumen Pendukung Lainnya\n\nBesar harapan saya untuk memperoleh kesempatan wawancara...\n\n(Biarkan kosong untuk menggunakan template surat lamaran profesional otomatis lengkap)";
     ?>
     <p style="margin-top:0; color:#475569; font-size:13px;">
         <?php _e('Pilih cara bagaimana pelamar mengirim lamaran kepada perusahaan/rekruter. Pelamar TIDAK PERLU login untuk mengirim lamaran!', 'hakajobs'); ?>
@@ -209,7 +217,7 @@ function hakajobs_render_job_apply_box($post) {
                 <label for="hakajobs_apply_wa_message"><?php _e('Template Teks Pesan WhatsApp (Opsional)', 'hakajobs'); ?></label>
                 <textarea id="hakajobs_apply_wa_message" name="hakajobs_apply_wa_message" rows="5" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:12px; font-family:monospace;" placeholder="<?php echo esc_attr($wa_placeholder); ?>"><?php echo esc_textarea($apply_wa_message); ?></textarea>
                 <small style="display:block; margin-top:4px; color:#475569;">
-                    <?php _e('Tersedia tag dinamis: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>, <code>{link}</code>.<br><strong>Biarkan kosong</strong> untuk menggunakan template pesan HRD profesional otomatis.', 'hakajobs'); ?>
+                    <?php _e('Tersedia tag dinamis: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>.<br><strong>Biarkan kosong</strong> untuk menggunakan template pesan HRD profesional otomatis tanpa link sumber.', 'hakajobs'); ?>
                 </small>
             </div>
         </div>
@@ -233,7 +241,7 @@ function hakajobs_render_job_apply_box($post) {
                 <label for="hakajobs_apply_email_body"><?php _e('Template Isi Surat Lamaran Email (Opsional)', 'hakajobs'); ?></label>
                 <textarea id="hakajobs_apply_email_body" name="hakajobs_apply_email_body" rows="6" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:12px; font-family:monospace;" placeholder="<?php echo esc_attr($email_body_placeholder); ?>"><?php echo esc_textarea($apply_email_body); ?></textarea>
                 <small style="display:block; margin-top:4px; color:#475569;">
-                    <?php _e('Tersedia tag: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>, <code>{link}</code>.<br><strong>Biarkan kosong</strong> untuk format surat lamaran kerja resmi standar HRD secara otomatis.', 'hakajobs'); ?>
+                    <?php _e('Tersedia tag: <code>{posisi}</code>, <code>{perusahaan}</code>, <code>{website}</code>.<br><strong>Biarkan kosong</strong> untuk format surat lamaran kerja resmi standar HRD secara otomatis tanpa link sumber.', 'hakajobs'); ?>
                 </small>
             </div>
         </div>

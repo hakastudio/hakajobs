@@ -186,6 +186,13 @@ function hakajobs_replace_template_tags($text, $post_id) {
     $site_name = get_bloginfo('name');
     $permalink = get_permalink($post_id);
 
+    // Strip out any source link lines or dynamic link tags from application templates
+    $text = preg_replace('/•\s*Referensi Info Loker:[^\n]*\n?/ui', '', $text);
+    $text = preg_replace('/Referensi Info Loker:[^\n]*\n?/ui', '', $text);
+    $text = preg_replace('/\s*\(?\{link\}\)?/i', '', $text);
+    $text = preg_replace('/\s*\(?\{url\}\)?/i', '', $text);
+    $text = preg_replace('/\s*\(?\{permalink\}\)?/i', '', $text);
+
     $tags = array(
         '{posisi}'        => $post_title,
         '{job_title}'     => $post_title,
@@ -196,9 +203,9 @@ function hakajobs_replace_template_tags($text, $post_id) {
         '{website}'       => $site_name,
         '{site_name}'     => $site_name,
         '{nama_website}'  => $site_name,
-        '{link}'          => $permalink,
-        '{url}'           => $permalink,
-        '{permalink}'     => $permalink,
+        '{link}'          => '',
+        '{url}'           => '',
+        '{permalink}'     => '',
     );
 
     // Legacy hardcoded strings replacement
@@ -235,15 +242,12 @@ function hakajobs_get_default_apply_wa_message($post_id) {
     if (empty($company_name)) {
         $company_name = __('Perusahaan', 'hakajobs');
     }
-    $site_name = get_bloginfo('name');
-    $permalink = get_permalink($post_id);
 
     $msg  = sprintf("Halo Tim Rekrutmen %s,\n\n", $company_name);
-    $msg .= sprintf("Saya membaca informasi lowongan pekerjaan di website %s dan bermaksud untuk melamar posisi berikut:\n\n", $site_name);
+    $msg .= "Saya bermaksud untuk melamar lowongan pekerjaan pada posisi berikut:\n\n";
     $msg .= "📋 *Detail Lamaran:*\n";
     $msg .= sprintf("• Posisi: *%s*\n", $post_title);
-    $msg .= sprintf("• Perusahaan: %s\n", $company_name);
-    $msg .= sprintf("• Referensi Info Loker: %s\n\n", $permalink);
+    $msg .= sprintf("• Perusahaan: %s\n\n", $company_name);
     $msg .= "👤 *Ringkasan Data Singkat:*\n";
     $msg .= "• Nama Lengkap: [Nama Anda]\n";
     $msg .= "• Domisili: [Kota/Daerah Domisili]\n";
@@ -277,14 +281,12 @@ function hakajobs_get_default_apply_email_body($post_id) {
     if (empty($company_name)) {
         $company_name = __('Perusahaan', 'hakajobs');
     }
-    $site_name = get_bloginfo('name');
-    $permalink = get_permalink($post_id);
 
     $body  = "Kepada Yth.\n";
     $body .= sprintf("Tim Rekrutmen / HRD %s\n", $company_name);
     $body .= "di Tempat\n\n";
     $body .= "Dengan hormat,\n\n";
-    $body .= sprintf("Sehubungan dengan informasi lowongan pekerjaan untuk posisi %s yang saya temukan melalui situs %s (%s), bersama email ini saya bermaksud untuk mengajukan diri guna mengisi posisi tersebut.\n\n", $post_title, $site_name, $permalink);
+    $body .= sprintf("Sehubungan dengan informasi lowongan pekerjaan untuk posisi %s di %s, bersama email ini saya bermaksud untuk mengajukan diri guna mengisi posisi tersebut.\n\n", $post_title, $company_name);
     $body .= "Berikut adalah ringkasan singkat profil saya:\n";
     $body .= "• Nama Lengkap: [Nama Lengkap Anda]\n";
     $body .= "• Nomor WhatsApp / HP: [Nomor HP/WA Aktif]\n";
