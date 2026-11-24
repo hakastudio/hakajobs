@@ -20,7 +20,7 @@ Hakajobs/
 ├── style.css                  # Header metadata tema & deklarasi versi WordPress
 ├── functions.php              # Inisialisasi tema, enqueue script & style terkompresi, query filter
 ├── header.php                 # Header bar, menu navigasi responsif, tombol bookmark, mobile drawer
-├── footer.php                 # Footer 4 kolom, anti-fraud banner, modal lowongan tersimpan, tombol Back to Top
+├── footer.php                 # Footer 4 kolom, modal lowongan tersimpan, tombol Back to Top
 ├── front-page.php             # Template Beranda (Hero search, lowongan prioritas, daftar loker, sidebar)
 ├── single-lowongan.php        # Halaman Detail Lowongan (Deskripsi, kualifikasi, benefit, sticky apply box)
 ├── archive-lowongan.php       # Direktori Lowongan (Filter sidebar, sorting, pagination)
@@ -109,15 +109,12 @@ Pencari kerja dapat menyaring direktori lowongan berdasarkan:
 - Tingkat Pengalaman (Fresh Graduate, 1-3 Tahun, > 3 Tahun)
 - Urutan Hasil (Terbaru, Terpopuler, Batas Waktu Terdekat)
 
-### 6. Peringatan Resmi Anti-Penipuan
-Mencegah pencari kerja tertipu oleh calo atau oknum berbayar dengan banner edukasi resmi pada footer dan catatan peringatan pada halaman detail lowongan (*"Seluruh proses rekrutmen GRATIS"*).
-
-### 7. Saluran WhatsApp & Generator Broadcast Loker
+### 6. Saluran WhatsApp & Generator Broadcast Loker
 - Tombol integrasi Saluran WhatsApp resmi untuk menambah followers situs.
 - Generator teks broadcast otomatis siap salin di halaman admin & detail loker: rapi dengan emoji, posisi, nama perusahaan, kota, gaji, batas waktu, dan tautan resmi.
 - Tombol aksi cepat *"📢 Broadcast WA"* langsung pada tabel daftar lowongan kerja di dashboard admin WordPress.
 
-### 8. Kecepatan Tinggi & Bebas Bloat (PageSpeed Optimized)
+### 7. Kecepatan Tinggi & Bebas Bloat (PageSpeed Optimized)
 - Otomatis memuat aset terkompresi produksi (`.min.css` dan `.min.js`).
 - Eliminasi render-blocking JavaScript dengan atribut `defer`.
 - Preconnect Google Fonts untuk mempercepat waktu First Contentful Paint (FCP).
@@ -160,18 +157,15 @@ Seluruh elemen tampilan dapat diatur secara visual melalui **Tampilan (Appearanc
    - Tampilkan / sembunyikan bagian Lowongan Prioritas (*Spotlight*).
    - Teks badge, judul section, dan subjudul Lowongan Prioritas.
    - Kustomisasi blok "Cara Melamar Kerja" (3 langkah panduan melamar).
-6. **🛡️ Peringatan Anti-Penipuan:**
-   - Tampilkan / sembunyikan banner anti-penipuan di atas footer.
-   - Kustomisasi judul dan isi pesan peringatan.
-7. **📋 Footer & Hak Cipta:**
+6. **📋 Footer & Hak Cipta:**
    - Paragraf "Tentang Kami" footer.
    - Teks hak cipta / copyright kustom.
    - Konfigurasi tautan media sosial pemilik situs (WhatsApp, Telegram, LinkedIn, Facebook, Instagram) dengan ikon SVG modern.
-8. **🔍 SEO & Verifikasi Mesin Pencari:**
+7. **🔍 SEO & Verifikasi Mesin Pencari:**
    - Mesin SEO otomatis (Meta Description dinamis, Canonical URL, Open Graph, Twitter Cards).
    - Kolom verifikasi resmi Google Search Console dan Bing Webmaster Tools.
    - Schema JSON-LD WebSite (Sitelinks Searchbox) dan BreadcrumbList.
-9. **💰 Google AdSense & Penempatan Iklan:**
+8. **💰 Google AdSense & Penempatan Iklan:**
    - Saklar aktifkan/nonaktifkan penayangan iklan.
    - Kolom ID Klien AdSense (`ca-pub-XXXXX`) untuk mengaktifkan Auto Ads otomatis.
    - Kolom skrip verifikasi peninjauan situs (*Site Review Script*).

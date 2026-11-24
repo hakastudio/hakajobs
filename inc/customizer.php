@@ -8,15 +8,14 @@
  *  |-- Section 3 : Bilah Pengumuman (Topbar)
  *  |-- Section 4 : Tombol Kembali ke Atas
  *  |-- Section 5 : Halaman Beranda (Hero)
- *  |-- Section 6 : Peringatan Anti Penipuan
- *  |-- Section 7 : Footer & Hak Cipta
- *  |-- Section 8 : SEO & Meta Tags
- *  |-- Section 9 : Monetisasi & Slot Banner Iklan
- *  |-- Section 10: Halaman Pasang Loker & Tarif
- *  |-- Section 11: Saluran WhatsApp & Broadcast Loker
- *  |-- Section 12: Sidebar Kanan (Beranda & Halaman Statis)
- *  |-- Section 13: Pop-up Cookie Pengunjung
- *  `-- Section 14: Halaman Pusat Tes & Karir
+ *  |-- Section 6 : Footer & Hak Cipta
+ *  |-- Section 7 : SEO & Meta Tags
+ *  |-- Section 8 : Monetisasi & Slot Banner Iklan
+ *  |-- Section 9 : Halaman Pasang Loker & Tarif
+ *  |-- Section 10: Saluran WhatsApp & Broadcast Loker
+ *  |-- Section 11: Sidebar Kanan (Beranda & Halaman Statis)
+ *  |-- Section 12: Pop-up Cookie Pengunjung
+ *  `-- Section 13: Halaman Pusat Tes & Karir
  *
  * @package Hakajobs
  */
@@ -312,7 +311,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_nav_cat_label', array(
         'type'        => 'text',
         'label'       => __('Menu: Label Dropdown [Kategori Loker]', 'hakajobs'),
-        'description' => __('Berisi sub-menu: Full-Time, Part-Time, Magang, Remote.', 'hakajobs'),
+        'description' => __('Berisi sub-menu: Full-Time, Magang, Remote.', 'hakajobs'),
         'section'     => 'hakajobs_header_section',
     ));
 
@@ -922,46 +921,7 @@ function hakajobs_customize_register($wp_customize) {
     ));
 
     // =========================================================================
-    // SECTION 6  -  PERINGATAN ANTI PENIPUAN
-    // =========================================================================
-    $wp_customize->add_section('hakajobs_fraud_section', array(
-        'title'    => __('Peringatan Anti Penipuan', 'hakajobs'),
-        'panel'    => 'hakajobs_theme_options',
-        'priority' => 40,
-    ));
-
-    $wp_customize->add_setting('hakajobs_show_fraud_alert', array(
-        'default'           => '1',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-    ));
-    $wp_customize->add_control('hakajobs_show_fraud_alert', array(
-        'type'        => 'checkbox',
-        'label'       => __('Tampilkan Banner Anti Penipuan di Atas Footer', 'hakajobs'),
-        'section'     => 'hakajobs_fraud_section',
-    ));
-
-    $wp_customize->add_setting('hakajobs_fraud_title', array(
-        'default'           => __('Peringatan Anti Penipuan Rekrutmen', 'hakajobs'),
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
-    $wp_customize->add_control('hakajobs_fraud_title', array(
-        'type'    => 'text',
-        'label'   => __('Judul Peringatan', 'hakajobs'),
-        'section' => 'hakajobs_fraud_section',
-    ));
-
-    $wp_customize->add_setting('hakajobs_fraud_text', array(
-        'default'           => __('Seluruh proses seleksi dan lamaran kerja di situs ini adalah 100% GRATIS. Jangan pernah mentransfer uang dengan alasan apapun (biaya administrasi, tiket travel, seragam, atau akomodasi hotel).', 'hakajobs'),
-        'sanitize_callback' => 'sanitize_textarea_field',
-    ));
-    $wp_customize->add_control('hakajobs_fraud_text', array(
-        'type'    => 'textarea',
-        'label'   => __('Teks Isi Peringatan', 'hakajobs'),
-        'section' => 'hakajobs_fraud_section',
-    ));
-
-    // =========================================================================
-    // SECTION 7  -  FOOTER & HAK CIPTA
+    // SECTION 6  -  FOOTER & HAK CIPTA
     // =========================================================================
     $wp_customize->add_section('hakajobs_footer_section', array(
         'title'    => __('Footer & Hak Cipta', 'hakajobs'),
@@ -1299,7 +1259,7 @@ function hakajobs_customize_register($wp_customize) {
     $wp_customize->add_control('hakajobs_ad_slot_footer', array(
         'type'        => 'textarea',
         'label'       => __('Slot Iklan Sebelum Footer (Banner Lebar)', 'hakajobs'),
-        'description' => __('Tampil di atas banner anti penipuan pada seluruh halaman website.', 'hakajobs'),
+        'description' => __('Tampil di atas footer pada seluruh halaman website.', 'hakajobs'),
         'section'     => 'hakajobs_ads_section',
     ));
 

@@ -79,7 +79,7 @@ function hakajobs_get_company_logo($post_id = null, $size = 54, $is_hero = false
 /**
  * Job Type Badges (Full-Time, Part-Time, Magang, Remote, dll.)
  */
-function hakajobs_get_job_type_badges($post_id = null) {
+function hakajobs_get_job_type_badges($post_id = null, $wrap = true) {
     if (!$post_id) {
         $post_id = get_the_ID();
     }
@@ -88,7 +88,7 @@ function hakajobs_get_job_type_badges($post_id = null) {
         return '';
     }
 
-    $output = '<div class="hk-badges-group">';
+    $badges = '';
     foreach ($terms as $term) {
         $term_slug = strtolower($term->slug);
         $badge_class = 'hk-badge-default';
@@ -104,14 +104,16 @@ function hakajobs_get_job_type_badges($post_id = null) {
             $badge_class = 'hk-badge-remote';
         }
 
-        $output .= sprintf(
+        $badges .= sprintf(
             '<span class="hk-badge %s">%s</span>',
             esc_attr($badge_class),
             esc_html($term->name)
         );
     }
-    $output .= '</div>';
-    return $output;
+    if ($wrap) {
+        return '<div class="hk-badges-group">' . $badges . '</div>';
+    }
+    return $badges;
 }
 
 /**
@@ -718,16 +720,15 @@ function hakajobs_render_job_card($post_id = null) {
                             <?php echo esc_html($salary); ?>
                         </span>
                     <?php endif; ?>
+                </div>
 
+                <div class="hk-job-tags-row hk-badges-group">
                     <?php if (!empty($category_label)): ?>
-                        <span class="hk-meta-item hk-category-tag">
+                        <span class="hk-badge hk-badge-category">
                             <?php echo esc_html($category_label); ?>
                         </span>
                     <?php endif; ?>
-                </div>
-
-                <div class="hk-job-tags-row">
-                    <?php echo hakajobs_get_job_type_badges($post_id); ?>
+                    <?php echo hakajobs_get_job_type_badges($post_id, false); ?>
                 </div>
             </div>
         </div>

@@ -5,9 +5,6 @@
  * @package Hakajobs
  */
 
-$show_fraud   = get_theme_mod('hakajobs_show_fraud_alert', '1');
-$fraud_title  = get_theme_mod('hakajobs_fraud_title', __('Peringatan Anti Penipuan Rekrutmen', 'hakajobs'));
-$fraud_text   = get_theme_mod('hakajobs_fraud_text', __('Seluruh proses seleksi dan lamaran kerja di situs ini adalah 100% GRATIS. Jangan pernah mentransfer uang dengan alasan apapun (biaya administrasi, seragam, tiket travel, atau akomodasi hotel). Jika menemukan indikasi mencurigakan, segera laporkan ke pihak berwajib.', 'hakajobs'));
 $footer_about = get_theme_mod('hakajobs_footer_about', __('Platform kurasi info lowongan kerja terpercaya, menghubungkan pencari kerja langsung dengan HRD via WhatsApp, Email, & Web resmi tanpa perlu registrasi akun.', 'hakajobs'));
 $custom_copy    = get_theme_mod('hakajobs_copyright_text', '');
 $enable_btt     = get_theme_mod('hakajobs_enable_back_to_top', '1');
@@ -21,25 +18,6 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
 
     <!-- Footer Ad Slot -->
     <?php if (function_exists('hakajobs_render_ad_slot')) { hakajobs_render_ad_slot('footer'); } ?>
-
-    <!-- Anti-Fraud Warning Callout -->
-    <?php if ($show_fraud === '1'): ?>
-    <section class="hk-fraud-alert-section">
-        <div class="hk-container">
-            <div class="hk-fraud-alert-card">
-                <div class="hk-fraud-alert-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                </div>
-                <div class="hk-fraud-alert-content">
-                    <h4 class="hk-fraud-alert-title"><?php echo esc_html($fraud_title); ?></h4>
-                    <p class="hk-fraud-alert-desc">
-                        <?php echo esc_html($fraud_text); ?>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <?php endif; ?>
 
     <!-- Main Footer -->
     <footer class="hk-site-footer" id="hk-colophon">
@@ -274,7 +252,7 @@ $col3_count   = (int) get_theme_mod('hakajobs_footer_col3_count', 6);
     <?php
     $enable_cookie = get_theme_mod('hakajobs_enable_cookie_notice', '1');
     if ($enable_cookie === '1'):
-        $cookie_badge    = get_theme_mod('hakajobs_cookie_badge', __('🍪 Privasi & Kenyamanan', 'hakajobs'));
+        $cookie_badge    = get_theme_mod('hakajobs_cookie_badge', __('Privasi & Kenyamanan', 'hakajobs'));
         $cookie_title    = get_theme_mod('hakajobs_cookie_title', __('Kami Menggunakan Cookie', 'hakajobs'));
         $cookie_text     = get_theme_mod('hakajobs_cookie_text', __('Situs ini menggunakan cookie dan penyimpanan lokal untuk menyimpan lowongan favorit Anda serta meningkatkan kenyamanan pencarian kerja Anda.', 'hakajobs'));
         $cookie_accept   = get_theme_mod('hakajobs_cookie_btn_accept', __('Aktifkan Cookie', 'hakajobs'));

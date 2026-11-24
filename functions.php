@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('HAKAJOBS_VERSION', '1.0.83');
+define('HAKAJOBS_VERSION', '1.0.84');
 define('HAKAJOBS_DIR', get_template_directory());
 define('HAKAJOBS_URI', get_template_directory_uri());
 
@@ -453,7 +453,6 @@ function hakajobs_fallback_menu($is_mobile = false) {
         echo '<a href="' . esc_url($archive_url) . '">' . esc_html($cat_label) . '</a>';
         echo '<ul class="sub-menu">';
         echo '<li><a href="' . esc_url($archive_url . '?tipe=full-time') . '">' . __('Full-Time', 'hakajobs') . '</a></li>';
-        echo '<li><a href="' . esc_url($archive_url . '?tipe=part-time') . '">' . __('Part-Time', 'hakajobs') . '</a></li>';
         echo '<li><a href="' . esc_url($archive_url . '?tipe=magang') . '">' . __('Magang (Internship)', 'hakajobs') . '</a></li>';
         echo '<li><a href="' . esc_url($archive_url . '?tipe=remote') . '">' . __('Remote / WFH', 'hakajobs') . '</a></li>';
         echo '</ul>';

@@ -103,90 +103,102 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
 
         <!-- 2. Widget Kategori Populer -->
         <?php if ($show_cats === '1'): ?>
-            <div class="hk-widget-card">
+            <div class="hk-widget-card hk-widget-themed">
                 <?php if (!empty($cats_title)): ?>
-                    <h3 class="hk-widget-title"><?php echo esc_html($cats_title); ?></h3>
+                    <div class="hk-widget-header">
+                        <h3 class="hk-widget-title"><?php echo esc_html($cats_title); ?></h3>
+                    </div>
                 <?php endif; ?>
 
-                <ul class="hk-widget-list">
-                    <?php
-                    $cats_args = array(
-                        'taxonomy'   => 'kategori_lowongan',
-                        'number'     => ($cats_count > 0 ? $cats_count : 6),
-                        'hide_empty' => $cats_hide_empty,
-                    );
-                    if ($cats_orderby === 'name') {
-                        $cats_args['orderby'] = 'name';
-                        $cats_args['order']   = 'ASC';
-                    } else {
-                        $cats_args['orderby'] = 'count';
-                        $cats_args['order']   = 'DESC';
-                    }
-
-                    $side_cats = get_terms($cats_args);
-                    if (!empty($side_cats) && !is_wp_error($side_cats)) {
-                        foreach ($side_cats as $sc) {
-                            echo '<li>';
-                            echo '<a href="' . esc_url(get_term_link($sc)) . '" class="hk-widget-link">';
-                            echo '<span>' . esc_html($sc->name) . '</span>';
-                            echo '<span class="hk-badge-count">' . intval($sc->count) . '</span>';
-                            echo '</a>';
-                            echo '</li>';
+                <div class="hk-widget-body">
+                    <ul class="hk-widget-list">
+                        <?php
+                        $cats_args = array(
+                            'taxonomy'   => 'kategori_lowongan',
+                            'number'     => ($cats_count > 0 ? $cats_count : 6),
+                            'hide_empty' => $cats_hide_empty,
+                        );
+                        if ($cats_orderby === 'name') {
+                            $cats_args['orderby'] = 'name';
+                            $cats_args['order']   = 'ASC';
+                        } else {
+                            $cats_args['orderby'] = 'count';
+                            $cats_args['order']   = 'DESC';
                         }
-                    } else {
-                        echo '<li class="hk-widget-empty"><span style="font-size:13px; color:var(--hk-text-muted);">' . __('Belum ada kategori tersedia.', 'hakajobs') . '</span></li>';
-                    }
-                    ?>
-                </ul>
+
+                        $side_cats = get_terms($cats_args);
+                        if (!empty($side_cats) && !is_wp_error($side_cats)) {
+                            foreach ($side_cats as $sc) {
+                                echo '<li>';
+                                echo '<a href="' . esc_url(get_term_link($sc)) . '" class="hk-widget-link">';
+                                echo '<span>' . esc_html($sc->name) . '</span>';
+                                echo '<span class="hk-badge-count">' . intval($sc->count) . '</span>';
+                                echo '</a>';
+                                echo '</li>';
+                            }
+                        } else {
+                            echo '<li class="hk-widget-empty"><span style="font-size:13px; color:var(--hk-text-muted);">' . __('Belum ada kategori tersedia.', 'hakajobs') . '</span></li>';
+                        }
+                        ?>
+                    </ul>
+                </div>
             </div>
         <?php endif; ?>
 
         <!-- 3. Widget Lokasi Kerja Teratas -->
         <?php if ($show_locs === '1'): ?>
-            <div class="hk-widget-card">
+            <div class="hk-widget-card hk-widget-themed">
                 <?php if (!empty($locs_title)): ?>
-                    <h3 class="hk-widget-title"><?php echo esc_html($locs_title); ?></h3>
+                    <div class="hk-widget-header">
+                        <h3 class="hk-widget-title"><?php echo esc_html($locs_title); ?></h3>
+                    </div>
                 <?php endif; ?>
 
-                <div class="hk-pills-cloud">
-                    <?php
-                    $locs_args = array(
-                        'taxonomy'   => 'lokasi_lowongan',
-                        'number'     => ($locs_count > 0 ? $locs_count : 8),
-                        'hide_empty' => $locs_hide_empty,
-                    );
-                    if ($locs_orderby === 'name') {
-                        $locs_args['orderby'] = 'name';
-                        $locs_args['order']   = 'ASC';
-                    } else {
-                        $locs_args['orderby'] = 'count';
-                        $locs_args['order']   = 'DESC';
-                    }
-
-                    $side_locs = get_terms($locs_args);
-                    if (!empty($side_locs) && !is_wp_error($side_locs)) {
-                        foreach ($side_locs as $sl) {
-                            echo '<a href="' . esc_url(get_term_link($sl)) . '" class="hk-cloud-pill">';
-                            echo esc_html($sl->name);
-                            if ($sl->count > 0) {
-                                echo ' <small style="opacity:0.75;">(' . intval($sl->count) . ')</small>';
-                            }
-                            echo '</a>';
+                <div class="hk-widget-body">
+                    <div class="hk-pills-cloud">
+                        <?php
+                        $locs_args = array(
+                            'taxonomy'   => 'lokasi_lowongan',
+                            'number'     => ($locs_count > 0 ? $locs_count : 8),
+                            'hide_empty' => $locs_hide_empty,
+                        );
+                        if ($locs_orderby === 'name') {
+                            $locs_args['orderby'] = 'name';
+                            $locs_args['order']   = 'ASC';
+                        } else {
+                            $locs_args['orderby'] = 'count';
+                            $locs_args['order']   = 'DESC';
                         }
-                    } else {
-                        echo '<span style="font-size:13px; color:var(--hk-text-muted);">' . __('Belum ada lokasi tersedia.', 'hakajobs') . '</span>';
-                    }
-                    ?>
+
+                        $side_locs = get_terms($locs_args);
+                        if (!empty($side_locs) && !is_wp_error($side_locs)) {
+                            foreach ($side_locs as $sl) {
+                                echo '<a href="' . esc_url(get_term_link($sl)) . '" class="hk-cloud-pill">';
+                                echo esc_html($sl->name);
+                                if ($sl->count > 0) {
+                                    echo ' <small style="opacity:0.75;">(' . intval($sl->count) . ')</small>';
+                                }
+                                echo '</a>';
+                            }
+                        } else {
+                            echo '<span style="font-size:13px; color:var(--hk-text-muted);">' . __('Belum ada lokasi tersedia.', 'hakajobs') . '</span>';
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         <?php endif; ?>
 
         <!-- 4. Widget 🔥 Lowongan Terpopuler -->
         <?php if ($show_popular === '1'): ?>
-            <div class="hk-widget-card hk-popular-jobs-widget">
+            <div class="hk-widget-card hk-popular-jobs-widget hk-widget-themed">
                 <?php if (!empty($popular_title)): ?>
-                    <h3 class="hk-widget-title"><?php echo esc_html($popular_title); ?></h3>
+                    <div class="hk-widget-header">
+                        <h3 class="hk-widget-title"><?php echo esc_html($popular_title); ?></h3>
+                    </div>
                 <?php endif; ?>
+
+                <div class="hk-widget-body">
 
                 <?php
                 $pop_args = array(
@@ -268,6 +280,7 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
                         <?php _e('Belum ada lowongan terpopuler saat ini.', 'hakajobs'); ?>
                     </p>
                 <?php endif; ?>
+                </div>
             </div>
         <?php endif; ?>
 

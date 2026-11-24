@@ -1297,10 +1297,10 @@ button, input, select, textarea {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
+    gap: 8px 14px;
     font-size: 13px;
     color: var(--hk-text-muted);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .hk-meta-item {
@@ -1311,25 +1311,41 @@ button, input, select, textarea {
 
 .hk-meta-item .hk-icon {
     color: var(--hk-text-light);
+    flex-shrink: 0;
 }
 
 .hk-salary-highlight {
-    font-weight: 600;
-    color: var(--hk-text-main);
+    font-weight: 700;
+    color: #16a34a;
 }
 
-.hk-category-tag {
+.hk-salary-highlight .hk-icon {
+    color: #16a34a;
+}
+
+.hk-job-tags-row {
+    margin-bottom: 4px;
+}
+
+.hk-category-tag,
+.hk-badge-category {
     background: #f1f5f9;
-    padding: 1px 8px;
+    padding: 3px 8px;
     border-radius: var(--hk-radius-sm);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 500;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.4;
 }
 
 /* Badges */
 .hk-badges-group {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 6px;
 }
 
@@ -1341,6 +1357,9 @@ button, input, select, textarea {
     background: #f1f5f9;
     color: #475569;
     border: 1px solid #e2e8f0;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.4;
 }
 
 .hk-badge-fulltime,
@@ -1357,19 +1376,22 @@ button, input, select, textarea {
 /* Card Footer */
 .hk-job-card-footer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 14px;
-    margin-top: 14px;
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 12px;
+    margin-top: 12px;
     border-top: 1px solid #f1f5f9;
-    gap: 12px;
+    gap: 10px;
 }
 
 .hk-card-footer-info {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 12px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    width: 100%;
+    font-size: 11.5px;
     color: var(--hk-text-light);
 }
 
@@ -1377,31 +1399,44 @@ button, input, select, textarea {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    white-space: nowrap;
+    color: var(--hk-text-light);
+}
+
+.hk-post-time .hk-icon {
+    flex-shrink: 0;
 }
 
 .hk-deadline-tag {
     font-weight: 600;
     color: var(--hk-urgent);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .hk-card-actions {
     display: flex;
     align-items: center;
     gap: 8px;
+    width: 100%;
 }
 
 .hk-btn-bookmark {
     background: transparent;
     border: 1px solid var(--hk-border);
     border-radius: var(--hk-radius-sm);
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     color: var(--hk-text-light);
     cursor: pointer;
     transition: all 0.15s ease;
+    box-sizing: border-box;
 }
 
 .hk-btn-bookmark:hover {
@@ -1418,6 +1453,44 @@ button, input, select, textarea {
 
 .hk-btn-bookmark.is-saved svg {
     fill: #eab308;
+}
+
+.hk-card-actions .hk-btn-view-job,
+.hk-card-actions .hk-btn-closed-pill {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-align: center;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* In wider 1-column desktop lists, keep actions neatly aligned */
+@media (min-width: 768px) {
+    .hk-jobs-list .hk-job-card-footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .hk-jobs-list .hk-card-footer-info {
+        width: auto;
+        gap: 14px;
+    }
+    .hk-jobs-list .hk-card-actions {
+        width: auto;
+    }
+    .hk-jobs-list .hk-card-actions .hk-btn-view-job,
+    .hk-jobs-list .hk-card-actions .hk-btn-closed-pill {
+        flex: 0 0 auto;
+        min-width: 120px;
+        padding: 0 16px;
+    }
 }
 
 .hk-btn {
@@ -1550,6 +1623,48 @@ button, input, select, textarea {
     font-weight: 700;
     color: var(--hk-dark);
     margin-bottom: 14px;
+}
+
+/* Themed Sidebar Widget Cards (with Blue Header) */
+.hk-widget-card.hk-widget-themed {
+    padding: 0;
+    overflow: hidden;
+}
+
+.hk-widget-card.hk-widget-themed .hk-widget-header {
+    background: var(--hk-primary);
+    padding: 13px 20px;
+    margin: 0;
+    border-top-left-radius: calc(var(--hk-radius-md) - 1px);
+    border-top-right-radius: calc(var(--hk-radius-md) - 1px);
+}
+
+.hk-widget-card.hk-widget-themed .hk-widget-title {
+    color: #ffffff !important;
+    font-size: 14.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+    line-height: 1.35;
+}
+
+.hk-widget-card.hk-widget-themed .hk-widget-body {
+    padding: 18px 20px 20px;
+}
+
+.hk-widget-card.hk-widget-themed > .hk-widget-title:first-child {
+    background: var(--hk-primary);
+    color: #ffffff !important;
+    font-size: 14.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 16px;
+    padding: 13px 20px;
+    line-height: 1.35;
+    border-top-left-radius: calc(var(--hk-radius-md) - 1px);
+    border-top-right-radius: calc(var(--hk-radius-md) - 1px);
 }
 
 .hk-widget-list li {

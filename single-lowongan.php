@@ -255,15 +255,6 @@ while (have_posts()) : the_post();
                     <!-- Ad Slot: Single Job Bottom -->
                     <?php if (function_exists('hakajobs_render_ad_slot')) { hakajobs_render_ad_slot('single_bottom'); } ?>
 
-                    <!-- Recruitment Safety Warning -->
-                    <div class="hk-job-alert-warning">
-                        <div class="hk-alert-icon">⚠️</div>
-                        <div class="hk-alert-text">
-                            <strong><?php _e('Perhatian untuk Calon Pelamar:', 'hakajobs'); ?></strong>
-                            <p><?php _e('Jangan pernah mentransfer biaya administrasi, tiket pesawat, atau akomodasi hotel. Proses rekrutmen kerja resmi dari perusahaan yang benar TIDAK PERNAH memungut biaya apapun dari pelamar kerja.', 'hakajobs'); ?></p>
-                        </div>
-                    </div>
-
                     <!-- Public WhatsApp Channel Follower Widget -->
                     <?php
                     $wa_channel_url  = get_theme_mod('hakajobs_wa_channel_url', '');
