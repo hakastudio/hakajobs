@@ -43,10 +43,6 @@ $company_name = $term ? $term->name : __('Perusahaan', 'hakajobs');
 
                     <h1 class="hk-company-profile-name"><?php single_term_title(); ?></h1>
 
-                    <?php if (!empty($term->description)): ?>
-                        <p class="hk-company-profile-desc"><?php echo esc_html($term->description); ?></p>
-                    <?php endif; ?>
-
                     <div class="hk-company-profile-meta">
                         <?php if ($profile && !empty($profile['location'])): ?>
                             <span class="hk-company-meta-item">
@@ -83,6 +79,82 @@ $company_name = $term ? $term->name : __('Perusahaan', 'hakajobs');
             </div>
             <?php endif; ?>
         </div>
+
+        <!-- Company About Section (Deskripsi Perusahaan) -->
+        <?php
+        $company_desc = (!empty($term->description)) ? $term->description : '';
+        if (empty($company_desc) && $term_id) {
+            $sample_jobs = get_posts(array(
+                'post_type'      => 'lowongan',
+                'posts_per_page' => 1,
+                'post_status'    => array('publish', 'draft'),
+                'tax_query'      => array(
+                    array(
+                        'taxonomy' => 'perusahaan',
+                        'field'    => 'term_id',
+                        'terms'    => $term_id,
+                    ),
+                ),
+                'meta_query'     => array(
+                    array(
+                        'key'     => '_hakajobs_company_description',
+                        'value'   => '',
+                        'compare' => '!=',
+                    ),
+                ),
+                'fields'         => 'ids',
+            ));
+            if (!empty($sample_jobs)) {
+                $company_desc = get_post_meta($sample_jobs[0], '_hakajobs_company_description', true);
+                if (!empty($company_desc)) {
+                    wp_update_term($term_id, 'perusahaan', array('description' => $company_desc));
+                }
+            }
+        }
+        ?>
+
+        <?php if (!empty($company_desc)): ?>
+            <section class="hk-company-about-card" aria-label="<?php echo esc_attr(sprintf(__('Tentang %s', 'hakajobs'), $company_name)); ?>">
+                <div class="hk-company-about-header">
+                    <div class="hk-company-about-title-wrap">
+                        <span class="hk-company-about-icon-badge">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </span>
+                        <h2 class="hk-company-about-title"><?php printf(__('Tentang %s', 'hakajobs'), esc_html($company_name)); ?></h2>
+                    </div>
+                    <?php if (current_user_can('manage_categories') || current_user_can('edit_theme_options')): ?>
+                        <a href="<?php echo esc_url(get_edit_term_link($term_id, 'perusahaan')); ?>" class="hk-company-about-edit-btn" title="<?php esc_attr_e('Edit deskripsi perusahaan ini di WordPress Admin', 'hakajobs'); ?>">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            <span><?php _e('Edit Deskripsi', 'hakajobs'); ?></span>
+                        </a>
+                    <?php endif; ?>
+                </div>
+                <div class="hk-company-about-content">
+                    <?php echo wpautop(wp_kses_post($company_desc)); ?>
+                </div>
+            </section>
+        <?php elseif (current_user_can('manage_categories') || current_user_can('edit_theme_options')): ?>
+            <div class="hk-company-about-card hk-company-about-placeholder">
+                <div class="hk-company-placeholder-inner">
+                    <div class="hk-placeholder-main">
+                        <div class="hk-placeholder-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </div>
+                        <div class="hk-placeholder-text">
+                            <strong><?php printf(__('Deskripsi untuk %s belum diisi', 'hakajobs'), esc_html($company_name)); ?></strong>
+                            <p><?php _e('Tambahkan profil, bidang bisnis, atau visi & misi perusahaan agar halaman profil ini terlihat lebih lengkap dan terpercaya bagi calon pelamar.', 'hakajobs'); ?></p>
+                        </div>
+                    </div>
+                    <a href="<?php echo esc_url(get_edit_term_link($term_id, 'perusahaan')); ?>" class="hk-btn hk-btn-primary hk-btn-sm" style="white-space: nowrap;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        <span><?php _e('Tulis Deskripsi', 'hakajobs'); ?></span>
+                    </a>
+                </div>
+            </div>
+        <?php endif; ?>
 
         <!-- Ad Slot -->
         <?php if (function_exists('hakajobs_render_ad_slot')) { hakajobs_render_ad_slot('header'); } ?>

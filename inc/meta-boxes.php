@@ -42,6 +42,13 @@ function hakajobs_render_job_details_box($post) {
     $company_name     = get_post_meta($post->ID, '_hakajobs_company_name', true);
     $company_website  = get_post_meta($post->ID, '_hakajobs_company_website', true);
     $company_location = get_post_meta($post->ID, '_hakajobs_company_location', true);
+    $company_desc     = get_post_meta($post->ID, '_hakajobs_company_description', true);
+    if (empty($company_desc) && !empty($company_name)) {
+        $c_term = get_term_by('name', $company_name, 'perusahaan');
+        if ($c_term && !is_wp_error($c_term) && !empty($c_term->description)) {
+            $company_desc = $c_term->description;
+        }
+    }
     $postal_code      = get_post_meta($post->ID, '_hakajobs_postal_code', true);
     $salary           = get_post_meta($post->ID, '_hakajobs_salary', true);
     $salary_period    = get_post_meta($post->ID, '_hakajobs_salary_period', true);
@@ -94,6 +101,14 @@ function hakajobs_render_job_details_box($post) {
             <label for="hakajobs_postal_code"><?php _e('Kode Pos Kantor (postalCode)', 'hakajobs'); ?></label>
             <input type="text" id="hakajobs_postal_code" name="hakajobs_postal_code" value="<?php echo esc_attr($postal_code); ?>" placeholder="Contoh: 12190" maxlength="10" />
             <small><?php _e('Kode pos 5 digit kantor. Jika kosong, sistem otomatis mengisinya berdasarkan kota.', 'hakajobs'); ?></small>
+        </div>
+    </div>
+
+    <div class="hk-meta-grid" style="grid-template-columns: 1fr;">
+        <div class="hk-field">
+            <label for="hakajobs_company_description"><?php _e('Deskripsi / Profil Singkat Perusahaan (Opsional)', 'hakajobs'); ?></label>
+            <textarea id="hakajobs_company_description" name="hakajobs_company_description" rows="3" placeholder="<?php esc_attr_e('Contoh: AMM Group adalah perusahaan berkembang yang bergerak di bidang...', 'hakajobs'); ?>"><?php echo esc_textarea($company_desc); ?></textarea>
+            <small><?php _e('Deskripsi ini otomatis terhubung dan tampil di halaman arsip profil perusahaan terkait. Anda juga dapat mengeditnya lengkap via menu Lowongan &gt; Perusahaan.', 'hakajobs'); ?></small>
         </div>
     </div>
 
@@ -309,6 +324,13 @@ function hakajobs_save_job_meta($post_id) {
         $fields['_hakajobs_views_count'] = max(0, intval($_POST['hakajobs_views_count']));
     }
 
+    $comp_desc = isset($_POST['hakajobs_company_description']) ? wp_kses_post(trim($_POST['hakajobs_company_description'])) : '';
+    if (!empty($comp_desc)) {
+        $fields['_hakajobs_company_description'] = $comp_desc;
+    } else {
+        delete_post_meta($post_id, '_hakajobs_company_description');
+    }
+
     foreach ($fields as $key => $value) {
         update_post_meta($post_id, $key, $value);
     }
@@ -316,6 +338,14 @@ function hakajobs_save_job_meta($post_id) {
     // Auto-sync company name to 'perusahaan' taxonomy
     if (!empty($fields['_hakajobs_company_name'])) {
         wp_set_object_terms($post_id, $fields['_hakajobs_company_name'], 'perusahaan', false);
+
+        // Sync description to the term if provided
+        if (!empty($comp_desc)) {
+            $c_term = get_term_by('name', $fields['_hakajobs_company_name'], 'perusahaan');
+            if ($c_term && !is_wp_error($c_term)) {
+                wp_update_term((int)$c_term->term_id, 'perusahaan', array('description' => $comp_desc));
+            }
+        }
     }
 }
 add_action('save_post_lowongan', 'hakajobs_save_job_meta');

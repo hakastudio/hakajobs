@@ -331,3 +331,63 @@ function hakajobs_add_lowongan_row_actions($actions, $post) {
 }
 add_filter('post_row_actions', 'hakajobs_add_lowongan_row_actions', 10, 2);
 
+/**
+ * Enable Rich Editor (TinyMCE) and better guidance on 'perusahaan' taxonomy edit screen.
+ */
+function hakajobs_perusahaan_taxonomy_editor_scripts($hook_suffix) {
+    $screen = get_current_screen();
+    if (!$screen || $screen->taxonomy !== 'perusahaan') {
+        return;
+    }
+
+    wp_enqueue_editor();
+
+    add_action('admin_footer', function() {
+        ?>
+        <script>
+        jQuery(document).ready(function($) {
+            var $desc = $('#description');
+            if ($desc.length && typeof wp !== 'undefined' && wp.editor) {
+                var $row = $desc.closest('.form-field');
+                $row.find('label[for="description"]').html('<strong>Deskripsi / Profil Perusahaan</strong>');
+                $row.find('p.description').html('Tuliskan profil atau deskripsi lengkap tentang perusahaan ini (sejarah, bidang bisnis, visi & misi, dsb). Konten ini otomatis tampil rapi di halaman profil/arsip perusahaan.');
+                
+                // On term.php (edit screen), initialize TinyMCE editor
+                if ($('body').hasClass('taxonomy-perusahaan') && $('#edittag').length) {
+                    wp.editor.initialize('description', {
+                        tinymce: {
+                            wpautop: true,
+                            toolbar1: 'formatselect,bold,italic,bullist,numlist,blockquote,link,unlink,undo,redo',
+                        },
+                        quicktags: true
+                    });
+                }
+            }
+        });
+        </script>
+        <style>
+        .taxonomy-perusahaan .term-description-wrap .wp-editor-wrap {
+            margin-top: 6px;
+            max-width: 820px;
+        }
+        .taxonomy-perusahaan .term-description-wrap td p.description {
+            margin-top: 8px;
+            font-style: italic;
+            color: #64748b;
+        }
+        </style>
+        <?php
+    });
+}
+add_action('admin_enqueue_scripts', 'hakajobs_perusahaan_taxonomy_editor_scripts');
+
+/**
+ * Allow post-level HTML formatting in 'perusahaan' taxonomy term description.
+ */
+function hakajobs_allow_html_in_perusahaan_description() {
+    remove_filter('pre_term_description', 'wp_filter_kses');
+    add_filter('pre_term_description', 'wp_filter_post_kses');
+}
+add_action('init', 'hakajobs_allow_html_in_perusahaan_description');
+
+
