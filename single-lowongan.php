@@ -17,7 +17,6 @@ while (have_posts()) : the_post();
     $deadline         = get_post_meta($post_id, '_hakajobs_deadline', true);
     $status           = get_post_meta($post_id, '_hakajobs_status', true);
     $apply_notes      = get_post_meta($post_id, '_hakajobs_apply_notes', true);
-    $views            = hakajobs_get_views($post_id);
 
     // Terms
     $terms_location   = get_the_terms($post_id, 'lokasi_lowongan');
@@ -139,11 +138,6 @@ while (have_posts()) : the_post();
                             <span class="hk-pubmeta-item">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                 <?php echo sprintf(__('Diterbitkan %s', 'hakajobs'), hakajobs_time_ago(get_the_time('U'))); ?>
-                            </span>
-                            <span class="hk-pubmeta-sep">•</span>
-                            <span class="hk-pubmeta-item">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <span><?php echo number_format_i18n($views); ?></span> <?php _e('kali dilihat', 'hakajobs'); ?>
                             </span>
                         </div>
                     </div>

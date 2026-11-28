@@ -2286,18 +2286,6 @@ function hakajobs_customize_register($wp_customize) {
         ),
     ));
 
-    $wp_customize->add_setting('hakajobs_sidebar_popular_show_views', array(
-        'default'           => '1',
-        'sanitize_callback' => 'hakajobs_sanitize_checkbox',
-        'transport'         => 'refresh',
-    ));
-    $wp_customize->add_control('hakajobs_sidebar_popular_show_views', array(
-        'type'        => 'checkbox',
-        'label'       => __('Tampilkan Jumlah Dilihat (View Counter)', 'hakajobs'),
-        'description' => __('Menampilkan lencana jumlah pembaca pada setiap lowongan terpopuler.', 'hakajobs'),
-        'section'     => 'hakajobs_sidebar_section',
-    ));
-
     // --- INTEGRASI WIDGET WORDPRESS ---
     $wp_customize->add_setting('hakajobs_sidebar_wp_widgets_pos', array(
         'default'           => 'after',

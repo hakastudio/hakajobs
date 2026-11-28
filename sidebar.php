@@ -47,7 +47,6 @@ $show_popular       = get_theme_mod('hakajobs_sidebar_show_popular', '1');
 $popular_title      = get_theme_mod('hakajobs_sidebar_popular_title', __('Lowongan Terpopuler', 'hakajobs'));
 $popular_days       = get_theme_mod('hakajobs_sidebar_popular_days', '7');
 $popular_count      = intval(get_theme_mod('hakajobs_sidebar_popular_count', 5));
-$show_pop_views     = get_theme_mod('hakajobs_sidebar_popular_show_views', '1');
 
 // 5. Pengaturan CTA Pencari Kerja (Siap Melamar Pekerjaan)
 $show_jobseeker_cta = get_theme_mod('hakajobs_sidebar_show_jobseeker_cta', '1');
@@ -244,7 +243,6 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
                             }
                             $company  = get_post_meta($job_id, '_hakajobs_company_name', true);
                             $location = get_post_meta($job_id, '_hakajobs_job_location', true);
-                            $views    = hakajobs_get_views($job_id);
                         ?>
                             <a href="<?php the_permalink(); ?>" class="hk-popular-job-item">
                                 <span class="hk-popular-rank rank-<?php echo esc_attr($pop_rank); ?>"><?php echo esc_html($pop_rank); ?></span>
@@ -261,9 +259,6 @@ $has_dynamic_wp    = is_active_sidebar('sidebar-right');
                                             <span class="hk-popular-loc"><?php echo esc_html($location); ?></span>
                                         <?php endif; ?>
                                     </div>
-                                    <?php if ($show_pop_views === '1' && $views > 0): ?>
-                                        <span class="hk-popular-views">👁️ <?php echo number_format_i18n($views); ?> <?php _e('dilihat', 'hakajobs'); ?></span>
-                                    <?php endif; ?>
                                 </div>
                             </a>
                         <?php 

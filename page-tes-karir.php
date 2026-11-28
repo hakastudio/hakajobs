@@ -411,16 +411,6 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                                     </p>
                                 </div>
                                 <div class="hk-tk-article-footer">
-                                    <?php
-                                    $art_views = function_exists('hakajobs_get_views') ? hakajobs_get_views(get_the_ID()) : 0;
-                                    if ($art_views > 0) {
-                                        $art_views_str = ($art_views >= 1000) ? round($art_views / 1000, 1) . 'k' : $art_views;
-                                    } else {
-                                        $dummy_views = (get_the_ID() * 137) % 3500 + 1200;
-                                        $art_views_str = round($dummy_views / 1000, 1) . 'k';
-                                    }
-                                    ?>
-                                    <span class="hk-tk-read-count"><?php echo esc_html($art_views_str); ?> dibaca</span>
                                     <a href="<?php the_permalink(); ?>" class="hk-tk-read-link">
                                         <?php _e('Baca Selengkapnya', 'hakajobs'); ?> &rarr;
                                     </a>
@@ -456,7 +446,6 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                                 </p>
                             </div>
                             <div class="hk-tk-article-footer">
-                                <span class="hk-tk-read-count">2.4k dibaca</span>
                                 <a href="javascript:void(0)" onclick="openCareerArticle('skd')" class="hk-tk-read-link">
                                     Pelajari Soal &amp; Jawaban &rarr;
                                 </a>
@@ -487,7 +476,6 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                                 </p>
                             </div>
                             <div class="hk-tk-article-footer">
-                                <span class="hk-tk-read-count">4.1k dibaca</span>
                                 <a href="javascript:void(0)" onclick="openCareerArticle('cv')" class="hk-tk-read-link">
                                     Baca &amp; Download Template &rarr;
                                 </a>
@@ -518,7 +506,6 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                                 </p>
                             </div>
                             <div class="hk-tk-article-footer">
-                                <span class="hk-tk-read-count">3.2k dibaca</span>
                                 <a href="javascript:void(0)" onclick="openCareerArticle('psikotes')" class="hk-tk-read-link">
                                     Pelajari Trik Psikotes &rarr;
                                 </a>
@@ -549,7 +536,6 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                                 </p>
                             </div>
                             <div class="hk-tk-article-footer">
-                                <span class="hk-tk-read-count">5.0k dibaca</span>
                                 <a href="javascript:void(0)" onclick="openCareerArticle('interview')" class="hk-tk-read-link">
                                     Pelajari Contoh Jawaban &rarr;
                                 </a>
@@ -669,8 +655,6 @@ if (!wp_style_is('hakajobs-tes-karir', 'enqueued')) {
                     <span id="hkArticleReadTime">10 Menit Baca</span>
                     <span>•</span>
                     <span id="hkArticleAuthor"><?php printf(esc_html__('Oleh %s', 'hakajobs'), esc_html($tk_author_name)); ?></span>
-                    <span>•</span>
-                    <span>3.8k dibaca</span>
                 </div>
             </header>
 
